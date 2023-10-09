@@ -1,0 +1,12 @@
+# Dependency directory
+node_modules
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+.vscode
