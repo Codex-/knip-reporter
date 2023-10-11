@@ -12,20 +12,22 @@ import { analyzeMetafile, build } from "esbuild";
       outfile: "dist/index.mjs",
       metafile: true,
       bundle: true,
-      format: 'esm',
+      format: "esm",
       platform: "node",
       target: ["node20"],
       treeShaking: true,
+      // Ensure require is properly defined: https://github.com/evanw/esbuild/issues/1921
+      banner: {
+        js:
+          "import { createRequire } from 'module';\n" +
+          "const require = createRequire(import.meta.url);",
+      },
     });
 
     const analysis = await analyzeMetafile(result.metafile);
     console.info(`📝 Bundle Analysis:${analysis}`);
 
-    console.info(
-      `${chalk.bold.green("✔ Bundled successfully!")} (${
-        Date.now() - startTime
-      }ms)`,
-    );
+    console.info(`${chalk.bold.green("✔ Bundled successfully!")} (${Date.now() - startTime}ms)`);
   } catch (error) {
     console.error(`🧨 ${chalk.red.bold("Failed:")} ${error.message}`);
     console.debug(`📚 ${chalk.blueBright.bold("Stack:")} ${error.stack}`);
