@@ -1,0 +1,24 @@
+name: Knip Reporter
+description: Comment on a pull-request with Knip results
+author: Alex Miller
+branding:
+  icon: package
+  color: green
+inputs:
+  token:
+    description: Your github token.
+    required: false
+  commandScriptName:
+    description: The npm script that runs knip.
+    required: false
+  alwaysComment:
+    description: Post a comment even if there are no results.
+    require: false
+    default: false
+  summaryOnly:
+    description: Post only a summary of the results
+    required: false
+    default: false
+runs:
+  using: node20
+  main: dist/index.js
