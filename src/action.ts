@@ -15,3 +15,13 @@ export function getConfig(): ActionConfig {
     commandScriptName: core.getInput("commandScriptName") || "knip",
   };
 }
+
+/**
+ * @param indent indentation multiplier
+ */
+export function configToStr(cfg: ActionConfig): string {
+  return `  with config:
+    token: ###
+    commandScriptName: ${cfg.commandScriptName}
+`;
+}

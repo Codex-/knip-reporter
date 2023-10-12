@@ -1,5 +1,5 @@
 import * as core from "@actions/core";
-import { getConfig } from "./action.ts";
+import { configToStr, getConfig } from "./action.ts";
 import { buildTask } from "./tasks/knip.ts";
 import { executeTask } from "./tasks/task.ts";
 
@@ -9,7 +9,7 @@ async function run(): Promise<void> {
     const actionMs = Date.now();
 
     core.info("- knip-reporter action");
-    core.info(`  commandScriptName: ${config.commandScriptName}`);
+    core.info(configToStr(config));
 
     const knipTask = buildTask(config.commandScriptName);
 
