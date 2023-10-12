@@ -149,10 +149,16 @@ function parseJsonReport(rawJson: string): ParsedReport {
 }
 
 /**
- * Naively return the first line that begins with '['
+ * Knip in some cases can end up causing javascript on
+ * config files to evaluate. This means that if the consumer
+ * outputs logs or information that could be misinterpreted as the
+ * report.
+ *
+ * For now, we naively assume that the last entry of the output to begin
+ * with '[' is the correct report
  */
 function getJsonFromOutput(output: string): string {
-  const lines = output.split(/\n/);
+  const lines = output.split(/\n/).reverse();
   for (const line of lines) {
     if (line.startsWith("[")) {
       return line;
