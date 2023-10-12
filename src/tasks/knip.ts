@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { exec } from "node:child_process";
 
 import { parseNr, getCliCommand } from "@antfu/ni";
 
@@ -15,8 +15,19 @@ async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
   return cmd;
 }
 
-function run(runCmd: string): string {
-  return execSync(runCmd).toString();
+async function run(runCmd: string): Promise<string> {
+  const result = await new Promise<string>((resolve, reject) => {
+    exec(runCmd, (_err, stdout, stderr) => {
+      // Knip will exit with a non-zero code on there being results
+      // We only reject the promise if there has been content written to stderr
+      // Since knip having results will always gives an error exit status
+      if (stderr.length > 0) {
+        reject(stderr);
+      }
+      resolve(stdout);
+    });
+  });
+  return result;
 }
 
 interface ParsedReport {
@@ -161,7 +172,7 @@ export function buildTask(buildScriptName: string) {
       },
       {
         name: "Run knip",
-        action: (cmd: string) => getJsonFromOutput(run(cmd)),
+        action: async (cmd: string) => getJsonFromOutput(await run(cmd)),
       },
       {
         name: "Parse knip report",
