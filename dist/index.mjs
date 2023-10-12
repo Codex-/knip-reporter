@@ -16755,12 +16755,12 @@ var require_lib = __commonJS({
             throw new Error("Client has already been disposed.");
           }
           const parsedUrl = new URL(requestUrl);
-          let info3 = this._prepareRequest(verb, parsedUrl, headers);
+          let info4 = this._prepareRequest(verb, parsedUrl, headers);
           const maxTries = this._allowRetries && RetryableHttpVerbs.includes(verb) ? this._maxRetries + 1 : 1;
           let numTries = 0;
           let response;
           do {
-            response = yield this.requestRaw(info3, data);
+            response = yield this.requestRaw(info4, data);
             if (response && response.message && response.message.statusCode === HttpCodes.Unauthorized) {
               let authenticationHandler;
               for (const handler of this.handlers) {
@@ -16770,7 +16770,7 @@ var require_lib = __commonJS({
                 }
               }
               if (authenticationHandler) {
-                return authenticationHandler.handleAuthentication(this, info3, data);
+                return authenticationHandler.handleAuthentication(this, info4, data);
               } else {
                 return response;
               }
@@ -16793,8 +16793,8 @@ var require_lib = __commonJS({
                   }
                 }
               }
-              info3 = this._prepareRequest(verb, parsedRedirectUrl, headers);
-              response = yield this.requestRaw(info3, data);
+              info4 = this._prepareRequest(verb, parsedRedirectUrl, headers);
+              response = yield this.requestRaw(info4, data);
               redirectsRemaining--;
             }
             if (!response.message.statusCode || !HttpResponseRetryCodes.includes(response.message.statusCode)) {
@@ -16823,7 +16823,7 @@ var require_lib = __commonJS({
        * @param info
        * @param data
        */
-      requestRaw(info3, data) {
+      requestRaw(info4, data) {
         return __awaiter(this, void 0, void 0, function* () {
           return new Promise((resolve2, reject) => {
             function callbackForResult(err, res) {
@@ -16835,7 +16835,7 @@ var require_lib = __commonJS({
                 resolve2(res);
               }
             }
-            this.requestRawWithCallback(info3, data, callbackForResult);
+            this.requestRawWithCallback(info4, data, callbackForResult);
           });
         });
       }
@@ -16845,12 +16845,12 @@ var require_lib = __commonJS({
        * @param data
        * @param onResult
        */
-      requestRawWithCallback(info3, data, onResult) {
+      requestRawWithCallback(info4, data, onResult) {
         if (typeof data === "string") {
-          if (!info3.options.headers) {
-            info3.options.headers = {};
+          if (!info4.options.headers) {
+            info4.options.headers = {};
           }
-          info3.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+          info4.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
         }
         let callbackCalled = false;
         function handleResult(err, res) {
@@ -16859,7 +16859,7 @@ var require_lib = __commonJS({
             onResult(err, res);
           }
         }
-        const req = info3.httpModule.request(info3.options, (msg) => {
+        const req = info4.httpModule.request(info4.options, (msg) => {
           const res = new HttpClientResponse(msg);
           handleResult(void 0, res);
         });
@@ -16871,7 +16871,7 @@ var require_lib = __commonJS({
           if (socket) {
             socket.end();
           }
-          handleResult(new Error(`Request timeout: ${info3.options.path}`));
+          handleResult(new Error(`Request timeout: ${info4.options.path}`));
         });
         req.on("error", function(err) {
           handleResult(err);
@@ -16907,27 +16907,27 @@ var require_lib = __commonJS({
         return this._getProxyAgentDispatcher(parsedUrl, proxyUrl);
       }
       _prepareRequest(method, requestUrl, headers) {
-        const info3 = {};
-        info3.parsedUrl = requestUrl;
-        const usingSsl = info3.parsedUrl.protocol === "https:";
-        info3.httpModule = usingSsl ? https : http;
+        const info4 = {};
+        info4.parsedUrl = requestUrl;
+        const usingSsl = info4.parsedUrl.protocol === "https:";
+        info4.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
-        info3.options = {};
-        info3.options.host = info3.parsedUrl.hostname;
-        info3.options.port = info3.parsedUrl.port ? parseInt(info3.parsedUrl.port) : defaultPort;
-        info3.options.path = (info3.parsedUrl.pathname || "") + (info3.parsedUrl.search || "");
-        info3.options.method = method;
-        info3.options.headers = this._mergeHeaders(headers);
+        info4.options = {};
+        info4.options.host = info4.parsedUrl.hostname;
+        info4.options.port = info4.parsedUrl.port ? parseInt(info4.parsedUrl.port) : defaultPort;
+        info4.options.path = (info4.parsedUrl.pathname || "") + (info4.parsedUrl.search || "");
+        info4.options.method = method;
+        info4.options.headers = this._mergeHeaders(headers);
         if (this.userAgent != null) {
-          info3.options.headers["user-agent"] = this.userAgent;
+          info4.options.headers["user-agent"] = this.userAgent;
         }
-        info3.options.agent = this._getAgent(info3.parsedUrl);
+        info4.options.agent = this._getAgent(info4.parsedUrl);
         if (this.handlers) {
           for (const handler of this.handlers) {
-            handler.prepareRequest(info3.options);
+            handler.prepareRequest(info4.options);
           }
         }
-        return info3;
+        return info4;
       }
       _mergeHeaders(headers) {
         if (this.requestOptions && this.requestOptions.headers) {
@@ -17791,10 +17791,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.notice = notice;
-    function info3(message) {
+    function info4(message) {
       process.stdout.write(message + os2.EOL);
     }
-    exports.info = info3;
+    exports.info = info4;
     function startGroup(name) {
       command_1.issue("group", name);
     }
@@ -17856,7 +17856,7 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 });
 
 // src/main.ts
-var core4 = __toESM(require_core(), 1);
+var core5 = __toESM(require_core(), 1);
 
 // src/action.ts
 var core = __toESM(require_core(), 1);
@@ -17865,9 +17865,16 @@ function getConfig() {
     commandScriptName: core.getInput("commandScriptName") || "knip"
   };
 }
+function configToStr(cfg) {
+  return `  with config:
+    token: ###
+    commandScriptName: ${cfg.commandScriptName}
+`;
+}
 
 // src/tasks/knip.ts
-import { execSync } from "node:child_process";
+var core3 = __toESM(require_core(), 1);
+import { exec } from "node:child_process";
 
 // node_modules/.pnpm/@antfu+ni@0.21.8/node_modules/@antfu/ni/dist/shared/ni.82314ed6.mjs
 import fs$1, { promises, createWriteStream, createReadStream, existsSync } from "node:fs";
@@ -22883,8 +22890,16 @@ async function buildRunKnipCommand(buildScriptName) {
   }
   return cmd;
 }
-function run2(runCmd) {
-  return execSync(runCmd).toString();
+async function run2(runCmd) {
+  const result = await new Promise((resolve2, reject) => {
+    exec(runCmd, (_err, stdout, stderr) => {
+      if (stderr.length > 0) {
+        reject(stderr);
+      }
+      resolve2(stdout);
+    });
+  });
+  return result;
 }
 function parseJsonReport(rawJson) {
   const entries = JSON.parse(rawJson);
@@ -22937,6 +22952,8 @@ function parseJsonReport(rawJson) {
   return out;
 }
 function getJsonFromOutput(output) {
+  core3.info("output:");
+  core3.info(output);
   const lines2 = output.split(/\n/);
   for (const line of lines2) {
     if (line.startsWith("[")) {
@@ -22955,7 +22972,7 @@ function buildTask(buildScriptName) {
       },
       {
         name: "Run knip",
-        action: (cmd) => getJsonFromOutput(run2(cmd))
+        action: async (cmd) => getJsonFromOutput(await run2(cmd))
       },
       {
         name: "Parse knip report",
@@ -22966,18 +22983,18 @@ function buildTask(buildScriptName) {
 }
 
 // src/tasks/task.ts
-var core3 = __toESM(require_core(), 1);
+var core4 = __toESM(require_core(), 1);
 async function executeTask(task) {
   const taskMs = Date.now();
-  core3.info(`- Execute task ${task.name}`);
+  core4.info(`- Execute task ${task.name}`);
   let result = void 0;
   for (const step of task.steps) {
     const stepMs = Date.now();
-    core3.info(`  - ${step.name}`);
+    core4.info(`  - ${step.name}`);
     result = await step.action(result);
-    core3.info(`  \u2714 ${step.name} (${Date.now() - stepMs}ms)`);
+    core4.info(`  \u2714 ${step.name} (${Date.now() - stepMs}ms)`);
   }
-  core3.info(`\u2714 Execute task ${task.name} (${Date.now() - taskMs}ms)`);
+  core4.info(`\u2714 Execute task ${task.name} (${Date.now() - taskMs}ms)`);
 }
 
 // src/main.ts
@@ -22985,16 +23002,16 @@ async function run3() {
   try {
     const config2 = getConfig();
     const actionMs = Date.now();
-    core4.info("- knip-reporter action");
-    core4.info(`  commandScriptName: ${config2.commandScriptName}`);
+    core5.info("- knip-reporter action");
+    core5.info(configToStr(config2));
     const knipTask = buildTask(config2.commandScriptName);
     await executeTask(knipTask);
-    core4.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
+    core5.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error2) {
     if (error2 instanceof Error) {
-      core4.error(`\u{1F9E8} Failed: ${error2.message}`);
-      core4.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
-      core4.setFailed(error2.message);
+      core5.error(`\u{1F9E8} Failed: ${error2.message}`);
+      core5.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
+      core5.setFailed(error2.message);
     }
   }
 }
