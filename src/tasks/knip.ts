@@ -1,6 +1,8 @@
 import { exec } from "node:child_process";
 
+import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
+import { markdownTable } from "markdown-table";
 
 import type { Task } from "./task.ts";
 
@@ -148,6 +150,63 @@ function parseJsonReport(rawJson: string): ParsedReport {
   return out;
 }
 
+function buildFilesSection(files: string[]): string {
+  const header = `### Unused files (${files.length})`;
+  const body = files.map((file) => `\`${file}\``).join(", ");
+  return header + "\n\n" + body;
+}
+
+/**
+ * This builds a section where the result is a collection of strings
+ */
+function buildArraySection(name: string, dependencies: Record<string, string[]>): string {
+  let totalDeps = 0;
+  const body = [
+    ["Filename", name],
+    ...Object.entries(dependencies).map(([fileName, results]) => {
+      totalDeps += results.length;
+      return [fileName, results.map((result) => `\`${result}\``).join("<br/>")];
+    }),
+  ];
+  const header = `### Unused ${name.toLocaleLowerCase()} (${totalDeps})`;
+
+  return header + "\n\n" + markdownTable(body);
+}
+
+function nextReport(report: ParsedReport): string {
+  const output: string[] = [];
+  for (const key of Object.keys(report)) {
+    switch (key) {
+      case "files":
+        if (report.files.length > 0) {
+          output.push(buildFilesSection(report.files));
+        }
+        break;
+      case "dependencies":
+      case "devDependencies":
+      case "optionalPeerDependencies":
+      case "unlisted":
+      case "binaries":
+      case "unresolved":
+      case "exports":
+      case "types":
+      case "duplicates":
+        if (Object.keys(report[key]).length > 0) {
+          output.push(buildArraySection(key, report[key]));
+        }
+        break;
+      case "enumMembers":
+      case "classMembers":
+        core.info(`Key: ${key} not yet implemented`);
+        break;
+    }
+  }
+
+  const x = output.join("\n\n");
+  core.info(x);
+  return x;
+}
+
 /**
  * Knip in some cases can end up causing javascript on
  * config files to evaluate. This means that if the consumer
@@ -183,6 +242,10 @@ export function buildTask(buildScriptName: string) {
       {
         name: "Parse knip report",
         action: (output: string) => parseJsonReport(output),
+      },
+      {
+        name: "Convert report to markdown",
+        action: (report: ParsedReport) => nextReport(report),
       },
     ] as const,
   } satisfies Task;
