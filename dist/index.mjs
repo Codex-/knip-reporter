@@ -23117,7 +23117,7 @@ function buildMapSection(name, rawResults) {
   }
   const headerName = name === "classMembers" ? "Class Members" : "Enum Members";
   const header = `### Unused ${headerName} (${totalUnused})`;
-  return header + "\n\n" + markdownTable([]);
+  return header + "\n\n" + markdownTable(body);
 }
 function nextReport(report) {
   const output = [];

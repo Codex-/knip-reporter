@@ -188,7 +188,7 @@ function buildMapSection(name: string, rawResults: Record<string, Record<string,
   const headerName = name === "classMembers" ? "Class Members" : "Enum Members";
   const header = `### Unused ${headerName} (${totalUnused})`;
 
-  return header + "\n\n" + markdownTable([]);
+  return header + "\n\n" + markdownTable(body);
 }
 
 function nextReport(report: ParsedReport): string {
