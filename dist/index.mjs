@@ -23096,17 +23096,28 @@ function buildFilesSection(files) {
   const body = files.map((file) => `\`${file}\``).join(", ");
   return header + "\n\n" + body;
 }
-function buildArraySection(name, dependencies) {
-  let totalDeps = 0;
-  const body = [
-    ["Filename", name],
-    ...Object.entries(dependencies).map(([fileName, results]) => {
-      totalDeps += results.length;
-      return [fileName, results.map((result) => `\`${result}\``).join("<br/>")];
-    })
-  ];
-  const header = `### Unused ${name.toLocaleLowerCase()} (${totalDeps})`;
+function buildArraySection(name, rawResults) {
+  let totalUnused = 0;
+  const body = [["Filename", name]];
+  for (const [fileName, results] of Object.entries(rawResults)) {
+    totalUnused += results.length;
+    body.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
+  }
+  const header = `### Unused ${name.toLocaleLowerCase()} (${totalUnused})`;
   return header + "\n\n" + markdownTable(body);
+}
+function buildMapSection(name, rawResults) {
+  let totalUnused = 0;
+  const body = [["Filename", name === "classMembers" ? "Class" : "Enum", "Member"]];
+  for (const [filename, results] of Object.entries(rawResults)) {
+    for (const [definitionName, members] of Object.entries(results)) {
+      totalUnused += members.length;
+      body.push([filename, definitionName, members.map((member) => `\`${member}\``).join("<br/>")]);
+    }
+  }
+  const headerName = name === "classMembers" ? "Class Members" : "Enum Members";
+  const header = `### Unused ${headerName} (${totalUnused})`;
+  return header + "\n\n" + markdownTable([]);
 }
 function nextReport(report) {
   const output = [];
@@ -23132,7 +23143,9 @@ function nextReport(report) {
         break;
       case "enumMembers":
       case "classMembers":
-        core3.info(`Key: ${key} not yet implemented`);
+        if (Object.keys(report[key]).length > 0) {
+          output.push(buildMapSection(key, report[key]));
+        }
         break;
     }
   }
