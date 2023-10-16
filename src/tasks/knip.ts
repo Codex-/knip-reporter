@@ -222,9 +222,7 @@ function nextReport(report: ParsedReport): string {
     }
   }
 
-  const x = output.join("\n\n");
-  core.info(x);
-  return x;
+  return output.join("\n\n");
 }
 
 /**
@@ -247,7 +245,7 @@ function getJsonFromOutput(output: string): string {
   throw new Error("Unable to find JSON blob");
 }
 
-export function buildTask(buildScriptName: string) {
+export function buildKnipTask(buildScriptName: string) {
   return {
     name: "Knip",
     steps: [

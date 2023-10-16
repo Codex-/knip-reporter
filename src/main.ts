@@ -1,7 +1,9 @@
 import * as core from "@actions/core";
+import * as github from "@actions/github";
 import { configToStr, getConfig } from "./action.ts";
-import { buildTask } from "./tasks/knip.ts";
+import { buildKnipTask } from "./tasks/knip.ts";
 import { executeTask } from "./tasks/task.ts";
+import { buildCommentTask } from "./tasks/comment.ts";
 
 async function run(): Promise<void> {
   try {
@@ -11,9 +13,22 @@ async function run(): Promise<void> {
     core.info("- knip-reporter action");
     core.info(configToStr(config));
 
-    const knipTask = buildTask(config.commandScriptName);
+    if (github.context.payload.pull_request === undefined) {
+      throw new Error(
+        `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
+      );
+    }
 
-    await executeTask(knipTask);
+    const knipTask = buildKnipTask(config.commandScriptName);
+    type KnipFinalStepResult = ReturnType<(typeof knipTask.steps)[3]["action"]>;
+    const knipTaskResult = await executeTask<KnipFinalStepResult>(knipTask);
+
+    const commentTask = buildCommentTask(
+      config.commentId,
+      github.context.payload.pull_request.number,
+      knipTaskResult,
+    );
+    await executeTask(commentTask);
 
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error) {

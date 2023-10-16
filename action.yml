@@ -6,19 +6,23 @@ branding:
   color: green
 inputs:
   token:
-    description: Your github token.
-    required: false
-  commandScriptName:
+    description: GitHub Personal Access Token for making API requests.
+    default: "${{ github.token }}"
+    required: true
+  command_script_name:
     description: The npm script that runs knip.
     required: false
-  alwaysComment:
-    description: Post a comment even if there are no results.
-    require: false
-    default: false
-  summaryOnly:
-    description: Post only a summary of the results
-    required: false
-    default: false
+  comment_id:
+    description: ID to use when updating the PR comment.
+    default: "${{ github.workflow }}-knip-reporter"
+  # alwaysComment:
+  #   description: Post a comment even if there are no results.
+  #   require: false
+  #   default: false
+  # summaryOnly:
+  #   description: Post only a summary of the results
+  #   required: false
+  #   default: false
 runs:
   using: node20
   main: dist/index.mjs

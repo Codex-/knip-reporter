@@ -5,14 +5,26 @@ import * as core from "@actions/core";
  */
 export interface ActionConfig {
   /**
+   * GitHub API token for making requests.
+   */
+  token: string;
+
+  /**
    * The npm script that runs knip.
    */
   commandScriptName: string;
+
+  /**
+   * ID to use when updating the PR comment
+   */
+  commentId: string;
 }
 
 export function getConfig(): ActionConfig {
   return {
-    commandScriptName: core.getInput("commandScriptName") || "knip",
+    token: core.getInput("token", { required: true }),
+    commandScriptName: core.getInput("commandScriptName", { required: false }) || "knip",
+    commentId: core.getInput("token", { required: true }),
   };
 }
 

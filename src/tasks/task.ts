@@ -10,12 +10,12 @@ export interface Task {
   steps: Readonly<Step[]>;
 }
 
-export async function executeTask(task: Task): Promise<void> {
+export async function executeTask<T = void>(task: Task, initialValue?: T): Promise<T> {
   const taskMs = Date.now();
   core.info(`- Execute task ${task.name}`);
 
   // Pay every returned value forward
-  let result: unknown = undefined;
+  let result: T | undefined = initialValue;
   for (const step of task.steps) {
     const stepMs = Date.now();
     core.info(`  - ${step.name}`);
@@ -24,4 +24,8 @@ export async function executeTask(task: Task): Promise<void> {
   }
 
   core.info(`✔ Execute task ${task.name} (${Date.now() - taskMs}ms)`);
+
+  // Boldly trust that you understand the resolved value
+  // of your task steps
+  return result!;
 }
