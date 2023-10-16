@@ -4,6 +4,7 @@ import { configToStr, getConfig } from "./action.ts";
 import { buildKnipTask } from "./tasks/knip.ts";
 import { executeTask } from "./tasks/task.ts";
 import { buildCommentTask } from "./tasks/comment.ts";
+import { init } from "./api.ts";
 
 async function run(): Promise<void> {
   try {
@@ -18,6 +19,8 @@ async function run(): Promise<void> {
         `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
       );
     }
+
+    init(config);
 
     const knipTask = buildKnipTask(config.commandScriptName);
     type KnipFinalStepResult = ReturnType<(typeof knipTask.steps)[3]["action"]>;
