@@ -95,9 +95,13 @@ export function buildCommentTask(
           createOrUpdateComments(pullRequestNumber, existingCommentIds),
       },
       {
-        name: "Create or update comment",
-        action: (existingCommentIds?: number[]) =>
-          createOrUpdateComments(pullRequestNumber, existingCommentIds),
+        name: "Delete extraneous comments",
+        action: (remainingComments: number[]) => {
+          if (remainingComments.length === 0) {
+            return;
+          }
+          return deleteExtraneousComments(remainingComments);
+        },
       },
     ] as const,
   } satisfies Task;
