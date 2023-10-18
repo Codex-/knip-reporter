@@ -27229,18 +27229,16 @@ function prepareComments(cfgCommentId, reportSections) {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
       currentSectionIndex++;
-      core5.info("currentCommentSections.push(section)");
       continue;
+    }
+    if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      core5.info("Section too long");
+      core5.info(section.split("\n")[0] ?? "");
     }
     comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
     currentCommentEntryNumber++;
     currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
     currentCommentLength = currentCommentSections[0]?.length ?? 0;
-    core5.info("newLength > GITHUB_COMMENT_MAX_COMMENT_LENGTH " + currentCommentSections.length);
-    core5.info(
-      `currentSectionIndex ${currentSectionIndex} < reportSections.length ${reportSections.length}`
-    );
-    core5.info(section);
   }
   commentsToPost = comments;
 }
