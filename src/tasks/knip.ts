@@ -191,7 +191,7 @@ function buildMapSection(name: string, rawResults: Record<string, Record<string,
   return header + "\n\n" + markdownTable(body);
 }
 
-function nextReport(report: ParsedReport): string {
+function nextReport(report: ParsedReport): string[] {
   const output: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {
@@ -222,7 +222,7 @@ function nextReport(report: ParsedReport): string {
     }
   }
 
-  return output.join("\n\n");
+  return output;
 }
 
 /**

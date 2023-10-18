@@ -34,10 +34,10 @@ export async function createComment(
   return response;
 }
 
-export async function getCommentId(
+export async function getCommentIds(
   cfgCommentId: string,
   pullRequestNumber: number,
-): Promise<number | undefined> {
+): Promise<number[] | undefined> {
   const params: Parameters<Octokit["rest"]["issues"]["listComments"]>[0] = {
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
@@ -46,6 +46,7 @@ export async function getCommentId(
   };
   const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
 
+  const messageIds: number[] = [];
   for await (const { data, status } of restIter) {
     if (status !== 200) {
       throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
@@ -57,12 +58,12 @@ export async function getCommentId(
       }
 
       if (body?.includes(cfgCommentId)) {
-        return id;
+        messageIds.push(id);
       }
     }
   }
 
-  return undefined;
+  return messageIds.length > 0 ? messageIds : undefined;
 }
 
 type UpdateCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["updateComment"]>>;
@@ -80,6 +81,22 @@ export async function updateComment(
 
   if (response.status !== 200) {
     throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
+  }
+
+  return response;
+}
+
+type DeleteCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["deleteComment"]>>;
+export async function deleteComment(commentId: number): Promise<DeleteCommentResponse> {
+  // https://docs.github.com/en/rest/issues/comments#update-an-issue-comment
+  const response = await octokit.rest.issues.deleteComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    comment_id: commentId,
+  });
+
+  if (response.status !== 204) {
+    throw new Error(`Failed to update comment, expected 204 but received ${response.status}`);
   }
 
   return response;

@@ -16755,12 +16755,12 @@ var require_lib = __commonJS({
             throw new Error("Client has already been disposed.");
           }
           const parsedUrl = new URL(requestUrl);
-          let info3 = this._prepareRequest(verb, parsedUrl, headers);
+          let info4 = this._prepareRequest(verb, parsedUrl, headers);
           const maxTries = this._allowRetries && RetryableHttpVerbs.includes(verb) ? this._maxRetries + 1 : 1;
           let numTries = 0;
           let response;
           do {
-            response = yield this.requestRaw(info3, data);
+            response = yield this.requestRaw(info4, data);
             if (response && response.message && response.message.statusCode === HttpCodes.Unauthorized) {
               let authenticationHandler;
               for (const handler of this.handlers) {
@@ -16770,7 +16770,7 @@ var require_lib = __commonJS({
                 }
               }
               if (authenticationHandler) {
-                return authenticationHandler.handleAuthentication(this, info3, data);
+                return authenticationHandler.handleAuthentication(this, info4, data);
               } else {
                 return response;
               }
@@ -16793,8 +16793,8 @@ var require_lib = __commonJS({
                   }
                 }
               }
-              info3 = this._prepareRequest(verb, parsedRedirectUrl, headers);
-              response = yield this.requestRaw(info3, data);
+              info4 = this._prepareRequest(verb, parsedRedirectUrl, headers);
+              response = yield this.requestRaw(info4, data);
               redirectsRemaining--;
             }
             if (!response.message.statusCode || !HttpResponseRetryCodes.includes(response.message.statusCode)) {
@@ -16823,7 +16823,7 @@ var require_lib = __commonJS({
        * @param info
        * @param data
        */
-      requestRaw(info3, data) {
+      requestRaw(info4, data) {
         return __awaiter(this, void 0, void 0, function* () {
           return new Promise((resolve2, reject) => {
             function callbackForResult(err, res) {
@@ -16835,7 +16835,7 @@ var require_lib = __commonJS({
                 resolve2(res);
               }
             }
-            this.requestRawWithCallback(info3, data, callbackForResult);
+            this.requestRawWithCallback(info4, data, callbackForResult);
           });
         });
       }
@@ -16845,12 +16845,12 @@ var require_lib = __commonJS({
        * @param data
        * @param onResult
        */
-      requestRawWithCallback(info3, data, onResult) {
+      requestRawWithCallback(info4, data, onResult) {
         if (typeof data === "string") {
-          if (!info3.options.headers) {
-            info3.options.headers = {};
+          if (!info4.options.headers) {
+            info4.options.headers = {};
           }
-          info3.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+          info4.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
         }
         let callbackCalled = false;
         function handleResult(err, res) {
@@ -16859,7 +16859,7 @@ var require_lib = __commonJS({
             onResult(err, res);
           }
         }
-        const req = info3.httpModule.request(info3.options, (msg) => {
+        const req = info4.httpModule.request(info4.options, (msg) => {
           const res = new HttpClientResponse(msg);
           handleResult(void 0, res);
         });
@@ -16871,7 +16871,7 @@ var require_lib = __commonJS({
           if (socket) {
             socket.end();
           }
-          handleResult(new Error(`Request timeout: ${info3.options.path}`));
+          handleResult(new Error(`Request timeout: ${info4.options.path}`));
         });
         req.on("error", function(err) {
           handleResult(err);
@@ -16907,27 +16907,27 @@ var require_lib = __commonJS({
         return this._getProxyAgentDispatcher(parsedUrl, proxyUrl);
       }
       _prepareRequest(method, requestUrl, headers) {
-        const info3 = {};
-        info3.parsedUrl = requestUrl;
-        const usingSsl = info3.parsedUrl.protocol === "https:";
-        info3.httpModule = usingSsl ? https : http;
+        const info4 = {};
+        info4.parsedUrl = requestUrl;
+        const usingSsl = info4.parsedUrl.protocol === "https:";
+        info4.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
-        info3.options = {};
-        info3.options.host = info3.parsedUrl.hostname;
-        info3.options.port = info3.parsedUrl.port ? parseInt(info3.parsedUrl.port) : defaultPort;
-        info3.options.path = (info3.parsedUrl.pathname || "") + (info3.parsedUrl.search || "");
-        info3.options.method = method;
-        info3.options.headers = this._mergeHeaders(headers);
+        info4.options = {};
+        info4.options.host = info4.parsedUrl.hostname;
+        info4.options.port = info4.parsedUrl.port ? parseInt(info4.parsedUrl.port) : defaultPort;
+        info4.options.path = (info4.parsedUrl.pathname || "") + (info4.parsedUrl.search || "");
+        info4.options.method = method;
+        info4.options.headers = this._mergeHeaders(headers);
         if (this.userAgent != null) {
-          info3.options.headers["user-agent"] = this.userAgent;
+          info4.options.headers["user-agent"] = this.userAgent;
         }
-        info3.options.agent = this._getAgent(info3.parsedUrl);
+        info4.options.agent = this._getAgent(info4.parsedUrl);
         if (this.handlers) {
           for (const handler of this.handlers) {
-            handler.prepareRequest(info3.options);
+            handler.prepareRequest(info4.options);
           }
         }
-        return info3;
+        return info4;
       }
       _mergeHeaders(headers) {
         if (this.requestOptions && this.requestOptions.headers) {
@@ -17791,10 +17791,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.notice = notice;
-    function info3(message) {
+    function info4(message) {
       process.stdout.write(message + os2.EOL);
     }
-    exports.info = info3;
+    exports.info = info4;
     function startGroup(name) {
       command_1.issue("group", name);
     }
@@ -21787,7 +21787,7 @@ var require_github = __commonJS({
 });
 
 // src/main.ts
-var core5 = __toESM(require_core(), 1);
+var core6 = __toESM(require_core(), 1);
 var github2 = __toESM(require_github(), 1);
 
 // src/action.ts
@@ -21795,14 +21795,15 @@ var core = __toESM(require_core(), 1);
 function getConfig() {
   return {
     token: core.getInput("token", { required: true }),
-    commandScriptName: core.getInput("commandScriptName", { required: false }) || "knip",
-    commentId: core.getInput("token", { required: true })
+    commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
+    commentId: core.getInput("comment_id", { required: true })
   };
 }
 function configToStr(cfg) {
   return `  with config:
     token: ###
-    commandScriptName: ${cfg.commandScriptName}
+    command_script_name: ${cfg.commandScriptName}
+    comment_id: ${cfg.commentId}
 `;
 }
 
@@ -27083,7 +27084,7 @@ function nextReport(report) {
         break;
     }
   }
-  return output.join("\n\n");
+  return output;
 }
 function getJsonFromOutput(output) {
   const lines2 = output.split(/\n/).reverse();
@@ -27134,6 +27135,9 @@ async function executeTask(task, initialValue) {
   return result;
 }
 
+// src/tasks/comment.ts
+var core5 = __toESM(require_core(), 1);
+
 // src/api.ts
 var github = __toESM(require_github(), 1);
 var config2;
@@ -27154,7 +27158,7 @@ async function createComment(pullRequestNumber, body) {
   }
   return response;
 }
-async function getCommentId(cfgCommentId, pullRequestNumber) {
+async function getCommentIds(cfgCommentId, pullRequestNumber) {
   const params = {
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
@@ -27162,6 +27166,7 @@ async function getCommentId(cfgCommentId, pullRequestNumber) {
     per_page: 100
   };
   const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
+  const messageIds = [];
   for await (const { data, status } of restIter) {
     if (status !== 200) {
       throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
@@ -27171,11 +27176,11 @@ async function getCommentId(cfgCommentId, pullRequestNumber) {
         continue;
       }
       if (body?.includes(cfgCommentId)) {
-        return id;
+        messageIds.push(id);
       }
     }
   }
-  return void 0;
+  return messageIds.length > 0 ? messageIds : void 0;
 }
 async function updateComment(commentId, body) {
   const response = await octokit.rest.issues.updateComment({
@@ -27191,37 +27196,65 @@ async function updateComment(commentId, body) {
 }
 
 // src/tasks/comment.ts
-function createCommentId(cfgCommentId) {
-  return `<!-- ${cfgCommentId} -->`;
+var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
+function createCommentId(cfgCommentId, n) {
+  return `<!-- ${cfgCommentId}-${n} -->`;
 }
-var commentBody;
-function setCommentBody(body) {
-  commentBody = body;
+var COMMENT_SECTION_DELIMITER = "\n\n";
+var commentsToPost;
+function prepareComments(cfgCommentId, reportSections) {
+  const comments = [];
+  let currentCommentEntryNumber = 0;
+  let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
+  let currentCommentLength = currentCommentSections[0]?.length ?? 0;
+  for (const section of reportSections) {
+    const newLength = currentCommentLength + section.length + COMMENT_SECTION_DELIMITER.length;
+    if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      currentCommentLength = newLength;
+      currentCommentSections.push(section);
+      continue;
+    }
+    comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
+    currentCommentEntryNumber++;
+    currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
+    currentCommentLength = currentCommentSections[0]?.length ?? 0;
+  }
+  commentsToPost = comments;
 }
-function buildCommentTask(cfgCommentId, pullRequestNumber, messageBody) {
+async function createOrUpdateComments(pullRequestNumber, existingCommentIds) {
+  let existingIdsIndex = 0;
+  for (const comment of commentsToPost) {
+    if (existingCommentIds && existingCommentIds[existingIdsIndex] !== void 0) {
+      await updateComment(existingCommentIds[existingIdsIndex], comment);
+      existingIdsIndex++;
+      continue;
+    }
+    await createComment(pullRequestNumber, comment);
+  }
+  if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
+    return existingCommentIds.slice(existingIdsIndex);
+  }
+  return [];
+}
+function buildCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
   return {
     name: "Comment",
     steps: [
       {
         name: "Prepend ID to comment body",
-        action: () => {
-          const commentId = createCommentId(cfgCommentId);
-          const joinedBody = commentId + "\n\n" + messageBody;
-          setCommentBody(joinedBody);
-        }
+        action: () => prepareComments(cfgCommentId, reportSections)
       },
       {
-        name: "Find existing comment ID",
-        action: () => getCommentId(cfgCommentId, pullRequestNumber)
+        name: "Find existing comment IDs",
+        action: () => getCommentIds(cfgCommentId, pullRequestNumber)
       },
       {
         name: "Create or update comment",
-        action: async (existingCommentId) => {
-          if (existingCommentId !== void 0) {
-            return updateComment(existingCommentId, commentBody);
-          }
-          return createComment(pullRequestNumber, commentBody);
-        }
+        action: (existingCommentIds) => createOrUpdateComments(pullRequestNumber, existingCommentIds)
+      },
+      {
+        name: "Create or update comment",
+        action: (existingCommentIds) => createOrUpdateComments(pullRequestNumber, existingCommentIds)
       }
     ]
   };
@@ -27232,8 +27265,8 @@ async function run3() {
   try {
     const config3 = getConfig();
     const actionMs = Date.now();
-    core5.info("- knip-reporter action");
-    core5.info(configToStr(config3));
+    core6.info("- knip-reporter action");
+    core6.info(configToStr(config3));
     if (github2.context.payload.pull_request === void 0) {
       throw new Error(
         `knip-reporter currently only supports 'pull_request' events, current event: ${github2.context.eventName}`
@@ -27248,12 +27281,12 @@ async function run3() {
       knipTaskResult
     );
     await executeTask(commentTask);
-    core5.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
+    core6.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error2) {
     if (error2 instanceof Error) {
-      core5.error(`\u{1F9E8} Failed: ${error2.message}`);
-      core5.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
-      core5.setFailed(error2.message);
+      core6.error(`\u{1F9E8} Failed: ${error2.message}`);
+      core6.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
+      core6.setFailed(error2.message);
     }
   }
 }

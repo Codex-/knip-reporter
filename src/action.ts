@@ -23,8 +23,8 @@ export interface ActionConfig {
 export function getConfig(): ActionConfig {
   return {
     token: core.getInput("token", { required: true }),
-    commandScriptName: core.getInput("commandScriptName", { required: false }) || "knip",
-    commentId: core.getInput("token", { required: true }),
+    commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
+    commentId: core.getInput("comment_id", { required: true }),
   };
 }
 
@@ -34,6 +34,7 @@ export function getConfig(): ActionConfig {
 export function configToStr(cfg: ActionConfig): string {
   return `  with config:
     token: ###
-    commandScriptName: ${cfg.commandScriptName}
+    command_script_name: ${cfg.commandScriptName}
+    comment_id: ${cfg.commentId}
 `;
 }
