@@ -20,11 +20,18 @@ function prepareComments(cfgCommentId: string, reportSections: string[]) {
   let currentCommentEntryNumber = 0;
   let currentCommentSections: string[] = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
   let currentCommentLength = currentCommentSections[0]?.length ?? 0;
-  for (const section of reportSections) {
+  let currentSectionIndex = 0;
+  while (currentSectionIndex < reportSections.length) {
+    const section = reportSections[currentSectionIndex];
+    if (section === undefined) {
+      break;
+    }
+
     const newLength = currentCommentLength + section.length + COMMENT_SECTION_DELIMITER.length;
     if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
+      currentSectionIndex++;
       continue;
     }
 

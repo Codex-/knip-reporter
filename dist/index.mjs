@@ -27194,6 +27194,17 @@ async function updateComment(commentId, body) {
   }
   return response;
 }
+async function deleteComment(commentId) {
+  const response = await octokit.rest.issues.deleteComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    comment_id: commentId
+  });
+  if (response.status !== 204) {
+    throw new Error(`Failed to update comment, expected 204 but received ${response.status}`);
+  }
+  return response;
+}
 
 // src/tasks/comment.ts
 var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
@@ -27207,17 +27218,29 @@ function prepareComments(cfgCommentId, reportSections) {
   let currentCommentEntryNumber = 0;
   let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
   let currentCommentLength = currentCommentSections[0]?.length ?? 0;
-  for (const section of reportSections) {
+  let currentSectionIndex = 0;
+  while (currentSectionIndex < reportSections.length) {
+    const section = reportSections[currentSectionIndex];
+    if (section === void 0) {
+      break;
+    }
     const newLength = currentCommentLength + section.length + COMMENT_SECTION_DELIMITER.length;
     if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
+      currentSectionIndex++;
+      core5.info("currentCommentSections.push(section)");
       continue;
     }
     comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
     currentCommentEntryNumber++;
     currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
     currentCommentLength = currentCommentSections[0]?.length ?? 0;
+    core5.info("newLength > GITHUB_COMMENT_MAX_COMMENT_LENGTH " + currentCommentSections.length);
+    core5.info(
+      `currentSectionIndex ${currentSectionIndex} < reportSections.length ${reportSections.length}`
+    );
+    core5.info(section);
   }
   commentsToPost = comments;
 }
@@ -27236,6 +27259,13 @@ async function createOrUpdateComments(pullRequestNumber, existingCommentIds) {
   }
   return [];
 }
+async function deleteExtraneousComments(commentIds) {
+  for (const id of commentIds) {
+    core5.info(`    - Delete comment ${id}`);
+    await deleteComment(id);
+    core5.info(`    \u2714 Delete comment ${id}`);
+  }
+}
 function buildCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
   return {
     name: "Comment",
@@ -27253,8 +27283,13 @@ function buildCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
         action: (existingCommentIds) => createOrUpdateComments(pullRequestNumber, existingCommentIds)
       },
       {
-        name: "Create or update comment",
-        action: (existingCommentIds) => createOrUpdateComments(pullRequestNumber, existingCommentIds)
+        name: "Delete extraneous comments",
+        action: (remainingComments) => {
+          if (remainingComments.length === 0) {
+            return;
+          }
+          return deleteExtraneousComments(remainingComments);
+        }
       }
     ]
   };
