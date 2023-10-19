@@ -2,6 +2,8 @@ import * as github from "@actions/github";
 import type { GitHub } from "@actions/github/lib/utils.ts";
 import { type ActionConfig, getConfig } from "./action.ts";
 
+export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
+
 type Octokit = InstanceType<typeof GitHub>;
 
 let config: ActionConfig;

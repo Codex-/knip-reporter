@@ -1,9 +1,13 @@
 import * as core from "@actions/core";
 
-import { createComment, deleteComment, getCommentIds, updateComment } from "../api.ts";
+import {
+  GITHUB_COMMENT_MAX_COMMENT_LENGTH,
+  createComment,
+  deleteComment,
+  getCommentIds,
+  updateComment,
+} from "../api.ts";
 import type { Task } from "./task.ts";
-
-const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 
 function createCommentId(cfgCommentId: string, n: number): string {
   return `<!-- ${cfgCommentId}-${n} -->`;
@@ -35,7 +39,15 @@ function prepareComments(cfgCommentId: string, reportSections: string[]) {
       continue;
     }
 
+    if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      core.info(`Section too long ${section.length} > ${GITHUB_COMMENT_MAX_COMMENT_LENGTH}`);
+      core.info(section.split("\n")[0] ?? "");
+      currentSectionIndex++;
+    }
+
+    // Current comment is now complete
     comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
+
     // Increase the number for comment IDs
     currentCommentEntryNumber++;
     // Reset the sections to just the new comment ID header

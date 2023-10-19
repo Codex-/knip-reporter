@@ -16755,12 +16755,12 @@ var require_lib = __commonJS({
             throw new Error("Client has already been disposed.");
           }
           const parsedUrl = new URL(requestUrl);
-          let info4 = this._prepareRequest(verb, parsedUrl, headers);
+          let info5 = this._prepareRequest(verb, parsedUrl, headers);
           const maxTries = this._allowRetries && RetryableHttpVerbs.includes(verb) ? this._maxRetries + 1 : 1;
           let numTries = 0;
           let response;
           do {
-            response = yield this.requestRaw(info4, data);
+            response = yield this.requestRaw(info5, data);
             if (response && response.message && response.message.statusCode === HttpCodes.Unauthorized) {
               let authenticationHandler;
               for (const handler of this.handlers) {
@@ -16770,7 +16770,7 @@ var require_lib = __commonJS({
                 }
               }
               if (authenticationHandler) {
-                return authenticationHandler.handleAuthentication(this, info4, data);
+                return authenticationHandler.handleAuthentication(this, info5, data);
               } else {
                 return response;
               }
@@ -16793,8 +16793,8 @@ var require_lib = __commonJS({
                   }
                 }
               }
-              info4 = this._prepareRequest(verb, parsedRedirectUrl, headers);
-              response = yield this.requestRaw(info4, data);
+              info5 = this._prepareRequest(verb, parsedRedirectUrl, headers);
+              response = yield this.requestRaw(info5, data);
               redirectsRemaining--;
             }
             if (!response.message.statusCode || !HttpResponseRetryCodes.includes(response.message.statusCode)) {
@@ -16823,7 +16823,7 @@ var require_lib = __commonJS({
        * @param info
        * @param data
        */
-      requestRaw(info4, data) {
+      requestRaw(info5, data) {
         return __awaiter(this, void 0, void 0, function* () {
           return new Promise((resolve2, reject) => {
             function callbackForResult(err, res) {
@@ -16835,7 +16835,7 @@ var require_lib = __commonJS({
                 resolve2(res);
               }
             }
-            this.requestRawWithCallback(info4, data, callbackForResult);
+            this.requestRawWithCallback(info5, data, callbackForResult);
           });
         });
       }
@@ -16845,12 +16845,12 @@ var require_lib = __commonJS({
        * @param data
        * @param onResult
        */
-      requestRawWithCallback(info4, data, onResult) {
+      requestRawWithCallback(info5, data, onResult) {
         if (typeof data === "string") {
-          if (!info4.options.headers) {
-            info4.options.headers = {};
+          if (!info5.options.headers) {
+            info5.options.headers = {};
           }
-          info4.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+          info5.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
         }
         let callbackCalled = false;
         function handleResult(err, res) {
@@ -16859,7 +16859,7 @@ var require_lib = __commonJS({
             onResult(err, res);
           }
         }
-        const req = info4.httpModule.request(info4.options, (msg) => {
+        const req = info5.httpModule.request(info5.options, (msg) => {
           const res = new HttpClientResponse(msg);
           handleResult(void 0, res);
         });
@@ -16871,7 +16871,7 @@ var require_lib = __commonJS({
           if (socket) {
             socket.end();
           }
-          handleResult(new Error(`Request timeout: ${info4.options.path}`));
+          handleResult(new Error(`Request timeout: ${info5.options.path}`));
         });
         req.on("error", function(err) {
           handleResult(err);
@@ -16907,27 +16907,27 @@ var require_lib = __commonJS({
         return this._getProxyAgentDispatcher(parsedUrl, proxyUrl);
       }
       _prepareRequest(method, requestUrl, headers) {
-        const info4 = {};
-        info4.parsedUrl = requestUrl;
-        const usingSsl = info4.parsedUrl.protocol === "https:";
-        info4.httpModule = usingSsl ? https : http;
+        const info5 = {};
+        info5.parsedUrl = requestUrl;
+        const usingSsl = info5.parsedUrl.protocol === "https:";
+        info5.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
-        info4.options = {};
-        info4.options.host = info4.parsedUrl.hostname;
-        info4.options.port = info4.parsedUrl.port ? parseInt(info4.parsedUrl.port) : defaultPort;
-        info4.options.path = (info4.parsedUrl.pathname || "") + (info4.parsedUrl.search || "");
-        info4.options.method = method;
-        info4.options.headers = this._mergeHeaders(headers);
+        info5.options = {};
+        info5.options.host = info5.parsedUrl.hostname;
+        info5.options.port = info5.parsedUrl.port ? parseInt(info5.parsedUrl.port) : defaultPort;
+        info5.options.path = (info5.parsedUrl.pathname || "") + (info5.parsedUrl.search || "");
+        info5.options.method = method;
+        info5.options.headers = this._mergeHeaders(headers);
         if (this.userAgent != null) {
-          info4.options.headers["user-agent"] = this.userAgent;
+          info5.options.headers["user-agent"] = this.userAgent;
         }
-        info4.options.agent = this._getAgent(info4.parsedUrl);
+        info5.options.agent = this._getAgent(info5.parsedUrl);
         if (this.handlers) {
           for (const handler of this.handlers) {
-            handler.prepareRequest(info4.options);
+            handler.prepareRequest(info5.options);
           }
         }
-        return info4;
+        return info5;
       }
       _mergeHeaders(headers) {
         if (this.requestOptions && this.requestOptions.headers) {
@@ -17791,10 +17791,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.notice = notice;
-    function info4(message) {
+    function info5(message) {
       process.stdout.write(message + os2.EOL);
     }
-    exports.info = info4;
+    exports.info = info5;
     function startGroup(name) {
       command_1.issue("group", name);
     }
@@ -26955,6 +26955,75 @@ function toAlignment(value) {
   return code === 67 || code === 99 ? 99 : code === 76 || code === 108 ? 108 : code === 82 || code === 114 ? 114 : 0;
 }
 
+// src/api.ts
+var github = __toESM(require_github(), 1);
+var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
+var config2;
+var octokit;
+function init2(cfg) {
+  config2 = cfg ?? getConfig();
+  octokit = github.getOctokit(config2.token);
+}
+async function createComment(pullRequestNumber, body) {
+  const response = await octokit.rest.issues.createComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    issue_number: pullRequestNumber,
+    body
+  });
+  if (response.status !== 201) {
+    throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
+  }
+  return response;
+}
+async function getCommentIds(cfgCommentId, pullRequestNumber) {
+  const params = {
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    issue_number: pullRequestNumber,
+    per_page: 100
+  };
+  const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
+  const messageIds = [];
+  for await (const { data, status } of restIter) {
+    if (status !== 200) {
+      throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
+    }
+    for (const { id, body } of data) {
+      if (!body) {
+        continue;
+      }
+      if (body?.includes(cfgCommentId)) {
+        messageIds.push(id);
+      }
+    }
+  }
+  return messageIds.length > 0 ? messageIds : void 0;
+}
+async function updateComment(commentId, body) {
+  const response = await octokit.rest.issues.updateComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    comment_id: commentId,
+    body
+  });
+  if (response.status !== 200) {
+    throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
+  }
+  return response;
+}
+async function deleteComment(commentId) {
+  const response = await octokit.rest.issues.deleteComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    comment_id: commentId
+  });
+  if (response.status !== 204) {
+    throw new Error(`Failed to update comment, expected 204 but received ${response.status}`);
+  }
+  return response;
+}
+
 // src/tasks/knip.ts
 async function buildRunKnipCommand(buildScriptName) {
   const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
@@ -27033,26 +27102,77 @@ function buildFilesSection(files) {
 }
 function buildArraySection(name, rawResults) {
   let totalUnused = 0;
-  const body = [["Filename", name]];
+  const tableHeader = ["Filename", name];
+  const tableBody = [];
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
-    body.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
+    tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
   }
-  const header = `### Unused ${name.toLocaleLowerCase()} (${totalUnused})`;
-  return header + "\n\n" + markdownTable(body);
+  const sectionHeader = `### Unused ${name.toLocaleLowerCase()} (${totalUnused})`;
+  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
 }
 function buildMapSection(name, rawResults) {
   let totalUnused = 0;
-  const body = [["Filename", name === "classMembers" ? "Class" : "Enum", "Member"]];
+  const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
+  const tableBody = [];
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       totalUnused += members.length;
-      body.push([filename, definitionName, members.map((member) => `\`${member}\``).join("<br/>")]);
+      tableBody.push([
+        filename,
+        definitionName,
+        members.map((member) => `\`${member}\``).join("<br/>")
+      ]);
     }
   }
-  const headerName = name === "classMembers" ? "Class Members" : "Enum Members";
-  const header = `### Unused ${headerName} (${totalUnused})`;
-  return header + "\n\n" + markdownTable(body);
+  const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
+  const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
+  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+}
+var markdownTableOptions = {
+  alignDelimiters: false,
+  padding: false
+};
+function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
+  const sectionProcessingMs = Date.now();
+  let output = [
+    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions)
+  ];
+  const originalOutputLength = output[0].length;
+  if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+    return output;
+  }
+  core3.info(`    - Splitting section ${sectionHeader}`);
+  output = [];
+  const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
+  const tableBodySize = tableBody.length;
+  const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
+  core3.info(
+    `GITHUB_COMMENT_MAX_COMMENT_LENGTH (${GITHUB_COMMENT_MAX_COMMENT_LENGTH}) / originalOutputLength (${originalOutputLength})`
+  );
+  core3.info(`splitFactor ${splitFactor}`);
+  core3.info(`tableBodySize ${tableBodySize}`);
+  core3.info(`tableBodySplitSize ${tableBodySplitSize}`);
+  const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
+  let tableBodySliceStart = 0;
+  let tableBodySliceEnd = tableBodyItemWindow;
+  while (tableBodySliceStart < tableBodySize) {
+    const slicedBodyItems = tableBody.slice(tableBodySliceStart, tableBodySliceEnd);
+    if (slicedBodyItems.length === 0) {
+      break;
+    }
+    const markdown = markdownTable([tableHeader, ...slicedBodyItems], markdownTableOptions);
+    const newSection = sectionHeader + "\n\n" + markdown;
+    if (newSection.length >= GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      core3.info(`Section still too long: ${newSection.length}`);
+      core3.info(newSection);
+    }
+    output.push(newSection);
+    tableBodySliceStart = tableBodySliceEnd;
+    tableBodySliceEnd += tableBodyItemWindow;
+  }
+  core3.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  return output;
 }
 function nextReport(report) {
   const output = [];
@@ -27073,13 +27193,13 @@ function nextReport(report) {
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          output.push(buildArraySection(key, report[key]));
+          buildArraySection(key, report[key]).forEach((section) => output.push(section));
         }
         break;
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          output.push(buildMapSection(key, report[key]));
+          buildMapSection(key, report[key]).forEach((section) => output.push(section));
         }
         break;
     }
@@ -27137,77 +27257,6 @@ async function executeTask(task, initialValue) {
 
 // src/tasks/comment.ts
 var core5 = __toESM(require_core(), 1);
-
-// src/api.ts
-var github = __toESM(require_github(), 1);
-var config2;
-var octokit;
-function init2(cfg) {
-  config2 = cfg ?? getConfig();
-  octokit = github.getOctokit(config2.token);
-}
-async function createComment(pullRequestNumber, body) {
-  const response = await octokit.rest.issues.createComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: pullRequestNumber,
-    body
-  });
-  if (response.status !== 201) {
-    throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
-  }
-  return response;
-}
-async function getCommentIds(cfgCommentId, pullRequestNumber) {
-  const params = {
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: pullRequestNumber,
-    per_page: 100
-  };
-  const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
-  const messageIds = [];
-  for await (const { data, status } of restIter) {
-    if (status !== 200) {
-      throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
-    }
-    for (const { id, body } of data) {
-      if (!body) {
-        continue;
-      }
-      if (body?.includes(cfgCommentId)) {
-        messageIds.push(id);
-      }
-    }
-  }
-  return messageIds.length > 0 ? messageIds : void 0;
-}
-async function updateComment(commentId, body) {
-  const response = await octokit.rest.issues.updateComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    comment_id: commentId,
-    body
-  });
-  if (response.status !== 200) {
-    throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
-  }
-  return response;
-}
-async function deleteComment(commentId) {
-  const response = await octokit.rest.issues.deleteComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    comment_id: commentId
-  });
-  if (response.status !== 204) {
-    throw new Error(`Failed to update comment, expected 204 but received ${response.status}`);
-  }
-  return response;
-}
-
-// src/tasks/comment.ts
-var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 function createCommentId(cfgCommentId, n) {
   return `<!-- ${cfgCommentId}-${n} -->`;
 }
@@ -27232,8 +27281,9 @@ function prepareComments(cfgCommentId, reportSections) {
       continue;
     }
     if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      core5.info("Section too long");
+      core5.info(`Section too long ${section.length} > ${GITHUB_COMMENT_MAX_COMMENT_LENGTH}`);
       core5.info(section.split("\n")[0] ?? "");
+      currentSectionIndex++;
     }
     comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
     currentCommentEntryNumber++;

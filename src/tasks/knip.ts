@@ -2,8 +2,9 @@ import { exec } from "node:child_process";
 
 import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
-import { markdownTable } from "markdown-table";
+import { markdownTable, type Options as MarkdownTableOptions } from "markdown-table";
 
+import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import type { Task } from "./task.ts";
 
 async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
@@ -159,36 +160,107 @@ function buildFilesSection(files: string[]): string {
 /**
  * Build a section where the result is a collection of strings
  */
-function buildArraySection(name: string, rawResults: Record<string, string[]>): string {
+function buildArraySection(name: string, rawResults: Record<string, string[]>): string[] {
   let totalUnused = 0;
-  const body = [["Filename", name]];
+  const tableHeader = ["Filename", name];
+  const tableBody = [];
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
-    body.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
+    tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
   }
-  const header = `### Unused ${name.toLocaleLowerCase()} (${totalUnused})`;
+  const sectionHeader = `### Unused ${name.toLocaleLowerCase()} (${totalUnused})`;
 
-  return header + "\n\n" + markdownTable(body);
+  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
 }
 
 /**
  * Build a section where the result is a ma
  */
-function buildMapSection(name: string, rawResults: Record<string, Record<string, string[]>>) {
+function buildMapSection(
+  name: string,
+  rawResults: Record<string, Record<string, string[]>>,
+): string[] {
   let totalUnused = 0;
-  const body = [["Filename", name === "classMembers" ? "Class" : "Enum", "Member"]];
+  const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
+  const tableBody = [];
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       totalUnused += members.length;
-      body.push([filename, definitionName, members.map((member) => `\`${member}\``).join("<br/>")]);
+      tableBody.push([
+        filename,
+        definitionName,
+        members.map((member) => `\`${member}\``).join("<br/>"),
+      ]);
     }
   }
 
-  const headerName = name === "classMembers" ? "Class Members" : "Enum Members";
-  const header = `### Unused ${headerName} (${totalUnused})`;
+  const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
+  const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
 
-  return header + "\n\n" + markdownTable(body);
+  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+}
+
+const markdownTableOptions: MarkdownTableOptions = {
+  alignDelimiters: false,
+  padding: false,
+};
+
+function processSectionToMessage(
+  sectionHeader: string,
+  tableHeader: string[],
+  tableBody: string[][],
+): string[] {
+  const sectionProcessingMs = Date.now();
+  let output = [
+    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions),
+  ];
+  const originalOutputLength = output[0]!.length;
+  if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+    // Output doesn't violate the limit, simply return and move on
+    return output;
+  }
+
+  core.info(`    - Splitting section ${sectionHeader}`);
+  output = [];
+
+  // We round this number up otherwise the splitLength will result in exactly 65535-100
+  // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
+  const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
+  // const splitLength = Math.ceil(originalOutputLength / splitFactor);
+  const tableBodySize = tableBody.length;
+  const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
+
+  core.info(
+    `GITHUB_COMMENT_MAX_COMMENT_LENGTH (${GITHUB_COMMENT_MAX_COMMENT_LENGTH}) / originalOutputLength (${originalOutputLength})`,
+  );
+  core.info(`splitFactor ${splitFactor}`);
+  // core.info(`splitLength ${splitLength}`);
+  core.info(`tableBodySize ${tableBodySize}`);
+  core.info(`tableBodySplitSize ${tableBodySplitSize}`);
+
+  const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
+  let tableBodySliceStart = 0;
+  let tableBodySliceEnd = tableBodyItemWindow;
+  while (tableBodySliceStart < tableBodySize) {
+    const slicedBodyItems = tableBody.slice(tableBodySliceStart, tableBodySliceEnd);
+    if (slicedBodyItems.length === 0) {
+      break;
+    }
+    const markdown = markdownTable([tableHeader, ...slicedBodyItems], markdownTableOptions);
+    const newSection = sectionHeader + "\n\n" + markdown;
+    if (newSection.length >= GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      core.info(`Section still too long: ${newSection.length}`);
+      core.info(newSection);
+    }
+    output.push(newSection);
+
+    tableBodySliceStart = tableBodySliceEnd;
+    tableBodySliceEnd += tableBodyItemWindow;
+  }
+
+  core.info(`    ✔ Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  return output;
 }
 
 function nextReport(report: ParsedReport): string[] {
@@ -210,13 +282,17 @@ function nextReport(report: ParsedReport): string[] {
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          output.push(buildArraySection(key, report[key]));
+          // eslint-disable-next-line github/array-foreach
+          buildArraySection(key, report[key]).forEach((section) => output.push(section));
+          // output.push(buildArraySection(key, report[key]));
         }
         break;
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          output.push(buildMapSection(key, report[key]));
+          // eslint-disable-next-line github/array-foreach
+          buildMapSection(key, report[key]).forEach((section) => output.push(section));
+          // output.push(buildMapSection(key, report[key]));
         }
         break;
     }
