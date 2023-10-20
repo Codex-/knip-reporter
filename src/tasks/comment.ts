@@ -40,8 +40,10 @@ function prepareComments(cfgCommentId: string, reportSections: string[]) {
     }
 
     if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      core.info(`Section too long ${section.length} > ${GITHUB_COMMENT_MAX_COMMENT_LENGTH}`);
-      core.info(section.split("\n")[0] ?? "");
+      const sectionHeader = section.split("\n")[0] ?? "";
+      core.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
+      core.warning(`Skipping this section, please see output below:`);
+      core.warning(section);
       currentSectionIndex++;
     }
 

@@ -227,18 +227,8 @@ function processSectionToMessage(
   // We round this number up otherwise the splitLength will result in exactly 65535-100
   // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
   const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
-  // const splitLength = Math.ceil(originalOutputLength / splitFactor);
   const tableBodySize = tableBody.length;
   const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
-
-  core.info(
-    `GITHUB_COMMENT_MAX_COMMENT_LENGTH (${GITHUB_COMMENT_MAX_COMMENT_LENGTH}) / originalOutputLength (${originalOutputLength})`,
-  );
-  core.info(`splitFactor ${splitFactor}`);
-  // core.info(`splitLength ${splitLength}`);
-  core.info(`tableBodySize ${tableBodySize}`);
-  core.info(`tableBodySplitSize ${tableBodySplitSize}`);
-
   const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
   let tableBodySliceStart = 0;
   let tableBodySliceEnd = tableBodyItemWindow;
@@ -249,10 +239,6 @@ function processSectionToMessage(
     }
     const markdown = markdownTable([tableHeader, ...slicedBodyItems], markdownTableOptions);
     const newSection = sectionHeader + "\n\n" + markdown;
-    if (newSection.length >= GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      core.info(`Section still too long: ${newSection.length}`);
-      core.info(newSection);
-    }
     output.push(newSection);
 
     tableBodySliceStart = tableBodySliceEnd;
@@ -282,17 +268,17 @@ function nextReport(report: ParsedReport): string[] {
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          // eslint-disable-next-line github/array-foreach
-          buildArraySection(key, report[key]).forEach((section) => output.push(section));
-          // output.push(buildArraySection(key, report[key]));
+          for (const section of buildArraySection(key, report[key])) {
+            output.push(section);
+          }
         }
         break;
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          // eslint-disable-next-line github/array-foreach
-          buildMapSection(key, report[key]).forEach((section) => output.push(section));
-          // output.push(buildMapSection(key, report[key]));
+          for (const section of buildMapSection(key, report[key])) {
+            output.push(section);
+          }
         }
         break;
     }

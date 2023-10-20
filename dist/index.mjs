@@ -17783,10 +17783,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("error", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.error = error2;
-    function warning(message, properties = {}) {
+    function warning2(message, properties = {}) {
       command_1.issueCommand("warning", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
-    exports.warning = warning;
+    exports.warning = warning2;
     function notice(message, properties = {}) {
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
@@ -27147,12 +27147,6 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
   const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
   const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
-  core3.info(
-    `GITHUB_COMMENT_MAX_COMMENT_LENGTH (${GITHUB_COMMENT_MAX_COMMENT_LENGTH}) / originalOutputLength (${originalOutputLength})`
-  );
-  core3.info(`splitFactor ${splitFactor}`);
-  core3.info(`tableBodySize ${tableBodySize}`);
-  core3.info(`tableBodySplitSize ${tableBodySplitSize}`);
   const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
   let tableBodySliceStart = 0;
   let tableBodySliceEnd = tableBodyItemWindow;
@@ -27163,10 +27157,6 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
     }
     const markdown = markdownTable([tableHeader, ...slicedBodyItems], markdownTableOptions);
     const newSection = sectionHeader + "\n\n" + markdown;
-    if (newSection.length >= GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      core3.info(`Section still too long: ${newSection.length}`);
-      core3.info(newSection);
-    }
     output.push(newSection);
     tableBodySliceStart = tableBodySliceEnd;
     tableBodySliceEnd += tableBodyItemWindow;
@@ -27193,13 +27183,17 @@ function nextReport(report) {
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          buildArraySection(key, report[key]).forEach((section) => output.push(section));
+          for (const section of buildArraySection(key, report[key])) {
+            output.push(section);
+          }
         }
         break;
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          buildMapSection(key, report[key]).forEach((section) => output.push(section));
+          for (const section of buildMapSection(key, report[key])) {
+            output.push(section);
+          }
         }
         break;
     }
@@ -27281,8 +27275,10 @@ function prepareComments(cfgCommentId, reportSections) {
       continue;
     }
     if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      core5.info(`Section too long ${section.length} > ${GITHUB_COMMENT_MAX_COMMENT_LENGTH}`);
-      core5.info(section.split("\n")[0] ?? "");
+      const sectionHeader = section.split("\n")[0] ?? "";
+      core5.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
+      core5.warning(`Skipping this section, please see output below:`);
+      core5.warning(section);
       currentSectionIndex++;
     }
     comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
