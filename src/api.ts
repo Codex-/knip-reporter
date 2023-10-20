@@ -40,6 +40,7 @@ export async function getCommentIds(
   cfgCommentId: string,
   pullRequestNumber: number,
 ): Promise<number[] | undefined> {
+  // https://docs.github.com/en/rest/issues/comments#list-issue-comments
   const params: Parameters<Octokit["rest"]["issues"]["listComments"]>[0] = {
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
@@ -90,7 +91,7 @@ export async function updateComment(
 
 type DeleteCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["deleteComment"]>>;
 export async function deleteComment(commentId: number): Promise<DeleteCommentResponse> {
-  // https://docs.github.com/en/rest/issues/comments#update-an-issue-comment
+  // https://docs.github.com/en/rest/issues/comments#delete-an-issue-comment
   const response = await octokit.rest.issues.deleteComment({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,

@@ -8,13 +8,15 @@ inputs:
   token:
     description: GitHub Personal Access Token for making API requests.
     default: "${{ github.token }}"
-    required: true
+    required: false
   command_script_name:
     description: The npm script that runs knip.
+    default: knip
     required: false
   comment_id:
     description: ID to use when updating the PR comment.
     default: "${{ github.workflow }}-knip-reporter"
+    required: false
   # alwaysComment:
   #   description: Post a comment even if there are no results.
   #   require: false
