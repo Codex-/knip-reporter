@@ -10,21 +10,17 @@ inputs:
     default: "${{ github.token }}"
     required: false
   command_script_name:
-    description: The npm script that runs knip.
+    description: The package script that runs knip.
     default: knip
     required: false
   comment_id:
     description: ID to use when updating the PR comment.
     default: "${{ github.workflow }}-knip-reporter"
     required: false
-  # alwaysComment:
-  #   description: Post a comment even if there are no results.
-  #   require: false
-  #   default: false
-  # summaryOnly:
-  #   description: Post only a summary of the results
-  #   required: false
-  #   default: false
+  ignore_result:
+    description: Do not fail the action run if knip results are found
+    default: false
+    required: false
 runs:
   using: node20
   main: dist/index.mjs

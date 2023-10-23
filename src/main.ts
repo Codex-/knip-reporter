@@ -33,13 +33,20 @@ async function run(): Promise<void> {
     );
     await executeTask(commentTask);
 
+    if (!config.ignoreResults && knipTaskResult.length > 0) {
+      core.setFailed("knip has resulted in findings, please see the report for more details");
+    }
+
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error) {
     if (error instanceof Error) {
       core.error(`🧨 Failed: ${error.message}`);
       core.error(`📚 Stack: ${error.stack ?? ""}`);
-      core.setFailed(error.message);
+      core.setFailed(error);
+      return;
     }
+
+    core.setFailed(`🧨 Failed: ${error}`);
   }
 }
 

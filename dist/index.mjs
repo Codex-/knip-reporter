@@ -21796,7 +21796,8 @@ function getConfig() {
   return {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
-    commentId: core.getInput("comment_id", { required: true })
+    commentId: core.getInput("comment_id", { required: true }),
+    ignoreResults: core.getInput("comment_id", { required: false }) === "true"
   };
 }
 function configToStr(cfg) {
@@ -27360,13 +27361,18 @@ async function run3() {
       knipTaskResult
     );
     await executeTask(commentTask);
+    if (!config3.ignoreResults && knipTaskResult.length > 0) {
+      core6.setFailed("knip has resulted in findings, please see the report for more details");
+    }
     core6.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error2) {
     if (error2 instanceof Error) {
       core6.error(`\u{1F9E8} Failed: ${error2.message}`);
       core6.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
-      core6.setFailed(error2.message);
+      core6.setFailed(error2);
+      return;
     }
+    core6.setFailed(`\u{1F9E8} Failed: ${error2}`);
   }
 }
 (() => run3())();
