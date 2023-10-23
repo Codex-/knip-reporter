@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", "group:allNonMajor", "schedule:monthly"],
+  "timezone": "Pacific/Auckland",
+  "labels": ["dependencies", "renovate"],
+  "rangeStrategy": "bump",
+  "autoApprove": true,
+  "automerge": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every 3 months on the first day of the month"]
+  },
+  "packageRules": [
+    {
+      "matchDepTypes": ["engines"],
+      "enabled": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "schedule": ["at any time"]
+  }
+}
