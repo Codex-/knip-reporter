@@ -5,47 +5,47 @@ import * as core from "@actions/core";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { parse } from "yaml";
 
-import { type ActionConfig, getConfig } from "./action.ts";
+import { type ActionConfig, getConfig, configToStr } from "./action.ts";
 
 vi.mock("@actions/core");
 
 describe("Action", () => {
+  let actionInputs: Record<string, { description: string; default: string; required: boolean }>;
+  let mockEnvConfig: any;
+
+  beforeAll(async () => {
+    // Load the actual action yaml so we can properly assert the defaults
+    const rawYml = await readFile(resolve(__dirname, "..", "action.yml"));
+    const actionYml = parse(rawYml.toString());
+    actionInputs = actionYml.inputs;
+  });
+
+  beforeEach(() => {
+    mockEnvConfig = {
+      token: actionInputs.token?.default,
+      command_script_name: actionInputs.command_script_name?.default,
+      comment_id: actionInputs.comment_id?.default,
+      ignore_results: actionInputs.ignore_results?.default,
+    };
+
+    vi.spyOn(core, "getInput").mockImplementation((input: string) => {
+      switch (input) {
+        case "token":
+        case "command_script_name":
+        case "comment_id":
+        case "ignore_results":
+          return mockEnvConfig[input];
+        default:
+          throw new Error(`invalid input requested ${input}`);
+      }
+    });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe("getConfig", () => {
-    let actionInputs: Record<string, { description: string; default: string; required: boolean }>;
-    let mockEnvConfig: any;
-
-    beforeAll(async () => {
-      // Load the actual action yaml so we can properly assert the defaults
-      const rawYml = await readFile(resolve(__dirname, "..", "action.yml"));
-      const actionYml = parse(rawYml.toString());
-      actionInputs = actionYml.inputs;
-    });
-
-    beforeEach(() => {
-      mockEnvConfig = {
-        token: actionInputs.token?.default,
-        command_script_name: actionInputs.command_script_name?.default,
-        comment_id: actionInputs.comment_id?.default,
-        ignore_results: actionInputs.ignore_results?.default,
-      };
-
-      vi.spyOn(core, "getInput").mockImplementation((input: string) => {
-        switch (input) {
-          case "token":
-          case "command_script_name":
-          case "comment_id":
-          case "ignore_results":
-            return mockEnvConfig[input];
-          default:
-            throw new Error(`invalid input requested ${input}`);
-        }
-      });
-    });
-
-    afterEach(() => {
-      vi.restoreAllMocks();
-    });
-
     it("should load the defaults from the yaml", () => {
       const config: ActionConfig = getConfig();
 
@@ -70,6 +70,13 @@ describe("Action", () => {
         expect(config.commandScriptName).toStrictEqual("custom:knip");
       });
 
+      it("should load a default value for commandScriptName if an empty string is provided", () => {
+        mockEnvConfig.command_script_name = "";
+        const config: ActionConfig = getConfig();
+
+        expect(config.commandScriptName).toStrictEqual("knip");
+      });
+
       it("should load a custom value for commentId", () => {
         mockEnvConfig.comment_id = "special-comment";
         const config: ActionConfig = getConfig();
@@ -83,6 +90,14 @@ describe("Action", () => {
 
         expect(config.ignoreResults).toStrictEqual(true);
       });
+    });
+  });
+
+  describe("configToStr", () => {
+    it("should not expose the token", () => {
+      const cfgStr = configToStr(getConfig());
+      expect(cfgStr).not.toContain(actionInputs.token?.default);
+      expect(cfgStr).not.toContain(mockEnvConfig.token);
     });
   });
 });
