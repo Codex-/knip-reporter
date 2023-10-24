@@ -731,7 +731,7 @@ var require_tunnel = __commonJS({
         connectOptions.headers = connectOptions.headers || {};
         connectOptions.headers["Proxy-Authorization"] = "Basic " + new Buffer(connectOptions.proxyAuth).toString("base64");
       }
-      debug2("making CONNECT request");
+      debug3("making CONNECT request");
       var connectReq = self2.request(connectOptions);
       connectReq.useChunkedEncodingByDefault = false;
       connectReq.once("response", onResponse);
@@ -751,7 +751,7 @@ var require_tunnel = __commonJS({
         connectReq.removeAllListeners();
         socket.removeAllListeners();
         if (res.statusCode !== 200) {
-          debug2(
+          debug3(
             "tunneling socket could not be established, statusCode=%d",
             res.statusCode
           );
@@ -763,7 +763,7 @@ var require_tunnel = __commonJS({
           return;
         }
         if (head.length > 0) {
-          debug2("got illegal response body from proxy");
+          debug3("got illegal response body from proxy");
           socket.destroy();
           var error2 = new Error("got illegal response body from proxy");
           error2.code = "ECONNRESET";
@@ -771,13 +771,13 @@ var require_tunnel = __commonJS({
           self2.removeSocket(placeholder);
           return;
         }
-        debug2("tunneling connection has established");
+        debug3("tunneling connection has established");
         self2.sockets[self2.sockets.indexOf(placeholder)] = socket;
         return cb(socket);
       }
       function onError(cause) {
         connectReq.removeAllListeners();
-        debug2(
+        debug3(
           "tunneling socket could not be established, cause=%s\n",
           cause.message,
           cause.stack
@@ -839,9 +839,9 @@ var require_tunnel = __commonJS({
       }
       return target;
     }
-    var debug2;
+    var debug3;
     if (process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)) {
-      debug2 = function() {
+      debug3 = function() {
         var args = Array.prototype.slice.call(arguments);
         if (typeof args[0] === "string") {
           args[0] = "TUNNEL: " + args[0];
@@ -851,10 +851,10 @@ var require_tunnel = __commonJS({
         console.error.apply(console, args);
       };
     } else {
-      debug2 = function() {
+      debug3 = function() {
       };
     }
-    exports.debug = debug2;
+    exports.debug = debug3;
   }
 });
 
@@ -17775,10 +17775,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       return process.env["RUNNER_DEBUG"] === "1";
     }
     exports.isDebug = isDebug;
-    function debug2(message) {
+    function debug3(message) {
       command_1.issueCommand("debug", {}, message);
     }
-    exports.debug = debug2;
+    exports.debug = debug3;
     function error2(message, properties = {}) {
       command_1.issueCommand("error", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
@@ -27034,7 +27034,7 @@ async function buildRunKnipCommand(buildScriptName) {
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
   }
-  core3.debug(`    - knip command: ${cmd}`);
+  core3.debug(`knip command: ${cmd}`);
   return cmd;
 }
 async function run2(runCmd) {
@@ -27074,6 +27074,7 @@ function parseJsonReport(rawJson) {
         case "files":
           if (result === true) {
             out.files.push(fileName);
+            core3.debug(`[parseJsonReport]: Parsed ${type}`);
           }
           break;
         case "dependencies":
@@ -27086,12 +27087,14 @@ function parseJsonReport(rawJson) {
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
             out[type][fileName] = result;
+            core3.debug(`[parseJsonReport]: Parsed ${type}`);
           }
           break;
         case "enumMembers":
         case "classMembers":
           if (typeof result === "object" && Object.keys(result).length > 0) {
             out[type][fileName] = result;
+            core3.debug(`[parseJsonReport]: Parsed ${type}`);
           }
       }
     }
@@ -27167,13 +27170,14 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
   core3.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
   return output;
 }
-function nextReport(report) {
+function buildMarkdownSections(report) {
   const output = [];
   for (const key of Object.keys(report)) {
     switch (key) {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
+          core3.debug(`[buildMarkdownSections]: Parsed ${key}`);
         }
         break;
       case "dependencies":
@@ -27189,6 +27193,7 @@ function nextReport(report) {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
+          core3.debug(`[buildMarkdownSections]: Parsed ${key}`);
         }
         break;
       case "enumMembers":
@@ -27197,6 +27202,7 @@ function nextReport(report) {
           for (const section of buildMapSection(key, report[key])) {
             output.push(section);
           }
+          core3.debug(`[buildMarkdownSections]: Parsed ${key}`);
         }
         break;
     }
@@ -27230,7 +27236,7 @@ function buildKnipTask(buildScriptName) {
       },
       {
         name: "Convert report to markdown",
-        action: (report) => nextReport(report)
+        action: (report) => buildMarkdownSections(report)
       }
     ]
   };
@@ -27255,7 +27261,9 @@ async function executeTask(task, initialValue) {
 // src/tasks/comment.ts
 var core5 = __toESM(require_core(), 1);
 function createCommentId(cfgCommentId, n) {
-  return `<!-- ${cfgCommentId}-${n} -->`;
+  const id = `<!-- ${cfgCommentId.replaceAll(/\s/, "-")}-${n} -->`;
+  core5.debug(`[createCommentId]: Generated '${id}'`);
+  return id;
 }
 var COMMENT_SECTION_DELIMITER = "\n\n";
 var commentsToPost;
