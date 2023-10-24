@@ -21357,6 +21357,7 @@ var require_dist_node10 = __commonJS({
       return response;
     }
     function iterator(octokit2, route, parameters) {
+      console.log(route);
       const options = typeof route === "function" ? route.endpoint(parameters) : octokit2.request.endpoint(route, parameters);
       const requestMethod = typeof route === "function" ? route : octokit2.request;
       const method = options.method;
@@ -27020,7 +27021,7 @@ async function deleteComment(commentId) {
     comment_id: commentId
   });
   if (response.status !== 204) {
-    throw new Error(`Failed to update comment, expected 204 but received ${response.status}`);
+    throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
   }
   return response;
 }
