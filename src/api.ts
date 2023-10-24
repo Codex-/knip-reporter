@@ -1,10 +1,9 @@
 import * as github from "@actions/github";
-import type { GitHub } from "@actions/github/lib/utils.ts";
 import { type ActionConfig, getConfig } from "./action.ts";
 
 export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 
-type Octokit = InstanceType<typeof GitHub>;
+type Octokit = ReturnType<(typeof github)["getOctokit"]>;
 
 let config: ActionConfig;
 let octokit: Octokit;
@@ -99,7 +98,7 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
   });
 
   if (response.status !== 204) {
-    throw new Error(`Failed to update comment, expected 204 but received ${response.status}`);
+    throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
   }
 
   return response;
