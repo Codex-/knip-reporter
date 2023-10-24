@@ -10,7 +10,9 @@ import {
 import type { Task } from "./task.ts";
 
 function createCommentId(cfgCommentId: string, n: number): string {
-  return `<!-- ${cfgCommentId}-${n} -->`;
+  const id = `<!-- ${cfgCommentId.trim().replaceAll(/\s/g, "-")}-${n} -->`;
+  core.debug(`[createCommentId]: Generated '${id}'`);
+  return id;
 }
 
 // Double newlines for markdown
