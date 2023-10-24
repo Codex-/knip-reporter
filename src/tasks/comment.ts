@@ -60,6 +60,7 @@ function prepareComments(cfgCommentId: string, reportSections: string[]) {
     currentCommentLength = currentCommentSections[0]?.length ?? 0;
   }
 
+  core.debug(`[prepareComments]: ${comments.length} comments prepared`);
   commentsToPost = comments;
 }
 
@@ -73,7 +74,9 @@ async function createOrUpdateComments(
   let existingIdsIndex = 0;
   for (const comment of commentsToPost) {
     if (existingCommentIds && existingCommentIds[existingIdsIndex] !== undefined) {
-      await updateComment(existingCommentIds[existingIdsIndex]!, comment);
+      const commentId = existingCommentIds[existingIdsIndex]!;
+      await updateComment(commentId, comment);
+      core.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
       existingIdsIndex++;
       continue;
     }
@@ -82,7 +85,9 @@ async function createOrUpdateComments(
 
   // Extraneous comments should be deleted
   if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
-    return existingCommentIds.slice(existingIdsIndex);
+    const toDelete = existingCommentIds.slice(existingIdsIndex);
+    core.debug(`[createOrUpdateComments]: extraneous comments to delete: [${toDelete.join(", ")}]`);
+    return toDelete;
   }
 
   return [];

@@ -1,4 +1,6 @@
+import * as core from "@actions/core";
 import * as github from "@actions/github";
+
 import { type ActionConfig, getConfig } from "./action.ts";
 
 export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
@@ -65,7 +67,13 @@ export async function getCommentIds(
     }
   }
 
-  return messageIds.length > 0 ? messageIds : undefined;
+  if (messageIds.length > 0) {
+    core.debug(`[getCommentIds]: Existing IDs found: [${messageIds.join(", ")}]`);
+    return messageIds;
+  }
+
+  core.debug("[getCommentIds]: No existing IDs found");
+  return undefined;
 }
 
 type UpdateCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["updateComment"]>>;
