@@ -27398,12 +27398,18 @@ function prepareComments(cfgCommentId, reportSections) {
   while (currentSectionIndex < reportSections.length) {
     const section = reportSections[currentSectionIndex];
     if (section === void 0) {
+      core6.debug(
+        `[prepareComments]: section at ${currentSectionIndex} is undefined, ending generation`
+      );
       break;
     }
     const newLength = currentCommentLength + section.length + COMMENT_SECTION_DELIMITER.length;
     if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
+      core6.debug(
+        `[prepareComments]: section at ${currentSectionIndex} added to currentCommentSections`
+      );
       currentSectionIndex++;
       continue;
     }
@@ -27415,6 +27421,7 @@ function prepareComments(cfgCommentId, reportSections) {
       currentSectionIndex++;
     }
     comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
+    core6.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
     currentCommentEntryNumber++;
     currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
     currentCommentLength = currentCommentSections[0]?.length ?? 0;
