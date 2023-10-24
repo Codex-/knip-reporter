@@ -2,9 +2,7 @@ name: release
 on:
   push:
     tags:
-      - "v*"
-    tags-ignore:
-      - "v1" # This is a convenience tag that is moved to the latest v1 release
+      - v1.*
 
 permissions:
   contents: write
