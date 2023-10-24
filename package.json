@@ -50,6 +50,7 @@
     "prettier": "3.0.3",
     "release-it": "^16.2.1",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "yaml": "^2.3.3"
   }
 }
