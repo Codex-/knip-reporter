@@ -27298,7 +27298,7 @@ function buildMarkdownSections(report) {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
-          core4.debug(`[buildMarkdownSections]: Parsed ${key}`);
+          core4.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
       case "dependencies":
@@ -27314,7 +27314,7 @@ function buildMarkdownSections(report) {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
-          core4.debug(`[buildMarkdownSections]: Parsed ${key}`);
+          core4.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
       case "enumMembers":
@@ -27323,7 +27323,7 @@ function buildMarkdownSections(report) {
           for (const section of buildMapSection(key, report[key])) {
             output.push(section);
           }
-          core4.debug(`[buildMarkdownSections]: Parsed ${key}`);
+          core4.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
@@ -27389,7 +27389,7 @@ function createCommentId(cfgCommentId, n) {
 var COMMENT_SECTION_DELIMITER = "\n\n";
 var commentsToPost;
 function prepareComments(cfgCommentId, reportSections) {
-  core6.debug(`[prepareComments]: ${reportSections} sections to prepare`);
+  core6.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments = [];
   let currentCommentEntryNumber = 0;
   let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
@@ -27453,7 +27453,7 @@ function buildCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
     name: "Comment",
     steps: [
       {
-        name: "Prepend ID to comment body",
+        name: "Prepare comments",
         action: () => prepareComments(cfgCommentId, reportSections)
       },
       {

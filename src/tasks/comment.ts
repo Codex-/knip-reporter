@@ -20,8 +20,8 @@ const COMMENT_SECTION_DELIMITER = "\n\n";
 
 let commentsToPost: string[];
 
-function prepareComments(cfgCommentId: string, reportSections: string[]) {
-  core.debug(`[prepareComments]: ${reportSections} sections to prepare`);
+function prepareComments(cfgCommentId: string, reportSections: string[]): void {
+  core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
   let currentCommentEntryNumber = 0;
@@ -111,7 +111,7 @@ export function buildCommentTask(
     name: "Comment",
     steps: [
       {
-        name: "Prepend ID to comment body",
+        name: "Prepare comments",
         action: () => prepareComments(cfgCommentId, reportSections),
       },
       {

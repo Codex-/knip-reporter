@@ -276,7 +276,7 @@ function buildMarkdownSections(report: ParsedReport): string[] {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
-          core.debug(`[buildMarkdownSections]: Parsed ${key}`);
+          core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
       case "dependencies":
@@ -292,7 +292,7 @@ function buildMarkdownSections(report: ParsedReport): string[] {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
-          core.debug(`[buildMarkdownSections]: Parsed ${key}`);
+          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
       case "enumMembers":
@@ -301,7 +301,7 @@ function buildMarkdownSections(report: ParsedReport): string[] {
           for (const section of buildMapSection(key, report[key])) {
             output.push(section);
           }
-          core.debug(`[buildMarkdownSections]: Parsed ${key}`);
+          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
