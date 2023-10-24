@@ -15,7 +15,7 @@ async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
     throw new Error("Unable to generate command for package manager");
   }
 
-  core.debug(`    - knip command: ${cmd}`);
+  core.debug(`knip command: ${cmd}`);
 
   return cmd;
 }
@@ -127,6 +127,7 @@ function parseJsonReport(rawJson: string): ParsedReport {
         case "files":
           if (result === true) {
             out.files.push(fileName);
+            core.debug(`[parseJsonReport]: Parsed ${type}`);
           }
           break;
         case "dependencies":
@@ -139,12 +140,14 @@ function parseJsonReport(rawJson: string): ParsedReport {
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
             out[type][fileName] = result;
+            core.debug(`[parseJsonReport]: Parsed ${type}`);
           }
           break;
         case "enumMembers":
         case "classMembers":
           if (typeof result === "object" && Object.keys(result).length > 0) {
             out[type][fileName] = result as Record<string, string[]>;
+            core.debug(`[parseJsonReport]: Parsed ${type}`);
           }
       }
     }
@@ -251,13 +254,14 @@ function processSectionToMessage(
   return output;
 }
 
-function nextReport(report: ParsedReport): string[] {
+function buildMarkdownSections(report: ParsedReport): string[] {
   const output: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
+          core.debug(`[buildMarkdownSections]: Parsed ${key}`);
         }
         break;
       case "dependencies":
@@ -273,6 +277,7 @@ function nextReport(report: ParsedReport): string[] {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
+          core.debug(`[buildMarkdownSections]: Parsed ${key}`);
         }
         break;
       case "enumMembers":
@@ -281,6 +286,7 @@ function nextReport(report: ParsedReport): string[] {
           for (const section of buildMapSection(key, report[key])) {
             output.push(section);
           }
+          core.debug(`[buildMarkdownSections]: Parsed ${key}`);
         }
         break;
     }
@@ -327,7 +333,7 @@ export function buildKnipTask(buildScriptName: string) {
       },
       {
         name: "Convert report to markdown",
-        action: (report: ParsedReport) => nextReport(report),
+        action: (report: ParsedReport) => buildMarkdownSections(report),
       },
     ] as const,
   } satisfies Task;
