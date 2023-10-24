@@ -30,13 +30,10 @@ export function getConfig(): ActionConfig {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
     commentId: core.getInput("comment_id", { required: true }),
-    ignoreResults: core.getInput("comment_id", { required: false }) === "true",
+    ignoreResults: core.getInput("ignore_results", { required: false }) === "true",
   };
 }
 
-/**
- * @param indent indentation multiplier
- */
 export function configToStr(cfg: ActionConfig): string {
   return `  with config:
     token: ###

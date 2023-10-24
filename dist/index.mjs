@@ -21797,7 +21797,7 @@ function getConfig() {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
     commentId: core.getInput("comment_id", { required: true }),
-    ignoreResults: core.getInput("comment_id", { required: false }) === "true"
+    ignoreResults: core.getInput("ignore_results", { required: false }) === "true"
   };
 }
 function configToStr(cfg) {
