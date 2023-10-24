@@ -15,6 +15,8 @@ async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
     throw new Error("Unable to generate command for package manager");
   }
 
+  core.debug(`    - knip command: ${cmd}`);
+
   return cmd;
 }
 
