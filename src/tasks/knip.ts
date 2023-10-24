@@ -114,6 +114,7 @@ function parseJsonReport(rawJson: string): ParsedReport {
     classMembers: {},
     duplicates: {},
   };
+  const summary: Partial<Record<keyof ParsedReport, number>> = {};
 
   for (const entry of entries) {
     const fileName: string = entry.file;
@@ -127,7 +128,10 @@ function parseJsonReport(rawJson: string): ParsedReport {
         case "files":
           if (result === true) {
             out.files.push(fileName);
-            core.debug(`[parseJsonReport]: Parsed ${type}`);
+            if (summary.files === undefined) {
+              summary.files = 0;
+            }
+            summary.files++;
           }
           break;
         case "dependencies":
@@ -140,19 +144,30 @@ function parseJsonReport(rawJson: string): ParsedReport {
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
             out[type][fileName] = result;
-            core.debug(`[parseJsonReport]: Parsed ${type}`);
+            if (summary[type] === undefined) {
+              summary[type] = 0;
+            }
+            summary[type]! += result.length;
           }
           break;
         case "enumMembers":
         case "classMembers":
           if (typeof result === "object" && Object.keys(result).length > 0) {
             out[type][fileName] = result as Record<string, string[]>;
-            core.debug(`[parseJsonReport]: Parsed ${type}`);
+            if (summary[type] === undefined) {
+              summary[type] = 0;
+            }
+            summary[type]! += Object.keys(result).length;
           }
       }
     }
   }
 
+  core.debug(
+    `[parseJsonReport]: results summary: {${Object.entries(summary)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ")}}`,
+  );
   return out;
 }
 

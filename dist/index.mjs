@@ -27172,6 +27172,7 @@ function parseJsonReport(rawJson) {
     classMembers: {},
     duplicates: {}
   };
+  const summary = {};
   for (const entry of entries) {
     const fileName = entry.file;
     for (const [type, result] of Object.entries(entry)) {
@@ -27182,7 +27183,10 @@ function parseJsonReport(rawJson) {
         case "files":
           if (result === true) {
             out.files.push(fileName);
-            core4.debug(`[parseJsonReport]: Parsed ${type}`);
+            if (summary.files === void 0) {
+              summary.files = 0;
+            }
+            summary.files++;
           }
           break;
         case "dependencies":
@@ -27195,18 +27199,27 @@ function parseJsonReport(rawJson) {
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
             out[type][fileName] = result;
-            core4.debug(`[parseJsonReport]: Parsed ${type}`);
+            if (summary[type] === void 0) {
+              summary[type] = 0;
+            }
+            summary[type] += result.length;
           }
           break;
         case "enumMembers":
         case "classMembers":
           if (typeof result === "object" && Object.keys(result).length > 0) {
             out[type][fileName] = result;
-            core4.debug(`[parseJsonReport]: Parsed ${type}`);
+            if (summary[type] === void 0) {
+              summary[type] = 0;
+            }
+            summary[type] += Object.keys(result).length;
           }
       }
     }
   }
+  core4.debug(
+    `[parseJsonReport]: results summary: {${Object.entries(summary).map(([key, value]) => `${key}: ${value}`).join(", ")}}`
+  );
   return out;
 }
 function buildFilesSection(files) {
