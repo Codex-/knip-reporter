@@ -17,6 +17,7 @@
     "coverage",
     "dist",
     "esbuild.config.mjs",
+    "knip.ts",
     "vitest.config.ts"
   ],
   "env": {
