@@ -1,0 +1,42 @@
+name: release
+on:
+  push:
+    tags:
+      - "v*"
+    tags-ignore:
+      - "v1" # This is a convenience tag that is moved to the latest v1 release
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    env:
+      CI: true
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: pnpm
+      - run: pnpm i
+      - run: pnpm run knip
+      - run: pnpm run build
+        # We need to make sure the checked-in `index.js` actually matches what we expect it to be.
+      - name: Compare the expected and actual dist/ directories
+        run: |
+          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+            echo "Detected uncommitted changes after build.  See status below:"
+            git diff
+            exit 1
+          fi
+      - run: npx changelogithub
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
