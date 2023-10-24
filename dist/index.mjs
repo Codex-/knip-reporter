@@ -27261,7 +27261,7 @@ async function executeTask(task, initialValue) {
 // src/tasks/comment.ts
 var core5 = __toESM(require_core(), 1);
 function createCommentId(cfgCommentId, n) {
-  const id = `<!-- ${cfgCommentId.replaceAll(/\s/, "-")}-${n} -->`;
+  const id = `<!-- ${cfgCommentId.trim().replaceAll(/\s/g, "-")}-${n} -->`;
   core5.debug(`[createCommentId]: Generated '${id}'`);
   return id;
 }
