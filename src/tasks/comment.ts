@@ -21,6 +21,7 @@ const COMMENT_SECTION_DELIMITER = "\n\n";
 let commentsToPost: string[];
 
 function prepareComments(cfgCommentId: string, reportSections: string[]) {
+  core.debug(`[prepareComments]: ${reportSections} sections to prepare`);
   const comments: string[] = [];
 
   let currentCommentEntryNumber = 0;

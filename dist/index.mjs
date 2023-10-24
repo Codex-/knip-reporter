@@ -27389,6 +27389,7 @@ function createCommentId(cfgCommentId, n) {
 var COMMENT_SECTION_DELIMITER = "\n\n";
 var commentsToPost;
 function prepareComments(cfgCommentId, reportSections) {
+  core6.debug(`[prepareComments]: ${reportSections} sections to prepare`);
   const comments = [];
   let currentCommentEntryNumber = 0;
   let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
