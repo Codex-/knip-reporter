@@ -27399,7 +27399,7 @@ function prepareComments(cfgCommentId, reportSections) {
     const section = reportSections[currentSectionIndex];
     if (section === void 0) {
       core6.debug(
-        `[prepareComments]: section at ${currentSectionIndex} is undefined, ending generation`
+        `[prepareComments]: section ${currentSectionIndex} is undefined, ending generation`
       );
       break;
     }
@@ -27408,10 +27408,12 @@ function prepareComments(cfgCommentId, reportSections) {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
       core6.debug(
-        `[prepareComments]: section at ${currentSectionIndex} added to currentCommentSections`
+        `[prepareComments]: section ${currentSectionIndex} added to currentCommentSections`
       );
       currentSectionIndex++;
-      continue;
+      if (currentSectionIndex - 1 < reportSections.length - 1) {
+        continue;
+      }
     }
     if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
       const sectionHeader = section.split("\n")[0] ?? "";
@@ -27420,8 +27422,10 @@ function prepareComments(cfgCommentId, reportSections) {
       core6.warning(section);
       currentSectionIndex++;
     }
-    comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
-    core6.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
+    if (currentCommentSections.length > 1) {
+      comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
+      core6.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
+    }
     currentCommentEntryNumber++;
     currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
     currentCommentLength = currentCommentSections[0]?.length ?? 0;

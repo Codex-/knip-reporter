@@ -31,8 +31,9 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): void {
   while (currentSectionIndex < reportSections.length) {
     const section = reportSections[currentSectionIndex];
     if (section === undefined) {
+      // Due to the while condition, this should never be reached.
       core.debug(
-        `[prepareComments]: section at ${currentSectionIndex} is undefined, ending generation`,
+        `[prepareComments]: section ${currentSectionIndex} is undefined, ending generation`,
       );
       break;
     }
@@ -42,10 +43,16 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): void {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
       core.debug(
-        `[prepareComments]: section at ${currentSectionIndex} added to currentCommentSections`,
+        `[prepareComments]: section ${currentSectionIndex} added to currentCommentSections`,
       );
+
       currentSectionIndex++;
-      continue;
+
+      // If we are at the end of the sections, we do not continue but simply
+      // proceed to add the comment sections to the output.
+      if (currentSectionIndex - 1 < reportSections.length - 1) {
+        continue;
+      }
     }
 
     if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
@@ -56,9 +63,11 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): void {
       currentSectionIndex++;
     }
 
-    // Current comment is now complete
-    comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
-    core.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
+    if (currentCommentSections.length > 1) {
+      // Current comment is now complete
+      comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
+      core.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
+    }
 
     // Increase the number for comment IDs
     currentCommentEntryNumber++;
