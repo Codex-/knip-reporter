@@ -29,6 +29,10 @@ The following inputs are supported
 | `comment_id`          | ID to use when updating the PR comment.               | `false`  | `${{ github.workflow }}-knip-reporter` |
 | `ignore_result`       | Do not fail the action run if knip results are found. | `false`  | `false`                                |
 
+### Issues
+
+If you encounter a case where comments are not being posted, or known sections are missing from the report, please [enable step debug logging](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging) and create an issue with the results and expected behaviour.
+
 ### APIs Used
 
 - `Issues`
