@@ -209,7 +209,7 @@ function buildArraySection(name: string, rawResults: Record<string, string[]>): 
     totalUnused += results.length;
     tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
   }
-  const sectionHeader = `### ${buildSectionName(name)}} (${totalUnused})`;
+  const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
   return processSectionToMessage(sectionHeader, tableHeader, tableBody);
 }
