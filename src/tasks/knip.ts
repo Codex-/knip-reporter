@@ -177,6 +177,27 @@ function buildFilesSection(files: string[]): string {
   return header + "\n\n" + body;
 }
 
+function buildSectionName(name: string): string {
+  switch (name) {
+    case "dependencies":
+    case "devDependencies":
+    case "optionalPeerDependencies":
+    case "exports":
+    case "types":
+      return `Unused ${name}`;
+    case "unresolved":
+      return "Unresolved imports";
+    case "binaries":
+      return "Unlisted binaries";
+    case "unlisted":
+      return "Unlisted dependencies";
+    case "duplicates":
+      return "Duplicates";
+    default:
+      throw new Error(`Unknown name: ${name}`);
+  }
+}
+
 /**
  * Build a section where the result is a collection of strings
  */
@@ -188,7 +209,7 @@ function buildArraySection(name: string, rawResults: Record<string, string[]>): 
     totalUnused += results.length;
     tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
   }
-  const sectionHeader = `### Unused ${name.toLocaleLowerCase()} (${totalUnused})`;
+  const sectionHeader = `### ${buildSectionName(name)}} (${totalUnused})`;
 
   return processSectionToMessage(sectionHeader, tableHeader, tableBody);
 }
