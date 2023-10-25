@@ -97,7 +97,8 @@ async function createOrUpdateComments(
       existingIdsIndex++;
       continue;
     }
-    await createComment(pullRequestNumber, comment);
+    const response = await createComment(pullRequestNumber, comment);
+    core.debug(`[createOrUpdateComments]: created comment (${response.data.id})`);
   }
 
   // Extraneous comments should be deleted

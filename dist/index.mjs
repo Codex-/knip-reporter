@@ -27463,7 +27463,8 @@ async function createOrUpdateComments(pullRequestNumber, existingCommentIds) {
       existingIdsIndex++;
       continue;
     }
-    await createComment(pullRequestNumber, comment);
+    const response = await createComment(pullRequestNumber, comment);
+    core6.debug(`[createOrUpdateComments]: created comment (${response.data.id})`);
   }
   if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
     const toDelete = existingCommentIds.slice(existingIdsIndex);
