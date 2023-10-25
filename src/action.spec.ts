@@ -18,6 +18,10 @@ describe("Action", () => {
     const rawYml = await readFile(resolve(__dirname, "..", "action.yml"));
     const actionYml = parse(rawYml.toString());
     actionInputs = actionYml.inputs;
+
+    // Emulate the github string replacements
+    actionInputs.token!.default = "githubSecret";
+    actionInputs.comment_id!.default = "Pull Request-knip-reporter";
   });
 
   beforeEach(() => {
@@ -51,7 +55,9 @@ describe("Action", () => {
 
       expect(config.token).toStrictEqual(actionInputs.token?.default);
       expect(config.commandScriptName).toStrictEqual(actionInputs.command_script_name?.default);
-      expect(config.commentId).toStrictEqual(actionInputs.comment_id?.default);
+      expect(config.commentId).toStrictEqual(
+        actionInputs.comment_id?.default.replaceAll(/\s/g, "-"),
+      );
       expect(config.ignoreResults).toStrictEqual(actionInputs.ignore_results?.default);
     });
 
@@ -82,6 +88,13 @@ describe("Action", () => {
         const config: ActionConfig = getConfig();
 
         expect(config.commentId).toStrictEqual("special-comment");
+      });
+
+      it("should load a custom value for commentId and replace spaces with dashes", () => {
+        mockEnvConfig.comment_id = "Special Comment ID";
+        const config: ActionConfig = getConfig();
+
+        expect(config.commentId).toStrictEqual("Special-Comment-ID");
       });
 
       it("should load a custom value for ignoreResults", () => {

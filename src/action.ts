@@ -29,7 +29,7 @@ export function getConfig(): ActionConfig {
   return {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
-    commentId: core.getInput("comment_id", { required: true }),
+    commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
     ignoreResults: core.getInput("ignore_results", { required: false }) === "true",
   };
 }

@@ -21899,7 +21899,7 @@ function getConfig() {
   return {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
-    commentId: core.getInput("comment_id", { required: true }),
+    commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
     ignoreResults: core.getInput("ignore_results", { required: false }) === "true"
   };
 }
@@ -27402,7 +27402,7 @@ async function executeTask(task, initialValue) {
 // src/tasks/comment.ts
 var core6 = __toESM(require_core(), 1);
 function createCommentId(cfgCommentId, n) {
-  const id = `<!-- ${cfgCommentId.trim().replaceAll(/\s/g, "-")}-${n} -->`;
+  const id = `<!-- ${cfgCommentId}-${n} -->`;
   core6.debug(`[createCommentId]: Generated '${id}'`);
   return id;
 }
