@@ -12,7 +12,7 @@ import {
 } from "vitest";
 
 import type { ActionConfig } from "./action.ts";
-import { createComment, deleteComment, getCommentIds, init, updateComment } from "./api.ts";
+import { createComment, deleteComment, listCommentIds, init, updateComment } from "./api.ts";
 
 vi.mock("@actions/core");
 
@@ -76,7 +76,7 @@ describe("API", () => {
     });
   });
 
-  describe("getCommentIds", () => {
+  describe("listCommentIds", () => {
     let listCommentsToReturn: any[];
     let listCommentsSpy: SpyInstance;
 
@@ -114,13 +114,13 @@ describe("API", () => {
 
     it("should return undefined for no results", async () => {
       listCommentsToReturn = [[{ id: 0, body: "" }]];
-      const commentIds = await getCommentIds("knip", 123456);
+      const commentIds = await listCommentIds("knip", 123456);
       expect(commentIds).toBeUndefined();
     });
 
     it("should return an ID for a single match", async () => {
       listCommentsToReturn = [[{ id: 0, body: "" }], [{ id: 123, body: "knip" }]];
-      const commentIds = await getCommentIds("knip", 123456);
+      const commentIds = await listCommentIds("knip", 123456);
       expect(Array.isArray(commentIds)).toStrictEqual(true);
       expect(commentIds?.length).toStrictEqual(1);
       expect(commentIds!).toContain(123);
@@ -133,7 +133,7 @@ describe("API", () => {
         [{ id: 456, body: "knip" }],
         [{ id: 789, body: "knop" }],
       ];
-      const commentIds = await getCommentIds("knip", 123456);
+      const commentIds = await listCommentIds("knip", 123456);
       expect(Array.isArray(commentIds)).toStrictEqual(true);
       expect(commentIds?.length).toStrictEqual(2);
       expect(commentIds!).toContain(123);
@@ -142,7 +142,7 @@ describe("API", () => {
 
     it("should not return an invalid match", async () => {
       listCommentsToReturn = [[{ id: 0, body: "" }], [{ id: 123, body: "knop" }]];
-      const commentIds = await getCommentIds("knip", 123456);
+      const commentIds = await listCommentIds("knip", 123456);
       expect(commentIds).toBeUndefined();
     });
 
@@ -157,7 +157,7 @@ describe("API", () => {
         } as any),
       );
 
-      await expect(getCommentIds("knip", 123456)).rejects.toThrow(
+      await expect(listCommentIds("knip", 123456)).rejects.toThrow(
         `Failed to find comment ID, expected 200 but received ${errorStatus}`,
       );
     });

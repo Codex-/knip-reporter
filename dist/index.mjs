@@ -27081,7 +27081,7 @@ async function createComment(pullRequestNumber, body) {
   }
   return response;
 }
-async function getCommentIds(cfgCommentId, pullRequestNumber) {
+async function listCommentIds(cfgCommentId, pullRequestNumber) {
   const params = {
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
@@ -27490,7 +27490,7 @@ function buildCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
       },
       {
         name: "Find existing comment IDs",
-        action: () => getCommentIds(cfgCommentId, pullRequestNumber)
+        action: () => listCommentIds(cfgCommentId, pullRequestNumber)
       },
       {
         name: "Create or update comment",

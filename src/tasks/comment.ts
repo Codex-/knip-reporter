@@ -4,7 +4,7 @@ import {
   GITHUB_COMMENT_MAX_COMMENT_LENGTH,
   createComment,
   deleteComment,
-  getCommentIds,
+  listCommentIds,
   updateComment,
 } from "../api.ts";
 import type { Task } from "./task.ts";
@@ -133,7 +133,7 @@ export function buildCommentTask(
       },
       {
         name: "Find existing comment IDs",
-        action: () => getCommentIds(cfgCommentId, pullRequestNumber),
+        action: () => listCommentIds(cfgCommentId, pullRequestNumber),
       },
       {
         name: "Create or update comment",

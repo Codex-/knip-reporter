@@ -37,7 +37,7 @@ export async function createComment(
   return response;
 }
 
-export async function getCommentIds(
+export async function listCommentIds(
   cfgCommentId: string,
   pullRequestNumber: number,
 ): Promise<number[] | undefined> {
