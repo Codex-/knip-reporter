@@ -17807,10 +17807,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("error", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.error = error2;
-    function warning2(message, properties = {}) {
+    function warning3(message, properties = {}) {
       command_1.issueCommand("warning", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
-    exports.warning = warning2;
+    exports.warning = warning3;
     function notice(message, properties = {}) {
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
@@ -21900,6 +21900,7 @@ function getConfig() {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
     commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
+    annotations: core.getInput("annotations", { required: false }) === "true",
     ignoreResults: core.getInput("ignore_results", { required: false }) === "true"
   };
 }
@@ -21912,7 +21913,7 @@ function configToStr(cfg) {
 }
 
 // src/tasks/knip.ts
-var core4 = __toESM(require_core(), 1);
+var core5 = __toESM(require_core(), 1);
 import { exec } from "node:child_process";
 
 // node_modules/.pnpm/@antfu+ni@0.21.8/node_modules/@antfu/ni/dist/shared/ni.82314ed6.mjs
@@ -27134,6 +27135,16 @@ async function deleteComment(commentId) {
   return response;
 }
 
+// src/tasks/task.ts
+var core4 = __toESM(require_core(), 1);
+async function timeTask(name, task) {
+  const stepMs = Date.now();
+  core4.info(`  - ${name}`);
+  const result = await task();
+  core4.info(`  \u2714 ${name} (${Date.now() - stepMs}ms)`);
+  return result;
+}
+
 // src/tasks/knip.ts
 async function buildRunKnipCommand(buildScriptName) {
   const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
@@ -27142,7 +27153,7 @@ async function buildRunKnipCommand(buildScriptName) {
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
   }
-  core4.debug(`knip command: ${cmd}`);
+  core5.debug(`knip command: ${cmd}`);
   return cmd;
 }
 async function run2(runCmd) {
@@ -27217,7 +27228,7 @@ function parseJsonReport(rawJson) {
       }
     }
   }
-  core4.debug(
+  core5.debug(
     `[parseJsonReport]: results summary: {${Object.entries(summary).map(([key, value]) => `${key}: ${value}`).join(", ")}}`
   );
   return out;
@@ -27289,7 +27300,7 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
   if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     return output;
   }
-  core4.info(`    - Splitting section ${sectionHeader}`);
+  core5.info(`    - Splitting section ${sectionHeader}`);
   output = [];
   const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
@@ -27308,7 +27319,7 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
     tableBodySliceStart = tableBodySliceEnd;
     tableBodySliceEnd += tableBodyItemWindow;
   }
-  core4.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  core5.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
   return output;
 }
 function buildMarkdownSections(report) {
@@ -27318,7 +27329,7 @@ function buildMarkdownSections(report) {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
-          core4.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+          core5.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
       case "dependencies":
@@ -27334,7 +27345,7 @@ function buildMarkdownSections(report) {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
-          core4.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core5.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
       case "enumMembers":
@@ -27343,7 +27354,7 @@ function buildMarkdownSections(report) {
           for (const section of buildMapSection(key, report[key])) {
             output.push(section);
           }
-          core4.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core5.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
@@ -27359,44 +27370,18 @@ function getJsonFromOutput(output) {
   }
   throw new Error("Unable to find JSON blob");
 }
-function buildKnipTask(buildScriptName) {
-  return {
-    name: "Knip",
-    steps: [
-      {
-        name: "Build knip command",
-        action: () => buildRunKnipCommand(buildScriptName)
-      },
-      {
-        name: "Run knip",
-        action: async (cmd) => getJsonFromOutput(await run2(cmd))
-      },
-      {
-        name: "Parse knip report",
-        action: (output) => parseJsonReport(output)
-      },
-      {
-        name: "Convert report to markdown",
-        action: (report) => buildMarkdownSections(report)
-      }
-    ]
-  };
-}
-
-// src/tasks/task.ts
-var core5 = __toESM(require_core(), 1);
-async function executeTask(task, initialValue) {
+async function runKnipTasks(buildScriptName) {
   const taskMs = Date.now();
-  core5.info(`- Execute task ${task.name}`);
-  let result = initialValue;
-  for (const step of task.steps) {
-    const stepMs = Date.now();
-    core5.info(`  - ${step.name}`);
-    result = await step.action(result);
-    core5.info(`  \u2714 ${step.name} (${Date.now() - stepMs}ms)`);
-  }
-  core5.info(`\u2714 Execute task ${task.name} (${Date.now() - taskMs}ms)`);
-  return result;
+  core5.info("- Running Knip tasks");
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
+  const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
+  const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
+  const sections = await timeTask(
+    "Convert report to markdown",
+    async () => buildMarkdownSections(report)
+  );
+  core5.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
+  return sections;
 }
 
 // src/tasks/comment.ts
@@ -27407,7 +27392,6 @@ function createCommentId(cfgCommentId, n) {
   return id;
 }
 var COMMENT_SECTION_DELIMITER = "\n\n";
-var commentsToPost;
 function prepareComments(cfgCommentId, reportSections) {
   core6.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments = [];
@@ -27451,9 +27435,9 @@ function prepareComments(cfgCommentId, reportSections) {
     currentCommentLength = currentCommentSections[0]?.length ?? 0;
   }
   core6.debug(`[prepareComments]: ${comments.length} comments prepared`);
-  commentsToPost = comments;
+  return comments;
 }
-async function createOrUpdateComments(pullRequestNumber, existingCommentIds) {
+async function createOrUpdateComments(pullRequestNumber, commentsToPost, existingCommentIds) {
   let existingIdsIndex = 0;
   for (const comment of commentsToPost) {
     if (existingCommentIds && existingCommentIds[existingIdsIndex] !== void 0) {
@@ -27480,33 +27464,28 @@ async function deleteExtraneousComments(commentIds) {
     core6.info(`    \u2714 Delete comment ${id}`);
   }
 }
-function buildCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
-  return {
-    name: "Comment",
-    steps: [
-      {
-        name: "Prepare comments",
-        action: () => prepareComments(cfgCommentId, reportSections)
-      },
-      {
-        name: "Find existing comment IDs",
-        action: () => listCommentIds(cfgCommentId, pullRequestNumber)
-      },
-      {
-        name: "Create or update comment",
-        action: (existingCommentIds) => createOrUpdateComments(pullRequestNumber, existingCommentIds)
-      },
-      {
-        name: "Delete extraneous comments",
-        action: (remainingComments) => {
-          if (remainingComments.length === 0) {
-            return;
-          }
-          return deleteExtraneousComments(remainingComments);
-        }
-      }
-    ]
-  };
+async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
+  const taskMs = Date.now();
+  core6.info("- Running comment tasks");
+  const comments = await timeTask(
+    "Prepare comments",
+    () => prepareComments(cfgCommentId, reportSections)
+  );
+  const existingCommentIds = await timeTask(
+    "Find existing comment IDs",
+    () => listCommentIds(cfgCommentId, pullRequestNumber)
+  );
+  const remainingComments = await timeTask(
+    "Create or update comment",
+    () => createOrUpdateComments(pullRequestNumber, comments, existingCommentIds)
+  );
+  await timeTask("Delete extraneous comments", () => {
+    if (remainingComments.length === 0) {
+      return;
+    }
+    return deleteExtraneousComments(remainingComments);
+  });
+  core6.info(`\u2714 Running comment tasks (${Date.now() - taskMs}ms)`);
 }
 
 // src/main.ts
@@ -27522,14 +27501,12 @@ async function run3() {
       );
     }
     init2(config3);
-    const knipTask = buildKnipTask(config3.commandScriptName);
-    const knipTaskResult = await executeTask(knipTask);
-    const commentTask = buildCommentTask(
+    const knipTaskResult = await runKnipTasks(config3.commandScriptName);
+    await runCommentTask(
       config3.commentId,
       github2.context.payload.pull_request.number,
       knipTaskResult
     );
-    await executeTask(commentTask);
     if (!config3.ignoreResults && knipTaskResult.length > 0) {
       core7.setFailed("knip has resulted in findings, please see the report for more details");
     }

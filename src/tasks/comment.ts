@@ -7,7 +7,7 @@ import {
   listCommentIds,
   updateComment,
 } from "../api.ts";
-import type { Task } from "./task.ts";
+import { timeTask } from "./task.ts";
 
 function createCommentId(cfgCommentId: string, n: number): string {
   const id = `<!-- ${cfgCommentId}-${n} -->`;
@@ -18,9 +18,7 @@ function createCommentId(cfgCommentId: string, n: number): string {
 // Double newlines for markdown
 const COMMENT_SECTION_DELIMITER = "\n\n";
 
-let commentsToPost: string[];
-
-function prepareComments(cfgCommentId: string, reportSections: string[]): void {
+function prepareComments(cfgCommentId: string, reportSections: string[]): string[] {
   core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
@@ -78,7 +76,8 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): void {
   }
 
   core.debug(`[prepareComments]: ${comments.length} comments prepared`);
-  commentsToPost = comments;
+
+  return comments;
 }
 
 /**
@@ -86,6 +85,7 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): void {
  */
 async function createOrUpdateComments(
   pullRequestNumber: number,
+  commentsToPost: string[],
   existingCommentIds?: number[],
 ): Promise<number[]> {
   let existingIdsIndex = 0;
@@ -119,36 +119,29 @@ async function deleteExtraneousComments(commentIds: number[]): Promise<void> {
   }
 }
 
-export function buildCommentTask(
+export async function runCommentTask(
   cfgCommentId: string,
   pullRequestNumber: number,
   reportSections: string[],
-) {
-  return {
-    name: "Comment",
-    steps: [
-      {
-        name: "Prepare comments",
-        action: () => prepareComments(cfgCommentId, reportSections),
-      },
-      {
-        name: "Find existing comment IDs",
-        action: () => listCommentIds(cfgCommentId, pullRequestNumber),
-      },
-      {
-        name: "Create or update comment",
-        action: (existingCommentIds?: number[]) =>
-          createOrUpdateComments(pullRequestNumber, existingCommentIds),
-      },
-      {
-        name: "Delete extraneous comments",
-        action: (remainingComments: number[]) => {
-          if (remainingComments.length === 0) {
-            return;
-          }
-          return deleteExtraneousComments(remainingComments);
-        },
-      },
-    ] as const,
-  } satisfies Task;
+): Promise<void> {
+  const taskMs = Date.now();
+  core.info("- Running comment tasks");
+
+  const comments = await timeTask("Prepare comments", () =>
+    prepareComments(cfgCommentId, reportSections),
+  );
+  const existingCommentIds = await timeTask("Find existing comment IDs", () =>
+    listCommentIds(cfgCommentId, pullRequestNumber),
+  );
+  const remainingComments = await timeTask("Create or update comment", () =>
+    createOrUpdateComments(pullRequestNumber, comments, existingCommentIds),
+  );
+  await timeTask("Delete extraneous comments", () => {
+    if (remainingComments.length === 0) {
+      return;
+    }
+    return deleteExtraneousComments(remainingComments);
+  });
+
+  core.info(`✔ Running comment tasks (${Date.now() - taskMs}ms)`);
 }

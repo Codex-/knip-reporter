@@ -1,9 +1,8 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { configToStr, getConfig } from "./action.ts";
-import { buildKnipTask } from "./tasks/knip.ts";
-import { executeTask } from "./tasks/task.ts";
-import { buildCommentTask } from "./tasks/comment.ts";
+import { runKnipTasks } from "./tasks/knip.ts";
+import { runCommentTask } from "./tasks/comment.ts";
 import { init } from "./api.ts";
 
 async function run(): Promise<void> {
@@ -22,16 +21,13 @@ async function run(): Promise<void> {
 
     init(config);
 
-    const knipTask = buildKnipTask(config.commandScriptName);
-    type KnipFinalStepResult = ReturnType<(typeof knipTask.steps)[3]["action"]>;
-    const knipTaskResult = await executeTask<KnipFinalStepResult>(knipTask);
+    const knipTaskResult = await runKnipTasks(config.commandScriptName);
 
-    const commentTask = buildCommentTask(
+    await runCommentTask(
       config.commentId,
       github.context.payload.pull_request.number,
       knipTaskResult,
     );
-    await executeTask(commentTask);
 
     if (!config.ignoreResults && knipTaskResult.length > 0) {
       core.setFailed("knip has resulted in findings, please see the report for more details");
