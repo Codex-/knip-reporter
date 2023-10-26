@@ -97,7 +97,7 @@ interface ParsedReport {
   duplicates: Record<string, string[]>;
 }
 
-function parseJsonReport(rawJson: string): ParsedReport {
+export function parseJsonReport(rawJson: string): ParsedReport {
   // Default JSON reporter results in a collection with a single object
   const entries = JSON.parse(rawJson);
   const out: ParsedReport = {
@@ -171,13 +171,13 @@ function parseJsonReport(rawJson: string): ParsedReport {
   return out;
 }
 
-function buildFilesSection(files: string[]): string {
+export function buildFilesSection(files: string[]): string {
   const header = `### Unused files (${files.length})`;
   const body = files.map((file) => `\`${file}\``).join(", ");
   return header + "\n\n" + body;
 }
 
-function buildSectionName(name: string): string {
+export function buildSectionName(name: string): string {
   switch (name) {
     case "dependencies":
     case "devDependencies":
