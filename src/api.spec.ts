@@ -7,19 +7,19 @@ import {
   describe,
   expect,
   it,
-  vi,
   type SpyInstance,
+  vi,
 } from "vitest";
 
 import type { ActionConfig } from "./action.ts";
 import {
+  createCheck,
   createComment,
   deleteComment,
-  listCommentIds,
   init,
-  updateComment,
-  createCheck,
+  listCommentIds,
   updateCheck,
+  updateComment,
 } from "./api.ts";
 
 vi.mock("@actions/core");

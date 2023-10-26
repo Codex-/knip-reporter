@@ -5,7 +5,7 @@ import * as core from "@actions/core";
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { parse } from "yaml";
 
-import { type ActionConfig, getConfig, configToStr } from "./action.ts";
+import { type ActionConfig, configToStr, getConfig } from "./action.ts";
 
 vi.mock("@actions/core");
 

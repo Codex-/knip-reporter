@@ -1,9 +1,10 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+
 import { configToStr, getConfig } from "./action.ts";
-import { runKnipTasks } from "./tasks/knip.ts";
-import { runCommentTask } from "./tasks/comment.ts";
 import { init } from "./api.ts";
+import { runCommentTask } from "./tasks/comment.ts";
+import { runKnipTasks } from "./tasks/knip.ts";
 
 async function run(): Promise<void> {
   try {

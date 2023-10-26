@@ -1,9 +1,9 @@
 import * as core from "@actions/core";
 
 import {
-  GITHUB_COMMENT_MAX_COMMENT_LENGTH,
   createComment,
   deleteComment,
+  GITHUB_COMMENT_MAX_COMMENT_LENGTH,
   listCommentIds,
   updateComment,
 } from "../api.ts";
