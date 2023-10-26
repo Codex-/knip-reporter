@@ -11,6 +11,8 @@ vi.mock("@antfu/ni", async () => {
   const actual: typeof import("@antfu/ni") = await vi.importActual("@antfu/ni");
   const toReturn: Record<string, any> = {};
   for (const [key, value] of Object.entries(actual)) {
+    // Makes keys mutable, as writable=true is the
+    // default descriptor when assigning to an object
     toReturn[key] = value;
   }
   return toReturn;

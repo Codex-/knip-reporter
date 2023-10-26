@@ -23,6 +23,16 @@ import {
 } from "./api.ts";
 
 vi.mock("@actions/core");
+vi.mock("@actions/github", async () => {
+  const actual: typeof import("@actions/github") = await vi.importActual("@actions/github");
+  const toReturn: Record<string, any> = {};
+  for (const [key, value] of Object.entries(actual)) {
+    // Makes keys mutable, as writable=true is the
+    // default descriptor when assigning to an object
+    toReturn[key] = value;
+  }
+  return toReturn;
+});
 
 describe("API", () => {
   const cfg: ActionConfig = {
@@ -51,6 +61,12 @@ describe("API", () => {
     vi.spyOn(core, "getInput").mockReturnValue("");
     vi.spyOn(github, "getOctokit").mockReturnValue(octokit);
     init(cfg);
+
+    // vi.spyOn(github.context, 'payload')
+    if (!github.context.payload.pull_request) {
+      github.context.payload.pull_request = { head: {} } as any;
+    }
+    github.context.payload.pull_request!.head.sha = "12345678";
   });
 
   afterEach(() => {
@@ -329,7 +345,7 @@ describe("API", () => {
       expect(restSpy).toBeCalledWith({
         owner: "a",
         repo: "b",
-        head_sha: undefined,
+        head_sha: "12345678",
         name: "knip-reporter",
         status: "in_progress",
       });
