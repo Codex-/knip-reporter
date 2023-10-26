@@ -45,5 +45,7 @@ export function configToStr(cfg: ActionConfig): string {
     token: ###
     command_script_name: ${cfg.commandScriptName}
     comment_id: ${cfg.commentId}
+    annotations: ${cfg.annotations}
+    ignoreResults: ${cfg.ignoreResults}
 `;
 }
