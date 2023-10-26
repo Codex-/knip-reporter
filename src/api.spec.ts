@@ -59,7 +59,7 @@ describe("API", () => {
 
   describe("createComment", () => {
     it("should not throw", async () => {
-      vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
+      const restSpy = vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
         Promise.resolve({
           data: {},
           status: 201,
@@ -68,6 +68,40 @@ describe("API", () => {
 
       const state = await createComment(123456, "");
       expect(state.status).toStrictEqual(201);
+      expect(restSpy).toBeCalledWith({
+        owner: "a",
+        repo: "b",
+        issue_number: 123456,
+        body: "",
+      });
+    });
+
+    it("should pass through issue_number", async () => {
+      const restSpy = vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 201,
+        }) as any,
+      );
+
+      await createComment(123, "");
+      expect(restSpy.mock.calls[0]![0]!.issue_number).toStrictEqual(123);
+      await createComment(456, "");
+      expect(restSpy.mock.calls[1]![0]!.issue_number).toStrictEqual(456);
+    });
+
+    it("should pass through body", async () => {
+      const restSpy = vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 201,
+        }) as any,
+      );
+
+      await createComment(123, "first");
+      expect(restSpy.mock.calls[0]![0]!.body).toStrictEqual("first");
+      await createComment(123, "second");
+      expect(restSpy.mock.calls[1]![0]!.body).toStrictEqual("second");
     });
 
     it("should throw if a non-201 status is returned", async () => {
@@ -174,7 +208,7 @@ describe("API", () => {
 
   describe("updateComment", () => {
     it("should not throw", async () => {
-      vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
+      const restSpy = vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
         Promise.resolve({
           data: {},
           status: 200,
@@ -183,6 +217,40 @@ describe("API", () => {
 
       const state = await updateComment(123456, "");
       expect(state.status).toStrictEqual(200);
+      expect(restSpy).toBeCalledWith({
+        owner: "a",
+        repo: "b",
+        comment_id: 123456,
+        body: "",
+      });
+    });
+
+    it("should pass through comment_id", async () => {
+      const restSpy = vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      await updateComment(123, "");
+      expect(restSpy.mock.calls[0]![0]!.comment_id).toStrictEqual(123);
+      await updateComment(456, "");
+      expect(restSpy.mock.calls[1]![0]!.comment_id).toStrictEqual(456);
+    });
+
+    it("should pass through body", async () => {
+      const restSpy = vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      await updateComment(123, "first");
+      expect(restSpy.mock.calls[0]![0]!.body).toStrictEqual("first");
+      await updateComment(123, "second");
+      expect(restSpy.mock.calls[1]![0]!.body).toStrictEqual("second");
     });
 
     it("should throw if a non-200 status is returned", async () => {
@@ -202,7 +270,7 @@ describe("API", () => {
 
   describe("deleteComment", () => {
     it("should not throw", async () => {
-      vi.spyOn(octokit.rest.issues, "deleteComment").mockReturnValue(
+      const restSpy = vi.spyOn(octokit.rest.issues, "deleteComment").mockReturnValue(
         Promise.resolve({
           data: {},
           status: 204,
@@ -211,6 +279,25 @@ describe("API", () => {
 
       const state = await deleteComment(123456);
       expect(state.status).toStrictEqual(204);
+      expect(restSpy).toBeCalledWith({
+        comment_id: 123456,
+        owner: "a",
+        repo: "b",
+      });
+    });
+
+    it("should pass through comment_id", async () => {
+      const restSpy = vi.spyOn(octokit.rest.issues, "deleteComment").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 204,
+        }) as any,
+      );
+
+      await deleteComment(123);
+      expect(restSpy.mock.calls[0]![0]!.comment_id).toStrictEqual(123);
+      await deleteComment(456);
+      expect(restSpy.mock.calls[1]![0]!.comment_id).toStrictEqual(456);
     });
 
     it("should throw if a non-204 status is returned", async () => {
