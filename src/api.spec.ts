@@ -23,16 +23,6 @@ import {
 } from "./api.ts";
 
 vi.mock("@actions/core");
-vi.mock("@actions/github", async () => {
-  const actual: typeof import("@actions/github") = await vi.importActual("@actions/github");
-  const toReturn: Record<string, any> = {};
-  for (const [key, value] of Object.entries(actual)) {
-    // Makes keys mutable, as writable=true is the
-    // default descriptor when assigning to an object
-    toReturn[key] = value;
-  }
-  return toReturn;
-});
 
 describe("API", () => {
   const cfg: ActionConfig = {
@@ -84,12 +74,7 @@ describe("API", () => {
 
       const state = await createComment(123456, "");
       expect(state.status).toStrictEqual(201);
-      expect(restSpy).toBeCalledWith({
-        owner: "a",
-        repo: "b",
-        issue_number: 123456,
-        body: "",
-      });
+      expect(restSpy).toMatchSnapshot();
     });
 
     it("should pass through issue_number", async () => {
@@ -233,12 +218,7 @@ describe("API", () => {
 
       const state = await updateComment(123456, "");
       expect(state.status).toStrictEqual(200);
-      expect(restSpy).toBeCalledWith({
-        owner: "a",
-        repo: "b",
-        comment_id: 123456,
-        body: "",
-      });
+      expect(restSpy).toMatchSnapshot();
     });
 
     it("should pass through comment_id", async () => {
@@ -295,11 +275,7 @@ describe("API", () => {
 
       const state = await deleteComment(123456);
       expect(state.status).toStrictEqual(204);
-      expect(restSpy).toBeCalledWith({
-        comment_id: 123456,
-        owner: "a",
-        repo: "b",
-      });
+      expect(restSpy).toMatchSnapshot();
     });
 
     it("should pass through comment_id", async () => {
@@ -342,13 +318,7 @@ describe("API", () => {
 
       const state = await createCheck();
       expect(state.status).toStrictEqual(201);
-      expect(restSpy).toBeCalledWith({
-        owner: "a",
-        repo: "b",
-        head_sha: "12345678",
-        name: "knip-reporter",
-        status: "in_progress",
-      });
+      expect(restSpy).toMatchSnapshot();
     });
 
     it("should throw if a non-201 status is returned", async () => {
