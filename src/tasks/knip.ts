@@ -7,8 +7,12 @@ import { markdownTable, type Options as MarkdownTableOptions } from "markdown-ta
 import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
 
-async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+async function buildRunKnipCommand(
+  buildScriptName: string,
+  annotationsEnabled: boolean,
+): Promise<string> {
+  const reporterArg = annotationsEnabled ? "--reporter jsonExt" : "--reporter json";
+  const cmd = await getCliCommand(parseNr, [buildScriptName, reporterArg], {
     programmatic: true,
   });
   if (!cmd) {
@@ -351,11 +355,16 @@ function getJsonFromOutput(output: string): string {
   throw new Error("Unable to find JSON blob");
 }
 
-export async function runKnipTasks(buildScriptName: string): Promise<string[]> {
+export async function runKnipTasks(
+  buildScriptName: string,
+  annotationsEnabled: boolean,
+): Promise<string[]> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
+  const cmd = await timeTask("Build knip command", () =>
+    buildRunKnipCommand(buildScriptName, annotationsEnabled),
+  );
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
   const sections = await timeTask("Convert report to markdown", async () =>

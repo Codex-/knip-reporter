@@ -21909,11 +21909,204 @@ function configToStr(cfg) {
     token: ###
     command_script_name: ${cfg.commandScriptName}
     comment_id: ${cfg.commentId}
+    annotations: ${cfg.annotations}
+    ignoreResults: ${cfg.ignoreResults}
 `;
 }
 
+// src/api.ts
+var core2 = __toESM(require_core(), 1);
+var github = __toESM(require_github(), 1);
+var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
+var config;
+var octokit;
+function init(cfg) {
+  config = cfg ?? getConfig();
+  octokit = github.getOctokit(config.token);
+}
+async function createComment(pullRequestNumber, body) {
+  const response = await octokit.rest.issues.createComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    issue_number: pullRequestNumber,
+    body
+  });
+  if (response.status !== 201) {
+    throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
+  }
+  return response;
+}
+async function listCommentIds(cfgCommentId, pullRequestNumber) {
+  const params = {
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    issue_number: pullRequestNumber,
+    per_page: 100
+  };
+  const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
+  const messageIds = [];
+  for await (const { data, status } of restIter) {
+    if (status !== 200) {
+      throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
+    }
+    for (const { id, body } of data) {
+      if (!body) {
+        continue;
+      }
+      if (body?.includes(cfgCommentId)) {
+        messageIds.push(id);
+      }
+    }
+  }
+  if (messageIds.length > 0) {
+    core2.debug(`[getCommentIds]: Existing IDs found: [${messageIds.join(", ")}]`);
+    return messageIds;
+  }
+  core2.debug("[getCommentIds]: No existing IDs found");
+  return void 0;
+}
+async function updateComment(commentId, body) {
+  const response = await octokit.rest.issues.updateComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    comment_id: commentId,
+    body
+  });
+  if (response.status !== 200) {
+    throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
+  }
+  return response;
+}
+async function deleteComment(commentId) {
+  const response = await octokit.rest.issues.deleteComment({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    comment_id: commentId
+  });
+  if (response.status !== 204) {
+    throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
+  }
+  return response;
+}
+
+// src/tasks/comment.ts
+var core4 = __toESM(require_core(), 1);
+
+// src/tasks/task.ts
+var core3 = __toESM(require_core(), 1);
+async function timeTask(name, task) {
+  const stepMs = Date.now();
+  core3.info(`  - ${name}`);
+  const result = await task();
+  core3.info(`  \u2714 ${name} (${Date.now() - stepMs}ms)`);
+  return result;
+}
+
+// src/tasks/comment.ts
+function createCommentId(cfgCommentId, n) {
+  const id = `<!-- ${cfgCommentId}-${n} -->`;
+  core4.debug(`[createCommentId]: Generated '${id}'`);
+  return id;
+}
+var COMMENT_SECTION_DELIMITER = "\n\n";
+function prepareComments(cfgCommentId, reportSections) {
+  core4.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
+  const comments = [];
+  let currentCommentEntryNumber = 0;
+  let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
+  let currentCommentLength = currentCommentSections[0]?.length ?? 0;
+  let currentSectionIndex = 0;
+  while (currentSectionIndex < reportSections.length) {
+    const section = reportSections[currentSectionIndex];
+    if (section === void 0) {
+      core4.debug(
+        `[prepareComments]: section ${currentSectionIndex} is undefined, ending generation`
+      );
+      break;
+    }
+    const newLength = currentCommentLength + section.length + COMMENT_SECTION_DELIMITER.length;
+    if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      currentCommentLength = newLength;
+      currentCommentSections.push(section);
+      core4.debug(
+        `[prepareComments]: section ${currentSectionIndex} added to currentCommentSections`
+      );
+      currentSectionIndex++;
+      if (currentSectionIndex - 1 < reportSections.length - 1) {
+        continue;
+      }
+    }
+    if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+      const sectionHeader = section.split("\n")[0] ?? "";
+      core4.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
+      core4.warning(`Skipping this section, please see output below:`);
+      core4.warning(section);
+      currentSectionIndex++;
+    }
+    if (currentCommentSections.length > 1) {
+      comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
+      core4.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
+    }
+    currentCommentEntryNumber++;
+    currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
+    currentCommentLength = currentCommentSections[0]?.length ?? 0;
+  }
+  core4.debug(`[prepareComments]: ${comments.length} comments prepared`);
+  return comments;
+}
+async function createOrUpdateComments(pullRequestNumber, commentsToPost, existingCommentIds) {
+  let existingIdsIndex = 0;
+  for (const comment of commentsToPost) {
+    if (existingCommentIds && existingCommentIds[existingIdsIndex] !== void 0) {
+      const commentId = existingCommentIds[existingIdsIndex];
+      await updateComment(commentId, comment);
+      core4.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
+      existingIdsIndex++;
+      continue;
+    }
+    const response = await createComment(pullRequestNumber, comment);
+    core4.debug(`[createOrUpdateComments]: created comment (${response.data.id})`);
+  }
+  if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
+    const toDelete = existingCommentIds.slice(existingIdsIndex);
+    core4.debug(`[createOrUpdateComments]: extraneous comments to delete: [${toDelete.join(", ")}]`);
+    return toDelete;
+  }
+  return [];
+}
+async function deleteExtraneousComments(commentIds) {
+  for (const id of commentIds) {
+    core4.info(`    - Delete comment ${id}`);
+    await deleteComment(id);
+    core4.info(`    \u2714 Delete comment ${id}`);
+  }
+}
+async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
+  const taskMs = Date.now();
+  core4.info("- Running comment tasks");
+  const comments = await timeTask(
+    "Prepare comments",
+    () => prepareComments(cfgCommentId, reportSections)
+  );
+  const existingCommentIds = await timeTask(
+    "Find existing comment IDs",
+    () => listCommentIds(cfgCommentId, pullRequestNumber)
+  );
+  const remainingComments = await timeTask(
+    "Create or update comment",
+    () => createOrUpdateComments(pullRequestNumber, comments, existingCommentIds)
+  );
+  await timeTask("Delete extraneous comments", () => {
+    if (remainingComments.length === 0) {
+      return;
+    }
+    return deleteExtraneousComments(remainingComments);
+  });
+  core4.info(`\u2714 Running comment tasks (${Date.now() - taskMs}ms)`);
+}
+
 // src/tasks/knip.ts
-var core5 = __toESM(require_core(), 1);
+var core6 = __toESM(require_core(), 1);
 import { exec } from "node:child_process";
 
 // node_modules/.pnpm/@antfu+ni@0.21.8/node_modules/@antfu/ni/dist/shared/ni.82314ed6.mjs
@@ -22449,22 +22642,22 @@ var defaultConfig = {
   defaultAgent: "prompt",
   globalAgent: "npm"
 };
-var config;
+var config2;
 async function getConfig2() {
-  if (!config) {
+  if (!config2) {
     const result = await findUp("package.json") || "";
     let packageManager = "";
     if (result)
       packageManager = JSON.parse(fs$1.readFileSync(result, "utf8")).packageManager ?? "";
     const [, agent, version2] = packageManager.match(new RegExp(`^(${Object.values(LOCKS).join("|")})@(\\d).*?$`)) || [];
     if (agent)
-      config = Object.assign({}, defaultConfig, { defaultAgent: agent === "yarn" && Number.parseInt(version2) > 1 ? "yarn@berry" : agent });
+      config2 = Object.assign({}, defaultConfig, { defaultAgent: agent === "yarn" && Number.parseInt(version2) > 1 ? "yarn@berry" : agent });
     else if (!fs$1.existsSync(rcPath))
-      config = defaultConfig;
+      config2 = defaultConfig;
     else
-      config = Object.assign({}, defaultConfig, ini$1.parse(fs$1.readFileSync(rcPath, "utf-8")));
+      config2 = Object.assign({}, defaultConfig, ini$1.parse(fs$1.readFileSync(rcPath, "utf-8")));
   }
-  return config;
+  return config2;
 }
 async function getDefaultAgent(programmatic) {
   const { defaultAgent } = await getConfig2();
@@ -22554,11 +22747,11 @@ function requireMode() {
   }
   return mode;
 }
-var core2;
+var core5;
 if (process.platform === "win32" || commonjsGlobal.TESTING_WINDOWS) {
-  core2 = requireWindows();
+  core5 = requireWindows();
 } else {
-  core2 = requireMode();
+  core5 = requireMode();
 }
 var isexe_1 = isexe$2;
 isexe$2.sync = sync;
@@ -22581,7 +22774,7 @@ function isexe$2(path2, options, cb) {
       });
     });
   }
-  core2(path2, options || {}, function(er, is) {
+  core5(path2, options || {}, function(er, is) {
     if (er) {
       if (er.code === "EACCES" || options && options.ignoreErrors) {
         er = null;
@@ -22593,7 +22786,7 @@ function isexe$2(path2, options, cb) {
 }
 function sync(path2, options) {
   try {
-    return core2.sync(path2, options || {});
+    return core5.sync(path2, options || {});
   } catch (er) {
     if (options && options.ignoreErrors || er.code === "EACCES") {
       return false;
@@ -26813,34 +27006,34 @@ if (typeof process !== "undefined") {
 var $ = {
   enabled: !NODE_DISABLE_COLORS && NO_COLOR == null && TERM !== "dumb" && (FORCE_COLOR != null && FORCE_COLOR !== "0" || isTTY),
   // modifiers
-  reset: init(0, 0),
-  bold: init(1, 22),
-  dim: init(2, 22),
-  italic: init(3, 23),
-  underline: init(4, 24),
-  inverse: init(7, 27),
-  hidden: init(8, 28),
-  strikethrough: init(9, 29),
+  reset: init2(0, 0),
+  bold: init2(1, 22),
+  dim: init2(2, 22),
+  italic: init2(3, 23),
+  underline: init2(4, 24),
+  inverse: init2(7, 27),
+  hidden: init2(8, 28),
+  strikethrough: init2(9, 29),
   // colors
-  black: init(30, 39),
-  red: init(31, 39),
-  green: init(32, 39),
-  yellow: init(33, 39),
-  blue: init(34, 39),
-  magenta: init(35, 39),
-  cyan: init(36, 39),
-  white: init(37, 39),
-  gray: init(90, 39),
-  grey: init(90, 39),
+  black: init2(30, 39),
+  red: init2(31, 39),
+  green: init2(32, 39),
+  yellow: init2(33, 39),
+  blue: init2(34, 39),
+  magenta: init2(35, 39),
+  cyan: init2(36, 39),
+  white: init2(37, 39),
+  gray: init2(90, 39),
+  grey: init2(90, 39),
   // background colors
-  bgBlack: init(40, 49),
-  bgRed: init(41, 49),
-  bgGreen: init(42, 49),
-  bgYellow: init(43, 49),
-  bgBlue: init(44, 49),
-  bgMagenta: init(45, 49),
-  bgCyan: init(46, 49),
-  bgWhite: init(47, 49)
+  bgBlack: init2(40, 49),
+  bgRed: init2(41, 49),
+  bgGreen: init2(42, 49),
+  bgYellow: init2(43, 49),
+  bgBlue: init2(44, 49),
+  bgMagenta: init2(45, 49),
+  bgCyan: init2(46, 49),
+  bgWhite: init2(47, 49)
 };
 function run$1(arr, str) {
   let i = 0, tmp, beg = "", end = "";
@@ -26884,7 +27077,7 @@ function chain(has, keys) {
   ctx.bgWhite = $.bgWhite.bind(ctx);
   return ctx;
 }
-function init(open, close) {
+function init2(open, close) {
   let blk = {
     open: `\x1B[${open}m`,
     close: `\x1B[${close}m`,
@@ -27060,100 +27253,16 @@ function toAlignment(value) {
   return code === 67 || code === 99 ? 99 : code === 76 || code === 108 ? 108 : code === 82 || code === 114 ? 114 : 0;
 }
 
-// src/api.ts
-var core3 = __toESM(require_core(), 1);
-var github = __toESM(require_github(), 1);
-var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
-var config2;
-var octokit;
-function init2(cfg) {
-  config2 = cfg ?? getConfig();
-  octokit = github.getOctokit(config2.token);
-}
-async function createComment(pullRequestNumber, body) {
-  const response = await octokit.rest.issues.createComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: pullRequestNumber,
-    body
-  });
-  if (response.status !== 201) {
-    throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
-  }
-  return response;
-}
-async function listCommentIds(cfgCommentId, pullRequestNumber) {
-  const params = {
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: pullRequestNumber,
-    per_page: 100
-  };
-  const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
-  const messageIds = [];
-  for await (const { data, status } of restIter) {
-    if (status !== 200) {
-      throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
-    }
-    for (const { id, body } of data) {
-      if (!body) {
-        continue;
-      }
-      if (body?.includes(cfgCommentId)) {
-        messageIds.push(id);
-      }
-    }
-  }
-  if (messageIds.length > 0) {
-    core3.debug(`[getCommentIds]: Existing IDs found: [${messageIds.join(", ")}]`);
-    return messageIds;
-  }
-  core3.debug("[getCommentIds]: No existing IDs found");
-  return void 0;
-}
-async function updateComment(commentId, body) {
-  const response = await octokit.rest.issues.updateComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    comment_id: commentId,
-    body
-  });
-  if (response.status !== 200) {
-    throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
-  }
-  return response;
-}
-async function deleteComment(commentId) {
-  const response = await octokit.rest.issues.deleteComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    comment_id: commentId
-  });
-  if (response.status !== 204) {
-    throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
-  }
-  return response;
-}
-
-// src/tasks/task.ts
-var core4 = __toESM(require_core(), 1);
-async function timeTask(name, task) {
-  const stepMs = Date.now();
-  core4.info(`  - ${name}`);
-  const result = await task();
-  core4.info(`  \u2714 ${name} (${Date.now() - stepMs}ms)`);
-  return result;
-}
-
 // src/tasks/knip.ts
-async function buildRunKnipCommand(buildScriptName) {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+async function buildRunKnipCommand(buildScriptName, annotationsEnabled) {
+  const reporterArg = annotationsEnabled ? "--reporter jsonExt" : "--reporter json";
+  const cmd = await getCliCommand(parseNr, [buildScriptName, reporterArg], {
     programmatic: true
   });
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
   }
-  core5.debug(`knip command: ${cmd}`);
+  core6.debug(`knip command: ${cmd}`);
   return cmd;
 }
 async function run2(runCmd) {
@@ -27228,7 +27337,7 @@ function parseJsonReport(rawJson) {
       }
     }
   }
-  core5.debug(
+  core6.debug(
     `[parseJsonReport]: results summary: {${Object.entries(summary).map(([key, value]) => `${key}: ${value}`).join(", ")}}`
   );
   return out;
@@ -27300,7 +27409,7 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
   if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     return output;
   }
-  core5.info(`    - Splitting section ${sectionHeader}`);
+  core6.info(`    - Splitting section ${sectionHeader}`);
   output = [];
   const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
@@ -27319,7 +27428,7 @@ function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
     tableBodySliceStart = tableBodySliceEnd;
     tableBodySliceEnd += tableBodyItemWindow;
   }
-  core5.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  core6.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
   return output;
 }
 function buildMarkdownSections(report) {
@@ -27329,7 +27438,7 @@ function buildMarkdownSections(report) {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
-          core5.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+          core6.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
       case "dependencies":
@@ -27345,7 +27454,7 @@ function buildMarkdownSections(report) {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
-          core5.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core6.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
       case "enumMembers":
@@ -27354,7 +27463,7 @@ function buildMarkdownSections(report) {
           for (const section of buildMapSection(key, report[key])) {
             output.push(section);
           }
-          core5.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core6.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
@@ -27370,122 +27479,21 @@ function getJsonFromOutput(output) {
   }
   throw new Error("Unable to find JSON blob");
 }
-async function runKnipTasks(buildScriptName) {
+async function runKnipTasks(buildScriptName, annotationsEnabled) {
   const taskMs = Date.now();
-  core5.info("- Running Knip tasks");
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
+  core6.info("- Running Knip tasks");
+  const cmd = await timeTask(
+    "Build knip command",
+    () => buildRunKnipCommand(buildScriptName, annotationsEnabled)
+  );
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
   const sections = await timeTask(
     "Convert report to markdown",
     async () => buildMarkdownSections(report)
   );
-  core5.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
+  core6.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
   return sections;
-}
-
-// src/tasks/comment.ts
-var core6 = __toESM(require_core(), 1);
-function createCommentId(cfgCommentId, n) {
-  const id = `<!-- ${cfgCommentId}-${n} -->`;
-  core6.debug(`[createCommentId]: Generated '${id}'`);
-  return id;
-}
-var COMMENT_SECTION_DELIMITER = "\n\n";
-function prepareComments(cfgCommentId, reportSections) {
-  core6.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
-  const comments = [];
-  let currentCommentEntryNumber = 0;
-  let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
-  let currentCommentLength = currentCommentSections[0]?.length ?? 0;
-  let currentSectionIndex = 0;
-  while (currentSectionIndex < reportSections.length) {
-    const section = reportSections[currentSectionIndex];
-    if (section === void 0) {
-      core6.debug(
-        `[prepareComments]: section ${currentSectionIndex} is undefined, ending generation`
-      );
-      break;
-    }
-    const newLength = currentCommentLength + section.length + COMMENT_SECTION_DELIMITER.length;
-    if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      currentCommentLength = newLength;
-      currentCommentSections.push(section);
-      core6.debug(
-        `[prepareComments]: section ${currentSectionIndex} added to currentCommentSections`
-      );
-      currentSectionIndex++;
-      if (currentSectionIndex - 1 < reportSections.length - 1) {
-        continue;
-      }
-    }
-    if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-      const sectionHeader = section.split("\n")[0] ?? "";
-      core6.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
-      core6.warning(`Skipping this section, please see output below:`);
-      core6.warning(section);
-      currentSectionIndex++;
-    }
-    if (currentCommentSections.length > 1) {
-      comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
-      core6.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
-    }
-    currentCommentEntryNumber++;
-    currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
-    currentCommentLength = currentCommentSections[0]?.length ?? 0;
-  }
-  core6.debug(`[prepareComments]: ${comments.length} comments prepared`);
-  return comments;
-}
-async function createOrUpdateComments(pullRequestNumber, commentsToPost, existingCommentIds) {
-  let existingIdsIndex = 0;
-  for (const comment of commentsToPost) {
-    if (existingCommentIds && existingCommentIds[existingIdsIndex] !== void 0) {
-      const commentId = existingCommentIds[existingIdsIndex];
-      await updateComment(commentId, comment);
-      core6.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
-      existingIdsIndex++;
-      continue;
-    }
-    const response = await createComment(pullRequestNumber, comment);
-    core6.debug(`[createOrUpdateComments]: created comment (${response.data.id})`);
-  }
-  if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
-    const toDelete = existingCommentIds.slice(existingIdsIndex);
-    core6.debug(`[createOrUpdateComments]: extraneous comments to delete: [${toDelete.join(", ")}]`);
-    return toDelete;
-  }
-  return [];
-}
-async function deleteExtraneousComments(commentIds) {
-  for (const id of commentIds) {
-    core6.info(`    - Delete comment ${id}`);
-    await deleteComment(id);
-    core6.info(`    \u2714 Delete comment ${id}`);
-  }
-}
-async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
-  const taskMs = Date.now();
-  core6.info("- Running comment tasks");
-  const comments = await timeTask(
-    "Prepare comments",
-    () => prepareComments(cfgCommentId, reportSections)
-  );
-  const existingCommentIds = await timeTask(
-    "Find existing comment IDs",
-    () => listCommentIds(cfgCommentId, pullRequestNumber)
-  );
-  const remainingComments = await timeTask(
-    "Create or update comment",
-    () => createOrUpdateComments(pullRequestNumber, comments, existingCommentIds)
-  );
-  await timeTask("Delete extraneous comments", () => {
-    if (remainingComments.length === 0) {
-      return;
-    }
-    return deleteExtraneousComments(remainingComments);
-  });
-  core6.info(`\u2714 Running comment tasks (${Date.now() - taskMs}ms)`);
 }
 
 // src/main.ts
@@ -27500,8 +27508,8 @@ async function run3() {
         `knip-reporter currently only supports 'pull_request' events, current event: ${github2.context.eventName}`
       );
     }
-    init2(config3);
-    const knipTaskResult = await runKnipTasks(config3.commandScriptName);
+    init(config3);
+    const knipTaskResult = await runKnipTasks(config3.commandScriptName, config3.annotations);
     await runCommentTask(
       config3.commentId,
       github2.context.payload.pull_request.number,

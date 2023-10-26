@@ -22,7 +22,7 @@ async function run(): Promise<void> {
 
     init(config);
 
-    const knipTaskResult = await runKnipTasks(config.commandScriptName);
+    const knipTaskResult = await runKnipTasks(config.commandScriptName, config.annotations);
 
     await runCommentTask(
       config.commentId,
