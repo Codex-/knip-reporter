@@ -12,7 +12,15 @@ import {
 } from "vitest";
 
 import type { ActionConfig } from "./action.ts";
-import { createComment, deleteComment, listCommentIds, init, updateComment } from "./api.ts";
+import {
+  createComment,
+  deleteComment,
+  listCommentIds,
+  init,
+  updateComment,
+  createCheck,
+  updateCheck,
+} from "./api.ts";
 
 vi.mock("@actions/core");
 
@@ -21,6 +29,7 @@ describe("API", () => {
     token: "secret",
     commandScriptName: "npm",
     commentId: "knip-report",
+    annotations: true,
     ignoreResults: false,
   };
   type Octokit = ReturnType<(typeof github)["getOctokit"]>;
@@ -215,6 +224,131 @@ describe("API", () => {
 
       await expect(deleteComment(123456)).rejects.toThrow(
         `Failed to delete comment, expected 204 but received ${errorStatus}`,
+      );
+    });
+  });
+
+  describe("createCheck", () => {
+    it("should not throw", async () => {
+      const restSpy = vi.spyOn(octokit.rest.checks, "create").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 201,
+        }) as any,
+      );
+
+      const state = await createCheck();
+      expect(state.status).toStrictEqual(201);
+      expect(restSpy).toBeCalledWith({
+        owner: "a",
+        repo: "b",
+        head_sha: undefined,
+        name: "knip-reporter",
+        status: "in_progress",
+      });
+    });
+
+    it("should throw if a non-201 status is returned", async () => {
+      const errorStatus = 401;
+      vi.spyOn(octokit.rest.checks, "create").mockReturnValue(
+        Promise.resolve({
+          data: undefined,
+          status: errorStatus,
+        }) as any,
+      );
+
+      await expect(createCheck()).rejects.toThrow(
+        `Failed to create check, expected 201 but received ${errorStatus}`,
+      );
+    });
+  });
+
+  describe("updateCheck", () => {
+    it("should not throw", async () => {
+      vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      const state = await updateCheck(123, "in_progress");
+      expect(state.status).toStrictEqual(200);
+    });
+
+    it("should pass through check_run_id", async () => {
+      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      await updateCheck(123, "in_progress");
+      expect(restSpy.mock.calls[0]![0]!.check_run_id).toStrictEqual(123);
+      await updateCheck(456, "in_progress");
+      expect(restSpy.mock.calls[1]![0]!.check_run_id).toStrictEqual(456);
+    });
+
+    it("should pass through status", async () => {
+      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      await updateCheck(123, "in_progress");
+      expect(restSpy.mock.calls[0]![0]!.status).toStrictEqual("in_progress");
+      await updateCheck(456, "completed");
+      expect(restSpy.mock.calls[1]![0]!.status).toStrictEqual("completed");
+    });
+
+    it("should pass through output", async () => {
+      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      await updateCheck(123, "in_progress", { title: "Test Output 1", summary: "Test Summary 1" });
+      expect(restSpy.mock.calls[0]![0]!.output).toStrictEqual({
+        summary: "Test Summary 1",
+        title: "Test Output 1",
+      });
+      await updateCheck(123, "in_progress", { title: "Test Output 2", summary: "Test Summary 2" });
+      expect(restSpy.mock.calls[1]![0]!.output).toStrictEqual({
+        summary: "Test Summary 2",
+        title: "Test Output 2",
+      });
+    });
+
+    it("should pass through conclusion", async () => {
+      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
+        Promise.resolve({
+          data: {},
+          status: 200,
+        }) as any,
+      );
+
+      await updateCheck(123, "in_progress", undefined, "failure");
+      expect(restSpy.mock.calls[0]![0]!.conclusion).toStrictEqual("failure");
+      await updateCheck(123, "in_progress", undefined, "success");
+      expect(restSpy.mock.calls[1]![0]!.conclusion).toStrictEqual("success");
+    });
+
+    it("should throw if a non-201 status is returned", async () => {
+      const errorStatus = 401;
+      vi.spyOn(octokit.rest.checks, "create").mockReturnValue(
+        Promise.resolve({
+          data: undefined,
+          status: errorStatus,
+        }) as any,
+      );
+
+      await expect(createCheck()).rejects.toThrow(
+        `Failed to create check, expected 201 but received ${errorStatus}`,
       );
     });
   });
