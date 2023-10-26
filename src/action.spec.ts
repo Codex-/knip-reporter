@@ -37,6 +37,7 @@ describe("Action", () => {
         case "token":
         case "command_script_name":
         case "comment_id":
+        case "annotations":
         case "ignore_results":
           return mockEnvConfig[input];
         default:
@@ -95,6 +96,13 @@ describe("Action", () => {
         const config: ActionConfig = getConfig();
 
         expect(config.commentId).toStrictEqual("Special-Comment-ID");
+      });
+
+      it("should load a custom value for annotations", () => {
+        mockEnvConfig.annotations = "false";
+        const config: ActionConfig = getConfig();
+
+        expect(config.annotations).toStrictEqual(false);
       });
 
       it("should load a custom value for ignoreResults", () => {

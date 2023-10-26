@@ -27,6 +27,7 @@ The following inputs are supported
 | `token`               | GitHub Personal Access Token for making API requests.                        | `false`  | `${{ github.token }}`                  |
 | `command_script_name` | The package script that runs knip.                                           | `false`  | `knip`                                 |
 | `comment_id`          | ID to use when updating the PR comment. Spaces will be replaced with dashes. | `false`  | `${{ github.workflow }}-knip-reporter` |
+| `annotations`         | Annotate the project code with the knip results.                             | `false`  | `true`                                 |
 | `ignore_result`       | Do not fail the action run if knip results are found.                        | `false`  | `false`                                |
 
 ### Issues

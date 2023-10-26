@@ -17,8 +17,12 @@ inputs:
     description: ID to use when updating the PR comment.
     default: "${{ github.workflow }}-knip-reporter"
     required: false
+  annotations:
+    description: Annotate the project code with the knip results.
+    default: true
+    required: false
   ignore_results:
-    description: Do not fail the action run if knip results are found
+    description: Do not fail the action run if knip results are found.
     default: false
     required: false
 runs:
