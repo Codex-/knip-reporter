@@ -7,12 +7,8 @@ import { markdownTable, type Options as MarkdownTableOptions } from "markdown-ta
 import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
 
-async function buildRunKnipCommand(
-  buildScriptName: string,
-  annotationsEnabled: boolean,
-): Promise<string> {
-  const reporterArg = annotationsEnabled ? "--reporter jsonExt" : "--reporter json";
-  const cmd = await getCliCommand(parseNr, [buildScriptName, reporterArg], {
+export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
     programmatic: true,
   });
   if (!cmd) {
@@ -24,7 +20,7 @@ async function buildRunKnipCommand(
   return cmd;
 }
 
-async function run(runCmd: string): Promise<string> {
+export async function run(runCmd: string): Promise<string> {
   const result = await new Promise<string>((resolve, reject) => {
     exec(runCmd, (_err, stdout, stderr) => {
       // Knip will exit with a non-zero code on there being results
@@ -246,16 +242,16 @@ function buildMapSection(
   return processSectionToMessage(sectionHeader, tableHeader, tableBody);
 }
 
-const markdownTableOptions: MarkdownTableOptions = {
-  alignDelimiters: false,
-  padding: false,
-};
-
 function processSectionToMessage(
   sectionHeader: string,
   tableHeader: string[],
   tableBody: string[][],
 ): string[] {
+  const markdownTableOptions: MarkdownTableOptions = {
+    alignDelimiters: false,
+    padding: false,
+  };
+
   const sectionProcessingMs = Date.now();
   let output = [
     sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions),
@@ -362,9 +358,7 @@ export async function runKnipTasks(
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
-  const cmd = await timeTask("Build knip command", () =>
-    buildRunKnipCommand(buildScriptName, annotationsEnabled),
-  );
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
   const sections = await timeTask("Convert report to markdown", async () =>
