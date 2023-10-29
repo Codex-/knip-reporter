@@ -201,7 +201,6 @@ export function buildSectionName(name: string): string {
   }
 }
 
-// TODO the interface for rawResults has changed, adding the line data
 /**
  * Build a section where the result is a collection of strings
  */
@@ -236,7 +235,7 @@ export function buildArraySection(
 /**
  * Build a section where the result is a ma
  */
-function buildMapSection(
+export function buildMapSection(
   name: string,
   rawResults: Record<string, Record<string, Item[]>>,
 ): string[] {
@@ -250,7 +249,7 @@ function buildMapSection(
       tableBody.push([
         filename,
         definitionName,
-        members.map((member) => `\`${member}\``).join("<br/>"),
+        members.map((member) => `\`${member.name}\``).join("<br/>"),
       ]);
     }
   }
@@ -309,7 +308,7 @@ function processSectionToMessage(
   return output;
 }
 
-function buildMarkdownSections(report: ParsedReport): string[] {
+export function buildMarkdownSections(report: ParsedReport): string[] {
   const output: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {

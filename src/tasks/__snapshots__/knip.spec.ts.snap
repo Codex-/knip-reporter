@@ -104,6 +104,105 @@ exports[`knip > buildFilesSection > should return markdown for a collection of f
 \`Ratchet.ts\`, \`Clank.ts\`"
 `;
 
+exports[`knip > buildMapSection > should transform a classMembers map section to markdown 1`] = `
+[
+  "### Unused Class Members (7)
+
+|Filename|Class|Member|
+|-|-|-|
+|Qwark.ts|InsaneQwark|\`destroy\`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
+]
+`;
+
+exports[`knip > buildMapSection > should transform a enumMembers map section to markdown 1`] = `
+[
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+]
+`;
+
+exports[`knip > buildMarkdownSections > processes all parsed sections 1`] = `
+[
+  "### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
+  "### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|",
+  "### Unused devDependencies (5)
+
+|Filename|devDependencies|
+|-|-|
+|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/d/package.json|\`dotenv\`|",
+  "### Unused optionalPeerDependencies (2)
+
+|Filename|optionalPeerDependencies|
+|-|-|
+|packages/c/package.json|\`dotenv\`|
+|packages/d/package.json|\`@mui/material\`|",
+  "### Unlisted dependencies (2)
+
+|Filename|unlisted|
+|-|-|
+|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+  "### Unlisted binaries (1)
+
+|Filename|binaries|
+|-|-|
+|packages/e/package.json|\`apollo\`|",
+  "### Unresolved imports (2)
+
+|Filename|unresolved|
+|-|-|
+|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+  "### Unused exports (3)
+
+|Filename|exports|
+|-|-|
+|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
+|packages/a/src/Weapons.ts|\`sheepinator\`|",
+  "### Unused types (5)
+
+|Filename|types|
+|-|-|
+|packages/a/src/Weapons.ts|\`cowinator\`|
+|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
+|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
+  "### Unused Class Members (7)
+
+|Filename|Class|Member|
+|-|-|-|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Qwark.ts|InsaneQwark|\`destroy\`|",
+  "### Duplicates (2)
+
+|Filename|duplicates|
+|-|-|
+|Lombax.ts|\`Ratchet\`, \`default\`|
+|WarBot.ts|\`Kit\`, \`default\`|",
+]
+`;
+
 exports[`knip > parseJsonReport > should not attempt to handle an undefined or null key 1`] = `
 {
   "binaries": {},

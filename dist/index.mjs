@@ -27396,7 +27396,7 @@ function buildMapSection(name, rawResults) {
       tableBody.push([
         filename,
         definitionName,
-        members.map((member) => `\`${member}\``).join("<br/>")
+        members.map((member) => `\`${member.name}\``).join("<br/>")
       ]);
     }
   }

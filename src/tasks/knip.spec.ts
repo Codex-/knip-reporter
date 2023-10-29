@@ -7,6 +7,8 @@ import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import {
   buildArraySection,
   buildFilesSection,
+  buildMapSection,
+  buildMarkdownSections,
   buildRunKnipCommand,
   buildSectionName,
   parseJsonReport,
@@ -346,6 +348,171 @@ describe("knip", () => {
 
       const section = buildArraySection("duplicates", duplicates);
       expect(section).toMatchSnapshot();
+    });
+  });
+
+  describe("buildMapSection", () => {
+    it("should transform a enumMembers map section to markdown", () => {
+      const enumMembers = {
+        "DrNefarious.ts": {
+          Homeworld: [
+            {
+              col: 5,
+              line: 37,
+              name: "Magmos",
+              pos: 1273,
+            },
+            {
+              col: 5,
+              line: 38,
+              name: "Aquatos",
+              pos: 1300,
+            },
+            {
+              col: 5,
+              line: 39,
+              name: "Leviathan ",
+              pos: 1317,
+            },
+            {
+              col: 5,
+              line: 40,
+              name: "TombliOutpost",
+              pos: 1317,
+            },
+            {
+              col: 5,
+              line: 41,
+              name: "Zanifar ",
+              pos: 1317,
+            },
+            {
+              col: 5,
+              line: 42,
+              name: "NefariousSpaceStation ",
+              pos: 1317,
+            },
+            {
+              col: 5,
+              line: 43,
+              name: "NefariousCity",
+              pos: 1317,
+            },
+            {
+              col: 5,
+              line: 44,
+              name: "CorsonV",
+              pos: 1317,
+            },
+          ],
+        },
+        "Sigmund.ts": {
+          Membership: [
+            {
+              col: 5,
+              line: 37,
+              name: "ZordoomPrison",
+              pos: 1273,
+            },
+            {
+              col: 5,
+              line: 38,
+              name: "GreatClockStaff",
+              pos: 1300,
+            },
+          ],
+          Residence: [
+            {
+              col: 5,
+              line: 37,
+              name: "Viceron",
+              pos: 1273,
+            },
+            {
+              col: 5,
+              line: 38,
+              name: "GreatClock",
+              pos: 1300,
+            },
+          ],
+        },
+      };
+
+      const section = buildMapSection("enumMembers", enumMembers);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a classMembers map section to markdown", () => {
+      const classMembers = {
+        "Qwark.ts": {
+          InsaneQwark: [
+            {
+              col: 9,
+              line: 327,
+              name: "destroy",
+              pos: 12268,
+            },
+          ],
+          SaneQwark: [
+            {
+              col: 9,
+              line: 327,
+              name: "rescue",
+              pos: 12268,
+            },
+          ],
+        },
+        "Rivet.ts": {
+          Rivet: [
+            {
+              col: 9,
+              line: 327,
+              name: "fly",
+              pos: 12268,
+            },
+            {
+              col: 3,
+              line: 353,
+              name: "swim",
+              pos: 12977,
+            },
+            {
+              col: 3,
+              line: 357,
+              name: "explode",
+              pos: 13056,
+            },
+            {
+              col: 3,
+              line: 381,
+              name: "mutate",
+              pos: 13810,
+            },
+            {
+              col: 3,
+              line: 388,
+              name: "refineGelatonium ",
+              pos: 13987,
+            },
+          ],
+        },
+      };
+
+      const section = buildMapSection("classMembers", classMembers);
+      expect(section).toMatchSnapshot();
+    });
+  });
+
+  describe("buildMarkdownSections", () => {
+    it("processes all parsed sections", () => {
+      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const mdSections = buildMarkdownSections(parsedReport);
+
+      expect(mdSections).toHaveLength(12);
+      for (const section of mdSections) {
+        expect(section).toBeTypeOf("string");
+      }
+      expect(mdSections).toMatchSnapshot();
     });
   });
 });
