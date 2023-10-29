@@ -35,6 +35,8 @@ export async function run(runCmd: string): Promise<string> {
   return result;
 }
 
+type Item = { name: string; pos?: number; line?: number; col?: number };
+
 interface ParsedReport {
   /**
    * Unused files `files`
@@ -44,57 +46,57 @@ interface ParsedReport {
   /**
    * Unused dependencies `dependencies`
    */
-  dependencies: Record<string, string[]>;
+  dependencies: Record<string, Array<{ name: string }>>;
 
   /**
    * Unused devDependencies `devDependencies`
    */
-  devDependencies: Record<string, string[]>;
+  devDependencies: Record<string, Array<{ name: string }>>;
 
   /**
    * Unused optionalPeerDependencies `optionalPeerDependencies`
    */
-  optionalPeerDependencies: Record<string, string[]>;
+  optionalPeerDependencies: Record<string, Array<{ name: string }>>;
 
   /**
    * Unlisted dependencies `unlisted`
    */
-  unlisted: Record<string, string[]>;
+  unlisted: Record<string, Array<{ name: string }>>;
 
   /**
    * Unlisted binaries `binaries`
    */
-  binaries: Record<string, string[]>;
+  binaries: Record<string, Array<{ name: string }>>;
 
   /**
    * Unresolved imports `unresolved`
    */
-  unresolved: Record<string, string[]>;
+  unresolved: Record<string, Array<{ name: string }>>;
 
   /**
    * Unused exports and unused namespaces exports`exports`
    */
-  exports: Record<string, string[]>;
+  exports: Record<string, Item[]>;
 
   /**
    * Unused exported types and unused namespace types `types`
    */
-  types: Record<string, string[]>;
+  types: Record<string, Item[]>;
 
   /**
    * Unused exported enum members `enumMembers`
    */
-  enumMembers: Record<string, Record<string, string[]>>;
+  enumMembers: Record<string, Record<string, Item[]>>;
 
   /**
    * Unused exported class members `classMembers`
    */
-  classMembers: Record<string, Record<string, string[]>>;
+  classMembers: Record<string, Record<string, Item[]>>;
 
   /**
    * Duplicate exports `duplicates`
    */
-  duplicates: Record<string, string[]>;
+  duplicates: Record<string, Array<Item[]>>;
 }
 
 export function parseJsonReport(rawJson: string): ParsedReport {
@@ -138,6 +140,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
         case "devDependencies":
         case "optionalPeerDependencies":
         case "unlisted":
+        case "binaries":
         case "unresolved":
         case "exports":
         case "types":
@@ -153,7 +156,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
         case "enumMembers":
         case "classMembers":
           if (typeof result === "object" && Object.keys(result).length > 0) {
-            out[type][fileName] = result as Record<string, string[]>;
+            out[type][fileName] = result as Record<string, Item[]>;
             if (summary[type] === undefined) {
               summary[type] = 0;
             }
@@ -198,17 +201,33 @@ export function buildSectionName(name: string): string {
   }
 }
 
+// TODO the interface for rawResults has changed, adding the line data
 /**
  * Build a section where the result is a collection of strings
  */
-function buildArraySection(name: string, rawResults: Record<string, string[]>): string[] {
+export function buildArraySection(
+  name: string,
+  rawResults: Record<string, Item[] | Item[][]>,
+): string[] {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
   const tableBody = [];
+
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
-    tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
+    tableBody.push([
+      fileName,
+      results
+        .map((result) => {
+          if (Array.isArray(result)) {
+            return result.map((item) => `\`${item.name}\``).join(", ");
+          }
+          return `\`${result.name}\``;
+        })
+        .join("<br/>"),
+    ]);
   }
+
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
   return processSectionToMessage(sectionHeader, tableHeader, tableBody);
@@ -219,7 +238,7 @@ function buildArraySection(name: string, rawResults: Record<string, string[]>): 
  */
 function buildMapSection(
   name: string,
-  rawResults: Record<string, Record<string, string[]>>,
+  rawResults: Record<string, Record<string, Item[]>>,
 ): string[] {
   let totalUnused = 0;
   const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
@@ -357,6 +376,10 @@ export async function runKnipTasks(
 ): Promise<string[]> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
+
+  if (annotationsEnabled) {
+    core.info("Annotations to be added in a future release");
+  }
 
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));

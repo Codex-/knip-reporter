@@ -27254,9 +27254,8 @@ function toAlignment(value) {
 }
 
 // src/tasks/knip.ts
-async function buildRunKnipCommand(buildScriptName, annotationsEnabled) {
-  const reporterArg = annotationsEnabled ? "--reporter jsonExt" : "--reporter json";
-  const cmd = await getCliCommand(parseNr, [buildScriptName, reporterArg], {
+async function buildRunKnipCommand(buildScriptName) {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
     programmatic: true
   });
   if (!cmd) {
@@ -27313,6 +27312,7 @@ function parseJsonReport(rawJson) {
         case "devDependencies":
         case "optionalPeerDependencies":
         case "unlisted":
+        case "binaries":
         case "unresolved":
         case "exports":
         case "types":
@@ -27373,7 +27373,15 @@ function buildArraySection(name, rawResults) {
   const tableBody = [];
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
-    tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
+    tableBody.push([
+      fileName,
+      results.map((result) => {
+        if (Array.isArray(result)) {
+          return result.map((item2) => `\`${item2.name}\``).join(", ");
+        }
+        return `\`${result.name}\``;
+      }).join("<br/>")
+    ]);
   }
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
   return processSectionToMessage(sectionHeader, tableHeader, tableBody);
@@ -27396,11 +27404,11 @@ function buildMapSection(name, rawResults) {
   const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
   return processSectionToMessage(sectionHeader, tableHeader, tableBody);
 }
-var markdownTableOptions = {
-  alignDelimiters: false,
-  padding: false
-};
 function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
+  const markdownTableOptions = {
+    alignDelimiters: false,
+    padding: false
+  };
   const sectionProcessingMs = Date.now();
   let output = [
     sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions)
@@ -27482,10 +27490,10 @@ function getJsonFromOutput(output) {
 async function runKnipTasks(buildScriptName, annotationsEnabled) {
   const taskMs = Date.now();
   core6.info("- Running Knip tasks");
-  const cmd = await timeTask(
-    "Build knip command",
-    () => buildRunKnipCommand(buildScriptName, annotationsEnabled)
-  );
+  if (annotationsEnabled) {
+    core6.info("Annotations to be added in a future release");
+  }
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
   const sections = await timeTask(

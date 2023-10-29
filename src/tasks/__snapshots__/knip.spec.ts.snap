@@ -1,5 +1,103 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`knip > buildArraySection > should transform a binaries array section to markdown 1`] = `
+[
+  "### Unlisted binaries (1)
+
+|Filename|binaries|
+|-|-|
+|packages/e/package.json|\`apollo\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a dependencies array section to markdown 1`] = `
+[
+  "### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a devDependencies array section to markdown 1`] = `
+[
+  "### Unused devDependencies (5)
+
+|Filename|devDependencies|
+|-|-|
+|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/d/package.json|\`dotenv\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a duplicate array array section to markdown 1`] = `
+[
+  "### Duplicates (2)
+
+|Filename|duplicates|
+|-|-|
+|Lombax.ts|\`Ratchet\`, \`default\`|
+|WarBot.ts|\`Kit\`, \`default\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a exports array section to markdown 1`] = `
+[
+  "### Unused exports (3)
+
+|Filename|exports|
+|-|-|
+|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
+|packages/a/src/Weapons.ts|\`sheepinator\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a optionalPeerDependencies array section to markdown 1`] = `
+[
+  "### Unused optionalPeerDependencies (2)
+
+|Filename|optionalPeerDependencies|
+|-|-|
+|packages/c/package.json|\`dotenv\`|
+|packages/d/package.json|\`@mui/material\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a types array section to markdown 1`] = `
+[
+  "### Unused types (5)
+
+|Filename|types|
+|-|-|
+|packages/a/src/Weapons.ts|\`cowinator\`|
+|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
+|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a unlisted array section to markdown 1`] = `
+[
+  "### Unlisted dependencies (2)
+
+|Filename|unlisted|
+|-|-|
+|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+]
+`;
+
+exports[`knip > buildArraySection > should transform a unresolved array section to markdown 1`] = `
+[
+  "### Unresolved imports (2)
+
+|Filename|unresolved|
+|-|-|
+|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+]
+`;
+
 exports[`knip > buildFilesSection > should return markdown for a collection of files 1`] = `
 "### Unused files (2)
 
@@ -25,7 +123,13 @@ exports[`knip > parseJsonReport > should not attempt to handle an undefined or n
 
 exports[`knip > parseJsonReport > should parse the knip output 1`] = `
 {
-  "binaries": {},
+  "binaries": {
+    "packages/e/package.json": [
+      {
+        "name": "apollo",
+      },
+    ],
+  },
   "classMembers": {
     "Qwark.ts": {
       "InsaneQwark": [

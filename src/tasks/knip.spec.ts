@@ -5,6 +5,7 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import {
+  buildArraySection,
   buildFilesSection,
   buildRunKnipCommand,
   buildSectionName,
@@ -128,6 +129,223 @@ describe("knip", () => {
 
     it("should throw if an unknown section name is provided", () => {
       expect(() => buildSectionName("sheepinator")).toThrowError("Unknown name: sheepinator");
+    });
+  });
+
+  describe("buildArraySection", () => {
+    it("should transform a dependencies array section to markdown", () => {
+      const dependencies = {
+        "packages/a/package.json": [
+          {
+            name: "react",
+          },
+          {
+            name: "react-dom",
+          },
+        ],
+        "packages/d/package.json": [
+          {
+            name: "react",
+          },
+        ],
+      };
+
+      const section = buildArraySection("dependencies", dependencies);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a devDependencies array section to markdown", () => {
+      const devDependencies = {
+        "packages/a/package.json": [
+          {
+            name: "dotenv",
+          },
+          {
+            name: "eslint-plugin-jest-dom",
+          },
+        ],
+        "packages/b/package.json": [
+          {
+            name: "dotenv",
+          },
+          {
+            name: "eslint-plugin-jest-dom",
+          },
+        ],
+        "packages/d/package.json": [
+          {
+            name: "dotenv",
+          },
+        ],
+      };
+
+      const section = buildArraySection("devDependencies", devDependencies);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a optionalPeerDependencies array section to markdown", () => {
+      const optionalPeerDependencies = {
+        "packages/c/package.json": [
+          {
+            name: "dotenv",
+          },
+        ],
+        "packages/d/package.json": [
+          {
+            name: "@mui/material",
+          },
+        ],
+      };
+
+      const section = buildArraySection("optionalPeerDependencies", optionalPeerDependencies);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a unlisted array section to markdown", () => {
+      const unlisted = {
+        ".eslintrc.cjs": [
+          {
+            name: "@emotion/eslint-plugin",
+          },
+          {
+            name: "eslint-plugin-jest-dom",
+          },
+        ],
+      };
+
+      const section = buildArraySection("unlisted", unlisted);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a binaries array section to markdown", () => {
+      const binaries = {
+        "packages/e/package.json": [
+          {
+            name: "apollo",
+          },
+        ],
+      };
+
+      const section = buildArraySection("binaries", binaries);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a unresolved array section to markdown", () => {
+      const unresolved = {
+        "jest.config.js": [
+          {
+            name: "packages/a/src/setupTests.ts",
+          },
+          {
+            name: "packages/a/../b/src",
+          },
+        ],
+      };
+
+      const section = buildArraySection("unresolved", unresolved);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a exports array section to markdown", () => {
+      const exports = {
+        "packages/a/src/Utils.ts": [
+          {
+            col: 14,
+            line: 48,
+            name: "specialFunc",
+            pos: 1587,
+          },
+          {
+            col: 14,
+            line: 50,
+            name: "uselessFunc",
+            pos: 1686,
+          },
+        ],
+        "packages/a/src/Weapons.ts": [
+          {
+            col: 14,
+            line: 83,
+            name: "sheepinator",
+            pos: 3858,
+          },
+        ],
+      };
+
+      const section = buildArraySection("exports", exports);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a types array section to markdown", () => {
+      const types = {
+        "packages/a/src/Weapons.ts": [
+          {
+            col: 13,
+            line: 75,
+            name: "cowinator",
+            pos: 3686,
+          },
+        ],
+        "packages/b/Clank.ts": [
+          {
+            col: 13,
+            line: 7,
+            name: "SpecialAgent",
+            pos: 310,
+          },
+          {
+            col: 13,
+            line: 11,
+            name: "Zoni",
+            pos: 407,
+          },
+        ],
+        "packages/b/Ratchet.ts": [
+          {
+            col: 13,
+            line: 7,
+            name: "Lombax",
+            pos: 310,
+          },
+          {
+            col: 13,
+            line: 11,
+            name: "Homeworld",
+            pos: 407,
+          },
+        ],
+      };
+
+      const section = buildArraySection("types", types);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a duplicate array array section to markdown", () => {
+      const duplicates = {
+        "Lombax.ts": [
+          [
+            {
+              name: "Ratchet",
+            },
+            {
+              name: "default",
+            },
+          ],
+        ],
+        "WarBot.ts": [
+          [
+            {
+              name: "Kit",
+            },
+            {
+              name: "default",
+            },
+          ],
+        ],
+      };
+
+      const section = buildArraySection("duplicates", duplicates);
+      expect(section).toMatchSnapshot();
     });
   });
 });
