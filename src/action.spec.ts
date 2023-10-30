@@ -29,6 +29,8 @@ describe("Action", () => {
       token: actionInputs.token?.default,
       command_script_name: actionInputs.command_script_name?.default,
       comment_id: actionInputs.comment_id?.default,
+      annotations: actionInputs.annotations?.default,
+      verbose: actionInputs.verbose?.default,
       ignore_results: actionInputs.ignore_results?.default,
     };
 
@@ -37,7 +39,16 @@ describe("Action", () => {
         case "token":
         case "command_script_name":
         case "comment_id":
+          return mockEnvConfig[input];
+        default:
+          throw new Error(`invalid input requested ${input}`);
+      }
+    });
+
+    vi.spyOn(core, "getBooleanInput").mockImplementation((input: string) => {
+      switch (input) {
         case "annotations":
+        case "verbose":
         case "ignore_results":
           return mockEnvConfig[input];
         default:
@@ -99,14 +110,21 @@ describe("Action", () => {
       });
 
       it("should load a custom value for annotations", () => {
-        mockEnvConfig.annotations = "false";
+        mockEnvConfig.annotations = false;
         const config: ActionConfig = getConfig();
 
         expect(config.annotations).toStrictEqual(false);
       });
 
+      it("should load a custom value for verbose", () => {
+        mockEnvConfig.verbose = true;
+        const config: ActionConfig = getConfig();
+
+        expect(config.verbose).toStrictEqual(true);
+      });
+
       it("should load a custom value for ignoreResults", () => {
-        mockEnvConfig.ignore_results = "true";
+        mockEnvConfig.ignore_results = true;
         const config: ActionConfig = getConfig();
 
         expect(config.ignoreResults).toStrictEqual(true);

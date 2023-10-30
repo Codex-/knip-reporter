@@ -25,6 +25,11 @@ export interface ActionConfig {
   annotations: boolean;
 
   /**
+   * Include annotated items in the comment report.
+   */
+  verbose: boolean;
+
+  /**
    * Do not fail the action run if knip results are found.
    */
   ignoreResults: boolean;
@@ -35,8 +40,9 @@ export function getConfig(): ActionConfig {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
     commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
-    annotations: core.getInput("annotations", { required: false }) === "true",
-    ignoreResults: core.getInput("ignore_results", { required: false }) === "true",
+    annotations: core.getBooleanInput("annotations", { required: false }),
+    verbose: core.getBooleanInput("verbose", { required: false }),
+    ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
   };
 }
 
@@ -46,6 +52,7 @@ export function configToStr(cfg: ActionConfig): string {
     command_script_name: ${cfg.commandScriptName}
     comment_id: ${cfg.commentId}
     annotations: ${cfg.annotations}
+    verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
 `;
 }

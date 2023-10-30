@@ -731,7 +731,7 @@ var require_tunnel = __commonJS({
         connectOptions.headers = connectOptions.headers || {};
         connectOptions.headers["Proxy-Authorization"] = "Basic " + new Buffer(connectOptions.proxyAuth).toString("base64");
       }
-      debug4("making CONNECT request");
+      debug5("making CONNECT request");
       var connectReq = self2.request(connectOptions);
       connectReq.useChunkedEncodingByDefault = false;
       connectReq.once("response", onResponse);
@@ -751,7 +751,7 @@ var require_tunnel = __commonJS({
         connectReq.removeAllListeners();
         socket.removeAllListeners();
         if (res.statusCode !== 200) {
-          debug4(
+          debug5(
             "tunneling socket could not be established, statusCode=%d",
             res.statusCode
           );
@@ -763,7 +763,7 @@ var require_tunnel = __commonJS({
           return;
         }
         if (head.length > 0) {
-          debug4("got illegal response body from proxy");
+          debug5("got illegal response body from proxy");
           socket.destroy();
           var error2 = new Error("got illegal response body from proxy");
           error2.code = "ECONNRESET";
@@ -771,13 +771,13 @@ var require_tunnel = __commonJS({
           self2.removeSocket(placeholder);
           return;
         }
-        debug4("tunneling connection has established");
+        debug5("tunneling connection has established");
         self2.sockets[self2.sockets.indexOf(placeholder)] = socket;
         return cb(socket);
       }
       function onError(cause) {
         connectReq.removeAllListeners();
-        debug4(
+        debug5(
           "tunneling socket could not be established, cause=%s\n",
           cause.message,
           cause.stack
@@ -839,9 +839,9 @@ var require_tunnel = __commonJS({
       }
       return target;
     }
-    var debug4;
+    var debug5;
     if (process.env.NODE_DEBUG && /\btunnel\b/.test(process.env.NODE_DEBUG)) {
-      debug4 = function() {
+      debug5 = function() {
         var args = Array.prototype.slice.call(arguments);
         if (typeof args[0] === "string") {
           args[0] = "TUNNEL: " + args[0];
@@ -851,10 +851,10 @@ var require_tunnel = __commonJS({
         console.error.apply(console, args);
       };
     } else {
-      debug4 = function() {
+      debug5 = function() {
       };
     }
-    exports.debug = debug4;
+    exports.debug = debug5;
   }
 });
 
@@ -17765,7 +17765,7 @@ var require_core = __commonJS({
       return inputs.map((input) => input.trim());
     }
     exports.getMultilineInput = getMultilineInput;
-    function getBooleanInput(name, options) {
+    function getBooleanInput2(name, options) {
       const trueValue = ["true", "True", "TRUE"];
       const falseValue = ["false", "False", "FALSE"];
       const val = getInput3(name, options);
@@ -17776,7 +17776,7 @@ var require_core = __commonJS({
       throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}
 Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
     }
-    exports.getBooleanInput = getBooleanInput;
+    exports.getBooleanInput = getBooleanInput2;
     function setOutput(name, value) {
       const filePath = process.env["GITHUB_OUTPUT"] || "";
       if (filePath) {
@@ -17799,10 +17799,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       return process.env["RUNNER_DEBUG"] === "1";
     }
     exports.isDebug = isDebug;
-    function debug4(message) {
+    function debug5(message) {
       command_1.issueCommand("debug", {}, message);
     }
-    exports.debug = debug4;
+    exports.debug = debug5;
     function error2(message, properties = {}) {
       command_1.issueCommand("error", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
@@ -21890,7 +21890,7 @@ var require_github = __commonJS({
 });
 
 // src/main.ts
-var core7 = __toESM(require_core(), 1);
+var core8 = __toESM(require_core(), 1);
 var github2 = __toESM(require_github(), 1);
 
 // src/action.ts
@@ -21900,8 +21900,9 @@ function getConfig() {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
     commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
-    annotations: core.getInput("annotations", { required: false }) === "true",
-    ignoreResults: core.getInput("ignore_results", { required: false }) === "true"
+    annotations: core.getBooleanInput("annotations", { required: false }),
+    verbose: core.getBooleanInput("verbose", { required: false }),
+    ignoreResults: core.getBooleanInput("ignore_results", { required: false })
   };
 }
 function configToStr(cfg) {
@@ -21910,6 +21911,7 @@ function configToStr(cfg) {
     command_script_name: ${cfg.commandScriptName}
     comment_id: ${cfg.commentId}
     annotations: ${cfg.annotations}
+    verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
 `;
 }
@@ -21988,29 +21990,53 @@ async function deleteComment(commentId) {
   }
   return response;
 }
+async function createCheck() {
+  if (github.context.payload.pull_request?.head.sha === void 0) {
+    core2.warning("Unable to find correct head_sha from payload, using base context sha");
+  }
+  const response = await octokit.rest.checks.create({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    name: "knip-reporter",
+    head_sha: github.context.payload.pull_request?.head.sha ?? github.context.sha,
+    status: "in_progress"
+  });
+  if (response.status !== 201) {
+    throw new Error(`Failed to create check, expected 201 but received ${response.status}`);
+  }
+  return response;
+}
+
+// src/tasks/check.ts
+var core3 = __toESM(require_core(), 1);
+async function createCheckId() {
+  const id = (await createCheck()).data.id;
+  core3.debug(`[createCheckId]: Check created (${id})`);
+  return id;
+}
 
 // src/tasks/comment.ts
-var core4 = __toESM(require_core(), 1);
+var core5 = __toESM(require_core(), 1);
 
 // src/tasks/task.ts
-var core3 = __toESM(require_core(), 1);
+var core4 = __toESM(require_core(), 1);
 async function timeTask(name, task) {
   const stepMs = Date.now();
-  core3.info(`  - ${name}`);
+  core4.info(`  - ${name}`);
   const result = await task();
-  core3.info(`  \u2714 ${name} (${Date.now() - stepMs}ms)`);
+  core4.info(`  \u2714 ${name} (${Date.now() - stepMs}ms)`);
   return result;
 }
 
 // src/tasks/comment.ts
 function createCommentId(cfgCommentId, n) {
   const id = `<!-- ${cfgCommentId}-${n} -->`;
-  core4.debug(`[createCommentId]: Generated '${id}'`);
+  core5.debug(`[createCommentId]: Generated '${id}'`);
   return id;
 }
 var COMMENT_SECTION_DELIMITER = "\n\n";
 function prepareComments(cfgCommentId, reportSections) {
-  core4.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
+  core5.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments = [];
   let currentCommentEntryNumber = 0;
   let currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
@@ -22019,7 +22045,7 @@ function prepareComments(cfgCommentId, reportSections) {
   while (currentSectionIndex < reportSections.length) {
     const section = reportSections[currentSectionIndex];
     if (section === void 0) {
-      core4.debug(
+      core5.debug(
         `[prepareComments]: section ${currentSectionIndex} is undefined, ending generation`
       );
       break;
@@ -22028,7 +22054,7 @@ function prepareComments(cfgCommentId, reportSections) {
     if (newLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
       currentCommentLength = newLength;
       currentCommentSections.push(section);
-      core4.debug(
+      core5.debug(
         `[prepareComments]: section ${currentSectionIndex} added to currentCommentSections`
       );
       currentSectionIndex++;
@@ -22038,20 +22064,20 @@ function prepareComments(cfgCommentId, reportSections) {
     }
     if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
       const sectionHeader = section.split("\n")[0] ?? "";
-      core4.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
-      core4.warning(`Skipping this section, please see output below:`);
-      core4.warning(section);
+      core5.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
+      core5.warning(`Skipping this section, please see output below:`);
+      core5.warning(section);
       currentSectionIndex++;
     }
     if (currentCommentSections.length > 1) {
       comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
-      core4.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
+      core5.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
     }
     currentCommentEntryNumber++;
     currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
     currentCommentLength = currentCommentSections[0]?.length ?? 0;
   }
-  core4.debug(`[prepareComments]: ${comments.length} comments prepared`);
+  core5.debug(`[prepareComments]: ${comments.length} comments prepared`);
   return comments;
 }
 async function createOrUpdateComments(pullRequestNumber, commentsToPost, existingCommentIds) {
@@ -22060,30 +22086,30 @@ async function createOrUpdateComments(pullRequestNumber, commentsToPost, existin
     if (existingCommentIds && existingCommentIds[existingIdsIndex] !== void 0) {
       const commentId = existingCommentIds[existingIdsIndex];
       await updateComment(commentId, comment);
-      core4.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
+      core5.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
       existingIdsIndex++;
       continue;
     }
     const response = await createComment(pullRequestNumber, comment);
-    core4.debug(`[createOrUpdateComments]: created comment (${response.data.id})`);
+    core5.debug(`[createOrUpdateComments]: created comment (${response.data.id})`);
   }
   if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
     const toDelete = existingCommentIds.slice(existingIdsIndex);
-    core4.debug(`[createOrUpdateComments]: extraneous comments to delete: [${toDelete.join(", ")}]`);
+    core5.debug(`[createOrUpdateComments]: extraneous comments to delete: [${toDelete.join(", ")}]`);
     return toDelete;
   }
   return [];
 }
 async function deleteExtraneousComments(commentIds) {
   for (const id of commentIds) {
-    core4.info(`    - Delete comment ${id}`);
+    core5.info(`    - Delete comment ${id}`);
     await deleteComment(id);
-    core4.info(`    \u2714 Delete comment ${id}`);
+    core5.info(`    \u2714 Delete comment ${id}`);
   }
 }
 async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
   const taskMs = Date.now();
-  core4.info("- Running comment tasks");
+  core5.info("- Running comment tasks");
   const comments = await timeTask(
     "Prepare comments",
     () => prepareComments(cfgCommentId, reportSections)
@@ -22102,11 +22128,11 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
     }
     return deleteExtraneousComments(remainingComments);
   });
-  core4.info(`\u2714 Running comment tasks (${Date.now() - taskMs}ms)`);
+  core5.info(`\u2714 Running comment tasks (${Date.now() - taskMs}ms)`);
 }
 
 // src/tasks/knip.ts
-var core6 = __toESM(require_core(), 1);
+var core7 = __toESM(require_core(), 1);
 import { exec } from "node:child_process";
 
 // node_modules/.pnpm/@antfu+ni@0.21.8/node_modules/@antfu/ni/dist/shared/ni.82314ed6.mjs
@@ -22747,11 +22773,11 @@ function requireMode() {
   }
   return mode;
 }
-var core5;
+var core6;
 if (process.platform === "win32" || commonjsGlobal.TESTING_WINDOWS) {
-  core5 = requireWindows();
+  core6 = requireWindows();
 } else {
-  core5 = requireMode();
+  core6 = requireMode();
 }
 var isexe_1 = isexe$2;
 isexe$2.sync = sync;
@@ -22774,7 +22800,7 @@ function isexe$2(path2, options, cb) {
       });
     });
   }
-  core5(path2, options || {}, function(er, is) {
+  core6(path2, options || {}, function(er, is) {
     if (er) {
       if (er.code === "EACCES" || options && options.ignoreErrors) {
         er = null;
@@ -22786,7 +22812,7 @@ function isexe$2(path2, options, cb) {
 }
 function sync(path2, options) {
   try {
-    return core5.sync(path2, options || {});
+    return core6.sync(path2, options || {});
   } catch (er) {
     if (options && options.ignoreErrors || er.code === "EACCES") {
       return false;
@@ -27261,7 +27287,7 @@ async function buildRunKnipCommand(buildScriptName) {
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
   }
-  core6.debug(`knip command: ${cmd}`);
+  core7.debug(`knip command: ${cmd}`);
   return cmd;
 }
 async function run2(runCmd) {
@@ -27337,7 +27363,7 @@ function parseJsonReport(rawJson) {
       }
     }
   }
-  core6.debug(
+  core7.debug(
     `[parseJsonReport]: results summary: {${Object.entries(summary).map(([key, value]) => `${key}: ${value}`).join(", ")}}`
   );
   return out;
@@ -27386,23 +27412,36 @@ function buildArraySection(name, rawResults) {
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
   return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
-function buildMapSection(name, rawResults) {
+function isValidAnnotationBody(item2) {
+  return item2.pos !== void 0 && item2.line !== void 0 && item2.col !== void 0;
+}
+function buildMapSection(name, rawResults, annotations = false) {
   let totalUnused = 0;
   const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
   const tableBody = [];
+  const itemAnnotations = [];
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
+      const itemNames = [];
+      for (const member of members) {
+        itemNames.push(`\`${member.name}\``);
+        if (annotations && isValidAnnotationBody(member)) {
+          itemAnnotations.push({
+            path: filename,
+            identifier: member.name,
+            start_line: member.line,
+            start_column: member.col
+          });
+        }
+      }
       totalUnused += members.length;
-      tableBody.push([
-        filename,
-        definitionName,
-        members.map((member) => `\`${member.name}\``).join("<br/>")
-      ]);
+      tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
     }
   }
   const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
   const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
-  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  return { sections: processedSections, annotations: itemAnnotations };
 }
 function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   const markdownTableOptions = {
@@ -27417,7 +27456,7 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     return output;
   }
-  core6.info(`    - Splitting section ${sectionHeader}`);
+  core7.info(`    - Splitting section ${sectionHeader}`);
   output = [];
   const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
@@ -27436,17 +27475,18 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
     tableBodySliceStart = tableBodySliceEnd;
     tableBodySliceEnd += tableBodyItemWindow;
   }
-  core6.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  core7.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
   return output;
 }
 function buildMarkdownSections(report) {
+  const annotations = [];
   const output = [];
   for (const key of Object.keys(report)) {
     switch (key) {
       case "files":
         if (report.files.length > 0) {
           output.push(buildFilesSection(report.files));
-          core6.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
       case "dependencies":
@@ -27462,16 +27502,18 @@ function buildMarkdownSections(report) {
           for (const section of buildArraySection(key, report[key])) {
             output.push(section);
           }
-          core6.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          for (const section of buildMapSection(key, report[key])) {
+          const { sections, annotations: annotations2 } = buildMapSection(key, report[key]);
+          annotations2.push(...annotations2);
+          for (const section of sections) {
             output.push(section);
           }
-          core6.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
@@ -27489,9 +27531,9 @@ function getJsonFromOutput(output) {
 }
 async function runKnipTasks(buildScriptName, annotationsEnabled) {
   const taskMs = Date.now();
-  core6.info("- Running Knip tasks");
+  core7.info("- Running Knip tasks");
   if (annotationsEnabled) {
-    core6.info("Annotations to be added in a future release");
+    core7.info("Annotations to be added in a future release");
   }
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
@@ -27500,7 +27542,7 @@ async function runKnipTasks(buildScriptName, annotationsEnabled) {
     "Convert report to markdown",
     async () => buildMarkdownSections(report)
   );
-  core6.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
+  core7.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
   return sections;
 }
 
@@ -27509,14 +27551,18 @@ async function run3() {
   try {
     const config3 = getConfig();
     const actionMs = Date.now();
-    core7.info("- knip-reporter action");
-    core7.info(configToStr(config3));
+    core8.info("- knip-reporter action");
+    core8.info(configToStr(config3));
     if (github2.context.payload.pull_request === void 0) {
       throw new Error(
         `knip-reporter currently only supports 'pull_request' events, current event: ${github2.context.eventName}`
       );
     }
     init(config3);
+    let checkId;
+    if (config3.annotations) {
+      checkId = await timeTask("Create check ID", () => createCheckId());
+    }
     const knipTaskResult = await runKnipTasks(config3.commandScriptName, config3.annotations);
     await runCommentTask(
       config3.commentId,
@@ -27524,17 +27570,17 @@ async function run3() {
       knipTaskResult
     );
     if (!config3.ignoreResults && knipTaskResult.length > 0) {
-      core7.setFailed("knip has resulted in findings, please see the report for more details");
+      core8.setFailed("knip has resulted in findings, please see the report for more details");
     }
-    core7.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
+    core8.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error2) {
     if (error2 instanceof Error) {
-      core7.error(`\u{1F9E8} Failed: ${error2.message}`);
-      core7.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
-      core7.setFailed(error2);
+      core8.error(`\u{1F9E8} Failed: ${error2.message}`);
+      core8.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
+      core8.setFailed(error2);
       return;
     }
-    core7.setFailed(`\u{1F9E8} Failed: ${error2}`);
+    core8.setFailed(`\u{1F9E8} Failed: ${error2}`);
   }
 }
 (() => run3())();
