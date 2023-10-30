@@ -105,27 +105,179 @@ exports[`knip > buildFilesSection > should return markdown for a collection of f
 `;
 
 exports[`knip > buildMapSection > should transform a classMembers map section to markdown 1`] = `
-[
-  "### Unused Class Members (7)
+{
+  "annotations": [],
+  "sections": [
+    "### Unused Class Members (7)
 
 |Filename|Class|Member|
 |-|-|-|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
-]
+  ],
+}
+`;
+
+exports[`knip > buildMapSection > should transform a classMembers map section to markdown and annotations 1`] = `
+{
+  "annotations": [
+    {
+      "identifier": "destroy",
+      "path": "Qwark.ts",
+      "start_column": 9,
+      "start_line": 327,
+    },
+    {
+      "identifier": "rescue",
+      "path": "Qwark.ts",
+      "start_column": 9,
+      "start_line": 327,
+    },
+    {
+      "identifier": "fly",
+      "path": "Rivet.ts",
+      "start_column": 9,
+      "start_line": 327,
+    },
+    {
+      "identifier": "swim",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 353,
+    },
+    {
+      "identifier": "explode",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 357,
+    },
+    {
+      "identifier": "mutate",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 381,
+    },
+    {
+      "identifier": "refineGelatonium ",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 388,
+    },
+  ],
+  "sections": [
+    "### Unused Class Members (7)
+
+|Filename|Class|Member|
+|-|-|-|
+|Qwark.ts|InsaneQwark|\`destroy\`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
+  ],
+}
 `;
 
 exports[`knip > buildMapSection > should transform a enumMembers map section to markdown 1`] = `
-[
-  "### Unused Enum Members (12)
+{
+  "annotations": [],
+  "sections": [
+    "### Unused Enum Members (12)
 
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
-]
+  ],
+}
+`;
+
+exports[`knip > buildMapSection > should transform a enumMembers map section to markdown and annotations 1`] = `
+{
+  "annotations": [
+    {
+      "identifier": "Magmos",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 37,
+    },
+    {
+      "identifier": "Aquatos",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 38,
+    },
+    {
+      "identifier": "Leviathan ",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 39,
+    },
+    {
+      "identifier": "TombliOutpost",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 40,
+    },
+    {
+      "identifier": "Zanifar ",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 41,
+    },
+    {
+      "identifier": "NefariousSpaceStation ",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 42,
+    },
+    {
+      "identifier": "NefariousCity",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 43,
+    },
+    {
+      "identifier": "CorsonV",
+      "path": "DrNefarious.ts",
+      "start_column": 5,
+      "start_line": 44,
+    },
+    {
+      "identifier": "ZordoomPrison",
+      "path": "Sigmund.ts",
+      "start_column": 5,
+      "start_line": 37,
+    },
+    {
+      "identifier": "GreatClockStaff",
+      "path": "Sigmund.ts",
+      "start_column": 5,
+      "start_line": 38,
+    },
+    {
+      "identifier": "Viceron",
+      "path": "Sigmund.ts",
+      "start_column": 5,
+      "start_line": 37,
+    },
+    {
+      "identifier": "GreatClock",
+      "path": "Sigmund.ts",
+      "start_column": 5,
+      "start_line": 38,
+    },
+  ],
+  "sections": [
+    "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  ],
+}
 `;
 
 exports[`knip > buildMarkdownSections > processes all parsed sections 1`] = `

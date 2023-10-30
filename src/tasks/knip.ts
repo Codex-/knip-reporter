@@ -232,32 +232,58 @@ export function buildArraySection(
   return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 
+interface MinimalAnnotation {
+  path: string;
+  identifier: string;
+  start_line: number;
+  start_column: number;
+}
+function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
+  return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
+}
+
 /**
- * Build a section where the result is a ma
+ * Build a section where the result is a map
+ *
+ * As these sections are the only sections that return code identifiers
+ * we process the sections and annotations.
+ *
+ * @returns a tuple of the sections and annotations if enabled
  */
 export function buildMapSection(
   name: string,
   rawResults: Record<string, Record<string, Item[]>>,
-): string[] {
+  annotations = false,
+): { sections: string[]; annotations: MinimalAnnotation[] } {
   let totalUnused = 0;
   const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
   const tableBody = [];
+  const itemAnnotations: MinimalAnnotation[] = [];
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
+      const itemNames = [];
+      for (const member of members) {
+        itemNames.push(`\`${member.name}\``);
+        if (annotations && isValidAnnotationBody(member)) {
+          itemAnnotations.push({
+            path: filename,
+            identifier: member.name,
+            start_line: member.line,
+            start_column: member.col,
+          });
+        }
+      }
       totalUnused += members.length;
-      tableBody.push([
-        filename,
-        definitionName,
-        members.map((member) => `\`${member.name}\``).join("<br/>"),
-      ]);
+      tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
     }
   }
 
   const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
   const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
+  const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
 
-  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  return { sections: processedSections, annotations: itemAnnotations };
 }
 
 export function processSectionToMessages(
@@ -309,6 +335,7 @@ export function processSectionToMessages(
 }
 
 export function buildMarkdownSections(report: ParsedReport): string[] {
+  const annotations: MinimalAnnotation[] = [];
   const output: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {
@@ -337,7 +364,9 @@ export function buildMarkdownSections(report: ParsedReport): string[] {
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          for (const section of buildMapSection(key, report[key])) {
+          const { sections, annotations } = buildMapSection(key, report[key]);
+          annotations.push(...annotations);
+          for (const section of sections) {
             output.push(section);
           }
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);

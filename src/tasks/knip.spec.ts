@@ -354,153 +354,162 @@ describe("knip", () => {
   });
 
   describe("buildMapSection", () => {
-    it("should transform a enumMembers map section to markdown", () => {
-      const enumMembers = {
-        "DrNefarious.ts": {
-          Homeworld: [
-            {
-              col: 5,
-              line: 37,
-              name: "Magmos",
-              pos: 1273,
-            },
-            {
-              col: 5,
-              line: 38,
-              name: "Aquatos",
-              pos: 1300,
-            },
-            {
-              col: 5,
-              line: 39,
-              name: "Leviathan ",
-              pos: 1317,
-            },
-            {
-              col: 5,
-              line: 40,
-              name: "TombliOutpost",
-              pos: 1317,
-            },
-            {
-              col: 5,
-              line: 41,
-              name: "Zanifar ",
-              pos: 1317,
-            },
-            {
-              col: 5,
-              line: 42,
-              name: "NefariousSpaceStation ",
-              pos: 1317,
-            },
-            {
-              col: 5,
-              line: 43,
-              name: "NefariousCity",
-              pos: 1317,
-            },
-            {
-              col: 5,
-              line: 44,
-              name: "CorsonV",
-              pos: 1317,
-            },
-          ],
-        },
-        "Sigmund.ts": {
-          Membership: [
-            {
-              col: 5,
-              line: 37,
-              name: "ZordoomPrison",
-              pos: 1273,
-            },
-            {
-              col: 5,
-              line: 38,
-              name: "GreatClockStaff",
-              pos: 1300,
-            },
-          ],
-          Residence: [
-            {
-              col: 5,
-              line: 37,
-              name: "Viceron",
-              pos: 1273,
-            },
-            {
-              col: 5,
-              line: 38,
-              name: "GreatClock",
-              pos: 1300,
-            },
-          ],
-        },
-      };
+    const enumMembers = {
+      "DrNefarious.ts": {
+        Homeworld: [
+          {
+            col: 5,
+            line: 37,
+            name: "Magmos",
+            pos: 1273,
+          },
+          {
+            col: 5,
+            line: 38,
+            name: "Aquatos",
+            pos: 1300,
+          },
+          {
+            col: 5,
+            line: 39,
+            name: "Leviathan ",
+            pos: 1317,
+          },
+          {
+            col: 5,
+            line: 40,
+            name: "TombliOutpost",
+            pos: 1317,
+          },
+          {
+            col: 5,
+            line: 41,
+            name: "Zanifar ",
+            pos: 1317,
+          },
+          {
+            col: 5,
+            line: 42,
+            name: "NefariousSpaceStation ",
+            pos: 1317,
+          },
+          {
+            col: 5,
+            line: 43,
+            name: "NefariousCity",
+            pos: 1317,
+          },
+          {
+            col: 5,
+            line: 44,
+            name: "CorsonV",
+            pos: 1317,
+          },
+        ],
+      },
+      "Sigmund.ts": {
+        Membership: [
+          {
+            col: 5,
+            line: 37,
+            name: "ZordoomPrison",
+            pos: 1273,
+          },
+          {
+            col: 5,
+            line: 38,
+            name: "GreatClockStaff",
+            pos: 1300,
+          },
+        ],
+        Residence: [
+          {
+            col: 5,
+            line: 37,
+            name: "Viceron",
+            pos: 1273,
+          },
+          {
+            col: 5,
+            line: 38,
+            name: "GreatClock",
+            pos: 1300,
+          },
+        ],
+      },
+    };
+    const classMembers = {
+      "Qwark.ts": {
+        InsaneQwark: [
+          {
+            col: 9,
+            line: 327,
+            name: "destroy",
+            pos: 12268,
+          },
+        ],
+        SaneQwark: [
+          {
+            col: 9,
+            line: 327,
+            name: "rescue",
+            pos: 12268,
+          },
+        ],
+      },
+      "Rivet.ts": {
+        Rivet: [
+          {
+            col: 9,
+            line: 327,
+            name: "fly",
+            pos: 12268,
+          },
+          {
+            col: 3,
+            line: 353,
+            name: "swim",
+            pos: 12977,
+          },
+          {
+            col: 3,
+            line: 357,
+            name: "explode",
+            pos: 13056,
+          },
+          {
+            col: 3,
+            line: 381,
+            name: "mutate",
+            pos: 13810,
+          },
+          {
+            col: 3,
+            line: 388,
+            name: "refineGelatonium ",
+            pos: 13987,
+          },
+        ],
+      },
+    };
 
+    it("should transform a enumMembers map section to markdown", () => {
       const section = buildMapSection("enumMembers", enumMembers);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown", () => {
-      const classMembers = {
-        "Qwark.ts": {
-          InsaneQwark: [
-            {
-              col: 9,
-              line: 327,
-              name: "destroy",
-              pos: 12268,
-            },
-          ],
-          SaneQwark: [
-            {
-              col: 9,
-              line: 327,
-              name: "rescue",
-              pos: 12268,
-            },
-          ],
-        },
-        "Rivet.ts": {
-          Rivet: [
-            {
-              col: 9,
-              line: 327,
-              name: "fly",
-              pos: 12268,
-            },
-            {
-              col: 3,
-              line: 353,
-              name: "swim",
-              pos: 12977,
-            },
-            {
-              col: 3,
-              line: 357,
-              name: "explode",
-              pos: 13056,
-            },
-            {
-              col: 3,
-              line: 381,
-              name: "mutate",
-              pos: 13810,
-            },
-            {
-              col: 3,
-              line: 388,
-              name: "refineGelatonium ",
-              pos: 13987,
-            },
-          ],
-        },
-      };
+    it("should transform a enumMembers map section to markdown and annotations", () => {
+      const section = buildMapSection("enumMembers", enumMembers, true);
+      expect(section).toMatchSnapshot();
+    });
 
+    it("should transform a classMembers map section to markdown", () => {
       const section = buildMapSection("classMembers", classMembers);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a classMembers map section to markdown and annotations", () => {
+      const section = buildMapSection("classMembers", classMembers, true);
       expect(section).toMatchSnapshot();
     });
   });
