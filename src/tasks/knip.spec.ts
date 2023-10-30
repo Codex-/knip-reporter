@@ -525,15 +525,50 @@ describe("knip", () => {
   });
 
   describe("buildMarkdownSections", () => {
-    it("processes all parsed sections", () => {
+    it("outputs only sections with defaults", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
-      const mdSections = buildMarkdownSections(parsedReport);
+      const { sections, annotations } = buildMarkdownSections(parsedReport);
 
-      expect(mdSections).toHaveLength(12);
-      for (const section of mdSections) {
+      expect(sections).toHaveLength(12);
+      expect(annotations).toHaveLength(0);
+      for (const section of sections) {
         expect(section).toBeTypeOf("string");
       }
-      expect(mdSections).toMatchSnapshot();
+      expect(sections).toMatchSnapshot();
+    });
+
+    it("outputs verbose sections and annotations", () => {
+      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true);
+
+      expect(sections).toHaveLength(12);
+      for (const section of sections) {
+        expect(section).toBeTypeOf("string");
+      }
+      expect(sections).toMatchSnapshot();
+
+      expect(annotations).toHaveLength(19);
+      for (const annotation of annotations) {
+        expect(annotation).toBeTypeOf("object");
+      }
+      expect(annotations).toMatchSnapshot();
+    });
+
+    it("outputs sections and annotations", () => {
+      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
+
+      expect(sections).toHaveLength(10);
+      for (const section of sections) {
+        expect(section).toBeTypeOf("string");
+      }
+      expect(sections).toMatchSnapshot();
+
+      expect(annotations).toHaveLength(19);
+      for (const annotation of annotations) {
+        expect(annotation).toBeTypeOf("object");
+      }
+      expect(annotations).toMatchSnapshot();
     });
   });
 

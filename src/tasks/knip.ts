@@ -238,6 +238,7 @@ interface MinimalAnnotation {
   start_line: number;
   start_column: number;
 }
+
 function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
   return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
 }
@@ -253,46 +254,46 @@ function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<
 export function buildMapSection(
   name: string,
   rawResults: Record<string, Record<string, Item[]>>,
-  annotations = false,
-  verbose = true,
+  annotationsEnabled = false,
+  verboseEnabled = true,
 ): { sections: string[]; annotations: MinimalAnnotation[] } {
   let totalUnused = 0;
   const tableBody: string[][] = [];
-  const itemAnnotations: MinimalAnnotation[] = [];
+  const annotations: MinimalAnnotation[] = [];
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       const itemNames = [];
       for (const member of members) {
-        if (annotations && isValidAnnotationBody(member)) {
-          itemAnnotations.push({
+        if (annotationsEnabled && isValidAnnotationBody(member)) {
+          annotations.push({
             path: filename,
             identifier: member.name,
             start_line: member.line,
             start_column: member.col,
           });
         }
-        if (verbose) {
+        if (verboseEnabled) {
           itemNames.push(`\`${member.name}\``);
         }
       }
       totalUnused += members.length;
-      if (verbose) {
+      if (verboseEnabled) {
         tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
       }
     }
   }
 
-  if (verbose) {
+  if (verboseEnabled) {
     const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
     const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
     const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
     const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
 
-    return { sections: processedSections, annotations: itemAnnotations };
+    return { sections: processedSections, annotations: annotations };
   }
 
-  return { sections: [], annotations: itemAnnotations };
+  return { sections: [], annotations: annotations };
 }
 
 export function processSectionToMessages(
@@ -343,14 +344,18 @@ export function processSectionToMessages(
   return output;
 }
 
-export function buildMarkdownSections(report: ParsedReport): string[] {
-  const annotations: MinimalAnnotation[] = [];
-  const output: string[] = [];
+export function buildMarkdownSections(
+  report: ParsedReport,
+  annotationsEnabled = false,
+  verboseEnabled = true,
+): { sections: string[]; annotations: MinimalAnnotation[] } {
+  const outputAnnotations: MinimalAnnotation[] = [];
+  const outputSections: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {
       case "files":
         if (report.files.length > 0) {
-          output.push(buildFilesSection(report.files));
+          outputSections.push(buildFilesSection(report.files));
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
@@ -365,7 +370,7 @@ export function buildMarkdownSections(report: ParsedReport): string[] {
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
           for (const section of buildArraySection(key, report[key])) {
-            output.push(section);
+            outputSections.push(section);
           }
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
@@ -373,10 +378,15 @@ export function buildMarkdownSections(report: ParsedReport): string[] {
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          const { sections, annotations } = buildMapSection(key, report[key]);
-          annotations.push(...annotations);
+          const { sections, annotations } = buildMapSection(
+            key,
+            report[key],
+            annotationsEnabled,
+            verboseEnabled,
+          );
+          outputAnnotations.push(...annotations);
           for (const section of sections) {
-            output.push(section);
+            outputSections.push(section);
           }
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
@@ -384,7 +394,7 @@ export function buildMarkdownSections(report: ParsedReport): string[] {
     }
   }
 
-  return output;
+  return { sections: outputSections, annotations: outputAnnotations };
 }
 
 /**
@@ -410,7 +420,7 @@ export function getJsonFromOutput(output: string): string {
 export async function runKnipTasks(
   buildScriptName: string,
   annotationsEnabled: boolean,
-): Promise<string[]> {
+): Promise<{ sections: string[]; annotations: MinimalAnnotation[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
@@ -421,10 +431,10 @@ export async function runKnipTasks(
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
-  const sections = await timeTask("Convert report to markdown", async () =>
+  const sectionsAndAnnotations = await timeTask("Convert report to markdown", async () =>
     buildMarkdownSections(report),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);
-  return sections;
+  return sectionsAndAnnotations;
 }

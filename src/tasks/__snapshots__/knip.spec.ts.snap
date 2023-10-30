@@ -410,7 +410,7 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
 }
 `;
 
-exports[`knip > buildMarkdownSections > processes all parsed sections 1`] = `
+exports[`knip > buildMarkdownSections > outputs only sections with defaults 1`] = `
 [
   "### Unused files (3)
 
@@ -482,6 +482,380 @@ exports[`knip > buildMarkdownSections > processes all parsed sections 1`] = `
 |-|-|
 |Lombax.ts|\`Ratchet\`, \`default\`|
 |WarBot.ts|\`Kit\`, \`default\`|",
+]
+`;
+
+exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
+[
+  "### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
+  "### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|",
+  "### Unused devDependencies (5)
+
+|Filename|devDependencies|
+|-|-|
+|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/d/package.json|\`dotenv\`|",
+  "### Unused optionalPeerDependencies (2)
+
+|Filename|optionalPeerDependencies|
+|-|-|
+|packages/c/package.json|\`dotenv\`|
+|packages/d/package.json|\`@mui/material\`|",
+  "### Unlisted dependencies (2)
+
+|Filename|unlisted|
+|-|-|
+|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+  "### Unlisted binaries (1)
+
+|Filename|binaries|
+|-|-|
+|packages/e/package.json|\`apollo\`|",
+  "### Unresolved imports (2)
+
+|Filename|unresolved|
+|-|-|
+|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+  "### Unused exports (3)
+
+|Filename|exports|
+|-|-|
+|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
+|packages/a/src/Weapons.ts|\`sheepinator\`|",
+  "### Unused types (5)
+
+|Filename|types|
+|-|-|
+|packages/a/src/Weapons.ts|\`cowinator\`|
+|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
+|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+  "### Duplicates (2)
+
+|Filename|duplicates|
+|-|-|
+|Lombax.ts|\`Ratchet\`, \`default\`|
+|WarBot.ts|\`Kit\`, \`default\`|",
+]
+`;
+
+exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
+[
+  {
+    "identifier": "Magmos",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 37,
+  },
+  {
+    "identifier": "Aquatos",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 38,
+  },
+  {
+    "identifier": "Leviathan",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 39,
+  },
+  {
+    "identifier": "TombliOutpost",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 40,
+  },
+  {
+    "identifier": "Zanifar ",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 41,
+  },
+  {
+    "identifier": "NefariousSpaceStation ",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 42,
+  },
+  {
+    "identifier": "NefariousCity",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 43,
+  },
+  {
+    "identifier": "CorsonV",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 44,
+  },
+  {
+    "identifier": "Viceron",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 37,
+  },
+  {
+    "identifier": "GreatClock",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 38,
+  },
+  {
+    "identifier": "ZordoomPrison",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 37,
+  },
+  {
+    "identifier": "GreatClockStaff",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 38,
+  },
+  {
+    "identifier": "fly",
+    "path": "Rivet.ts",
+    "start_column": 9,
+    "start_line": 327,
+  },
+  {
+    "identifier": "swim",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 353,
+  },
+  {
+    "identifier": "explode",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 357,
+  },
+  {
+    "identifier": "mutate",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 381,
+  },
+  {
+    "identifier": "refineGelatonium ",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 388,
+  },
+  {
+    "identifier": "rescue",
+    "path": "Qwark.ts",
+    "start_column": 9,
+    "start_line": 327,
+  },
+  {
+    "identifier": "destroy",
+    "path": "Qwark.ts",
+    "start_column": 9,
+    "start_line": 327,
+  },
+]
+`;
+
+exports[`knip > buildMarkdownSections > outputs verbose sections and annotations 1`] = `
+[
+  "### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
+  "### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|",
+  "### Unused devDependencies (5)
+
+|Filename|devDependencies|
+|-|-|
+|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/d/package.json|\`dotenv\`|",
+  "### Unused optionalPeerDependencies (2)
+
+|Filename|optionalPeerDependencies|
+|-|-|
+|packages/c/package.json|\`dotenv\`|
+|packages/d/package.json|\`@mui/material\`|",
+  "### Unlisted dependencies (2)
+
+|Filename|unlisted|
+|-|-|
+|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+  "### Unlisted binaries (1)
+
+|Filename|binaries|
+|-|-|
+|packages/e/package.json|\`apollo\`|",
+  "### Unresolved imports (2)
+
+|Filename|unresolved|
+|-|-|
+|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+  "### Unused exports (3)
+
+|Filename|exports|
+|-|-|
+|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
+|packages/a/src/Weapons.ts|\`sheepinator\`|",
+  "### Unused types (5)
+
+|Filename|types|
+|-|-|
+|packages/a/src/Weapons.ts|\`cowinator\`|
+|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
+|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
+  "### Unused Class Members (7)
+
+|Filename|Class|Member|
+|-|-|-|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Qwark.ts|InsaneQwark|\`destroy\`|",
+  "### Duplicates (2)
+
+|Filename|duplicates|
+|-|-|
+|Lombax.ts|\`Ratchet\`, \`default\`|
+|WarBot.ts|\`Kit\`, \`default\`|",
+]
+`;
+
+exports[`knip > buildMarkdownSections > outputs verbose sections and annotations 2`] = `
+[
+  {
+    "identifier": "Magmos",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 37,
+  },
+  {
+    "identifier": "Aquatos",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 38,
+  },
+  {
+    "identifier": "Leviathan",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 39,
+  },
+  {
+    "identifier": "TombliOutpost",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 40,
+  },
+  {
+    "identifier": "Zanifar ",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 41,
+  },
+  {
+    "identifier": "NefariousSpaceStation ",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 42,
+  },
+  {
+    "identifier": "NefariousCity",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 43,
+  },
+  {
+    "identifier": "CorsonV",
+    "path": "DrNefarious.ts",
+    "start_column": 5,
+    "start_line": 44,
+  },
+  {
+    "identifier": "Viceron",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 37,
+  },
+  {
+    "identifier": "GreatClock",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 38,
+  },
+  {
+    "identifier": "ZordoomPrison",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 37,
+  },
+  {
+    "identifier": "GreatClockStaff",
+    "path": "Sigmund.ts",
+    "start_column": 5,
+    "start_line": 38,
+  },
+  {
+    "identifier": "fly",
+    "path": "Rivet.ts",
+    "start_column": 9,
+    "start_line": 327,
+  },
+  {
+    "identifier": "swim",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 353,
+  },
+  {
+    "identifier": "explode",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 357,
+  },
+  {
+    "identifier": "mutate",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 381,
+  },
+  {
+    "identifier": "refineGelatonium ",
+    "path": "Rivet.ts",
+    "start_column": 3,
+    "start_line": 388,
+  },
+  {
+    "identifier": "rescue",
+    "path": "Qwark.ts",
+    "start_column": 9,
+    "start_line": 327,
+  },
+  {
+    "identifier": "destroy",
+    "path": "Qwark.ts",
+    "start_column": 9,
+    "start_line": 327,
+  },
 ]
 `;
 
