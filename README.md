@@ -32,6 +32,7 @@ The following inputs are supported
 | `command_script_name` | The package script that runs knip.                                           | `false`  | `knip`                                 |
 | `comment_id`          | ID to use when updating the PR comment. Spaces will be replaced with dashes. | `false`  | `${{ github.workflow }}-knip-reporter` |
 | `annotations`         | Annotate the project code with the knip results.                             | `false`  | `true`                                 |
+| `verbose`             | Include annotated items in the comment report.                               | `false`  | `false`                                |
 | `ignore_result`       | Do not fail the action run if knip results are found.                        | `false`  | `false`                                |
 
 ### Issues
@@ -40,6 +41,12 @@ If you encounter a case where comments are not being posted, or known sections a
 
 ### APIs Used
 
+- `Checks`
+  - `Check Runs`
+    - [`Create a check run`](https://docs.github.com/en/rest/checks/runs#create-a-check-run)
+      - POST `/repos/{owner}/{repo}/check-runs`
+    - [`Update a check run`](https://docs.github.com/en/rest/checks/runs#update-a-check-run)
+      - PATCH `/repos/{owner}/{repo}/check-runs/{check_run_id}`
 - `Issues`
   - `Comments`
     - [`Create an issue comment`](https://docs.github.com/en/rest/issues/comments#create-an-issue-comment)
