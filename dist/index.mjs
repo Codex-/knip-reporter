@@ -22006,6 +22006,20 @@ async function createCheck() {
   }
   return response;
 }
+async function updateCheck(checkRunId, status, output, conclusion) {
+  const response = await octokit.rest.checks.update({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    check_run_id: checkRunId,
+    status,
+    conclusion,
+    output
+  });
+  if (response.status !== 200) {
+    throw new Error(`Failed to update check, expected 200 but received ${response.status}`);
+  }
+  return response;
+}
 
 // src/tasks/check.ts
 var core3 = __toESM(require_core(), 1);
@@ -22013,6 +22027,37 @@ async function createCheckId() {
   const id = (await createCheck()).data.id;
   core3.debug(`[createCheckId]: Check created (${id})`);
   return id;
+}
+var CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
+async function updateCheckAnnotations(checkId, minimalAnnotations) {
+  core3.debug(`[updateCheckAnnotations]: Begin pushing annotations (${minimalAnnotations.length})`);
+  let i = 0;
+  while (i < minimalAnnotations.length) {
+    core3.debug(`[updateCheckAnnotations]: Slicing ${i}...${i + CHECK_ANNOTATIONS_UPDATE_LIMIT}`);
+    const slice = minimalAnnotations.slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT).map((minimalAnnotation) => {
+      const annotation = {
+        ...minimalAnnotation,
+        end_line: minimalAnnotation.start_line,
+        annotation_level: "failure",
+        message: `\`${minimalAnnotation.identifier}\` is unused`
+      };
+      return annotation;
+    });
+    core3.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
+    await updateCheck(checkId, "in_progress", {
+      title: "knip-reporter",
+      summary: "some summary",
+      annotations: slice
+    });
+    i += CHECK_ANNOTATIONS_UPDATE_LIMIT;
+  }
+  core3.debug(
+    `[updateCheckAnnotations]: Pushing annotations (${minimalAnnotations.length}) to check ${checkId} completed`
+  );
+}
+async function resolveCheck(checkId, conclusion) {
+  core3.debug(`[resolveCheck]: Updating check ${checkId} conclusion (${conclusion})`);
+  return updateCheck(checkId, "in_progress", void 0, conclusion);
 }
 
 // src/tasks/comment.ts
@@ -27415,33 +27460,40 @@ function buildArraySection(name, rawResults) {
 function isValidAnnotationBody(item2) {
   return item2.pos !== void 0 && item2.line !== void 0 && item2.col !== void 0;
 }
-function buildMapSection(name, rawResults, annotations = false) {
+function buildMapSection(name, rawResults, annotationsEnabled = false, verboseEnabled = true) {
   let totalUnused = 0;
-  const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
   const tableBody = [];
-  const itemAnnotations = [];
+  const annotations = [];
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       const itemNames = [];
       for (const member of members) {
-        itemNames.push(`\`${member.name}\``);
-        if (annotations && isValidAnnotationBody(member)) {
-          itemAnnotations.push({
+        if (annotationsEnabled && isValidAnnotationBody(member)) {
+          annotations.push({
             path: filename,
             identifier: member.name,
             start_line: member.line,
             start_column: member.col
           });
         }
+        if (verboseEnabled) {
+          itemNames.push(`\`${member.name}\``);
+        }
       }
       totalUnused += members.length;
-      tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+      if (verboseEnabled) {
+        tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+      }
     }
   }
-  const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
-  const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
-  const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
-  return { sections: processedSections, annotations: itemAnnotations };
+  if (verboseEnabled) {
+    const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
+    const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
+    const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
+    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+    return { sections: processedSections, annotations };
+  }
+  return { sections: [], annotations };
 }
 function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   const markdownTableOptions = {
@@ -27478,14 +27530,14 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   core7.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
   return output;
 }
-function buildMarkdownSections(report) {
-  const annotations = [];
-  const output = [];
+function buildMarkdownSections(report, annotationsEnabled = false, verboseEnabled = true) {
+  const outputAnnotations = [];
+  const outputSections = [];
   for (const key of Object.keys(report)) {
     switch (key) {
       case "files":
         if (report.files.length > 0) {
-          output.push(buildFilesSection(report.files));
+          outputSections.push(buildFilesSection(report.files));
           core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
@@ -27500,7 +27552,7 @@ function buildMarkdownSections(report) {
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
           for (const section of buildArraySection(key, report[key])) {
-            output.push(section);
+            outputSections.push(section);
           }
           core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
@@ -27508,17 +27560,22 @@ function buildMarkdownSections(report) {
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          const { sections, annotations: annotations2 } = buildMapSection(key, report[key]);
-          annotations2.push(...annotations2);
+          const { sections, annotations } = buildMapSection(
+            key,
+            report[key],
+            annotationsEnabled,
+            verboseEnabled
+          );
+          outputAnnotations.push(...annotations);
           for (const section of sections) {
-            output.push(section);
+            outputSections.push(section);
           }
           core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
   }
-  return output;
+  return { sections: outputSections, annotations: outputAnnotations };
 }
 function getJsonFromOutput(output) {
   const lines2 = output.split(/\n/).reverse();
@@ -27529,21 +27586,18 @@ function getJsonFromOutput(output) {
   }
   throw new Error("Unable to find JSON blob");
 }
-async function runKnipTasks(buildScriptName, annotationsEnabled) {
+async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled) {
   const taskMs = Date.now();
   core7.info("- Running Knip tasks");
-  if (annotationsEnabled) {
-    core7.info("Annotations to be added in a future release");
-  }
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
-  const sections = await timeTask(
+  const sectionsAndAnnotations = await timeTask(
     "Convert report to markdown",
-    async () => buildMarkdownSections(report)
+    async () => buildMarkdownSections(report, annotationsEnabled, verboseEnabled)
   );
   core7.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
-  return sections;
+  return sectionsAndAnnotations;
 }
 
 // src/main.ts
@@ -27563,14 +27617,28 @@ async function run3() {
     if (config3.annotations) {
       checkId = await timeTask("Create check ID", () => createCheckId());
     }
-    const knipTaskResult = await runKnipTasks(config3.commandScriptName, config3.annotations);
+    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
+      config3.commandScriptName,
+      config3.annotations,
+      config3.verbose
+    );
     await runCommentTask(
       config3.commentId,
       github2.context.payload.pull_request.number,
-      knipTaskResult
+      knipSections
     );
-    if (!config3.ignoreResults && knipTaskResult.length > 0) {
+    if (config3.annotations) {
+      await updateCheckAnnotations(checkId, knipAnnotations);
+    }
+    if (!config3.ignoreResults && knipSections.length > 0) {
       core8.setFailed("knip has resulted in findings, please see the report for more details");
+    }
+    if (config3.annotations) {
+      if (!config3.ignoreResults) {
+        await resolveCheck(checkId, "failure");
+      } else {
+        await resolveCheck(checkId, "success");
+      }
     }
     core8.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error2) {

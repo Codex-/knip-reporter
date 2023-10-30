@@ -6,6 +6,7 @@ import { markdownTable, type Options as MarkdownTableOptions } from "markdown-ta
 
 import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
+import type { MinimalAnnotation } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
   const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
@@ -232,13 +233,6 @@ export function buildArraySection(
   return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 
-interface MinimalAnnotation {
-  path: string;
-  identifier: string;
-  start_line: number;
-  start_column: number;
-}
-
 function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
   return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
 }
@@ -420,19 +414,16 @@ export function getJsonFromOutput(output: string): string {
 export async function runKnipTasks(
   buildScriptName: string,
   annotationsEnabled: boolean,
+  verboseEnabled: boolean,
 ): Promise<{ sections: string[]; annotations: MinimalAnnotation[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
-
-  if (annotationsEnabled) {
-    core.info("Annotations to be added in a future release");
-  }
 
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
   const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
   const sectionsAndAnnotations = await timeTask("Convert report to markdown", async () =>
-    buildMarkdownSections(report),
+    buildMarkdownSections(report, annotationsEnabled, verboseEnabled),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);

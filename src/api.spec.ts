@@ -30,6 +30,7 @@ describe("API", () => {
     commandScriptName: "npm",
     commentId: "knip-report",
     annotations: true,
+    verbose: false,
     ignoreResults: false,
   };
   type Octokit = ReturnType<(typeof github)["getOctokit"]>;

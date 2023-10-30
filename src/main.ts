@@ -3,8 +3,10 @@ import * as github from "@actions/github";
 
 import { configToStr, getConfig } from "./action.ts";
 import { init } from "./api.ts";
+import { createCheckId, resolveCheck, updateCheckAnnotations } from "./tasks/check.ts";
 import { runCommentTask } from "./tasks/comment.ts";
 import { runKnipTasks } from "./tasks/knip.ts";
+import { timeTask } from "./tasks/task.ts";
 
 async function run(): Promise<void> {
   try {
@@ -22,16 +24,37 @@ async function run(): Promise<void> {
 
     init(config);
 
-    const knipTaskResult = await runKnipTasks(config.commandScriptName, config.annotations);
+    let checkId: number;
+    if (config.annotations) {
+      checkId = await timeTask("Create check ID", () => createCheckId());
+    }
+
+    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
+      config.commandScriptName,
+      config.annotations,
+      config.verbose,
+    );
 
     await runCommentTask(
       config.commentId,
       github.context.payload.pull_request.number,
-      knipTaskResult,
+      knipSections,
     );
 
-    if (!config.ignoreResults && knipTaskResult.length > 0) {
+    if (config.annotations) {
+      await updateCheckAnnotations(checkId!, knipAnnotations);
+    }
+
+    if (!config.ignoreResults && knipSections.length > 0) {
       core.setFailed("knip has resulted in findings, please see the report for more details");
+    }
+
+    if (config.annotations) {
+      if (!config.ignoreResults) {
+        await resolveCheck(checkId!, "failure");
+      } else {
+        await resolveCheck(checkId!, "success");
+      }
     }
 
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);

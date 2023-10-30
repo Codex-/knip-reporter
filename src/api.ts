@@ -135,10 +135,10 @@ export async function createCheck(): Promise<CreateCheckResponse> {
 }
 
 type CheckStatus = NonNullable<Parameters<Octokit["rest"]["checks"]["create"]>[0]>["status"];
-type CheckConclusion = NonNullable<
+export type CheckConclusion = NonNullable<
   Parameters<Octokit["rest"]["checks"]["create"]>[0]
 >["conclusion"];
-type CheckOutput = NonNullable<Parameters<Octokit["rest"]["checks"]["create"]>[0]>["output"];
+export type CheckOutput = NonNullable<Parameters<Octokit["rest"]["checks"]["create"]>[0]>["output"];
 type UpdateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["update"]>>;
 export async function updateCheck(
   checkRunId: number,
