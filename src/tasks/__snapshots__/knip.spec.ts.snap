@@ -336,7 +336,7 @@ exports[`knip > buildMarkdownSections > processes all parsed sections 1`] = `
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
   "### Unused Class Members (7)
@@ -513,7 +513,7 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
         {
           "col": 5,
           "line": 39,
-          "name": "Leviathan ",
+          "name": "Leviathan",
           "pos": 1317,
         },
         {

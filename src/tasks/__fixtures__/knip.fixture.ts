@@ -297,7 +297,7 @@ export const reportJson = [
       Homeworld: [
         { name: "Magmos", line: 37, col: 5, pos: 1273 },
         { name: "Aquatos", line: 38, col: 5, pos: 1300 },
-        { name: "Leviathan ", line: 39, col: 5, pos: 1317 },
+        { name: "Leviathan", line: 39, col: 5, pos: 1317 },
         { name: "TombliOutpost", line: 40, col: 5, pos: 1317 },
         { name: "Zanifar ", line: 41, col: 5, pos: 1317 },
         { name: "NefariousSpaceStation ", line: 42, col: 5, pos: 1317 },
