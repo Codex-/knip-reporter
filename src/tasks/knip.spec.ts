@@ -498,8 +498,13 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
+    it("should transform a enumMembers map section and annotations", () => {
+      const section = buildMapSection("enumMembers", enumMembers, true, false);
+      expect(section).toMatchSnapshot();
+    });
+
     it("should transform a enumMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("enumMembers", enumMembers, true);
+      const section = buildMapSection("enumMembers", enumMembers, true, true);
       expect(section).toMatchSnapshot();
     });
 
@@ -508,8 +513,13 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
+    it("should transform a classMembers map section and annotations", () => {
+      const section = buildMapSection("classMembers", classMembers, true, false);
+      expect(section).toMatchSnapshot();
+    });
+
     it("should transform a classMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("classMembers", classMembers, true);
+      const section = buildMapSection("classMembers", classMembers, true, true);
       expect(section).toMatchSnapshot();
     });
   });

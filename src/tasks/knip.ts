@@ -248,23 +248,22 @@ function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<
  * As these sections are the only sections that return code identifiers
  * we process the sections and annotations.
  *
- * @returns a tuple of the sections and annotations if enabled
+ * @returns a tuple of the markdown sections if verbose and annotations if enabled
  */
 export function buildMapSection(
   name: string,
   rawResults: Record<string, Record<string, Item[]>>,
   annotations = false,
+  verbose = true,
 ): { sections: string[]; annotations: MinimalAnnotation[] } {
   let totalUnused = 0;
-  const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
-  const tableBody = [];
+  const tableBody: string[][] = [];
   const itemAnnotations: MinimalAnnotation[] = [];
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       const itemNames = [];
       for (const member of members) {
-        itemNames.push(`\`${member.name}\``);
         if (annotations && isValidAnnotationBody(member)) {
           itemAnnotations.push({
             path: filename,
@@ -273,17 +272,27 @@ export function buildMapSection(
             start_column: member.col,
           });
         }
+        if (verbose) {
+          itemNames.push(`\`${member.name}\``);
+        }
       }
       totalUnused += members.length;
-      tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+      if (verbose) {
+        tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+      }
     }
   }
 
-  const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
-  const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
-  const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  if (verbose) {
+    const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
+    const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
+    const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
+    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
 
-  return { sections: processedSections, annotations: itemAnnotations };
+    return { sections: processedSections, annotations: itemAnnotations };
+  }
+
+  return { sections: [], annotations: itemAnnotations };
 }
 
 export function processSectionToMessages(
