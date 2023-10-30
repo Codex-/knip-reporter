@@ -229,7 +229,7 @@ export function buildArraySection(
 
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 
 /**
@@ -257,10 +257,10 @@ export function buildMapSection(
   const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
   const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
 
-  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 
-function processSectionToMessage(
+export function processSectionToMessages(
   sectionHeader: string,
   tableHeader: string[],
   tableBody: string[][],
@@ -358,7 +358,7 @@ export function buildMarkdownSections(report: ParsedReport): string[] {
  * For now, we naively assume that the last entry of the output to begin
  * with '[' is the correct report
  */
-function getJsonFromOutput(output: string): string {
+export function getJsonFromOutput(output: string): string {
   const lines = output.split(/\n/).reverse();
   for (const line of lines) {
     if (line.startsWith("[")) {

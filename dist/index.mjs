@@ -27384,7 +27384,7 @@ function buildArraySection(name, rawResults) {
     ]);
   }
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
-  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 function buildMapSection(name, rawResults) {
   let totalUnused = 0;
@@ -27402,9 +27402,9 @@ function buildMapSection(name, rawResults) {
   }
   const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
   const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
-  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
-function processSectionToMessage(sectionHeader, tableHeader, tableBody) {
+function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   const markdownTableOptions = {
     alignDelimiters: false,
     padding: false

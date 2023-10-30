@@ -11,7 +11,9 @@ import {
   buildMarkdownSections,
   buildRunKnipCommand,
   buildSectionName,
+  getJsonFromOutput,
   parseJsonReport,
+  processSectionToMessages,
   run,
 } from "./knip.ts";
 
@@ -513,6 +515,67 @@ describe("knip", () => {
         expect(section).toBeTypeOf("string");
       }
       expect(mdSections).toMatchSnapshot();
+    });
+  });
+
+  describe("processSectionToMessage", () => {
+    it("should return sections that are below the github max character limit", () => {
+      const sectionHeader = "### Unused Enum Members (12)";
+      const tableHeader = ["Filename", "Enum", "Member"];
+      const src = [
+        [
+          "DrNefarious.ts",
+          "Homeworld",
+          "`Magmos`<br/>`Aquatos`<br/>`Leviathan `<br/>`TombliOutpost`<br/>`Zanifar `<br/>`NefariousSpaceStation `<br/>`NefariousCity`<br/>`CorsonV`",
+        ],
+        ["Sigmund.ts", "Membership", "`ZordoomPrison`<br/>`GreatClockStaff`"],
+        ["Sigmund.ts", "Residence", "`Viceron`<br/>`GreatClock`"],
+      ];
+      const body: string[][] = [];
+      for (let i = 0; i < 500; i++) {
+        body.push(...src);
+      }
+
+      const messages = processSectionToMessages(sectionHeader, tableHeader, body);
+      expect(messages).toMatchSnapshot();
+    });
+  });
+
+  describe("getJsonFromOutput", () => {
+    it("should get the report json from the command output", () => {
+      /* eslint-disable no-irregular-whitespace */
+      const cliOutput = `
+
+> knip-reporter@0.0.0 knip /Users/x/dev/p/knip-reporter
+> knip "--reporter" "jsonExt"
+
+{"foo":"bar"}
+
+${JSON.stringify(reportJson)}
+ ELIFECYCLE  Command failed with exit code 3.
+
+`;
+      /* eslint-enable no-irregular-whitespace */
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(() => JSON.parse(jsonStr)).not.toThrow();
+      const jsonObj = JSON.parse(jsonStr);
+      expect(Array.isArray(jsonObj)).toStrictEqual(true);
+    });
+
+    it("should throw if there isn't valid output", () => {
+      /* eslint-disable no-irregular-whitespace */
+      const cliOutput = `
+
+> knip-reporter@0.0.0 knip /Users/x/dev/p/knip-reporter
+> knip
+
+Unused files (2)
+src/tasks/check.ts
+src/x.ts
+ ELIFECYCLE  Command failed with exit code 2.
+`;
+      /* eslint-enable no-irregular-whitespace */
+      expect(() => getJsonFromOutput(cliOutput)).toThrowError("Unable to find JSON blob");
     });
   });
 });

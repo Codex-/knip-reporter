@@ -528,3 +528,3508 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
   },
 }
 `;
+
+exports[`knip > processSectionToMessage > should return sections that are below the github max character limit 1`] = `
+[
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+]
+`;
