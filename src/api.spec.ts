@@ -411,17 +411,17 @@ describe("API", () => {
       expect(restSpy.mock.calls[1]![0]!.conclusion).toStrictEqual("success");
     });
 
-    it("should throw if a non-201 status is returned", async () => {
+    it("should throw if a non-200 status is returned", async () => {
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.checks, "create").mockReturnValue(
+      vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
         Promise.resolve({
           data: undefined,
           status: errorStatus,
         }) as any,
       );
 
-      await expect(createCheck()).rejects.toThrow(
-        `Failed to create check, expected 201 but received ${errorStatus}`,
+      await expect(updateCheck(123, "completed")).rejects.toThrow(
+        `Failed to update check, expected 200 but received ${errorStatus}`,
       );
     });
   });
