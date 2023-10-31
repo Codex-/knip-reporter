@@ -21990,14 +21990,14 @@ async function deleteComment(commentId) {
   }
   return response;
 }
-async function createCheck() {
+async function createCheck(name) {
   if (github.context.payload.pull_request?.head.sha === void 0) {
     core2.warning("Unable to find correct head_sha from payload, using base context sha");
   }
   const response = await octokit.rest.checks.create({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
-    name: "knip-reporter",
+    name,
     head_sha: github.context.payload.pull_request?.head.sha ?? github.context.sha,
     status: "in_progress"
   });
@@ -22023,8 +22023,8 @@ async function updateCheck(checkRunId, status, output, conclusion) {
 
 // src/tasks/check.ts
 var core3 = __toESM(require_core(), 1);
-async function createCheckId() {
-  const id = (await createCheck()).data.id;
+async function createCheckId(name) {
+  const id = (await createCheck(name)).data.id;
   core3.debug(`[createCheckId]: Check created (${id})`);
   return id;
 }
@@ -27615,7 +27615,10 @@ async function run3() {
     init(config3);
     let checkId;
     if (config3.annotations) {
-      checkId = await timeTask("Create check ID", () => createCheckId());
+      checkId = await timeTask(
+        "Create check ID",
+        () => createCheckId("knip-reporter-annotations-check")
+      );
     }
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config3.commandScriptName,

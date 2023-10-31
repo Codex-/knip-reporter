@@ -3,8 +3,8 @@ import * as core from "@actions/core";
 import { type CheckConclusion, type CheckOutput, createCheck, updateCheck } from "../api.ts";
 import type { MinimalAnnotation } from "./types.ts";
 
-export async function createCheckId(): Promise<number> {
-  const id = (await createCheck()).data.id;
+export async function createCheckId(name: string): Promise<number> {
+  const id = (await createCheck(name)).data.id;
   core.debug(`[createCheckId]: Check created (${id})`);
   return id;
 }

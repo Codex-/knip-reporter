@@ -26,7 +26,9 @@ async function run(): Promise<void> {
 
     let checkId: number;
     if (config.annotations) {
-      checkId = await timeTask("Create check ID", () => createCheckId());
+      checkId = await timeTask("Create check ID", () =>
+        createCheckId("knip-reporter-annotations-check"),
+      );
     }
 
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(

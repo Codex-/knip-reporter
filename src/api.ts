@@ -113,7 +113,7 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
 }
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
-export async function createCheck(): Promise<CreateCheckResponse> {
+export async function createCheck(name: string): Promise<CreateCheckResponse> {
   if (github.context.payload.pull_request?.head.sha === undefined) {
     core.warning("Unable to find correct head_sha from payload, using base context sha");
   }
@@ -122,7 +122,7 @@ export async function createCheck(): Promise<CreateCheckResponse> {
   const response = await octokit.rest.checks.create({
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
-    name: "knip-reporter",
+    name: name,
     head_sha: github.context.payload.pull_request?.head.sha ?? github.context.sha,
     status: "in_progress",
   });
