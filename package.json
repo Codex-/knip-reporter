@@ -35,9 +35,9 @@
     "markdown-table": "^3.0.3"
   },
   "devDependencies": {
-    "@types/node": "^20.8.8",
-    "@typescript-eslint/eslint-plugin": "^6.9.0",
-    "@typescript-eslint/parser": "^6.9.0",
+    "@types/node": "^20.8.10",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
     "@vitest/coverage-v8": "^0.34.6",
     "chalk": "^5.3.0",
     "changelogithub": "^0.13.1",
@@ -47,7 +47,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-github": "^4.10.1",
     "eslint-plugin-import": "^2.29.0",
-    "knip": "^2.38.1",
+    "knip": "^2.38.4",
     "prettier": "3.0.3",
     "release-it": "^16.2.1",
     "typescript": "^5.2.2",
