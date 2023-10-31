@@ -41,11 +41,12 @@ export async function updateCheckAnnotations(
       });
 
     core.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
-    await updateCheck(checkId, "in_progress", {
+    const response = await updateCheck(checkId, "in_progress", {
       title: "knip-reporter",
       summary: "some summary",
       annotations: slice,
     });
+    core.debug(`[updateCheckAnnotations]: annotations: ${response.data.output.annotations_url}`);
 
     i += CHECK_ANNOTATIONS_UPDATE_LIMIT;
   }
