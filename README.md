@@ -17,6 +17,11 @@ name: Pull Request
 on:
   pull_request:
 
+# This permissions config is only required if you are not providing
+# own permissive token or if you disable annotations.
+permissions:
+  checks: write
+
 steps:
   - name: Post the knip results
     uses: codex-/knip-reporter@v1
