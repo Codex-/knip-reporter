@@ -22002,7 +22002,7 @@ async function createCheck(name, title) {
     status: "in_progress",
     output: {
       title,
-      summary: "Starting..."
+      summary: ""
     }
   });
   if (response.status !== 201) {
@@ -22041,19 +22041,22 @@ async function updateCheckAnnotations(checkId, minimalAnnotations) {
     core3.debug(
       `[updateCheckAnnotations]: Slicing ${i}...${i + (CHECK_ANNOTATIONS_UPDATE_LIMIT - 1)}`
     );
-    const slice = minimalAnnotations.slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT).map((minimalAnnotation) => {
+    const slice = minimalAnnotations.slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT).map((ma) => {
       const annotation = {
-        ...minimalAnnotation,
-        end_line: minimalAnnotation.start_line,
+        path: ma.path,
+        start_line: ma.start_line,
+        end_line: ma.start_line,
+        // start_column: ma.start_column,
+        // end_column: ma.start_column + ma.identifier.length,
         annotation_level: "failure",
-        message: `\`${minimalAnnotation.identifier}\` is unused`
+        message: `\`${ma.identifier}\` is unused`
       };
       return annotation;
     });
     core3.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
     await updateCheck(checkId, "in_progress", {
       title: "Knip reporter analysis",
-      summary: "Updating annotations...",
+      summary: "",
       annotations: slice
     });
     i += CHECK_ANNOTATIONS_UPDATE_LIMIT;

@@ -8,7 +8,7 @@ exports[`API > createCheck > should not throw 1`] = `
         "head_sha": "12345678",
         "name": "knip-reporter",
         "output": {
-          "summary": "Starting...",
+          "summary": "",
           "title": "Knip reporter analysis",
         },
         "owner": "a",

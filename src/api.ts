@@ -127,7 +127,7 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
     status: "in_progress",
     output: {
       title: title,
-      summary: "Starting...",
+      summary: "",
     },
   });
 

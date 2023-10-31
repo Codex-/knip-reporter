@@ -29,22 +29,23 @@ export async function updateCheckAnnotations(
       `[updateCheckAnnotations]: Slicing ${i}...${i + (CHECK_ANNOTATIONS_UPDATE_LIMIT - 1)}`,
     );
 
-    const slice = minimalAnnotations
-      .slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT)
-      .map((minimalAnnotation) => {
-        const annotation: Annotation = {
-          ...minimalAnnotation,
-          end_line: minimalAnnotation.start_line,
-          annotation_level: "failure",
-          message: `\`${minimalAnnotation.identifier}\` is unused`,
-        };
-        return annotation;
-      });
+    const slice = minimalAnnotations.slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT).map((ma) => {
+      const annotation: Annotation = {
+        path: ma.path,
+        start_line: ma.start_line,
+        end_line: ma.start_line,
+        // start_column: ma.start_column,
+        // end_column: ma.start_column + ma.identifier.length,
+        annotation_level: "failure",
+        message: `\`${ma.identifier}\` is unused`,
+      };
+      return annotation;
+    });
 
     core.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
     await updateCheck(checkId, "in_progress", {
       title: "Knip reporter analysis",
-      summary: "Updating annotations...",
+      summary: "",
       annotations: slice,
     });
 
