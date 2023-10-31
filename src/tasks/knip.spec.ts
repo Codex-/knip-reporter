@@ -494,7 +494,7 @@ describe("knip", () => {
     };
 
     it("should transform a enumMembers map section to markdown", () => {
-      const section = buildMapSection("enumMembers", enumMembers);
+      const section = buildMapSection("enumMembers", enumMembers, false, true);
       expect(section).toMatchSnapshot();
     });
 
@@ -509,7 +509,7 @@ describe("knip", () => {
     });
 
     it("should transform a classMembers map section to markdown", () => {
-      const section = buildMapSection("classMembers", classMembers);
+      const section = buildMapSection("classMembers", classMembers, false, true);
       expect(section).toMatchSnapshot();
     });
 
@@ -527,7 +527,7 @@ describe("knip", () => {
   describe("buildMarkdownSections", () => {
     it("outputs only sections with defaults", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
-      const { sections, annotations } = buildMarkdownSections(parsedReport);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true);
 
       expect(sections).toHaveLength(12);
       expect(annotations).toHaveLength(0);

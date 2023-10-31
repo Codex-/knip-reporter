@@ -20,7 +20,7 @@ type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>
 export async function updateCheckAnnotations(
   checkId: number,
   minimalAnnotations: MinimalAnnotation[],
-  ignoreResults = false,
+  ignoreResults: boolean,
 ): Promise<void> {
   core.debug(
     `[updateCheckAnnotations]: Begin pushing annotations (${

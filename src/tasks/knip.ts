@@ -248,8 +248,8 @@ function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<
 export function buildMapSection(
   name: string,
   rawResults: Record<string, Record<string, Item[]>>,
-  annotationsEnabled = false,
-  verboseEnabled = true,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
 ): { sections: string[]; annotations: MinimalAnnotation[] } {
   let totalUnused = 0;
   const tableBody: string[][] = [];
@@ -340,8 +340,8 @@ export function processSectionToMessages(
 
 export function buildMarkdownSections(
   report: ParsedReport,
-  annotationsEnabled = false,
-  verboseEnabled = true,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
 ): { sections: string[]; annotations: MinimalAnnotation[] } {
   const outputAnnotations: MinimalAnnotation[] = [];
   const outputSections: string[] = [];
