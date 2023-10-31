@@ -20,8 +20,13 @@ type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>
 export async function updateCheckAnnotations(
   checkId: number,
   minimalAnnotations: MinimalAnnotation[],
+  ignoreResults = false,
 ): Promise<void> {
-  core.debug(`[updateCheckAnnotations]: Begin pushing annotations (${minimalAnnotations.length})`);
+  core.debug(
+    `[updateCheckAnnotations]: Begin pushing annotations (${
+      minimalAnnotations.length
+    }) with level '${ignoreResults ? "warning" : "failure"}'`,
+  );
 
   let i = 0;
   while (i < minimalAnnotations.length) {
@@ -34,9 +39,9 @@ export async function updateCheckAnnotations(
         path: ma.path,
         start_line: ma.start_line,
         end_line: ma.start_line,
-        // start_column: ma.start_column,
-        // end_column: ma.start_column + ma.identifier.length,
-        annotation_level: "failure",
+        start_column: ma.start_column,
+        end_column: ma.start_column + ma.identifier.length,
+        annotation_level: ignoreResults ? "warning" : "failure",
         message: `\`${ma.identifier}\` is unused`,
       };
       return annotation;

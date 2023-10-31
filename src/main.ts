@@ -44,7 +44,7 @@ async function run(): Promise<void> {
     );
 
     if (config.annotations) {
-      await updateCheckAnnotations(checkId!, knipAnnotations);
+      await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
     }
 
     if (!config.ignoreResults && knipSections.length > 0) {
