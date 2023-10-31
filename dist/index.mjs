@@ -22033,7 +22033,9 @@ async function updateCheckAnnotations(checkId, minimalAnnotations) {
   core3.debug(`[updateCheckAnnotations]: Begin pushing annotations (${minimalAnnotations.length})`);
   let i = 0;
   while (i < minimalAnnotations.length) {
-    core3.debug(`[updateCheckAnnotations]: Slicing ${i}...${i + CHECK_ANNOTATIONS_UPDATE_LIMIT}`);
+    core3.debug(
+      `[updateCheckAnnotations]: Slicing ${i}...${i + (CHECK_ANNOTATIONS_UPDATE_LIMIT - 1)}`
+    );
     const slice = minimalAnnotations.slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT).map((minimalAnnotation) => {
       const annotation = {
         ...minimalAnnotation,
@@ -22128,7 +22130,7 @@ function prepareComments(cfgCommentId, reportSections) {
 async function createOrUpdateComments(pullRequestNumber, commentsToPost, existingCommentIds) {
   let existingIdsIndex = 0;
   for (const comment of commentsToPost) {
-    if (existingCommentIds && existingCommentIds[existingIdsIndex] !== void 0) {
+    if (existingCommentIds?.[existingIdsIndex] !== void 0) {
       const commentId = existingCommentIds[existingIdsIndex];
       await updateComment(commentId, comment);
       core5.debug(`[createOrUpdateComments]: updated comment (${commentId})`);

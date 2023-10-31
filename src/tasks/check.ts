@@ -24,7 +24,9 @@ export async function updateCheckAnnotations(
 
   let i = 0;
   while (i < minimalAnnotations.length) {
-    core.debug(`[updateCheckAnnotations]: Slicing ${i}...${i + CHECK_ANNOTATIONS_UPDATE_LIMIT}`);
+    core.debug(
+      `[updateCheckAnnotations]: Slicing ${i}...${i + (CHECK_ANNOTATIONS_UPDATE_LIMIT - 1)}`,
+    );
 
     const slice = minimalAnnotations
       .slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT)

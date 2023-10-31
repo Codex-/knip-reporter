@@ -90,7 +90,7 @@ async function createOrUpdateComments(
 ): Promise<number[]> {
   let existingIdsIndex = 0;
   for (const comment of commentsToPost) {
-    if (existingCommentIds && existingCommentIds[existingIdsIndex] !== undefined) {
+    if (existingCommentIds?.[existingIdsIndex] !== undefined) {
       const commentId = existingCommentIds[existingIdsIndex]!;
       await updateComment(commentId, comment);
       core.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
