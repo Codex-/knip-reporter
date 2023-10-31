@@ -27634,7 +27634,7 @@ async function run3() {
       core8.setFailed("knip has resulted in findings, please see the report for more details");
     }
     if (config3.annotations) {
-      if (!config3.ignoreResults) {
+      if (!config3.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
         await resolveCheck(checkId, "failure");
       } else {
         await resolveCheck(checkId, "success");

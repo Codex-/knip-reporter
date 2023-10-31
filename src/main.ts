@@ -50,7 +50,7 @@ async function run(): Promise<void> {
     }
 
     if (config.annotations) {
-      if (!config.ignoreResults) {
+      if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
         await resolveCheck(checkId!, "failure");
       } else {
         await resolveCheck(checkId!, "success");
