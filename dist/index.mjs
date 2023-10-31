@@ -21990,7 +21990,7 @@ async function deleteComment(commentId) {
   }
   return response;
 }
-async function createCheck(name) {
+async function createCheck(name, title) {
   if (github.context.payload.pull_request?.head.sha === void 0) {
     core2.warning("Unable to find correct head_sha from payload, using base context sha");
   }
@@ -21999,7 +21999,11 @@ async function createCheck(name) {
     repo: github.context.repo.repo,
     name,
     head_sha: github.context.payload.pull_request?.head.sha ?? github.context.sha,
-    status: "in_progress"
+    status: "in_progress",
+    output: {
+      title,
+      summary: "Starting..."
+    }
   });
   if (response.status !== 201) {
     throw new Error(`Failed to create check, expected 201 but received ${response.status}`);
@@ -22023,8 +22027,9 @@ async function updateCheck(checkRunId, status, output, conclusion) {
 
 // src/tasks/check.ts
 var core3 = __toESM(require_core(), 1);
-async function createCheckId(name) {
-  const id = (await createCheck(name)).data.id;
+async function createCheckId(name, title) {
+  core3.debug(`[createCheckId]: Creating check, name: ${name}, title: ${title}`);
+  const id = (await createCheck(name, title)).data.id;
   core3.debug(`[createCheckId]: Check created (${id})`);
   return id;
 }
@@ -22046,12 +22051,11 @@ async function updateCheckAnnotations(checkId, minimalAnnotations) {
       return annotation;
     });
     core3.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
-    const response = await updateCheck(checkId, "in_progress", {
-      title: "knip-reporter",
-      summary: "some summary",
+    await updateCheck(checkId, "in_progress", {
+      title: "Knip reporter analysis",
+      summary: "Updating annotations...",
       annotations: slice
     });
-    core3.debug(`[updateCheckAnnotations]: annotations: ${response.data.output.annotations_url}`);
     i += CHECK_ANNOTATIONS_UPDATE_LIMIT;
   }
   core3.debug(
@@ -27620,7 +27624,7 @@ async function run3() {
     if (config3.annotations) {
       checkId = await timeTask(
         "Create check ID",
-        () => createCheckId("knip-reporter-annotations-check")
+        () => createCheckId("knip-reporter-annotations-check", "Knip reporter analysis")
       );
     }
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(

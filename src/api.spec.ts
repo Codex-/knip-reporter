@@ -317,7 +317,7 @@ describe("API", () => {
         }) as any,
       );
 
-      const state = await createCheck("knip-reporter");
+      const state = await createCheck("knip-reporter", "Knip reporter analysis");
       expect(state.status).toStrictEqual(201);
       expect(restSpy).toMatchSnapshot();
     });
@@ -331,7 +331,7 @@ describe("API", () => {
         }) as any,
       );
 
-      await expect(createCheck("knip-reporter")).rejects.toThrow(
+      await expect(createCheck("knip-reporter", "Knip reporter analysis")).rejects.toThrow(
         `Failed to create check, expected 201 but received ${errorStatus}`,
       );
     });

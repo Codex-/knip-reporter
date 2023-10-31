@@ -3,8 +3,9 @@ import * as core from "@actions/core";
 import { type CheckConclusion, type CheckOutput, createCheck, updateCheck } from "../api.ts";
 import type { MinimalAnnotation } from "./types.ts";
 
-export async function createCheckId(name: string): Promise<number> {
-  const id = (await createCheck(name)).data.id;
+export async function createCheckId(name: string, title: string): Promise<number> {
+  core.debug(`[createCheckId]: Creating check, name: ${name}, title: ${title}`);
+  const id = (await createCheck(name, title)).data.id;
   core.debug(`[createCheckId]: Check created (${id})`);
   return id;
 }
@@ -41,12 +42,11 @@ export async function updateCheckAnnotations(
       });
 
     core.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
-    const response = await updateCheck(checkId, "in_progress", {
-      title: "knip-reporter",
-      summary: "some summary",
+    await updateCheck(checkId, "in_progress", {
+      title: "Knip reporter analysis",
+      summary: "Updating annotations...",
       annotations: slice,
     });
-    core.debug(`[updateCheckAnnotations]: annotations: ${response.data.output.annotations_url}`);
 
     i += CHECK_ANNOTATIONS_UPDATE_LIMIT;
   }
