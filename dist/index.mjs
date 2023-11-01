@@ -22240,7 +22240,7 @@ function summaryMarkdownTable({ classMembers, enumMembers }) {
   };
   return markdownTable(
     [
-      ["Type", "Count"],
+      ["Type", "Found"],
       ["Class Members", `${classMembers}`],
       ["Enum Members", `${enumMembers}`]
     ],
@@ -22333,7 +22333,7 @@ async function createOrUpdateComments(pullRequestNumber, commentsToPost, existin
   }
   return [];
 }
-async function deleteExtraneousComments(commentIds) {
+async function deleteComments(commentIds) {
   for (const id of commentIds) {
     core5.info(`    - Delete comment ${id}`);
     await deleteComment(id);
@@ -22359,7 +22359,7 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
     if (remainingComments.length === 0) {
       return;
     }
-    return deleteExtraneousComments(remainingComments);
+    return deleteComments(remainingComments);
   });
   core5.info(`\u2714 Running comment tasks (${Date.now() - taskMs}ms)`);
 }

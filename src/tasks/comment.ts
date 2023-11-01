@@ -83,7 +83,7 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): string
 /**
  * @returns a collection of IDs that were not updated but extraneously remain
  */
-async function createOrUpdateComments(
+export async function createOrUpdateComments(
   pullRequestNumber: number,
   commentsToPost: string[],
   existingCommentIds?: number[],
@@ -111,7 +111,7 @@ async function createOrUpdateComments(
   return [];
 }
 
-async function deleteExtraneousComments(commentIds: number[]): Promise<void> {
+export async function deleteComments(commentIds: number[]): Promise<void> {
   for (const id of commentIds) {
     core.info(`    - Delete comment ${id}`);
     await deleteComment(id);
@@ -140,7 +140,7 @@ export async function runCommentTask(
     if (remainingComments.length === 0) {
       return;
     }
-    return deleteExtraneousComments(remainingComments);
+    return deleteComments(remainingComments);
   });
 
   core.info(`✔ Running comment tasks (${Date.now() - taskMs}ms)`);
