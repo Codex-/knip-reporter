@@ -22226,9 +22226,9 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
 async function resolveCheck(checkId, conclusion, counts) {
   core3.debug(`[resolveCheck]: Updating check ${checkId} conclusion (${conclusion})`);
   const summaryTable = summaryMarkdownTable(counts);
-  return updateCheck(
+  await updateCheck(
     checkId,
-    "in_progress",
+    "completed",
     { title: "Knip reporter analysis", summary: summaryTable },
     conclusion
   );

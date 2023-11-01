@@ -92,25 +92,25 @@ export async function resolveCheck(
   checkId: number,
   conclusion: CheckConclusion,
   counts: AnnotationsCount,
-) {
+): Promise<void> {
   core.debug(`[resolveCheck]: Updating check ${checkId} conclusion (${conclusion})`);
   const summaryTable = summaryMarkdownTable(counts);
-  return updateCheck(
+  await updateCheck(
     checkId,
-    "in_progress",
+    "completed",
     { title: "Knip reporter analysis", summary: summaryTable },
     conclusion,
   );
 }
 
-function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsCount): string {
+export function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsCount): string {
   const markdownTableOptions: MarkdownTableOptions = {
     alignDelimiters: false,
     padding: false,
   };
   return markdownTable(
     [
-      ["Type", "Count"],
+      ["Type", "Found"],
       ["Class Members", `${classMembers}`],
       ["Enum Members", `${enumMembers}`],
     ],

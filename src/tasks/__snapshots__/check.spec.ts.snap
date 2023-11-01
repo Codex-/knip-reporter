@@ -1,5 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`check > summaryMarkdownTable > should transform an annotations summary to a markdown table 1`] = `
+"|Type|Found|
+|-|-|
+|Class Members|123|
+|Enum Members|456|"
+`;
+
+exports[`check > summaryMarkdownTable > should transform an annotations summary to a markdown table 2`] = `
+"|Type|Found|
+|-|-|
+|Class Members|456|
+|Enum Members|789|"
+`;
+
 exports[`check > updateCheckAnnotations > should only make three requests with 150 annotations 1`] = `
 [
   [
