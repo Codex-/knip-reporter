@@ -22186,10 +22186,10 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
   while (i < itemMeta.length) {
     const currentEndIndex = i + CHECK_ANNOTATIONS_UPDATE_LIMIT < itemMeta.length ? i + CHECK_ANNOTATIONS_UPDATE_LIMIT : itemMeta.length;
     core3.debug(
-      `[updateCheckAnnotations]: Processing ${i}...${i + (currentEndIndex - 1)} of ${itemMeta.length - 1}`
+      `[updateCheckAnnotations]: Processing ${i}...${currentEndIndex - 1} of ${itemMeta.length - 1}`
     );
     const annotations = [];
-    for (let j = 0; j < currentEndIndex; j++) {
+    for (let j = i; j < currentEndIndex; j++) {
       const meta = itemMeta[j];
       if (!meta) {
         continue;
