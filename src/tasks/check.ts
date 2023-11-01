@@ -1,7 +1,8 @@
 import * as core from "@actions/core";
+import { markdownTable, type Options as MarkdownTableOptions } from "markdown-table";
 
 import { type CheckConclusion, type CheckOutput, createCheck, updateCheck } from "../api.ts";
-import type { MinimalAnnotation } from "./types.ts";
+import type { ItemMeta } from "./types.ts";
 
 export async function createCheckId(name: string, title: string): Promise<number> {
   core.debug(`[createCheckId]: Creating check, name: ${name}, title: ${title}`);
@@ -16,53 +17,103 @@ const CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 
 type Unpacked<T> = T extends Array<infer U> ? U : T;
 type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>;
+export interface AnnotationsCount {
+  classMembers: number;
+  enumMembers: number;
+}
 
 export async function updateCheckAnnotations(
   checkId: number,
-  minimalAnnotations: MinimalAnnotation[],
+  itemMeta: ItemMeta[],
   ignoreResults: boolean,
-): Promise<void> {
+): Promise<AnnotationsCount> {
   core.debug(
-    `[updateCheckAnnotations]: Begin pushing annotations (${
-      minimalAnnotations.length
-    }) with level '${ignoreResults ? "warning" : "failure"}'`,
+    `[updateCheckAnnotations]: Begin pushing annotations (${itemMeta.length}) with level '${
+      ignoreResults ? "warning" : "failure"
+    }'`,
   );
 
+  let classMemberCount = 0;
+  let enumMemberCount = 0;
   let i = 0;
-  while (i < minimalAnnotations.length) {
+  while (i < itemMeta.length) {
+    const currentEndIndex =
+      i + CHECK_ANNOTATIONS_UPDATE_LIMIT < itemMeta.length
+        ? i + CHECK_ANNOTATIONS_UPDATE_LIMIT
+        : itemMeta.length;
     core.debug(
-      `[updateCheckAnnotations]: Slicing ${i}...${i + (CHECK_ANNOTATIONS_UPDATE_LIMIT - 1)}`,
+      `[updateCheckAnnotations]: Processing ${i}...${i + (currentEndIndex - 1)} ` +
+        `of ${itemMeta.length - 1}`,
     );
 
-    const slice = minimalAnnotations.slice(i, i + CHECK_ANNOTATIONS_UPDATE_LIMIT).map((ma) => {
+    const annotations: Annotation[] = [];
+    for (let j = 0; j < currentEndIndex; j++) {
+      const meta = itemMeta[j];
+      if (!meta) {
+        continue;
+      }
+
+      if (meta.type === "class") {
+        classMemberCount++;
+      } else {
+        enumMemberCount++;
+      }
+
       const annotation: Annotation = {
-        path: ma.path,
-        start_line: ma.start_line,
-        end_line: ma.start_line,
-        start_column: ma.start_column,
-        end_column: ma.start_column + ma.identifier.length,
+        path: meta.path,
+        start_line: meta.start_line,
+        end_line: meta.start_line,
+        start_column: meta.start_column,
+        end_column: meta.start_column + meta.identifier.length,
         annotation_level: ignoreResults ? "warning" : "failure",
-        message: `\`${ma.identifier}\` is unused`,
+        message: `${meta.identifier} is an unused ${meta.type} member`,
       };
-      return annotation;
-    });
+      annotations.push(annotation);
+    }
 
     core.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
     await updateCheck(checkId, "in_progress", {
       title: "Knip reporter analysis",
       summary: "",
-      annotations: slice,
+      annotations: annotations,
     });
 
     i += CHECK_ANNOTATIONS_UPDATE_LIMIT;
   }
 
   core.debug(
-    `[updateCheckAnnotations]: Pushing annotations (${minimalAnnotations.length}) to check ${checkId} completed`,
+    `[updateCheckAnnotations]: Pushing annotations (${itemMeta.length}) to check ${checkId} completed`,
+  );
+
+  return { classMembers: classMemberCount, enumMembers: enumMemberCount };
+}
+
+export async function resolveCheck(
+  checkId: number,
+  conclusion: CheckConclusion,
+  counts: AnnotationsCount,
+) {
+  core.debug(`[resolveCheck]: Updating check ${checkId} conclusion (${conclusion})`);
+  const summaryTable = summaryMarkdownTable(counts);
+  return updateCheck(
+    checkId,
+    "in_progress",
+    { title: "Knip reporter analysis", summary: summaryTable },
+    conclusion,
   );
 }
 
-export async function resolveCheck(checkId: number, conclusion: CheckConclusion) {
-  core.debug(`[resolveCheck]: Updating check ${checkId} conclusion (${conclusion})`);
-  return updateCheck(checkId, "in_progress", undefined, conclusion);
+function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsCount): string {
+  const markdownTableOptions: MarkdownTableOptions = {
+    alignDelimiters: false,
+    padding: false,
+  };
+  return markdownTable(
+    [
+      ["Type", "Count"],
+      ["Class Members", `${classMembers}`],
+      ["Enum Members", `${enumMembers}`],
+    ],
+    markdownTableOptions,
+  );
 }

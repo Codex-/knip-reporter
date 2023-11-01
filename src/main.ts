@@ -3,7 +3,12 @@ import * as github from "@actions/github";
 
 import { configToStr, getConfig } from "./action.ts";
 import { init } from "./api.ts";
-import { createCheckId, resolveCheck, updateCheckAnnotations } from "./tasks/check.ts";
+import {
+  type AnnotationsCount,
+  createCheckId,
+  resolveCheck,
+  updateCheckAnnotations,
+} from "./tasks/check.ts";
 import { runCommentTask } from "./tasks/comment.ts";
 import { runKnipTasks } from "./tasks/knip.ts";
 import { timeTask } from "./tasks/task.ts";
@@ -43,8 +48,9 @@ async function run(): Promise<void> {
       knipSections,
     );
 
+    let counts: AnnotationsCount = { classMembers: 0, enumMembers: 0 };
     if (config.annotations) {
-      await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
+      counts = await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
     }
 
     if (!config.ignoreResults && knipSections.length > 0) {
@@ -53,9 +59,9 @@ async function run(): Promise<void> {
 
     if (config.annotations) {
       if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
-        await resolveCheck(checkId!, "failure");
+        await resolveCheck(checkId!, "failure", counts);
       } else {
-        await resolveCheck(checkId!, "success");
+        await resolveCheck(checkId!, "success", counts);
       }
     }
 

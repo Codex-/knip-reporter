@@ -6,7 +6,7 @@ import { markdownTable, type Options as MarkdownTableOptions } from "markdown-ta
 
 import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
-import type { MinimalAnnotation } from "./types.ts";
+import type { ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
   const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
@@ -250,10 +250,12 @@ export function buildMapSection(
   rawResults: Record<string, Record<string, Item[]>>,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
-): { sections: string[]; annotations: MinimalAnnotation[] } {
+): { sections: string[]; annotations: ItemMeta[] } {
   let totalUnused = 0;
   const tableBody: string[][] = [];
-  const annotations: MinimalAnnotation[] = [];
+  const annotations: ItemMeta[] = [];
+  const resultType = name === "classMembers" ? "Class" : "Enum";
+  const resultMetaType = name === "classMembers" ? "class" : "enum";
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
@@ -265,6 +267,7 @@ export function buildMapSection(
             identifier: member.name,
             start_line: member.line,
             start_column: member.col,
+            type: resultMetaType,
           });
         }
         if (verboseEnabled) {
@@ -279,8 +282,8 @@ export function buildMapSection(
   }
 
   if (verboseEnabled) {
-    const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
-    const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
+    const tableHeader = ["Filename", resultType, "Member"];
+    const sectionHeaderName = `${resultType} Members`;
     const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
     const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
 
@@ -342,8 +345,8 @@ export function buildMarkdownSections(
   report: ParsedReport,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
-): { sections: string[]; annotations: MinimalAnnotation[] } {
-  const outputAnnotations: MinimalAnnotation[] = [];
+): { sections: string[]; annotations: ItemMeta[] } {
+  const outputAnnotations: ItemMeta[] = [];
   const outputSections: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {
@@ -415,7 +418,7 @@ export async function runKnipTasks(
   buildScriptName: string,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
-): Promise<{ sections: string[]; annotations: MinimalAnnotation[] }> {
+): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
