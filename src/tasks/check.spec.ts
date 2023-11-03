@@ -289,8 +289,8 @@ describe("check", () => {
       await resolveCheck(123, "success", { classMembers: 100, enumMembers: 200 });
 
       const summary = updateCheckSpy.mock.lastCall?.[2]?.summary;
-      expect(summary).toMatch(/|Class Members|100|/);
-      expect(summary).toMatch(/|Enum Members|200|/);
+      expect(summary).toMatch(/\|Class Members\|100\|/);
+      expect(summary).toMatch(/\|Enum Members\|200\|/);
     });
   });
 
