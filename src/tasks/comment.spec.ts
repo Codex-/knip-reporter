@@ -2,7 +2,9 @@ import * as core from "@actions/core";
 import { describe, expect, it, vi } from "vitest";
 
 import * as api from "../api.ts";
-import { createOrUpdateComments, deleteComments } from "./comment.ts";
+import { reportJson } from "./__fixtures__/knip.fixture.ts";
+import { buildComments, createOrUpdateComments, deleteComments } from "./comment.ts";
+import { buildFilesSection, buildMarkdownSections, parseJsonReport } from "./knip.ts";
 
 vi.mock("@actions/core");
 vi.mock("../api.ts");
@@ -104,6 +106,81 @@ describe("comment", () => {
 
       expect(coreInfoSpy).not.toHaveBeenCalled();
       expect(deleteCommentSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("buildComments", () => {
+    const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+
+    const shortSections = [buildFilesSection(["Ratchet.ts", "Clank.ts"])];
+    const manyShortSections = (() => {
+      const toReturn: string[] = [];
+      const { sections } = buildMarkdownSections(parsedReport, false, true);
+      for (let i = 0; i < 100; i++) {
+        toReturn.push(...sections);
+      }
+      return toReturn;
+    })();
+    const longSection = (() => {
+      const files: string[] = [];
+      let currentLength = 0;
+      const toAdd = ["Ratchet.ts", "Clank.ts"];
+      const toAddLength = toAdd.reduce((acc: number, curr: string) => (acc += curr.length), 0);
+      while (currentLength < api.GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+        files.push(...toAdd);
+        currentLength += toAddLength;
+      }
+      return [buildFilesSection(files)];
+    })();
+
+    it("should inject a provided comment ID", () => {
+      let comments = buildComments("hello", shortSections);
+
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+
+      comments = buildComments("goodbye", shortSections);
+
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toContain("<!-- goodbye-0 -->");
+    });
+
+    it("should increase the number on the injected comment for each comment generated", () => {
+      const comments = buildComments("hello", manyShortSections);
+
+      expect(comments).toHaveLength(3);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[1]).toContain("<!-- hello-1 -->");
+      expect(comments[2]).toContain("<!-- hello-2 -->");
+    });
+
+    it("should output multiple comments if all sections exceed the max character limit", () => {
+      const comments = buildComments("hello", manyShortSections);
+
+      expect(comments).toHaveLength(3);
+      expect(comments).toMatchSnapshot();
+    });
+
+    it("should output a long section", () => {
+      const coreWarningSpy = vi.spyOn(core, "warning");
+      const comments = buildComments("hello", longSection);
+
+      expect(comments).toHaveLength(0);
+      expect(coreWarningSpy).toHaveBeenCalledTimes(3);
+      expect(coreWarningSpy.mock.calls[0]?.[0]).toContain("Unused files");
+      expect(coreWarningSpy.mock.calls[0]?.[0]).toContain(longSection[0]?.length);
+      expect(coreWarningSpy.mock.calls[1]?.[0]).toContain(
+        "Skipping this section, please see output below:",
+      );
+      expect(coreWarningSpy.mock.calls[2]?.[0]).toStrictEqual(longSection[0]);
+    });
+
+    it("should not output a warning for a regular section", () => {
+      const coreWarningSpy = vi.spyOn(core, "warning");
+      const comments = buildComments("hello", shortSections);
+
+      expect(comments).toHaveLength(1);
+      expect(coreWarningSpy).not.toHaveBeenCalled();
     });
   });
 });

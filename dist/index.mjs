@@ -22268,7 +22268,7 @@ function createCommentId(cfgCommentId, n) {
   return id;
 }
 var COMMENT_SECTION_DELIMITER = "\n\n";
-function prepareComments(cfgCommentId, reportSections) {
+function buildComments(cfgCommentId, reportSections) {
   core5.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments = [];
   let currentCommentEntryNumber = 0;
@@ -22345,7 +22345,7 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
   core5.info("- Running comment tasks");
   const comments = await timeTask(
     "Prepare comments",
-    () => prepareComments(cfgCommentId, reportSections)
+    () => buildComments(cfgCommentId, reportSections)
   );
   const existingCommentIds = await timeTask(
     "Find existing comment IDs",

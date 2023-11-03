@@ -18,7 +18,7 @@ function createCommentId(cfgCommentId: string, n: number): string {
 // Double newlines for markdown
 const COMMENT_SECTION_DELIMITER = "\n\n";
 
-function prepareComments(cfgCommentId: string, reportSections: string[]): string[] {
+export function buildComments(cfgCommentId: string, reportSections: string[]): string[] {
   core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
@@ -128,7 +128,7 @@ export async function runCommentTask(
   core.info("- Running comment tasks");
 
   const comments = await timeTask("Prepare comments", () =>
-    prepareComments(cfgCommentId, reportSections),
+    buildComments(cfgCommentId, reportSections),
   );
   const existingCommentIds = await timeTask("Find existing comment IDs", () =>
     listCommentIds(cfgCommentId, pullRequestNumber),
