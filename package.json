@@ -47,6 +47,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-github": "^4.10.1",
     "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "knip": "^2.38.4",
     "prettier": "3.0.3",
     "release-it": "^16.2.1",

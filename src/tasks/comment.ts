@@ -1,13 +1,13 @@
 import * as core from "@actions/core";
 
 import {
-  GITHUB_COMMENT_MAX_COMMENT_LENGTH,
   createComment,
   deleteComment,
+  GITHUB_COMMENT_MAX_COMMENT_LENGTH,
   listCommentIds,
   updateComment,
 } from "../api.ts";
-import type { Task } from "./task.ts";
+import { timeTask } from "./task.ts";
 
 function createCommentId(cfgCommentId: string, n: number): string {
   const id = `<!-- ${cfgCommentId}-${n} -->`;
@@ -18,9 +18,7 @@ function createCommentId(cfgCommentId: string, n: number): string {
 // Double newlines for markdown
 const COMMENT_SECTION_DELIMITER = "\n\n";
 
-let commentsToPost: string[];
-
-function prepareComments(cfgCommentId: string, reportSections: string[]): void {
+export function buildComments(cfgCommentId: string, reportSections: string[]): string[] {
   core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
@@ -78,19 +76,21 @@ function prepareComments(cfgCommentId: string, reportSections: string[]): void {
   }
 
   core.debug(`[prepareComments]: ${comments.length} comments prepared`);
-  commentsToPost = comments;
+
+  return comments;
 }
 
 /**
  * @returns a collection of IDs that were not updated but extraneously remain
  */
-async function createOrUpdateComments(
+export async function createOrUpdateComments(
   pullRequestNumber: number,
+  commentsToPost: string[],
   existingCommentIds?: number[],
 ): Promise<number[]> {
   let existingIdsIndex = 0;
   for (const comment of commentsToPost) {
-    if (existingCommentIds && existingCommentIds[existingIdsIndex] !== undefined) {
+    if (existingCommentIds?.[existingIdsIndex] !== undefined) {
       const commentId = existingCommentIds[existingIdsIndex]!;
       await updateComment(commentId, comment);
       core.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
@@ -111,7 +111,7 @@ async function createOrUpdateComments(
   return [];
 }
 
-async function deleteExtraneousComments(commentIds: number[]): Promise<void> {
+export async function deleteComments(commentIds: number[]): Promise<void> {
   for (const id of commentIds) {
     core.info(`    - Delete comment ${id}`);
     await deleteComment(id);
@@ -119,36 +119,29 @@ async function deleteExtraneousComments(commentIds: number[]): Promise<void> {
   }
 }
 
-export function buildCommentTask(
+export async function runCommentTask(
   cfgCommentId: string,
   pullRequestNumber: number,
   reportSections: string[],
-) {
-  return {
-    name: "Comment",
-    steps: [
-      {
-        name: "Prepare comments",
-        action: () => prepareComments(cfgCommentId, reportSections),
-      },
-      {
-        name: "Find existing comment IDs",
-        action: () => listCommentIds(cfgCommentId, pullRequestNumber),
-      },
-      {
-        name: "Create or update comment",
-        action: (existingCommentIds?: number[]) =>
-          createOrUpdateComments(pullRequestNumber, existingCommentIds),
-      },
-      {
-        name: "Delete extraneous comments",
-        action: (remainingComments: number[]) => {
-          if (remainingComments.length === 0) {
-            return;
-          }
-          return deleteExtraneousComments(remainingComments);
-        },
-      },
-    ] as const,
-  } satisfies Task;
+): Promise<void> {
+  const taskMs = Date.now();
+  core.info("- Running comment tasks");
+
+  const comments = await timeTask("Prepare comments", () =>
+    buildComments(cfgCommentId, reportSections),
+  );
+  const existingCommentIds = await timeTask("Find existing comment IDs", () =>
+    listCommentIds(cfgCommentId, pullRequestNumber),
+  );
+  const remainingComments = await timeTask("Create or update comment", () =>
+    createOrUpdateComments(pullRequestNumber, comments, existingCommentIds),
+  );
+  await timeTask("Delete extraneous comments", () => {
+    if (remainingComments.length === 0) {
+      return;
+    }
+    return deleteComments(remainingComments);
+  });
+
+  core.info(`✔ Running comment tasks (${Date.now() - taskMs}ms)`);
 }

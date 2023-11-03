@@ -1,0 +1,101 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`API > createCheck > should not throw 1`] = `
+[MockFunction newApi] {
+  "calls": [
+    [
+      {
+        "head_sha": "12345678",
+        "name": "knip-reporter",
+        "output": {
+          "summary": "",
+          "title": "Knip reporter analysis",
+        },
+        "owner": "a",
+        "repo": "b",
+        "status": "in_progress",
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": {
+        "data": {},
+        "status": 201,
+      },
+    },
+  ],
+}
+`;
+
+exports[`API > createComment > should not throw 1`] = `
+[MockFunction newApi] {
+  "calls": [
+    [
+      {
+        "body": "",
+        "issue_number": 123456,
+        "owner": "a",
+        "repo": "b",
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": {
+        "data": {},
+        "status": 201,
+      },
+    },
+  ],
+}
+`;
+
+exports[`API > deleteComment > should not throw 1`] = `
+[MockFunction newApi] {
+  "calls": [
+    [
+      {
+        "comment_id": 123456,
+        "owner": "a",
+        "repo": "b",
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": {
+        "data": {},
+        "status": 204,
+      },
+    },
+  ],
+}
+`;
+
+exports[`API > updateComment > should not throw 1`] = `
+[MockFunction newApi] {
+  "calls": [
+    [
+      {
+        "body": "",
+        "comment_id": 123456,
+        "owner": "a",
+        "repo": "b",
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": {
+        "data": {},
+        "status": 200,
+      },
+    },
+  ],
+}
+`;

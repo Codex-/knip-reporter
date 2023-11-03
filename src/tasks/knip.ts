@@ -5,10 +5,11 @@ import { parseNr, getCliCommand } from "@antfu/ni";
 import { markdownTable, type Options as MarkdownTableOptions } from "markdown-table";
 
 import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
-import type { Task } from "./task.ts";
+import { timeTask } from "./task.ts";
+import type { ItemMeta } from "./types.ts";
 
-async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
     programmatic: true,
   });
   if (!cmd) {
@@ -20,7 +21,7 @@ async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
   return cmd;
 }
 
-async function run(runCmd: string): Promise<string> {
+export async function run(runCmd: string): Promise<string> {
   const result = await new Promise<string>((resolve, reject) => {
     exec(runCmd, (_err, stdout, stderr) => {
       // Knip will exit with a non-zero code on there being results
@@ -35,6 +36,8 @@ async function run(runCmd: string): Promise<string> {
   return result;
 }
 
+type Item = { name: string; pos?: number; line?: number; col?: number };
+
 interface ParsedReport {
   /**
    * Unused files `files`
@@ -44,60 +47,60 @@ interface ParsedReport {
   /**
    * Unused dependencies `dependencies`
    */
-  dependencies: Record<string, string[]>;
+  dependencies: Record<string, Array<{ name: string }>>;
 
   /**
    * Unused devDependencies `devDependencies`
    */
-  devDependencies: Record<string, string[]>;
+  devDependencies: Record<string, Array<{ name: string }>>;
 
   /**
    * Unused optionalPeerDependencies `optionalPeerDependencies`
    */
-  optionalPeerDependencies: Record<string, string[]>;
+  optionalPeerDependencies: Record<string, Array<{ name: string }>>;
 
   /**
    * Unlisted dependencies `unlisted`
    */
-  unlisted: Record<string, string[]>;
+  unlisted: Record<string, Array<{ name: string }>>;
 
   /**
    * Unlisted binaries `binaries`
    */
-  binaries: Record<string, string[]>;
+  binaries: Record<string, Array<{ name: string }>>;
 
   /**
    * Unresolved imports `unresolved`
    */
-  unresolved: Record<string, string[]>;
+  unresolved: Record<string, Array<{ name: string }>>;
 
   /**
    * Unused exports and unused namespaces exports`exports`
    */
-  exports: Record<string, string[]>;
+  exports: Record<string, Item[]>;
 
   /**
    * Unused exported types and unused namespace types `types`
    */
-  types: Record<string, string[]>;
+  types: Record<string, Item[]>;
 
   /**
    * Unused exported enum members `enumMembers`
    */
-  enumMembers: Record<string, Record<string, string[]>>;
+  enumMembers: Record<string, Record<string, Item[]>>;
 
   /**
    * Unused exported class members `classMembers`
    */
-  classMembers: Record<string, Record<string, string[]>>;
+  classMembers: Record<string, Record<string, Item[]>>;
 
   /**
    * Duplicate exports `duplicates`
    */
-  duplicates: Record<string, string[]>;
+  duplicates: Record<string, Array<Item[]>>;
 }
 
-function parseJsonReport(rawJson: string): ParsedReport {
+export function parseJsonReport(rawJson: string): ParsedReport {
   // Default JSON reporter results in a collection with a single object
   const entries = JSON.parse(rawJson);
   const out: ParsedReport = {
@@ -138,6 +141,7 @@ function parseJsonReport(rawJson: string): ParsedReport {
         case "devDependencies":
         case "optionalPeerDependencies":
         case "unlisted":
+        case "binaries":
         case "unresolved":
         case "exports":
         case "types":
@@ -153,7 +157,7 @@ function parseJsonReport(rawJson: string): ParsedReport {
         case "enumMembers":
         case "classMembers":
           if (typeof result === "object" && Object.keys(result).length > 0) {
-            out[type][fileName] = result as Record<string, string[]>;
+            out[type][fileName] = result as Record<string, Item[]>;
             if (summary[type] === undefined) {
               summary[type] = 0;
             }
@@ -171,13 +175,13 @@ function parseJsonReport(rawJson: string): ParsedReport {
   return out;
 }
 
-function buildFilesSection(files: string[]): string {
+export function buildFilesSection(files: string[]): string {
   const header = `### Unused files (${files.length})`;
   const body = files.map((file) => `\`${file}\``).join(", ");
   return header + "\n\n" + body;
 }
 
-function buildSectionName(name: string): string {
+export function buildSectionName(name: string): string {
   switch (name) {
     case "dependencies":
     case "devDependencies":
@@ -201,57 +205,104 @@ function buildSectionName(name: string): string {
 /**
  * Build a section where the result is a collection of strings
  */
-function buildArraySection(name: string, rawResults: Record<string, string[]>): string[] {
+export function buildArraySection(
+  name: string,
+  rawResults: Record<string, Item[] | Item[][]>,
+): string[] {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
   const tableBody = [];
+
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
-    tableBody.push([fileName, results.map((result) => `\`${result}\``).join("<br/>")]);
+    tableBody.push([
+      fileName,
+      results
+        .map((result) => {
+          if (Array.isArray(result)) {
+            return result.map((item) => `\`${item.name}\``).join(", ");
+          }
+          return `\`${result.name}\``;
+        })
+        .join("<br/>"),
+    ]);
   }
+
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+}
+
+function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
+  return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
 }
 
 /**
- * Build a section where the result is a ma
+ * Build a section where the result is a map
+ *
+ * As these sections are the only sections that return code identifiers
+ * we process the sections and annotations.
+ *
+ * @returns a tuple of the markdown sections if verbose and annotations if enabled
  */
-function buildMapSection(
+export function buildMapSection(
   name: string,
-  rawResults: Record<string, Record<string, string[]>>,
-): string[] {
+  rawResults: Record<string, Record<string, Item[]>>,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
+): { sections: string[]; annotations: ItemMeta[] } {
   let totalUnused = 0;
-  const tableHeader = ["Filename", name === "classMembers" ? "Class" : "Enum", "Member"];
-  const tableBody = [];
+  const tableBody: string[][] = [];
+  const annotations: ItemMeta[] = [];
+  const resultType = name === "classMembers" ? "Class" : "Enum";
+  const resultMetaType = name === "classMembers" ? "class" : "enum";
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
+      const itemNames = [];
+      for (const member of members) {
+        if (annotationsEnabled && isValidAnnotationBody(member)) {
+          annotations.push({
+            path: filename,
+            identifier: member.name,
+            start_line: member.line,
+            start_column: member.col,
+            type: resultMetaType,
+          });
+        }
+        if (verboseEnabled) {
+          itemNames.push(`\`${member.name}\``);
+        }
+      }
       totalUnused += members.length;
-      tableBody.push([
-        filename,
-        definitionName,
-        members.map((member) => `\`${member}\``).join("<br/>"),
-      ]);
+      if (verboseEnabled) {
+        tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+      }
     }
   }
 
-  const sectionHeaderName = name === "classMembers" ? "Class Members" : "Enum Members";
-  const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
+  if (verboseEnabled) {
+    const tableHeader = ["Filename", resultType, "Member"];
+    const sectionHeaderName = `${resultType} Members`;
+    const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
+    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
 
-  return processSectionToMessage(sectionHeader, tableHeader, tableBody);
+    return { sections: processedSections, annotations: annotations };
+  }
+
+  return { sections: [], annotations: annotations };
 }
 
-const markdownTableOptions: MarkdownTableOptions = {
-  alignDelimiters: false,
-  padding: false,
-};
-
-function processSectionToMessage(
+export function processSectionToMessages(
   sectionHeader: string,
   tableHeader: string[],
   tableBody: string[][],
 ): string[] {
+  const markdownTableOptions: MarkdownTableOptions = {
+    alignDelimiters: false,
+    padding: false,
+  };
+
   const sectionProcessingMs = Date.now();
   let output = [
     sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions),
@@ -290,13 +341,18 @@ function processSectionToMessage(
   return output;
 }
 
-function buildMarkdownSections(report: ParsedReport): string[] {
-  const output: string[] = [];
+export function buildMarkdownSections(
+  report: ParsedReport,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
+): { sections: string[]; annotations: ItemMeta[] } {
+  const outputAnnotations: ItemMeta[] = [];
+  const outputSections: string[] = [];
   for (const key of Object.keys(report)) {
     switch (key) {
       case "files":
         if (report.files.length > 0) {
-          output.push(buildFilesSection(report.files));
+          outputSections.push(buildFilesSection(report.files));
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
         }
         break;
@@ -311,7 +367,7 @@ function buildMarkdownSections(report: ParsedReport): string[] {
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
           for (const section of buildArraySection(key, report[key])) {
-            output.push(section);
+            outputSections.push(section);
           }
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
@@ -319,8 +375,15 @@ function buildMarkdownSections(report: ParsedReport): string[] {
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          for (const section of buildMapSection(key, report[key])) {
-            output.push(section);
+          const { sections, annotations } = buildMapSection(
+            key,
+            report[key],
+            annotationsEnabled,
+            verboseEnabled,
+          );
+          outputAnnotations.push(...annotations);
+          for (const section of sections) {
+            outputSections.push(section);
           }
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
@@ -328,7 +391,7 @@ function buildMarkdownSections(report: ParsedReport): string[] {
     }
   }
 
-  return output;
+  return { sections: outputSections, annotations: outputAnnotations };
 }
 
 /**
@@ -340,7 +403,7 @@ function buildMarkdownSections(report: ParsedReport): string[] {
  * For now, we naively assume that the last entry of the output to begin
  * with '[' is the correct report
  */
-function getJsonFromOutput(output: string): string {
+export function getJsonFromOutput(output: string): string {
   const lines = output.split(/\n/).reverse();
   for (const line of lines) {
     if (line.startsWith("[")) {
@@ -351,26 +414,21 @@ function getJsonFromOutput(output: string): string {
   throw new Error("Unable to find JSON blob");
 }
 
-export function buildKnipTask(buildScriptName: string) {
-  return {
-    name: "Knip",
-    steps: [
-      {
-        name: "Build knip command",
-        action: () => buildRunKnipCommand(buildScriptName),
-      },
-      {
-        name: "Run knip",
-        action: async (cmd: string) => getJsonFromOutput(await run(cmd)),
-      },
-      {
-        name: "Parse knip report",
-        action: (output: string) => parseJsonReport(output),
-      },
-      {
-        name: "Convert report to markdown",
-        action: (report: ParsedReport) => buildMarkdownSections(report),
-      },
-    ] as const,
-  } satisfies Task;
+export async function runKnipTasks(
+  buildScriptName: string,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
+): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
+  const taskMs = Date.now();
+  core.info("- Running Knip tasks");
+
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
+  const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
+  const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
+  const sectionsAndAnnotations = await timeTask("Convert report to markdown", async () =>
+    buildMarkdownSections(report, annotationsEnabled, verboseEnabled),
+  );
+
+  core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);
+  return sectionsAndAnnotations;
 }

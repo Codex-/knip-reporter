@@ -1,10 +1,17 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+
 import { configToStr, getConfig } from "./action.ts";
-import { buildKnipTask } from "./tasks/knip.ts";
-import { executeTask } from "./tasks/task.ts";
-import { buildCommentTask } from "./tasks/comment.ts";
 import { init } from "./api.ts";
+import {
+  type AnnotationsCount,
+  createCheckId,
+  resolveCheck,
+  updateCheckAnnotations,
+} from "./tasks/check.ts";
+import { runCommentTask } from "./tasks/comment.ts";
+import { runKnipTasks } from "./tasks/knip.ts";
+import { timeTask } from "./tasks/task.ts";
 
 async function run(): Promise<void> {
   try {
@@ -22,19 +29,40 @@ async function run(): Promise<void> {
 
     init(config);
 
-    const knipTask = buildKnipTask(config.commandScriptName);
-    type KnipFinalStepResult = ReturnType<(typeof knipTask.steps)[3]["action"]>;
-    const knipTaskResult = await executeTask<KnipFinalStepResult>(knipTask);
+    let checkId: number;
+    if (config.annotations) {
+      checkId = await timeTask("Create check ID", () =>
+        createCheckId("knip-reporter-annotations-check", "Knip reporter analysis"),
+      );
+    }
 
-    const commentTask = buildCommentTask(
+    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
+      config.commandScriptName,
+      config.annotations,
+      config.verbose,
+    );
+
+    await runCommentTask(
       config.commentId,
       github.context.payload.pull_request.number,
-      knipTaskResult,
+      knipSections,
     );
-    await executeTask(commentTask);
 
-    if (!config.ignoreResults && knipTaskResult.length > 0) {
+    let counts: AnnotationsCount = { classMembers: 0, enumMembers: 0 };
+    if (config.annotations) {
+      counts = await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
+    }
+
+    if (!config.ignoreResults && knipSections.length > 0) {
       core.setFailed("knip has resulted in findings, please see the report for more details");
+    }
+
+    if (config.annotations) {
+      if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
+        await resolveCheck(checkId!, "failure", counts);
+      } else {
+        await resolveCheck(checkId!, "success", counts);
+      }
     }
 
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
