@@ -10,7 +10,7 @@ This action runs [knip](https://github.com/webpro/knip), parses the results, and
 
 The execution of `knip` requires you to have followed the general `knip` setup and have a command script present in your `package.json` file, `knip`, by default but this can be of any name. If this script name deviates from the standard `knip` setup, please provide the script name in the config.
 
-`knip-reporter` appends a reporter to the `knip` command used, `--reporter json`, to output a parseable report with information needed for annotations where supported.
+`knip-reporter` appends a reporter to the `knip` command used, `--reporter jsonExt`, to output a parseable report with information needed for annotations where supported.
 
 ```yaml
 name: Pull Request

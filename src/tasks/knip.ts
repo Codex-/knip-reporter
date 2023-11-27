@@ -9,7 +9,7 @@ import { timeTask } from "./task.ts";
 import type { ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
     programmatic: true,
   });
   if (!cmd) {

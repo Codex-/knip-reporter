@@ -41,7 +41,7 @@ describe("knip", () => {
       const cmd = await buildRunKnipCommand("knip");
 
       expect(cmd).toMatch("knip");
-      expect(cmd).toMatch("--reporter json");
+      expect(cmd).toMatch("--reporter jsonExt");
     });
 
     it("should throw if a command could not be generated", async () => {
@@ -621,7 +621,7 @@ describe("knip", () => {
       const cliOutput = `
 
 > knip-reporter@0.0.0 knip /Users/x/dev/p/knip-reporter
-> knip "--reporter" "json"
+> knip "--reporter" "jsonExt"
 
 {"files":["foo.ts"],"issues":[{"foo":"bar"}]}
 
