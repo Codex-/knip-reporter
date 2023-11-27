@@ -49,6 +49,10 @@ export async function updateCheckAnnotations(
     const annotations: Annotation[] = [];
     for (let j = i; j < currentEndIndex; j++) {
       const meta = itemMeta[j];
+      core.debug(`j = ${j}`);
+      core.debug(`${meta}`);
+      core.debug("====================");
+
       if (!meta) {
         continue;
       }
