@@ -233,6 +233,17 @@ export function buildArraySection(
             }
             return result.map((item) => `\`${item.name}\``).join(", ");
           }
+          if (annotationsEnabled) {
+            core.debug(`[buildArraySection] result: ${result}`);
+            isValidAnnotationBody(result) &&
+            annotations.push({
+              path: fileName,
+              identifier: result.name,
+              start_line: result.line,
+              start_column: result.col,
+              type: "export",
+            })
+          }
           return `\`${result.name}\``;
         })
         .join("<br/>"),

@@ -28759,6 +28759,16 @@ function buildArraySection(name, rawResults, annotationsEnabled) {
           }
           return result.map((item2) => `\`${item2.name}\``).join(", ");
         }
+        if (annotationsEnabled) {
+          core7.debug(`[buildArraySection] result: ${result}`);
+          isValidAnnotationBody(result) && annotations.push({
+            path: fileName,
+            identifier: result.name,
+            start_line: result.line,
+            start_column: result.col,
+            type: "export"
+          });
+        }
         return `\`${result.name}\``;
       }).join("<br/>")
     ]);
