@@ -216,7 +216,7 @@ export function buildArraySection(
       fileName,
       results
         .map((result) => {
-          core.debug(`[buildArraySection]: ${fileName} result ${result}`);
+          core.debug(`[buildArraySection]: ${fileName} result ${JSON.stringify(result)}`);
           if (Array.isArray(result)) {
             if (annotationsEnabled) {
               result.map(member => {

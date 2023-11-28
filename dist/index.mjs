@@ -28743,7 +28743,7 @@ function buildArraySection(name, rawResults, annotationsEnabled) {
     tableBody.push([
       fileName,
       results.map((result) => {
-        core7.debug(`[buildArraySection]: ${fileName} result ${result}`);
+        core7.debug(`[buildArraySection]: ${fileName} result ${JSON.stringify(result)}`);
         if (Array.isArray(result)) {
           if (annotationsEnabled) {
             result.map((member) => {
