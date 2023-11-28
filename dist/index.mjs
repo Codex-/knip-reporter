@@ -23158,6 +23158,9 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
     const annotations = [];
     for (let j = i; j < currentEndIndex; j++) {
       const meta = itemMeta[j];
+      core3.debug(`j = ${j}`);
+      core3.debug(`${meta}`);
+      core3.debug("====================");
       if (!meta) {
         continue;
       }
@@ -28624,7 +28627,7 @@ async function getCliCommand(fn, args, options2 = {}, cwd = options2.cwd ?? proc
 
 // src/tasks/knip.ts
 async function buildRunKnipCommand(buildScriptName) {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
     programmatic: true
   });
   if (!cmd) {
@@ -28730,16 +28733,28 @@ function buildSectionName(name) {
       throw new Error(`Unknown name: ${name}`);
   }
 }
-function buildArraySection(name, rawResults) {
+function buildArraySection(name, rawResults, annotationsEnabled) {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
   const tableBody = [];
+  const annotations = [];
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
     tableBody.push([
       fileName,
       results.map((result) => {
         if (Array.isArray(result)) {
+          if (annotationsEnabled) {
+            result.map(
+              (member) => isValidAnnotationBody(member) && annotations.push({
+                path: fileName,
+                identifier: member.name,
+                start_line: member.line,
+                start_column: member.col,
+                type: "export"
+              })
+            );
+          }
           return result.map((item2) => `\`${item2.name}\``).join(", ");
         }
         return `\`${result.name}\``;
@@ -28747,7 +28762,7 @@ function buildArraySection(name, rawResults) {
     ]);
   }
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
-  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  return { section: processSectionToMessages(sectionHeader, tableHeader, tableBody), annotations };
 }
 function isValidAnnotationBody(item2) {
   return item2.pos !== void 0 && item2.line !== void 0 && item2.col !== void 0;
@@ -28846,9 +28861,11 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          for (const section of buildArraySection(key, report[key])) {
-            outputSections.push(section);
+          const { section, annotations } = buildArraySection(key, report[key], annotationsEnabled);
+          for (const s of section) {
+            outputSections.push(s);
           }
+          outputAnnotations.push(...annotations);
           core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;

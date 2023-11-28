@@ -203,10 +203,12 @@ export function buildSectionName(name: string): string {
 export function buildArraySection(
   name: string,
   rawResults: Record<string, Item[] | Item[][]>,
-): string[] {
+  annotationsEnabled: boolean
+): { section: string[]; annotations: ItemMeta[] } {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
   const tableBody = [];
+  const annotations: ItemMeta[] = [];
 
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
@@ -215,6 +217,18 @@ export function buildArraySection(
       results
         .map((result) => {
           if (Array.isArray(result)) {
+            if (annotationsEnabled) {
+              result.map(member =>
+                isValidAnnotationBody(member) &&
+                annotations.push({
+                  path: fileName,
+                  identifier: member.name,
+                  start_line: member.line,
+                  start_column: member.col,
+                  type: "export",
+                })
+              );
+            }
             return result.map((item) => `\`${item.name}\``).join(", ");
           }
           return `\`${result.name}\``;
@@ -225,7 +239,7 @@ export function buildArraySection(
 
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  return { section: processSectionToMessages(sectionHeader, tableHeader, tableBody), annotations: annotations };
 }
 
 function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
@@ -361,9 +375,11 @@ export function buildMarkdownSections(
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          for (const section of buildArraySection(key, report[key])) {
-            outputSections.push(section);
+          const {section, annotations} = buildArraySection(key, report[key], annotationsEnabled);
+          for (const s of section) {
+            outputSections.push(s);
           }
+          outputAnnotations.push(...annotations);
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
         }
         break;
