@@ -364,7 +364,7 @@ export function buildMarkdownSections(
       case "files":
         if (report.files.length > 0) {
           outputSections.push(buildFilesSection(report.files));
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+          core.debug(`[buildMarkdownSections]: Parsed files ${key} (${report.files.length})`);
         }
         break;
       case "dependencies":
@@ -382,7 +382,7 @@ export function buildMarkdownSections(
             outputSections.push(s);
           }
           outputAnnotations.push(...annotations);
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core.debug(`[buildMarkdownSections]: Parsed arrays ${key} (${Object.keys(report[key]).length})`);
           core.debug(`[buildMarkdownSections]: Total annotations ${outputAnnotations.length}`);
         }
         break;
@@ -399,7 +399,7 @@ export function buildMarkdownSections(
           for (const section of sections) {
             outputSections.push(section);
           }
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core.debug(`[buildMarkdownSections]: Parsed maps ${key} (${Object.keys(report[key]).length})`);
         }
         break;
     }
