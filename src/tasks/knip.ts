@@ -216,9 +216,11 @@ export function buildArraySection(
       fileName,
       results
         .map((result) => {
+          core.debug(`[buildArraySection]: ${fileName} result ${result}`);
           if (Array.isArray(result)) {
             if (annotationsEnabled) {
-              result.map(member =>
+              result.map(member => {
+                core.debug(`[buildArraySection] member: ${member}`);
                 isValidAnnotationBody(member) &&
                 annotations.push({
                   path: fileName,
@@ -227,7 +229,7 @@ export function buildArraySection(
                   start_column: member.col,
                   type: "export",
                 })
-              );
+            });
             }
             return result.map((item) => `\`${item.name}\``).join(", ");
           }
@@ -381,6 +383,7 @@ export function buildMarkdownSections(
           }
           outputAnnotations.push(...annotations);
           core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          core.debug(`[buildMarkdownSections]: Total annotations ${outputAnnotations.length}`);
         }
         break;
       case "enumMembers":
