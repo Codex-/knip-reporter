@@ -9,7 +9,7 @@ import { timeTask } from "./task.ts";
 import type { ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
     programmatic: true,
   });
   if (!cmd) {
@@ -406,7 +406,7 @@ export function buildMarkdownSections(
 export function getJsonFromOutput(output: string): string {
   const lines = output.split(/\n/).reverse();
   for (const line of lines) {
-    if (line.startsWith("[")) {
+    if (line.startsWith("{") && line.endsWith("}")) {
       return line;
     }
   }
