@@ -9,7 +9,7 @@ import { timeTask } from "./task.ts";
 import type { ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
     programmatic: true,
   });
   if (!cmd) {
@@ -102,9 +102,9 @@ interface ParsedReport {
 
 export function parseJsonReport(rawJson: string): ParsedReport {
   // Default JSON reporter results in a collection with a single object
-  const entries = JSON.parse(rawJson);
+  const { files, issues }: { files: string[]; issues: any } = JSON.parse(rawJson) ?? {};
   const out: ParsedReport = {
-    files: [],
+    files: files.filter((file) => !!file) ?? [],
     dependencies: {},
     devDependencies: {},
     optionalPeerDependencies: {},
@@ -118,25 +118,19 @@ export function parseJsonReport(rawJson: string): ParsedReport {
     duplicates: {},
   };
   const summary: Partial<Record<keyof ParsedReport, number>> = {};
+  if (out.files.length > 0) {
+    summary.files = out.files.length;
+  }
 
-  for (const entry of entries) {
-    const fileName: string = entry.file;
+  for (const issue of issues) {
+    const fileName: string = issue.file;
 
-    for (const [type, result] of Object.entries(entry)) {
+    for (const [type, result] of Object.entries(issue)) {
       if (result === undefined || result === null) {
         continue;
       }
 
       switch (type) {
-        case "files":
-          if (result === true) {
-            out.files.push(fileName);
-            if (summary.files === undefined) {
-              summary.files = 0;
-            }
-            summary.files++;
-          }
-          break;
         case "dependencies":
         case "devDependencies":
         case "optionalPeerDependencies":
@@ -406,7 +400,7 @@ export function buildMarkdownSections(
 export function getJsonFromOutput(output: string): string {
   const lines = output.split(/\n/).reverse();
   for (const line of lines) {
-    if (line.startsWith("[")) {
+    if (line.startsWith("{") && line.endsWith("}")) {
       return line;
     }
   }

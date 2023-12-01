@@ -218,14 +218,14 @@ var init_stringify = __esm({
 });
 
 // node_modules/.pnpm/uuid@8.3.2/node_modules/uuid/dist/esm-node/v1.js
-function v1(options, buf, offset) {
+function v1(options2, buf, offset) {
   let i = buf && offset || 0;
   const b = buf || new Array(16);
-  options = options || {};
-  let node = options.node || _nodeId;
-  let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq;
+  options2 = options2 || {};
+  let node = options2.node || _nodeId;
+  let clockseq = options2.clockseq !== void 0 ? options2.clockseq : _clockseq;
   if (node == null || clockseq == null) {
-    const seedBytes = options.random || (options.rng || rng)();
+    const seedBytes = options2.random || (options2.rng || rng)();
     if (node == null) {
       node = _nodeId = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
     }
@@ -233,13 +233,13 @@ function v1(options, buf, offset) {
       clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
     }
   }
-  let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
-  let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs + 1;
+  let msecs = options2.msecs !== void 0 ? options2.msecs : Date.now();
+  let nsecs = options2.nsecs !== void 0 ? options2.nsecs : _lastNSecs + 1;
   const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
-  if (dt < 0 && options.clockseq === void 0) {
+  if (dt < 0 && options2.clockseq === void 0) {
     clockseq = clockseq + 1 & 16383;
   }
-  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === void 0) {
+  if ((dt < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
     nsecs = 0;
   }
   if (nsecs >= 1e4) {
@@ -392,9 +392,9 @@ var init_v3 = __esm({
 });
 
 // node_modules/.pnpm/uuid@8.3.2/node_modules/uuid/dist/esm-node/v4.js
-function v4(options, buf, offset) {
-  options = options || {};
-  const rnds = options.random || (options.rng || rng)();
+function v4(options2, buf, offset) {
+  options2 = options2 || {};
+  const rnds = options2.random || (options2.rng || rng)();
   rnds[6] = rnds[6] & 15 | 64;
   rnds[8] = rnds[8] & 63 | 128;
   if (buf) {
@@ -643,42 +643,42 @@ var require_tunnel = __commonJS({
     exports.httpsOverHttp = httpsOverHttp;
     exports.httpOverHttps = httpOverHttps;
     exports.httpsOverHttps = httpsOverHttps;
-    function httpOverHttp(options) {
-      var agent = new TunnelingAgent(options);
+    function httpOverHttp(options2) {
+      var agent = new TunnelingAgent(options2);
       agent.request = http.request;
       return agent;
     }
-    function httpsOverHttp(options) {
-      var agent = new TunnelingAgent(options);
+    function httpsOverHttp(options2) {
+      var agent = new TunnelingAgent(options2);
       agent.request = http.request;
       agent.createSocket = createSecureSocket;
       agent.defaultPort = 443;
       return agent;
     }
-    function httpOverHttps(options) {
-      var agent = new TunnelingAgent(options);
+    function httpOverHttps(options2) {
+      var agent = new TunnelingAgent(options2);
       agent.request = https.request;
       return agent;
     }
-    function httpsOverHttps(options) {
-      var agent = new TunnelingAgent(options);
+    function httpsOverHttps(options2) {
+      var agent = new TunnelingAgent(options2);
       agent.request = https.request;
       agent.createSocket = createSecureSocket;
       agent.defaultPort = 443;
       return agent;
     }
-    function TunnelingAgent(options) {
+    function TunnelingAgent(options2) {
       var self2 = this;
-      self2.options = options || {};
+      self2.options = options2 || {};
       self2.proxyOptions = self2.options.proxy || {};
       self2.maxSockets = self2.options.maxSockets || http.Agent.defaultMaxSockets;
       self2.requests = [];
       self2.sockets = [];
       self2.on("free", function onFree(socket, host, port, localAddress) {
-        var options2 = toOptions(host, port, localAddress);
+        var options3 = toOptions(host, port, localAddress);
         for (var i = 0, len = self2.requests.length; i < len; ++i) {
           var pending = self2.requests[i];
-          if (pending.host === options2.host && pending.port === options2.port) {
+          if (pending.host === options3.host && pending.port === options3.port) {
             self2.requests.splice(i, 1);
             pending.request.onSocket(socket);
             return;
@@ -691,18 +691,18 @@ var require_tunnel = __commonJS({
     util2.inherits(TunnelingAgent, events.EventEmitter);
     TunnelingAgent.prototype.addRequest = function addRequest(req, host, port, localAddress) {
       var self2 = this;
-      var options = mergeOptions({ request: req }, self2.options, toOptions(host, port, localAddress));
+      var options2 = mergeOptions({ request: req }, self2.options, toOptions(host, port, localAddress));
       if (self2.sockets.length >= this.maxSockets) {
-        self2.requests.push(options);
+        self2.requests.push(options2);
         return;
       }
-      self2.createSocket(options, function(socket) {
+      self2.createSocket(options2, function(socket) {
         socket.on("free", onFree);
         socket.on("close", onCloseOrRemove);
         socket.on("agentRemove", onCloseOrRemove);
         req.onSocket(socket);
         function onFree() {
-          self2.emit("free", socket, options);
+          self2.emit("free", socket, options2);
         }
         function onCloseOrRemove(err) {
           self2.removeSocket(socket);
@@ -712,20 +712,20 @@ var require_tunnel = __commonJS({
         }
       });
     };
-    TunnelingAgent.prototype.createSocket = function createSocket(options, cb) {
+    TunnelingAgent.prototype.createSocket = function createSocket(options2, cb) {
       var self2 = this;
       var placeholder = {};
       self2.sockets.push(placeholder);
       var connectOptions = mergeOptions({}, self2.proxyOptions, {
         method: "CONNECT",
-        path: options.host + ":" + options.port,
+        path: options2.host + ":" + options2.port,
         agent: false,
         headers: {
-          host: options.host + ":" + options.port
+          host: options2.host + ":" + options2.port
         }
       });
-      if (options.localAddress) {
-        connectOptions.localAddress = options.localAddress;
+      if (options2.localAddress) {
+        connectOptions.localAddress = options2.localAddress;
       }
       if (connectOptions.proxyAuth) {
         connectOptions.headers = connectOptions.headers || {};
@@ -758,7 +758,7 @@ var require_tunnel = __commonJS({
           socket.destroy();
           var error2 = new Error("tunneling socket could not be established, statusCode=" + res.statusCode);
           error2.code = "ECONNRESET";
-          options.request.emit("error", error2);
+          options2.request.emit("error", error2);
           self2.removeSocket(placeholder);
           return;
         }
@@ -767,7 +767,7 @@ var require_tunnel = __commonJS({
           socket.destroy();
           var error2 = new Error("got illegal response body from proxy");
           error2.code = "ECONNRESET";
-          options.request.emit("error", error2);
+          options2.request.emit("error", error2);
           self2.removeSocket(placeholder);
           return;
         }
@@ -784,7 +784,7 @@ var require_tunnel = __commonJS({
         );
         var error2 = new Error("tunneling socket could not be established, cause=" + cause.message);
         error2.code = "ECONNRESET";
-        options.request.emit("error", error2);
+        options2.request.emit("error", error2);
         self2.removeSocket(placeholder);
       }
     };
@@ -801,13 +801,13 @@ var require_tunnel = __commonJS({
         });
       }
     };
-    function createSecureSocket(options, cb) {
+    function createSecureSocket(options2, cb) {
       var self2 = this;
-      TunnelingAgent.prototype.createSocket.call(self2, options, function(socket) {
-        var hostHeader = options.request.getHeader("host");
+      TunnelingAgent.prototype.createSocket.call(self2, options2, function(socket) {
+        var hostHeader = options2.request.getHeader("host");
         var tlsOptions = mergeOptions({}, self2.options, {
           socket,
-          servername: hostHeader ? hostHeader.replace(/:.*$/, "") : options.host
+          servername: hostHeader ? hostHeader.replace(/:.*$/, "") : options2.host
         });
         var secureSocket = tls.connect(0, tlsOptions);
         self2.sockets[self2.sockets.indexOf(socket)] = secureSocket;
@@ -1141,7 +1141,7 @@ var require_util = __commonJS({
     var assert = __require("assert");
     var { kDestroyed, kBodyUsed } = require_symbols();
     var { IncomingMessage } = __require("http");
-    var stream2 = __require("stream");
+    var stream = __require("stream");
     var net = __require("net");
     var { InvalidArgumentError } = require_errors();
     var { Blob: Blob2 } = __require("buffer");
@@ -1241,7 +1241,7 @@ var require_util = __commonJS({
     function deepClone(obj) {
       return JSON.parse(JSON.stringify(obj));
     }
-    function isAsyncIterable(obj) {
+    function isAsyncIterable2(obj) {
       return !!(obj != null && typeof obj[Symbol.asyncIterator] === "function");
     }
     function isIterable(obj) {
@@ -1260,29 +1260,29 @@ var require_util = __commonJS({
       }
       return null;
     }
-    function isDestroyed(stream3) {
-      return !stream3 || !!(stream3.destroyed || stream3[kDestroyed]);
+    function isDestroyed(stream2) {
+      return !stream2 || !!(stream2.destroyed || stream2[kDestroyed]);
     }
-    function isReadableAborted(stream3) {
-      const state = stream3 && stream3._readableState;
-      return isDestroyed(stream3) && state && !state.endEmitted;
+    function isReadableAborted(stream2) {
+      const state = stream2 && stream2._readableState;
+      return isDestroyed(stream2) && state && !state.endEmitted;
     }
-    function destroy(stream3, err) {
-      if (!isStream2(stream3) || isDestroyed(stream3)) {
+    function destroy(stream2, err) {
+      if (!isStream2(stream2) || isDestroyed(stream2)) {
         return;
       }
-      if (typeof stream3.destroy === "function") {
-        if (Object.getPrototypeOf(stream3).constructor === IncomingMessage) {
-          stream3.socket = null;
+      if (typeof stream2.destroy === "function") {
+        if (Object.getPrototypeOf(stream2).constructor === IncomingMessage) {
+          stream2.socket = null;
         }
-        stream3.destroy(err);
+        stream2.destroy(err);
       } else if (err) {
-        process.nextTick((stream4, err2) => {
-          stream4.emit("error", err2);
-        }, stream3, err);
+        process.nextTick((stream3, err2) => {
+          stream3.emit("error", err2);
+        }, stream2, err);
       }
-      if (stream3.destroyed !== true) {
-        stream3[kDestroyed] = true;
+      if (stream2.destroyed !== true) {
+        stream2[kDestroyed] = true;
       }
     }
     var KEEPALIVE_TIMEOUT_EXPR = /timeout=(\d+)/;
@@ -1369,15 +1369,15 @@ var require_util = __commonJS({
       }
     }
     function isDisturbed(body) {
-      return !!(body && (stream2.isDisturbed ? stream2.isDisturbed(body) || body[kBodyUsed] : body[kBodyUsed] || body.readableDidRead || body._readableState && body._readableState.dataEmitted || isReadableAborted(body)));
+      return !!(body && (stream.isDisturbed ? stream.isDisturbed(body) || body[kBodyUsed] : body[kBodyUsed] || body.readableDidRead || body._readableState && body._readableState.dataEmitted || isReadableAborted(body)));
     }
     function isErrored(body) {
-      return !!(body && (stream2.isErrored ? stream2.isErrored(body) : /state: 'errored'/.test(
+      return !!(body && (stream.isErrored ? stream.isErrored(body) : /state: 'errored'/.test(
         nodeUtil.inspect(body)
       )));
     }
     function isReadable(body) {
-      return !!(body && (stream2.isReadable ? stream2.isReadable(body) : /state: 'readable'/.test(
+      return !!(body && (stream.isReadable ? stream.isReadable(body) : /state: 'readable'/.test(
         nodeUtil.inspect(body)
       )));
     }
@@ -1490,7 +1490,7 @@ var require_util = __commonJS({
       getServerName,
       isStream: isStream2,
       isIterable,
-      isAsyncIterable,
+      isAsyncIterable: isAsyncIterable2,
       isDestroyed,
       parseRawHeaders,
       parseHeaders,
@@ -3171,7 +3171,7 @@ var require_constants = __commonJS({
     var channel;
     var structuredClone = globalThis.structuredClone ?? // https://github.com/nodejs/node/blob/b27ae24dcc4251bad726d9d84baf678d1f707fed/lib/internal/structured_clone.js
     // structuredClone was added in v17.0.0, but fetch supports v16.8
-    function structuredClone2(value, options = void 0) {
+    function structuredClone2(value, options2 = void 0) {
       if (arguments.length === 0) {
         throw new TypeError("missing argument");
       }
@@ -3180,7 +3180,7 @@ var require_constants = __commonJS({
       }
       channel.port1.unref();
       channel.port2.unref();
-      channel.port1.postMessage(value, options?.transfer);
+      channel.port1.postMessage(value, options2?.transfer);
       return receiveMessageOnPort(channel.port2).message;
     };
     module.exports = {
@@ -3662,11 +3662,11 @@ var require_util2 = __commonJS({
       }
     }
     var ReadableStream = globalThis.ReadableStream;
-    function isReadableStreamLike(stream2) {
+    function isReadableStreamLike(stream) {
       if (!ReadableStream) {
         ReadableStream = __require("stream/web").ReadableStream;
       }
-      return stream2 instanceof ReadableStream || stream2[Symbol.toStringTag] === "ReadableStream" && typeof stream2.tee === "function";
+      return stream instanceof ReadableStream || stream[Symbol.toStringTag] === "ReadableStream" && typeof stream.tee === "function";
     }
     var MAXIMUM_ARGUMENT_LENGTH = 65535;
     function isomorphicDecode(input) {
@@ -3998,8 +3998,8 @@ var require_webidl = __commonJS({
             message: `Expected ${dictionary} to be one of: Null, Undefined, Object.`
           });
         }
-        for (const options of converters) {
-          const { key, defaultValue, required, converter } = options;
+        for (const options2 of converters) {
+          const { key, defaultValue, required, converter } = options2;
           if (required === true) {
             if (!hasOwn(dictionary, key)) {
               throw webidl.errors.exception({
@@ -4009,16 +4009,16 @@ var require_webidl = __commonJS({
             }
           }
           let value = dictionary[key];
-          const hasDefault = hasOwn(options, "defaultValue");
+          const hasDefault = hasOwn(options2, "defaultValue");
           if (hasDefault && value !== null) {
             value = value ?? defaultValue;
           }
           if (required || hasDefault || value !== void 0) {
             value = converter(value);
-            if (options.allowedValues && !options.allowedValues.includes(value)) {
+            if (options2.allowedValues && !options2.allowedValues.includes(value)) {
               throw webidl.errors.exception({
                 header: "Dictionary",
-                message: `${value} is not an accepted type. Expected one of ${options.allowedValues.join(", ")}.`
+                message: `${value} is not an accepted type. Expected one of ${options2.allowedValues.join(", ")}.`
               });
             }
             dict[key] = value;
@@ -4459,13 +4459,13 @@ var require_file = __commonJS({
     var { parseMIMEType, serializeAMimeType } = require_dataURL();
     var { kEnumerableProperty } = require_util();
     var File = class _File extends Blob2 {
-      constructor(fileBits, fileName, options = {}) {
+      constructor(fileBits, fileName, options2 = {}) {
         webidl.argumentLengthCheck(arguments, 2, { header: "File constructor" });
         fileBits = webidl.converters["sequence<BlobPart>"](fileBits);
         fileName = webidl.converters.USVString(fileName);
-        options = webidl.converters.FilePropertyBag(options);
+        options2 = webidl.converters.FilePropertyBag(options2);
         const n = fileName;
-        let t = options.type;
+        let t = options2.type;
         let d;
         substep: {
           if (t) {
@@ -4476,9 +4476,9 @@ var require_file = __commonJS({
             }
             t = serializeAMimeType(t).toLowerCase();
           }
-          d = options.lastModified;
+          d = options2.lastModified;
         }
-        super(processBlobParts(fileBits, options), { type: t });
+        super(processBlobParts(fileBits, options2), { type: t });
         this[kState] = {
           name: n,
           lastModified: d,
@@ -4499,10 +4499,10 @@ var require_file = __commonJS({
       }
     };
     var FileLike = class _FileLike {
-      constructor(blobLike, fileName, options = {}) {
+      constructor(blobLike, fileName, options2 = {}) {
         const n = fileName;
-        const t = options.type;
-        const d = options.lastModified ?? Date.now();
+        const t = options2.type;
+        const d = options2.lastModified ?? Date.now();
         this[kState] = {
           blobLike,
           name: n,
@@ -4595,12 +4595,12 @@ var require_file = __commonJS({
         defaultValue: "transparent"
       }
     ]);
-    function processBlobParts(parts, options) {
+    function processBlobParts(parts, options2) {
       const bytes = [];
       for (const element of parts) {
         if (typeof element === "string") {
           let s = element;
-          if (options.endings === "native") {
+          if (options2.endings === "native") {
             s = convertLineEndingsNative(s);
           }
           bytes.push(new TextEncoder().encode(s));
@@ -4775,11 +4775,11 @@ var require_formdata = __commonJS({
           value = value instanceof Blob2 ? new File([value], "blob", { type: value.type }) : new FileLike(value, "blob", { type: value.type });
         }
         if (filename !== void 0) {
-          const options = {
+          const options2 = {
             type: value.type,
             lastModified: value.lastModified
           };
-          value = NativeFile && value instanceof NativeFile || value instanceof UndiciFile ? new File([value], filename, options) : new FileLike(value, filename, options);
+          value = NativeFile && value instanceof NativeFile || value instanceof UndiciFile ? new File([value], filename, options2) : new FileLike(value, filename, options2);
         }
       }
       return { name, value };
@@ -4819,13 +4819,13 @@ var require_body = __commonJS({
       if (!ReadableStream) {
         ReadableStream = __require("stream/web").ReadableStream;
       }
-      let stream2 = null;
+      let stream = null;
       if (object instanceof ReadableStream) {
-        stream2 = object;
+        stream = object;
       } else if (isBlobLike(object)) {
-        stream2 = object.stream();
+        stream = object.stream();
       } else {
-        stream2 = new ReadableStream({
+        stream = new ReadableStream({
           async pull(controller) {
             controller.enqueue(
               typeof source === "string" ? new TextEncoder().encode(source) : source
@@ -4837,7 +4837,7 @@ var require_body = __commonJS({
           type: void 0
         });
       }
-      assert(isReadableStreamLike(stream2));
+      assert(isReadableStreamLike(stream));
       let action2 = null;
       let source = null;
       let length = null;
@@ -4916,14 +4916,14 @@ Content-Type: ${value.type || "application/octet-stream"}\r
             "Response body object should not be disturbed or locked"
           );
         }
-        stream2 = object instanceof ReadableStream ? object : ReadableStreamFrom(object);
+        stream = object instanceof ReadableStream ? object : ReadableStreamFrom(object);
       }
       if (typeof source === "string" || util2.isBuffer(source)) {
         length = Buffer.byteLength(source);
       }
       if (action2 != null) {
         let iterator;
-        stream2 = new ReadableStream({
+        stream = new ReadableStream({
           async start() {
             iterator = action2(object)[Symbol.asyncIterator]();
           },
@@ -4934,7 +4934,7 @@ Content-Type: ${value.type || "application/octet-stream"}\r
                 controller.close();
               });
             } else {
-              if (!isErrored(stream2)) {
+              if (!isErrored(stream)) {
                 controller.enqueue(new Uint8Array(value));
               }
             }
@@ -4946,7 +4946,7 @@ Content-Type: ${value.type || "application/octet-stream"}\r
           type: void 0
         });
       }
-      const body = { stream: stream2, source, length };
+      const body = { stream, source, length };
       return [body, type];
     }
     function safelyExtractBody(object, keepalive = false) {
@@ -4975,15 +4975,15 @@ Content-Type: ${value.type || "application/octet-stream"}\r
         if (isUint8Array(body)) {
           yield body;
         } else {
-          const stream2 = body.stream;
-          if (util2.isDisturbed(stream2)) {
+          const stream = body.stream;
+          if (util2.isDisturbed(stream)) {
             throw new TypeError("The body has already been consumed.");
           }
-          if (stream2.locked) {
+          if (stream.locked) {
             throw new TypeError("The stream is locked.");
           }
-          stream2[kBodyUsed] = true;
-          yield* stream2;
+          stream[kBodyUsed] = true;
+          yield* stream;
         }
       }
     }
@@ -5732,7 +5732,7 @@ var require_connect = __commonJS({
       if (maxCachedSessions != null && (!Number.isInteger(maxCachedSessions) || maxCachedSessions < 0)) {
         throw new InvalidArgumentError("maxCachedSessions must be a positive integer or zero");
       }
-      const options = { path: socketPath, ...opts };
+      const options2 = { path: socketPath, ...opts };
       const sessionCache = new SessionCache(maxCachedSessions == null ? 100 : maxCachedSessions);
       timeout = timeout == null ? 1e4 : timeout;
       allowH2 = allowH2 != null ? allowH2 : false;
@@ -5742,14 +5742,14 @@ var require_connect = __commonJS({
           if (!tls) {
             tls = __require("tls");
           }
-          servername = servername || options.servername || util2.getServerName(host) || null;
+          servername = servername || options2.servername || util2.getServerName(host) || null;
           const sessionKey = servername || hostname;
           const session = sessionCache.get(sessionKey) || null;
           assert(sessionKey);
           socket = tls.connect({
             highWaterMark: 16384,
             // TLS in node can't have bigger HWM anyway...
-            ...options,
+            ...options2,
             servername,
             session,
             localAddress,
@@ -5768,14 +5768,14 @@ var require_connect = __commonJS({
           socket = net.connect({
             highWaterMark: 64 * 1024,
             // Same as nodejs fs streams.
-            ...options,
+            ...options2,
             localAddress,
             port: port || 80,
             host: hostname
           });
         }
-        if (options.keepAlive == null || options.keepAlive) {
-          const keepAliveInitialDelay = options.keepAliveInitialDelay === void 0 ? 6e4 : options.keepAliveInitialDelay;
+        if (options2.keepAlive == null || options2.keepAlive) {
+          const keepAliveInitialDelay = options2.keepAliveInitialDelay === void 0 ? 6e4 : options2.keepAliveInitialDelay;
           socket.setKeepAlive(true, keepAliveInitialDelay);
         }
         const cancelTimeout = setupTimeout2(() => onConnectTimeout(socket), timeout);
@@ -7629,23 +7629,23 @@ upgrade: ${upgrade}\r
       if (request.aborted) {
         return false;
       }
-      let stream2;
+      let stream;
       const h2State = client[kHTTP2SessionState];
       headers[HTTP2_HEADER_AUTHORITY] = host || client[kHost];
       headers[HTTP2_HEADER_METHOD] = method;
       if (method === "CONNECT") {
         session.ref();
-        stream2 = session.request(headers, { endStream: false, signal });
-        if (stream2.id && !stream2.pending) {
-          request.onUpgrade(null, null, stream2);
+        stream = session.request(headers, { endStream: false, signal });
+        if (stream.id && !stream.pending) {
+          request.onUpgrade(null, null, stream);
           ++h2State.openStreams;
         } else {
-          stream2.once("ready", () => {
-            request.onUpgrade(null, null, stream2);
+          stream.once("ready", () => {
+            request.onUpgrade(null, null, stream);
             ++h2State.openStreams;
           });
         }
-        stream2.once("close", () => {
+        stream.once("close", () => {
           h2State.openStreams -= 1;
           if (h2State.openStreams === 0)
             session.unref();
@@ -7680,45 +7680,45 @@ upgrade: ${upgrade}\r
       const shouldEndStream = method === "GET" || method === "HEAD";
       if (expectContinue) {
         headers[HTTP2_HEADER_EXPECT] = "100-continue";
-        stream2 = session.request(headers, { endStream: shouldEndStream, signal });
-        stream2.once("continue", writeBodyH2);
+        stream = session.request(headers, { endStream: shouldEndStream, signal });
+        stream.once("continue", writeBodyH2);
       } else {
-        stream2 = session.request(headers, {
+        stream = session.request(headers, {
           endStream: shouldEndStream,
           signal
         });
         writeBodyH2();
       }
       ++h2State.openStreams;
-      stream2.once("response", (headers2) => {
-        if (request.onHeaders(Number(headers2[HTTP2_HEADER_STATUS]), headers2, stream2.resume.bind(stream2), "") === false) {
-          stream2.pause();
+      stream.once("response", (headers2) => {
+        if (request.onHeaders(Number(headers2[HTTP2_HEADER_STATUS]), headers2, stream.resume.bind(stream), "") === false) {
+          stream.pause();
         }
       });
-      stream2.once("end", () => {
+      stream.once("end", () => {
         request.onComplete([]);
       });
-      stream2.on("data", (chunk) => {
+      stream.on("data", (chunk) => {
         if (request.onData(chunk) === false)
-          stream2.pause();
+          stream.pause();
       });
-      stream2.once("close", () => {
+      stream.once("close", () => {
         h2State.openStreams -= 1;
         if (h2State.openStreams === 0)
           session.unref();
       });
-      stream2.once("error", function(err) {
+      stream.once("error", function(err) {
         if (client[kHTTP2Session] && !client[kHTTP2Session].destroyed && !this.closed && !this.destroyed) {
           h2State.streams -= 1;
-          util2.destroy(stream2, err);
+          util2.destroy(stream, err);
         }
       });
-      stream2.once("frameError", (type, code) => {
+      stream.once("frameError", (type, code) => {
         const err = new InformationalError(`HTTP/2: "frameError" received - type ${type}, code ${code}`);
         errorRequest(client, request, err);
         if (client[kHTTP2Session] && !client[kHTTP2Session].destroyed && !this.closed && !this.destroyed) {
           h2State.streams -= 1;
-          util2.destroy(stream2, err);
+          util2.destroy(stream, err);
         }
       });
       return true;
@@ -7727,10 +7727,10 @@ upgrade: ${upgrade}\r
           request.onRequestSent();
         } else if (util2.isBuffer(body)) {
           assert(contentLength === body.byteLength, "buffer body must have content length");
-          stream2.cork();
-          stream2.write(body);
-          stream2.uncork();
-          stream2.end();
+          stream.cork();
+          stream.write(body);
+          stream.uncork();
+          stream.end();
           request.onBodySent(body);
           request.onRequestSent();
         } else if (util2.isBlobLike(body)) {
@@ -7739,7 +7739,7 @@ upgrade: ${upgrade}\r
               client,
               request,
               contentLength,
-              h2stream: stream2,
+              h2stream: stream,
               expectsPayload,
               body: body.stream(),
               socket: client[kSocket],
@@ -7752,7 +7752,7 @@ upgrade: ${upgrade}\r
               request,
               contentLength,
               expectsPayload,
-              h2stream: stream2,
+              h2stream: stream,
               header: "",
               socket: client[kSocket]
             });
@@ -7765,7 +7765,7 @@ upgrade: ${upgrade}\r
             contentLength,
             expectsPayload,
             socket: client[kSocket],
-            h2stream: stream2,
+            h2stream: stream,
             header: ""
           });
         } else if (util2.isIterable(body)) {
@@ -7776,7 +7776,7 @@ upgrade: ${upgrade}\r
             contentLength,
             expectsPayload,
             header: "",
-            h2stream: stream2,
+            h2stream: stream,
             socket: client[kSocket]
           });
         } else {
@@ -8348,7 +8348,7 @@ var require_pool = __commonJS({
         autoSelectFamily,
         autoSelectFamilyAttemptTimeout,
         allowH2,
-        ...options
+        ...options2
       } = {}) {
         super();
         if (connections != null && (!Number.isFinite(connections) || connections < 0)) {
@@ -8371,11 +8371,11 @@ var require_pool = __commonJS({
             ...connect
           });
         }
-        this[kInterceptors] = options.interceptors && options.interceptors.Pool && Array.isArray(options.interceptors.Pool) ? options.interceptors.Pool : [];
+        this[kInterceptors] = options2.interceptors && options2.interceptors.Pool && Array.isArray(options2.interceptors.Pool) ? options2.interceptors.Pool : [];
         this[kConnections] = connections || null;
         this[kUrl] = util2.parseOrigin(origin);
-        this[kOptions] = { ...util2.deepClone(options), connect, allowH2 };
-        this[kOptions].interceptors = options.interceptors ? { ...options.interceptors } : void 0;
+        this[kOptions] = { ...util2.deepClone(options2), connect, allowH2 };
+        this[kOptions].interceptors = options2.interceptors ? { ...options2.interceptors } : void 0;
         this[kFactory] = factory;
       }
       [kGetDispatcher]() {
@@ -8596,7 +8596,7 @@ var require_agent = __commonJS({
       return opts && opts.connections === 1 ? new Client(origin, opts) : new Pool(origin, opts);
     }
     var Agent = class extends DispatcherBase {
-      constructor({ factory = defaultFactory, maxRedirections = 0, connect, ...options } = {}) {
+      constructor({ factory = defaultFactory, maxRedirections = 0, connect, ...options2 } = {}) {
         super();
         if (typeof factory !== "function") {
           throw new InvalidArgumentError("factory must be a function.");
@@ -8610,9 +8610,9 @@ var require_agent = __commonJS({
         if (connect && typeof connect !== "function") {
           connect = { ...connect };
         }
-        this[kInterceptors] = options.interceptors && options.interceptors.Agent && Array.isArray(options.interceptors.Agent) ? options.interceptors.Agent : [createRedirectInterceptor({ maxRedirections })];
-        this[kOptions] = { ...util2.deepClone(options), connect };
-        this[kOptions].interceptors = options.interceptors ? { ...options.interceptors } : void 0;
+        this[kInterceptors] = options2.interceptors && options2.interceptors.Agent && Array.isArray(options2.interceptors.Agent) ? options2.interceptors.Agent : [createRedirectInterceptor({ maxRedirections })];
+        this[kOptions] = { ...util2.deepClone(options2), connect };
+        this[kOptions].interceptors = options2.interceptors ? { ...options2.interceptors } : void 0;
         this[kMaxRedirections] = maxRedirections;
         this[kFactory] = factory;
         this[kClients] = /* @__PURE__ */ new Map();
@@ -8845,28 +8845,28 @@ var require_readable = __commonJS({
     function isUnusable(self2) {
       return util2.isDisturbed(self2) || isLocked(self2);
     }
-    async function consume(stream2, type) {
-      if (isUnusable(stream2)) {
+    async function consume(stream, type) {
+      if (isUnusable(stream)) {
         throw new TypeError("unusable");
       }
-      assert(!stream2[kConsume]);
+      assert(!stream[kConsume]);
       return new Promise((resolve2, reject) => {
-        stream2[kConsume] = {
+        stream[kConsume] = {
           type,
-          stream: stream2,
+          stream,
           resolve: resolve2,
           reject,
           length: 0,
           body: []
         };
-        stream2.on("error", function(err) {
+        stream.on("error", function(err) {
           consumeFinish(this[kConsume], err);
         }).on("close", function() {
           if (this[kConsume].body !== null) {
             consumeFinish(this[kConsume], new RequestAbortedError());
           }
         });
-        process.nextTick(consumeStart, stream2[kConsume]);
+        process.nextTick(consumeStart, stream[kConsume]);
       });
     }
     function consumeStart(consume2) {
@@ -8889,7 +8889,7 @@ var require_readable = __commonJS({
       }
     }
     function consumeEnd(consume2) {
-      const { type, body, resolve: resolve2, stream: stream2, length } = consume2;
+      const { type, body, resolve: resolve2, stream, length } = consume2;
       try {
         if (type === "text") {
           resolve2(toUSVString(Buffer.concat(body)));
@@ -8907,11 +8907,11 @@ var require_readable = __commonJS({
           if (!Blob2) {
             Blob2 = __require("buffer").Blob;
           }
-          resolve2(new Blob2(body, { type: stream2[kContentType] }));
+          resolve2(new Blob2(body, { type: stream[kContentType] }));
         }
         consumeFinish(consume2);
       } catch (err) {
-        stream2.destroy(err);
+        stream.destroy(err);
       }
     }
     function consumePush(consume2, chunk) {
@@ -9334,10 +9334,10 @@ var require_api_stream = __commonJS({
         }
       }
     };
-    function stream2(opts, factory, callback) {
+    function stream(opts, factory, callback) {
       if (callback === void 0) {
         return new Promise((resolve2, reject) => {
-          stream2.call(this, opts, factory, (err, data) => {
+          stream.call(this, opts, factory, (err, data) => {
             return err ? reject(err) : resolve2(data);
           });
         });
@@ -9352,7 +9352,7 @@ var require_api_stream = __commonJS({
         queueMicrotask(() => callback(err, { opaque }));
       }
     }
-    module.exports = stream2;
+    module.exports = stream;
   }
 });
 
@@ -10236,7 +10236,7 @@ var require_mock_interceptor = __commonJS({
 var require_mock_client = __commonJS({
   "node_modules/.pnpm/undici@5.26.5/node_modules/undici/lib/mock/mock-client.js"(exports, module) {
     "use strict";
-    var { promisify: promisify2 } = __require("util");
+    var { promisify } = __require("util");
     var Client = require_client();
     var { buildMockDispatch } = require_mock_utils();
     var {
@@ -10276,7 +10276,7 @@ var require_mock_client = __commonJS({
         return new MockInterceptor(opts, this[kDispatches]);
       }
       async [kClose]() {
-        await promisify2(this[kOriginalClose])();
+        await promisify(this[kOriginalClose])();
         this[kConnected] = 0;
         this[kMockAgent][Symbols.kClients].delete(this[kOrigin]);
       }
@@ -10289,7 +10289,7 @@ var require_mock_client = __commonJS({
 var require_mock_pool = __commonJS({
   "node_modules/.pnpm/undici@5.26.5/node_modules/undici/lib/mock/mock-pool.js"(exports, module) {
     "use strict";
-    var { promisify: promisify2 } = __require("util");
+    var { promisify } = __require("util");
     var Pool = require_pool();
     var { buildMockDispatch } = require_mock_utils();
     var {
@@ -10329,7 +10329,7 @@ var require_mock_pool = __commonJS({
         return new MockInterceptor(opts, this[kDispatches]);
       }
       async [kClose]() {
-        await promisify2(this[kOriginalClose])();
+        await promisify(this[kOriginalClose])();
         this[kConnected] = 0;
         this[kMockAgent][Symbols.kClients].delete(this[kOrigin]);
       }
@@ -12943,7 +12943,7 @@ var require_fetch = __commonJS({
       if (!ReadableStream) {
         ReadableStream = __require("stream/web").ReadableStream;
       }
-      const stream2 = new ReadableStream(
+      const stream = new ReadableStream(
         {
           async start(controller) {
             fetchParams.controller.controller = controller;
@@ -12962,7 +12962,7 @@ var require_fetch = __commonJS({
           }
         }
       );
-      response.body = { stream: stream2 };
+      response.body = { stream };
       fetchParams.controller.on("terminated", onAborted);
       fetchParams.controller.resume = async () => {
         while (true) {
@@ -12993,7 +12993,7 @@ var require_fetch = __commonJS({
             return;
           }
           fetchParams.controller.controller.enqueue(new Uint8Array(bytes));
-          if (isErrored(stream2)) {
+          if (isErrored(stream)) {
             fetchParams.controller.terminate();
             return;
           }
@@ -13005,13 +13005,13 @@ var require_fetch = __commonJS({
       function onAborted(reason) {
         if (isAborted(fetchParams)) {
           response.aborted = true;
-          if (isReadable(stream2)) {
+          if (isReadable(stream)) {
             fetchParams.controller.controller.error(
               fetchParams.controller.serializedAbortReason
             );
           }
         } else {
-          if (isReadable(stream2)) {
+          if (isReadable(stream)) {
             fetchParams.controller.controller.error(new TypeError("terminated", {
               cause: isErrorLike(reason) ? reason : void 0
             }));
@@ -13562,8 +13562,8 @@ var require_util4 = __commonJS({
       fr[kState] = "loading";
       fr[kResult] = null;
       fr[kError] = null;
-      const stream2 = blob.stream();
-      const reader = stream2.getReader();
+      const stream = blob.stream();
+      const reader = stream.getReader();
       const bytes = [];
       let chunkPromise = reader.read();
       let isFirstChunk = true;
@@ -14048,27 +14048,27 @@ var require_cache = __commonJS({
         }
         this.#relevantRequestResponseList = arguments[1];
       }
-      async match(request, options = {}) {
+      async match(request, options2 = {}) {
         webidl.brandCheck(this, _Cache);
         webidl.argumentLengthCheck(arguments, 1, { header: "Cache.match" });
         request = webidl.converters.RequestInfo(request);
-        options = webidl.converters.CacheQueryOptions(options);
-        const p = await this.matchAll(request, options);
+        options2 = webidl.converters.CacheQueryOptions(options2);
+        const p = await this.matchAll(request, options2);
         if (p.length === 0) {
           return;
         }
         return p[0];
       }
-      async matchAll(request = void 0, options = {}) {
+      async matchAll(request = void 0, options2 = {}) {
         webidl.brandCheck(this, _Cache);
         if (request !== void 0)
           request = webidl.converters.RequestInfo(request);
-        options = webidl.converters.CacheQueryOptions(options);
+        options2 = webidl.converters.CacheQueryOptions(options2);
         let r = null;
         if (request !== void 0) {
           if (request instanceof Request) {
             r = request[kState];
-            if (r.method !== "GET" && !options.ignoreMethod) {
+            if (r.method !== "GET" && !options2.ignoreMethod) {
               return [];
             }
           } else if (typeof request === "string") {
@@ -14081,7 +14081,7 @@ var require_cache = __commonJS({
             responses.push(requestResponse[1]);
           }
         } else {
-          const requestResponses = this.#queryCache(r, options);
+          const requestResponses = this.#queryCache(r, options2);
           for (const requestResponse of requestResponses) {
             responses.push(requestResponse[1]);
           }
@@ -14248,8 +14248,8 @@ var require_cache = __commonJS({
         const clonedResponse = cloneResponse(innerResponse);
         const bodyReadPromise = createDeferredPromise();
         if (innerResponse.body != null) {
-          const stream2 = innerResponse.body.stream;
-          const reader = stream2.getReader();
+          const stream = innerResponse.body.stream;
+          const reader = stream.getReader();
           readAllBytes(reader).then(bodyReadPromise.resolve, bodyReadPromise.reject);
         } else {
           bodyReadPromise.resolve(void 0);
@@ -14284,15 +14284,15 @@ var require_cache = __commonJS({
         });
         return cacheJobPromise.promise;
       }
-      async delete(request, options = {}) {
+      async delete(request, options2 = {}) {
         webidl.brandCheck(this, _Cache);
         webidl.argumentLengthCheck(arguments, 1, { header: "Cache.delete" });
         request = webidl.converters.RequestInfo(request);
-        options = webidl.converters.CacheQueryOptions(options);
+        options2 = webidl.converters.CacheQueryOptions(options2);
         let r = null;
         if (request instanceof Request) {
           r = request[kState];
-          if (r.method !== "GET" && !options.ignoreMethod) {
+          if (r.method !== "GET" && !options2.ignoreMethod) {
             return false;
           }
         } else {
@@ -14303,7 +14303,7 @@ var require_cache = __commonJS({
         const operation = {
           type: "delete",
           request: r,
-          options
+          options: options2
         };
         operations.push(operation);
         const cacheJobPromise = createDeferredPromise();
@@ -14329,16 +14329,16 @@ var require_cache = __commonJS({
        * @param {import('../../types/cache').CacheQueryOptions} options
        * @returns {readonly Request[]}
        */
-      async keys(request = void 0, options = {}) {
+      async keys(request = void 0, options2 = {}) {
         webidl.brandCheck(this, _Cache);
         if (request !== void 0)
           request = webidl.converters.RequestInfo(request);
-        options = webidl.converters.CacheQueryOptions(options);
+        options2 = webidl.converters.CacheQueryOptions(options2);
         let r = null;
         if (request !== void 0) {
           if (request instanceof Request) {
             r = request[kState];
-            if (r.method !== "GET" && !options.ignoreMethod) {
+            if (r.method !== "GET" && !options2.ignoreMethod) {
               return [];
             }
           } else if (typeof request === "string") {
@@ -14352,7 +14352,7 @@ var require_cache = __commonJS({
             requests.push(requestResponse[0]);
           }
         } else {
-          const requestResponses = this.#queryCache(r, options);
+          const requestResponses = this.#queryCache(r, options2);
           for (const requestResponse of requestResponses) {
             requests.push(requestResponse[0]);
           }
@@ -14460,12 +14460,12 @@ var require_cache = __commonJS({
        * @param {requestResponseList} targetStorage
        * @returns {requestResponseList}
        */
-      #queryCache(requestQuery, options, targetStorage) {
+      #queryCache(requestQuery, options2, targetStorage) {
         const resultList = [];
         const storage = targetStorage ?? this.#relevantRequestResponseList;
         for (const requestResponse of storage) {
           const [cachedRequest, cachedResponse] = requestResponse;
-          if (this.#requestMatchesCachedItem(requestQuery, cachedRequest, cachedResponse, options)) {
+          if (this.#requestMatchesCachedItem(requestQuery, cachedRequest, cachedResponse, options2)) {
             resultList.push(requestResponse);
           }
         }
@@ -14479,17 +14479,17 @@ var require_cache = __commonJS({
        * @param {import('../../types/cache').CacheQueryOptions | undefined} options
        * @returns {boolean}
        */
-      #requestMatchesCachedItem(requestQuery, request, response = null, options) {
+      #requestMatchesCachedItem(requestQuery, request, response = null, options2) {
         const queryURL = new URL(requestQuery.url);
         const cachedURL = new URL(request.url);
-        if (options?.ignoreSearch) {
+        if (options2?.ignoreSearch) {
           cachedURL.search = "";
           queryURL.search = "";
         }
         if (!urlEquals(queryURL, cachedURL, true)) {
           return false;
         }
-        if (response == null || options?.ignoreVary || !response.headersList.contains("vary")) {
+        if (response == null || options2?.ignoreVary || !response.headersList.contains("vary")) {
           return true;
         }
         const fieldValues = getFieldValues(response.headersList.get("vary"));
@@ -14573,21 +14573,21 @@ var require_cachestorage = __commonJS({
           webidl.illegalConstructor();
         }
       }
-      async match(request, options = {}) {
+      async match(request, options2 = {}) {
         webidl.brandCheck(this, _CacheStorage);
         webidl.argumentLengthCheck(arguments, 1, { header: "CacheStorage.match" });
         request = webidl.converters.RequestInfo(request);
-        options = webidl.converters.MultiCacheQueryOptions(options);
-        if (options.cacheName != null) {
-          if (this.#caches.has(options.cacheName)) {
-            const cacheList = this.#caches.get(options.cacheName);
+        options2 = webidl.converters.MultiCacheQueryOptions(options2);
+        if (options2.cacheName != null) {
+          if (this.#caches.has(options2.cacheName)) {
+            const cacheList = this.#caches.get(options2.cacheName);
             const cache = new Cache(kConstruct, cacheList);
-            return await cache.match(request, options);
+            return await cache.match(request, options2);
           }
         } else {
           for (const cacheList of this.#caches.values()) {
             const cache = new Cache(kConstruct, cacheList);
-            const response = await cache.match(request, options);
+            const response = await cache.match(request, options2);
             if (response !== void 0) {
               return response;
             }
@@ -15522,7 +15522,7 @@ var require_connection = __commonJS({
       crypto4 = __require("crypto");
     } catch {
     }
-    function establishWebSocketConnection(url2, protocols, ws, onEstablish, options) {
+    function establishWebSocketConnection(url2, protocols, ws, onEstablish, options2) {
       const requestURL = url2;
       requestURL.protocol = url2.protocol === "ws:" ? "http:" : "https:";
       const request = makeRequest({
@@ -15534,8 +15534,8 @@ var require_connection = __commonJS({
         cache: "no-store",
         redirect: "error"
       });
-      if (options.headers) {
-        const headersList = new Headers(options.headers)[kHeadersList];
+      if (options2.headers) {
+        const headersList = new Headers(options2.headers)[kHeadersList];
         request.headersList = headersList;
       }
       const keyValue = crypto4.randomBytes(16).toString("base64");
@@ -15548,7 +15548,7 @@ var require_connection = __commonJS({
       const controller = fetching({
         request,
         useParallelQueue: true,
-        dispatcher: options.dispatcher ?? getGlobalDispatcher(),
+        dispatcher: options2.dispatcher ?? getGlobalDispatcher(),
         processResponse(response) {
           if (response.type === "error" || response.status !== 101) {
             failWebsocketConnection(ws, "Received network error or non-101 status code.");
@@ -15984,9 +15984,9 @@ var require_websocket = __commonJS({
             code: "UNDICI-WS"
           });
         }
-        const options = webidl.converters["DOMString or sequence<DOMString> or WebSocketInit"](protocols);
+        const options2 = webidl.converters["DOMString or sequence<DOMString> or WebSocketInit"](protocols);
         url2 = webidl.converters.USVString(url2);
-        protocols = options.protocols;
+        protocols = options2.protocols;
         const baseURL = getGlobalOrigin();
         let urlRecord;
         try {
@@ -16023,7 +16023,7 @@ var require_websocket = __commonJS({
           protocols,
           this,
           (response) => this.#onConnectionEstablished(response),
-          options
+          options2
         );
         this[kReadyState] = _WebSocket.CONNECTING;
         this[kBinaryType] = "blob";
@@ -16725,9 +16725,9 @@ var require_lib = __commonJS({
           return this.request("HEAD", requestUrl, null, additionalHeaders || {});
         });
       }
-      sendStream(verb, requestUrl, stream2, additionalHeaders) {
+      sendStream(verb, requestUrl, stream, additionalHeaders) {
         return __awaiter(this, void 0, void 0, function* () {
-          return this.request(verb, requestUrl, stream2, additionalHeaders);
+          return this.request(verb, requestUrl, stream, additionalHeaders);
         });
       }
       /**
@@ -17003,8 +17003,8 @@ var require_lib = __commonJS({
           this._proxyAgent = agent;
         }
         if (this._keepAlive && !agent) {
-          const options = { keepAlive: this._keepAlive, maxSockets };
-          agent = usingSsl ? new https.Agent(options) : new http.Agent(options);
+          const options2 = { keepAlive: this._keepAlive, maxSockets };
+          agent = usingSsl ? new https.Agent(options2) : new http.Agent(options2);
           this._agent = agent;
         }
         if (!agent) {
@@ -17044,7 +17044,7 @@ var require_lib = __commonJS({
           return new Promise((resolve2) => setTimeout(() => resolve2(), ms));
         });
       }
-      _processResponse(res, options) {
+      _processResponse(res, options2) {
         return __awaiter(this, void 0, void 0, function* () {
           return new Promise((resolve2, reject) => __awaiter(this, void 0, void 0, function* () {
             const statusCode = res.message.statusCode || 0;
@@ -17070,7 +17070,7 @@ var require_lib = __commonJS({
             try {
               contents = yield res.readBody();
               if (contents && contents.length > 0) {
-                if (options && options.deserializeDates) {
+                if (options2 && options2.deserializeDates) {
                   obj = JSON.parse(contents, dateTimeDeserializer);
                 } else {
                   obj = JSON.parse(contents);
@@ -17142,11 +17142,11 @@ var require_auth = __commonJS({
         this.username = username;
         this.password = password;
       }
-      prepareRequest(options) {
-        if (!options.headers) {
+      prepareRequest(options2) {
+        if (!options2.headers) {
           throw Error("The request has no headers");
         }
-        options.headers["Authorization"] = `Basic ${Buffer.from(`${this.username}:${this.password}`).toString("base64")}`;
+        options2.headers["Authorization"] = `Basic ${Buffer.from(`${this.username}:${this.password}`).toString("base64")}`;
       }
       // This handler cannot handle 401
       canHandleAuthentication() {
@@ -17165,11 +17165,11 @@ var require_auth = __commonJS({
       }
       // currently implements pre-authorization
       // TODO: support preAuth = false where it hooks on 401
-      prepareRequest(options) {
-        if (!options.headers) {
+      prepareRequest(options2) {
+        if (!options2.headers) {
           throw Error("The request has no headers");
         }
-        options.headers["Authorization"] = `Bearer ${this.token}`;
+        options2.headers["Authorization"] = `Bearer ${this.token}`;
       }
       // This handler cannot handle 401
       canHandleAuthentication() {
@@ -17188,11 +17188,11 @@ var require_auth = __commonJS({
       }
       // currently implements pre-authorization
       // TODO: support preAuth = false where it hooks on 401
-      prepareRequest(options) {
-        if (!options.headers) {
+      prepareRequest(options2) {
+        if (!options2.headers) {
           throw Error("The request has no headers");
         }
-        options.headers["Authorization"] = `Basic ${Buffer.from(`PAT:${this.token}`).toString("base64")}`;
+        options2.headers["Authorization"] = `Basic ${Buffer.from(`PAT:${this.token}`).toString("base64")}`;
       }
       // This handler cannot handle 401
       canHandleAuthentication() {
@@ -17340,8 +17340,8 @@ var require_summary = __commonJS({
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.summary = exports.markdownSummary = exports.SUMMARY_DOCS_URL = exports.SUMMARY_ENV_VAR = void 0;
     var os_1 = __require("os");
-    var fs_1 = __require("fs");
-    var { access, appendFile, writeFile } = fs_1.promises;
+    var fs_12 = __require("fs");
+    var { access, appendFile, writeFile } = fs_12.promises;
     exports.SUMMARY_ENV_VAR = "GITHUB_STEP_SUMMARY";
     exports.SUMMARY_DOCS_URL = "https://docs.github.com/actions/using-workflows/workflow-commands-for-github-actions#adding-a-job-summary";
     var Summary = class {
@@ -17364,7 +17364,7 @@ var require_summary = __commonJS({
             throw new Error(`Unable to find environment variable for $${exports.SUMMARY_ENV_VAR}. Check if your runtime environment supports job summaries.`);
           }
           try {
-            yield access(pathFromEnv, fs_1.constants.R_OK | fs_1.constants.W_OK);
+            yield access(pathFromEnv, fs_12.constants.R_OK | fs_12.constants.W_OK);
           } catch (_a) {
             throw new Error(`Unable to access summary file: '${pathFromEnv}'. Check if the file has correct read/write permissions.`);
           }
@@ -17395,9 +17395,9 @@ var require_summary = __commonJS({
        *
        * @returns {Promise<Summary>} summary instance
        */
-      write(options) {
+      write(options2) {
         return __awaiter(this, void 0, void 0, function* () {
-          const overwrite = !!(options === null || options === void 0 ? void 0 : options.overwrite);
+          const overwrite = !!(options2 === null || options2 === void 0 ? void 0 : options2.overwrite);
           const filePath = yield this.filePath();
           const writeFunc = overwrite ? writeFile : appendFile;
           yield writeFunc(filePath, this._buffer, { encoding: "utf8" });
@@ -17530,8 +17530,8 @@ var require_summary = __commonJS({
        *
        * @returns {Summary} summary instance
        */
-      addImage(src2, alt, options) {
-        const { width: width2, height } = options || {};
+      addImage(src2, alt, options2) {
+        const { width: width2, height } = options2 || {};
         const attrs = Object.assign(Object.assign({}, width2 && { width: width2 }), height && { height });
         const element = this.wrap("img", null, Object.assign({ src: src2, alt }, attrs));
         return this.addRaw(element).addEOL();
@@ -17746,29 +17746,29 @@ var require_core = __commonJS({
       process.env["PATH"] = `${inputPath}${path2.delimiter}${process.env["PATH"]}`;
     }
     exports.addPath = addPath;
-    function getInput3(name, options) {
+    function getInput3(name, options2) {
       const val = process.env[`INPUT_${name.replace(/ /g, "_").toUpperCase()}`] || "";
-      if (options && options.required && !val) {
+      if (options2 && options2.required && !val) {
         throw new Error(`Input required and not supplied: ${name}`);
       }
-      if (options && options.trimWhitespace === false) {
+      if (options2 && options2.trimWhitespace === false) {
         return val;
       }
       return val.trim();
     }
     exports.getInput = getInput3;
-    function getMultilineInput(name, options) {
-      const inputs = getInput3(name, options).split("\n").filter((x) => x !== "");
-      if (options && options.trimWhitespace === false) {
+    function getMultilineInput(name, options2) {
+      const inputs = getInput3(name, options2).split("\n").filter((x) => x !== "");
+      if (options2 && options2.trimWhitespace === false) {
         return inputs;
       }
       return inputs.map((input) => input.trim());
     }
     exports.getMultilineInput = getMultilineInput;
-    function getBooleanInput2(name, options) {
+    function getBooleanInput2(name, options2) {
       const trueValue = ["true", "True", "TRUE"];
       const falseValue = ["false", "False", "FALSE"];
-      const val = getInput3(name, options);
+      const val = getInput3(name, options2);
       if (trueValue.includes(val))
         return true;
       if (falseValue.includes(val))
@@ -17885,7 +17885,7 @@ var require_context = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.Context = void 0;
-    var fs_1 = __require("fs");
+    var fs_12 = __require("fs");
     var os_1 = __require("os");
     var Context = class {
       /**
@@ -17895,8 +17895,8 @@ var require_context = __commonJS({
         var _a, _b, _c;
         this.payload = {};
         if (process.env.GITHUB_EVENT_PATH) {
-          if ((0, fs_1.existsSync)(process.env.GITHUB_EVENT_PATH)) {
-            this.payload = JSON.parse((0, fs_1.readFileSync)(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
+          if ((0, fs_12.existsSync)(process.env.GITHUB_EVENT_PATH)) {
+            this.payload = JSON.parse((0, fs_12.readFileSync)(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
           } else {
             const path2 = process.env.GITHUB_EVENT_PATH;
             process.stdout.write(`GITHUB_EVENT_PATH ${path2} does not exist${os_1.EOL}`);
@@ -18004,13 +18004,13 @@ var require_utils3 = __commonJS({
     exports.getApiBaseUrl = exports.getProxyFetch = exports.getProxyAgentDispatcher = exports.getProxyAgent = exports.getAuthString = void 0;
     var httpClient = __importStar(require_lib());
     var undici_1 = require_undici();
-    function getAuthString(token, options) {
-      if (!token && !options.auth) {
+    function getAuthString(token, options2) {
+      if (!token && !options2.auth) {
         throw new Error("Parameter token or opts.auth is required");
-      } else if (token && options.auth) {
+      } else if (token && options2.auth) {
         throw new Error("Parameters token and opts.auth may not both be specified");
       }
-      return typeof options.auth === "string" ? options.auth : `token ${token}`;
+      return typeof options2.auth === "string" ? options2.auth : `token ${token}`;
     }
     exports.getAuthString = getAuthString;
     function getProxyAgent(destinationUrl) {
@@ -18060,24 +18060,24 @@ var require_dist_node = __commonJS({
 var require_register = __commonJS({
   "node_modules/.pnpm/before-after-hook@2.2.3/node_modules/before-after-hook/lib/register.js"(exports, module) {
     module.exports = register;
-    function register(state, name, method, options) {
+    function register(state, name, method, options2) {
       if (typeof method !== "function") {
         throw new Error("method for before hook must be a function");
       }
-      if (!options) {
-        options = {};
+      if (!options2) {
+        options2 = {};
       }
       if (Array.isArray(name)) {
         return name.reverse().reduce(function(callback, name2) {
-          return register.bind(null, state, name2, callback, options);
+          return register.bind(null, state, name2, callback, options2);
         }, method)();
       }
       return Promise.resolve().then(function() {
         if (!state.registry[name]) {
-          return method(options);
+          return method(options2);
         }
         return state.registry[name].reduce(function(method2, registered) {
-          return registered.hook.bind(null, method2, options);
+          return registered.hook.bind(null, method2, options2);
         }, method)();
       });
     }
@@ -18094,25 +18094,25 @@ var require_add = __commonJS({
         state.registry[name] = [];
       }
       if (kind === "before") {
-        hook = function(method, options) {
-          return Promise.resolve().then(orig.bind(null, options)).then(method.bind(null, options));
+        hook = function(method, options2) {
+          return Promise.resolve().then(orig.bind(null, options2)).then(method.bind(null, options2));
         };
       }
       if (kind === "after") {
-        hook = function(method, options) {
+        hook = function(method, options2) {
           var result;
-          return Promise.resolve().then(method.bind(null, options)).then(function(result_) {
+          return Promise.resolve().then(method.bind(null, options2)).then(function(result_) {
             result = result_;
-            return orig(result, options);
+            return orig(result, options2);
           }).then(function() {
             return result;
           });
         };
       }
       if (kind === "error") {
-        hook = function(method, options) {
-          return Promise.resolve().then(method.bind(null, options)).catch(function(error2) {
-            return orig(error2, options);
+        hook = function(method, options2) {
+          return Promise.resolve().then(method.bind(null, options2)).catch(function(error2) {
+            return orig(error2, options2);
           });
         };
       }
@@ -18276,16 +18276,16 @@ var require_dist_node2 = __commonJS({
       }, {});
     }
     var import_is_plain_object = require_is_plain_object();
-    function mergeDeep(defaults, options) {
+    function mergeDeep(defaults, options2) {
       const result = Object.assign({}, defaults);
-      Object.keys(options).forEach((key) => {
-        if ((0, import_is_plain_object.isPlainObject)(options[key])) {
+      Object.keys(options2).forEach((key) => {
+        if ((0, import_is_plain_object.isPlainObject)(options2[key])) {
           if (!(key in defaults))
-            Object.assign(result, { [key]: options[key] });
+            Object.assign(result, { [key]: options2[key] });
           else
-            result[key] = mergeDeep(defaults[key], options[key]);
+            result[key] = mergeDeep(defaults[key], options2[key]);
         } else {
-          Object.assign(result, { [key]: options[key] });
+          Object.assign(result, { [key]: options2[key] });
         }
       });
       return result;
@@ -18298,18 +18298,18 @@ var require_dist_node2 = __commonJS({
       }
       return obj;
     }
-    function merge(defaults, route, options) {
+    function merge(defaults, route, options2) {
       if (typeof route === "string") {
         let [method, url2] = route.split(" ");
-        options = Object.assign(url2 ? { method, url: url2 } : { url: method }, options);
+        options2 = Object.assign(url2 ? { method, url: url2 } : { url: method }, options2);
       } else {
-        options = Object.assign({}, route);
+        options2 = Object.assign({}, route);
       }
-      options.headers = lowercaseKeys(options.headers);
-      removeUndefinedProperties(options);
-      removeUndefinedProperties(options.headers);
-      const mergedOptions = mergeDeep(defaults || {}, options);
-      if (options.url === "/graphql") {
+      options2.headers = lowercaseKeys(options2.headers);
+      removeUndefinedProperties(options2);
+      removeUndefinedProperties(options2.headers);
+      const mergedOptions = mergeDeep(defaults || {}, options2);
+      if (options2.url === "/graphql") {
         if (defaults && defaults.mediaType.previews?.length) {
           mergedOptions.mediaType.previews = defaults.mediaType.previews.filter(
             (preview) => !mergedOptions.mediaType.previews.includes(preview)
@@ -18474,12 +18474,12 @@ var require_dist_node2 = __commonJS({
         }
       );
     }
-    function parse3(options) {
-      let method = options.method.toUpperCase();
-      let url2 = (options.url || "/").replace(/:([a-z]\w+)/g, "{$1}");
-      let headers = Object.assign({}, options.headers);
+    function parse3(options2) {
+      let method = options2.method.toUpperCase();
+      let url2 = (options2.url || "/").replace(/:([a-z]\w+)/g, "{$1}");
+      let headers = Object.assign({}, options2.headers);
       let body;
-      let parameters = omit(options, [
+      let parameters = omit(options2, [
         "method",
         "baseUrl",
         "url",
@@ -18490,25 +18490,25 @@ var require_dist_node2 = __commonJS({
       const urlVariableNames = extractUrlVariableNames(url2);
       url2 = parseUrl(url2).expand(parameters);
       if (!/^http/.test(url2)) {
-        url2 = options.baseUrl + url2;
+        url2 = options2.baseUrl + url2;
       }
-      const omittedParameters = Object.keys(options).filter((option) => urlVariableNames.includes(option)).concat("baseUrl");
+      const omittedParameters = Object.keys(options2).filter((option) => urlVariableNames.includes(option)).concat("baseUrl");
       const remainingParameters = omit(parameters, omittedParameters);
       const isBinaryRequest = /application\/octet-stream/i.test(headers.accept);
       if (!isBinaryRequest) {
-        if (options.mediaType.format) {
+        if (options2.mediaType.format) {
           headers.accept = headers.accept.split(/,/).map(
             (format) => format.replace(
               /application\/vnd(\.\w+)(\.v3)?(\.\w+)?(\+json)?$/,
-              `application/vnd$1$2.${options.mediaType.format}`
+              `application/vnd$1$2.${options2.mediaType.format}`
             )
           ).join(",");
         }
         if (url2.endsWith("/graphql")) {
-          if (options.mediaType.previews?.length) {
+          if (options2.mediaType.previews?.length) {
             const previewsFromAcceptHeader = headers.accept.match(/[\w-]+(?=-preview)/g) || [];
-            headers.accept = previewsFromAcceptHeader.concat(options.mediaType.previews).map((preview) => {
-              const format = options.mediaType.format ? `.${options.mediaType.format}` : "+json";
+            headers.accept = previewsFromAcceptHeader.concat(options2.mediaType.previews).map((preview) => {
+              const format = options2.mediaType.format ? `.${options2.mediaType.format}` : "+json";
               return `application/vnd.github.${preview}-preview${format}`;
             }).join(",");
           }
@@ -18534,11 +18534,11 @@ var require_dist_node2 = __commonJS({
       return Object.assign(
         { method, url: url2, headers },
         typeof body !== "undefined" ? { body } : null,
-        options.request ? { request: options.request } : null
+        options2.request ? { request: options2.request } : null
       );
     }
-    function endpointWithDefaults(defaults, route, options) {
-      return parse3(merge(defaults, route, options));
+    function endpointWithDefaults(defaults, route, options2) {
+      return parse3(merge(defaults, route, options2));
     }
     function withDefaults(oldDefaults, newDefaults) {
       const DEFAULTS2 = merge(oldDefaults, newDefaults);
@@ -18689,7 +18689,7 @@ var require_dist_node4 = __commonJS({
     var logOnceCode = (0, import_once.default)((deprecation) => console.warn(deprecation));
     var logOnceHeaders = (0, import_once.default)((deprecation) => console.warn(deprecation));
     var RequestError = class extends Error {
-      constructor(message, statusCode, options) {
+      constructor(message, statusCode, options2) {
         super(message);
         if (Error.captureStackTrace) {
           Error.captureStackTrace(this, this.constructor);
@@ -18697,17 +18697,17 @@ var require_dist_node4 = __commonJS({
         this.name = "HttpError";
         this.status = statusCode;
         let headers;
-        if ("headers" in options && typeof options.headers !== "undefined") {
-          headers = options.headers;
+        if ("headers" in options2 && typeof options2.headers !== "undefined") {
+          headers = options2.headers;
         }
-        if ("response" in options) {
-          this.response = options.response;
-          headers = options.response.headers;
+        if ("response" in options2) {
+          this.response = options2.response;
+          headers = options2.response.headers;
         }
-        const requestCopy = Object.assign({}, options.request);
-        if (options.request.headers.authorization) {
-          requestCopy.headers = Object.assign({}, options.request.headers, {
-            authorization: options.request.headers.authorization.replace(
+        const requestCopy = Object.assign({}, options2.request);
+        if (options2.request.headers.authorization) {
+          requestCopy.headers = Object.assign({}, options2.request.headers, {
+            authorization: options2.request.headers.authorization.replace(
               / .*$/,
               " [REDACTED]"
             )
@@ -18995,14 +18995,14 @@ var require_dist_node6 = __commonJS({
     ];
     var FORBIDDEN_VARIABLE_OPTIONS = ["query", "method", "url"];
     var GHES_V3_SUFFIX_REGEX = /\/api\/v3\/?$/;
-    function graphql(request2, query, options) {
-      if (options) {
-        if (typeof query === "string" && "query" in options) {
+    function graphql(request2, query, options2) {
+      if (options2) {
+        if (typeof query === "string" && "query" in options2) {
           return Promise.reject(
             new Error(`[@octokit/graphql] "query" cannot be used as variable name`)
           );
         }
-        for (const key in options) {
+        for (const key in options2) {
           if (!FORBIDDEN_VARIABLE_OPTIONS.includes(key))
             continue;
           return Promise.reject(
@@ -19012,7 +19012,7 @@ var require_dist_node6 = __commonJS({
           );
         }
       }
-      const parsedOptions = typeof query === "string" ? Object.assign({ query }, options) : query;
+      const parsedOptions = typeof query === "string" ? Object.assign({ query }, options2) : query;
       const requestOptions = Object.keys(
         parsedOptions
       ).reduce((result, key) => {
@@ -19047,8 +19047,8 @@ var require_dist_node6 = __commonJS({
     }
     function withDefaults(request2, newDefaults) {
       const newRequest = request2.defaults(newDefaults);
-      const newApi = (query, options) => {
-        return graphql(newRequest, query, options);
+      const newApi = (query, options2) => {
+        return graphql(newRequest, query, options2);
       };
       return Object.assign(newApi, {
         defaults: withDefaults.bind(null, newRequest),
@@ -19181,18 +19181,18 @@ var require_dist_node8 = __commonJS({
       static defaults(defaults) {
         const OctokitWithDefaults = class extends this {
           constructor(...args) {
-            const options = args[0] || {};
+            const options2 = args[0] || {};
             if (typeof defaults === "function") {
-              super(defaults(options));
+              super(defaults(options2));
               return;
             }
             super(
               Object.assign(
                 {},
                 defaults,
-                options,
-                options.userAgent && defaults.userAgent ? {
-                  userAgent: `${options.userAgent} ${defaults.userAgent}`
+                options2,
+                options2.userAgent && defaults.userAgent ? {
+                  userAgent: `${options2.userAgent} ${defaults.userAgent}`
                 } : null
               )
             );
@@ -19220,12 +19220,12 @@ var require_dist_node8 = __commonJS({
         };
         return NewOctokit;
       }
-      constructor(options = {}) {
+      constructor(options2 = {}) {
         const hook = new import_before_after_hook.Collection();
         const requestDefaults = {
           baseUrl: import_request.request.endpoint.DEFAULTS.baseUrl,
           headers: {},
-          request: Object.assign({}, options.request, {
+          request: Object.assign({}, options2.request, {
             // @ts-ignore internal usage only, no need to type
             hook: hook.bind(null, "request")
           }),
@@ -19235,17 +19235,17 @@ var require_dist_node8 = __commonJS({
           }
         };
         requestDefaults.headers["user-agent"] = [
-          options.userAgent,
+          options2.userAgent,
           `octokit-core.js/${VERSION} ${(0, import_universal_user_agent.getUserAgent)()}`
         ].filter(Boolean).join(" ");
-        if (options.baseUrl) {
-          requestDefaults.baseUrl = options.baseUrl;
+        if (options2.baseUrl) {
+          requestDefaults.baseUrl = options2.baseUrl;
         }
-        if (options.previews) {
-          requestDefaults.mediaType.previews = options.previews;
+        if (options2.previews) {
+          requestDefaults.mediaType.previews = options2.previews;
         }
-        if (options.timeZone) {
-          requestDefaults.headers["time-zone"] = options.timeZone;
+        if (options2.timeZone) {
+          requestDefaults.headers["time-zone"] = options2.timeZone;
         }
         this.request = import_request.request.defaults(requestDefaults);
         this.graphql = (0, import_graphql.withCustomRequest)(this.request).defaults(requestDefaults);
@@ -19258,21 +19258,21 @@ var require_dist_node8 = __commonJS({
             warn: console.warn.bind(console),
             error: console.error.bind(console)
           },
-          options.log
+          options2.log
         );
         this.hook = hook;
-        if (!options.authStrategy) {
-          if (!options.auth) {
+        if (!options2.authStrategy) {
+          if (!options2.auth) {
             this.auth = async () => ({
               type: "unauthenticated"
             });
           } else {
-            const auth = (0, import_auth_token.createTokenAuth)(options.auth);
+            const auth = (0, import_auth_token.createTokenAuth)(options2.auth);
             hook.wrap("request", auth.hook);
             this.auth = auth;
           }
         } else {
-          const { authStrategy, ...otherOptions } = options;
+          const { authStrategy, ...otherOptions } = options2;
           const auth = authStrategy(
             Object.assign(
               {
@@ -19286,7 +19286,7 @@ var require_dist_node8 = __commonJS({
                 octokit: this,
                 octokitOptions: otherOptions
               },
-              options.auth
+              options2.auth
             )
           );
           hook.wrap("request", auth.hook);
@@ -19294,7 +19294,7 @@ var require_dist_node8 = __commonJS({
         }
         const classConstructor = this.constructor;
         classConstructor.plugins.forEach((plugin) => {
-          Object.assign(this, plugin(this, options));
+          Object.assign(this, plugin(this, options2));
         });
       }
     };
@@ -21342,13 +21342,13 @@ var require_dist_node9 = __commonJS({
     function decorate(octokit2, scope, methodName, defaults, decorations) {
       const requestWithDefaults = octokit2.request.defaults(defaults);
       function withDecorations(...args) {
-        let options = requestWithDefaults.endpoint.merge(...args);
+        let options2 = requestWithDefaults.endpoint.merge(...args);
         if (decorations.mapToData) {
-          options = Object.assign({}, options, {
-            data: options[decorations.mapToData],
+          options2 = Object.assign({}, options2, {
+            data: options2[decorations.mapToData],
             [decorations.mapToData]: void 0
           });
-          return requestWithDefaults(options);
+          return requestWithDefaults(options2);
         }
         if (decorations.renamed) {
           const [newScope, newMethodName] = decorations.renamed;
@@ -21360,21 +21360,21 @@ var require_dist_node9 = __commonJS({
           octokit2.log.warn(decorations.deprecated);
         }
         if (decorations.renamedParameters) {
-          const options2 = requestWithDefaults.endpoint.merge(...args);
+          const options22 = requestWithDefaults.endpoint.merge(...args);
           for (const [name, alias] of Object.entries(
             decorations.renamedParameters
           )) {
-            if (name in options2) {
+            if (name in options22) {
               octokit2.log.warn(
                 `"${name}" parameter is deprecated for "octokit.${scope}.${methodName}()". Use "${alias}" instead`
               );
-              if (!(alias in options2)) {
-                options2[alias] = options2[name];
+              if (!(alias in options22)) {
+                options22[alias] = options22[name];
               }
-              delete options2[name];
+              delete options22[name];
             }
           }
-          return requestWithDefaults(options2);
+          return requestWithDefaults(options22);
         }
         return requestWithDefaults(...args);
       }
@@ -21457,11 +21457,11 @@ var require_dist_node10 = __commonJS({
       return response;
     }
     function iterator(octokit2, route, parameters) {
-      const options = typeof route === "function" ? route.endpoint(parameters) : octokit2.request.endpoint(route, parameters);
+      const options2 = typeof route === "function" ? route.endpoint(parameters) : octokit2.request.endpoint(route, parameters);
       const requestMethod = typeof route === "function" ? route : octokit2.request;
-      const method = options.method;
-      const headers = options.headers;
-      let url2 = options.url;
+      const method = options2.method;
+      const headers = options2.headers;
+      let url2 = options2.url;
       return {
         [Symbol.asyncIterator]: () => ({
           async next() {
@@ -21828,8 +21828,8 @@ var require_utils4 = __commonJS({
       }
     };
     exports.GitHub = core_1.Octokit.plugin(plugin_rest_endpoint_methods_1.restEndpointMethods, plugin_paginate_rest_1.paginateRest).defaults(exports.defaults);
-    function getOctokitOptions(token, options) {
-      const opts = Object.assign({}, options || {});
+    function getOctokitOptions(token, options2) {
+      const opts = Object.assign({}, options2 || {});
       const auth = Utils.getAuthString(token, opts);
       if (auth) {
         opts.auth = auth;
@@ -21881,9 +21881,9 @@ var require_github = __commonJS({
     var Context = __importStar(require_context());
     var utils_1 = require_utils4();
     exports.context = new Context.Context();
-    function getOctokit2(token, options, ...additionalPlugins) {
+    function getOctokit2(token, options2, ...additionalPlugins) {
       const GitHubWithPlugins = utils_1.GitHub.plugin(...additionalPlugins);
-      return new GitHubWithPlugins((0, utils_1.getOctokitOptions)(token, options));
+      return new GitHubWithPlugins((0, utils_1.getOctokitOptions)(token, options2));
     }
     exports.getOctokit = getOctokit2;
   }
@@ -22029,9 +22029,9 @@ async function updateCheck(checkRunId, status, output, conclusion) {
 var core3 = __toESM(require_core(), 1);
 
 // node_modules/.pnpm/markdown-table@3.0.3/node_modules/markdown-table/index.js
-function markdownTable(table, options = {}) {
-  const align = (options.align || []).concat();
-  const stringLength = options.stringLength || defaultStringLength;
+function markdownTable(table, options2 = {}) {
+  const align = (options2.align || []).concat();
+  const stringLength = options2.stringLength || defaultStringLength;
   const alignments = [];
   const cellMatrix = [];
   const sizeMatrix = [];
@@ -22047,7 +22047,7 @@ function markdownTable(table, options = {}) {
     }
     while (++columnIndex2 < table[rowIndex].length) {
       const cell = serialize(table[rowIndex][columnIndex2]);
-      if (options.alignDelimiters !== false) {
+      if (options2.alignDelimiters !== false) {
         const size = stringLength(cell);
         sizes2[columnIndex2] = size;
         if (longestCellByColumn[columnIndex2] === void 0 || size > longestCellByColumn[columnIndex2]) {
@@ -22085,12 +22085,12 @@ function markdownTable(table, options = {}) {
     } else if (code === 114) {
       after = ":";
     }
-    let size = options.alignDelimiters === false ? 1 : Math.max(
+    let size = options2.alignDelimiters === false ? 1 : Math.max(
       1,
       longestCellByColumn[columnIndex] - before.length - after.length
     );
     const cell = before + "-".repeat(size) + after;
-    if (options.alignDelimiters !== false) {
+    if (options2.alignDelimiters !== false) {
       size = before.length + size + after.length;
       if (size > longestCellByColumn[columnIndex]) {
         longestCellByColumn[columnIndex] = size;
@@ -22112,7 +22112,7 @@ function markdownTable(table, options = {}) {
       const cell = row2[columnIndex] || "";
       let before = "";
       let after = "";
-      if (options.alignDelimiters !== false) {
+      if (options2.alignDelimiters !== false) {
         const size = longestCellByColumn[columnIndex] - (sizes2[columnIndex] || 0);
         const code = alignments[columnIndex];
         if (code === 114) {
@@ -22129,30 +22129,30 @@ function markdownTable(table, options = {}) {
           after = " ".repeat(size);
         }
       }
-      if (options.delimiterStart !== false && !columnIndex) {
+      if (options2.delimiterStart !== false && !columnIndex) {
         line.push("|");
       }
-      if (options.padding !== false && // Don’t add the opening space if we’re not aligning and the cell is
+      if (options2.padding !== false && // Don’t add the opening space if we’re not aligning and the cell is
       // empty: there will be a closing space.
-      !(options.alignDelimiters === false && cell === "") && (options.delimiterStart !== false || columnIndex)) {
+      !(options2.alignDelimiters === false && cell === "") && (options2.delimiterStart !== false || columnIndex)) {
         line.push(" ");
       }
-      if (options.alignDelimiters !== false) {
+      if (options2.alignDelimiters !== false) {
         line.push(before);
       }
       line.push(cell);
-      if (options.alignDelimiters !== false) {
+      if (options2.alignDelimiters !== false) {
         line.push(after);
       }
-      if (options.padding !== false) {
+      if (options2.padding !== false) {
         line.push(" ");
       }
-      if (options.delimiterEnd !== false || columnIndex !== mostCellsPerRow - 1) {
+      if (options2.delimiterEnd !== false || columnIndex !== mostCellsPerRow - 1) {
         line.push("|");
       }
     }
     lines2.push(
-      options.delimiterEnd === false ? line.join("").replace(/ +$/, "") : line.join("")
+      options2.delimiterEnd === false ? line.join("").replace(/ +$/, "") : line.join("")
     );
   }
   return lines2.join("\n");
@@ -22368,26 +22368,25 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
 var core7 = __toESM(require_core(), 1);
 import { exec } from "node:child_process";
 
-// node_modules/.pnpm/@antfu+ni@0.21.8/node_modules/@antfu/ni/dist/shared/ni.82314ed6.mjs
-import fs$1, { promises, createWriteStream, createReadStream, existsSync } from "node:fs";
+// node_modules/.pnpm/@antfu+ni@0.21.12/node_modules/@antfu/ni/dist/shared/ni.f699cf8a.mjs
+import fs$1, { createWriteStream, createReadStream, promises, existsSync } from "node:fs";
 import path$3, { join as join$1, dirname, resolve } from "node:path";
 import process$2 from "node:process";
-import url, { fileURLToPath } from "node:url";
 import { Buffer as Buffer$1 } from "node:buffer";
 import childProcess, { ChildProcess } from "node:child_process";
 import require$$0$2 from "child_process";
 import require$$0$1 from "path";
 import require$$0 from "fs";
+import url, { fileURLToPath } from "node:url";
 import os$1, { constants } from "node:os";
-import require$$0$3 from "assert";
-import require$$2 from "events";
-import require$$0$5 from "buffer";
-import require$$0$4 from "stream";
-import require$$2$1 from "util";
+import { setTimeout as setTimeout$1 } from "node:timers/promises";
+import require$$0$3 from "stream";
 import { debuglog } from "node:util";
-import require$$0$6 from "os";
+import require$$0$4 from "os";
 import require$$1 from "tty";
-import require$$0$7 from "readline";
+import require$$0$5 from "readline";
+import require$$2 from "events";
+import require$$1$1 from "fs/promises";
 function npmRun(agent) {
   return (args) => {
     if (args.length > 1)
@@ -22695,239 +22694,6 @@ var ini = {
   unsafe
 };
 var ini$1 = /* @__PURE__ */ getDefaultExportFromCjs(ini);
-var Node = class {
-  value;
-  next;
-  constructor(value) {
-    this.value = value;
-  }
-};
-var Queue = class {
-  #head;
-  #tail;
-  #size;
-  constructor() {
-    this.clear();
-  }
-  enqueue(value) {
-    const node = new Node(value);
-    if (this.#head) {
-      this.#tail.next = node;
-      this.#tail = node;
-    } else {
-      this.#head = node;
-      this.#tail = node;
-    }
-    this.#size++;
-  }
-  dequeue() {
-    const current = this.#head;
-    if (!current) {
-      return;
-    }
-    this.#head = this.#head.next;
-    this.#size--;
-    return current.value;
-  }
-  clear() {
-    this.#head = void 0;
-    this.#tail = void 0;
-    this.#size = 0;
-  }
-  get size() {
-    return this.#size;
-  }
-  *[Symbol.iterator]() {
-    let current = this.#head;
-    while (current) {
-      yield current.value;
-      current = current.next;
-    }
-  }
-};
-function pLimit(concurrency) {
-  if (!((Number.isInteger(concurrency) || concurrency === Number.POSITIVE_INFINITY) && concurrency > 0)) {
-    throw new TypeError("Expected `concurrency` to be a number from 1 and up");
-  }
-  const queue = new Queue();
-  let activeCount = 0;
-  const next = () => {
-    activeCount--;
-    if (queue.size > 0) {
-      queue.dequeue()();
-    }
-  };
-  const run4 = async (fn, resolve2, args) => {
-    activeCount++;
-    const result = (async () => fn(...args))();
-    resolve2(result);
-    try {
-      await result;
-    } catch {
-    }
-    next();
-  };
-  const enqueue = (fn, resolve2, args) => {
-    queue.enqueue(run4.bind(void 0, fn, resolve2, args));
-    (async () => {
-      await Promise.resolve();
-      if (activeCount < concurrency && queue.size > 0) {
-        queue.dequeue()();
-      }
-    })();
-  };
-  const generator = (fn, ...args) => new Promise((resolve2) => {
-    enqueue(fn, resolve2, args);
-  });
-  Object.defineProperties(generator, {
-    activeCount: {
-      get: () => activeCount
-    },
-    pendingCount: {
-      get: () => queue.size
-    },
-    clearQueue: {
-      value: () => {
-        queue.clear();
-      }
-    }
-  });
-  return generator;
-}
-var EndError = class extends Error {
-  constructor(value) {
-    super();
-    this.value = value;
-  }
-};
-var testElement = async (element, tester) => tester(await element);
-var finder = async (element) => {
-  const values = await Promise.all(element);
-  if (values[1] === true) {
-    throw new EndError(values[0]);
-  }
-  return false;
-};
-async function pLocate(iterable, tester, {
-  concurrency = Number.POSITIVE_INFINITY,
-  preserveOrder = true
-} = {}) {
-  const limit = pLimit(concurrency);
-  const items = [...iterable].map((element) => [element, limit(testElement, element, tester)]);
-  const checkLimit = pLimit(preserveOrder ? 1 : Number.POSITIVE_INFINITY);
-  try {
-    await Promise.all(items.map((element) => checkLimit(finder, element)));
-  } catch (error2) {
-    if (error2 instanceof EndError) {
-      return error2.value;
-    }
-    throw error2;
-  }
-}
-var typeMappings = {
-  directory: "isDirectory",
-  file: "isFile"
-};
-function checkType(type) {
-  if (type in typeMappings) {
-    return;
-  }
-  throw new Error(`Invalid type specified: ${type}`);
-}
-var matchType = (type, stat) => type === void 0 || stat[typeMappings[type]]();
-var toPath$1 = (urlOrPath) => urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
-async function locatePath(paths, {
-  cwd = process$2.cwd(),
-  type = "file",
-  allowSymlinks = true,
-  concurrency,
-  preserveOrder
-} = {}) {
-  checkType(type);
-  cwd = toPath$1(cwd);
-  const statFunction = allowSymlinks ? promises.stat : promises.lstat;
-  return pLocate(paths, async (path_) => {
-    try {
-      const stat = await statFunction(path$3.resolve(cwd, path_));
-      return matchType(type, stat);
-    } catch {
-      return false;
-    }
-  }, { concurrency, preserveOrder });
-}
-var toPath = (urlOrPath) => urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
-var findUpStop = Symbol("findUpStop");
-async function findUpMultiple(name, options = {}) {
-  let directory = path$3.resolve(toPath(options.cwd) || "");
-  const { root } = path$3.parse(directory);
-  const stopAt = path$3.resolve(directory, options.stopAt || root);
-  const limit = options.limit || Number.POSITIVE_INFINITY;
-  const paths = [name].flat();
-  const runMatcher = async (locateOptions) => {
-    if (typeof name !== "function") {
-      return locatePath(paths, locateOptions);
-    }
-    const foundPath = await name(locateOptions.cwd);
-    if (typeof foundPath === "string") {
-      return locatePath([foundPath], locateOptions);
-    }
-    return foundPath;
-  };
-  const matches = [];
-  while (true) {
-    const foundPath = await runMatcher({ ...options, cwd: directory });
-    if (foundPath === findUpStop) {
-      break;
-    }
-    if (foundPath) {
-      matches.push(path$3.resolve(directory, foundPath));
-    }
-    if (directory === stopAt || matches.length >= limit) {
-      break;
-    }
-    directory = path$3.dirname(directory);
-  }
-  return matches;
-}
-async function findUp(name, options = {}) {
-  const matches = await findUpMultiple(name, { ...options, limit: 1 });
-  return matches[0];
-}
-var customRcPath = process$2.env.NI_CONFIG_FILE;
-var home = process$2.platform === "win32" ? process$2.env.USERPROFILE : process$2.env.HOME;
-var defaultRcPath = path$3.join(home || "~/", ".nirc");
-var rcPath = customRcPath || defaultRcPath;
-var defaultConfig = {
-  defaultAgent: "prompt",
-  globalAgent: "npm"
-};
-var config2;
-async function getConfig2() {
-  if (!config2) {
-    const result = await findUp("package.json") || "";
-    let packageManager = "";
-    if (result)
-      packageManager = JSON.parse(fs$1.readFileSync(result, "utf8")).packageManager ?? "";
-    const [, agent, version2] = packageManager.match(new RegExp(`^(${Object.values(LOCKS).join("|")})@(\\d).*?$`)) || [];
-    if (agent)
-      config2 = Object.assign({}, defaultConfig, { defaultAgent: agent === "yarn" && Number.parseInt(version2) > 1 ? "yarn@berry" : agent });
-    else if (!fs$1.existsSync(rcPath))
-      config2 = defaultConfig;
-    else
-      config2 = Object.assign({}, defaultConfig, ini$1.parse(fs$1.readFileSync(rcPath, "utf-8")));
-  }
-  return config2;
-}
-async function getDefaultAgent(programmatic) {
-  const { defaultAgent } = await getConfig2();
-  if (defaultAgent === "prompt" && (programmatic || process$2.env.CI))
-    return "npm";
-  return defaultAgent;
-}
-async function getGlobalAgent() {
-  const { globalAgent } = await getConfig2();
-  return globalAgent;
-}
 var crossSpawn$1 = { exports: {} };
 var windows;
 var hasRequiredWindows;
@@ -22938,8 +22704,8 @@ function requireWindows() {
   windows = isexe2;
   isexe2.sync = sync2;
   var fs2 = require$$0;
-  function checkPathExt(path2, options) {
-    var pathext = options.pathExt !== void 0 ? options.pathExt : process.env.PATHEXT;
+  function checkPathExt2(path2, options2) {
+    var pathext = options2.pathExt !== void 0 ? options2.pathExt : process.env.PATHEXT;
     if (!pathext) {
       return true;
     }
@@ -22955,19 +22721,19 @@ function requireWindows() {
     }
     return false;
   }
-  function checkStat(stat, path2, options) {
+  function checkStat2(stat, path2, options2) {
     if (!stat.isSymbolicLink() && !stat.isFile()) {
       return false;
     }
-    return checkPathExt(path2, options);
+    return checkPathExt2(path2, options2);
   }
-  function isexe2(path2, options, cb) {
+  function isexe2(path2, options2, cb) {
     fs2.stat(path2, function(er, stat) {
-      cb(er, er ? false : checkStat(stat, path2, options));
+      cb(er, er ? false : checkStat2(stat, path2, options2));
     });
   }
-  function sync2(path2, options) {
-    return checkStat(fs2.statSync(path2), path2, options);
+  function sync2(path2, options2) {
+    return checkStat2(fs2.statSync(path2), path2, options2);
   }
   return windows;
 }
@@ -22980,23 +22746,23 @@ function requireMode() {
   mode = isexe2;
   isexe2.sync = sync2;
   var fs2 = require$$0;
-  function isexe2(path2, options, cb) {
+  function isexe2(path2, options2, cb) {
     fs2.stat(path2, function(er, stat) {
-      cb(er, er ? false : checkStat(stat, options));
+      cb(er, er ? false : checkStat2(stat, options2));
     });
   }
-  function sync2(path2, options) {
-    return checkStat(fs2.statSync(path2), options);
+  function sync2(path2, options2) {
+    return checkStat2(fs2.statSync(path2), options2);
   }
-  function checkStat(stat, options) {
-    return stat.isFile() && checkMode(stat, options);
+  function checkStat2(stat, options2) {
+    return stat.isFile() && checkMode2(stat, options2);
   }
-  function checkMode(stat, options) {
+  function checkMode2(stat, options2) {
     var mod = stat.mode;
     var uid = stat.uid;
     var gid = stat.gid;
-    var myUid = options.uid !== void 0 ? options.uid : process.getuid && process.getuid();
-    var myGid = options.gid !== void 0 ? options.gid : process.getgid && process.getgid();
+    var myUid = options2.uid !== void 0 ? options2.uid : process.getuid && process.getuid();
+    var myGid = options2.gid !== void 0 ? options2.gid : process.getgid && process.getgid();
     var u = parseInt("100", 8);
     var g = parseInt("010", 8);
     var o = parseInt("001", 8);
@@ -23012,19 +22778,19 @@ if (process.platform === "win32" || commonjsGlobal.TESTING_WINDOWS) {
 } else {
   core6 = requireMode();
 }
-var isexe_1 = isexe$2;
-isexe$2.sync = sync;
-function isexe$2(path2, options, cb) {
-  if (typeof options === "function") {
-    cb = options;
-    options = {};
+var isexe_1 = isexe$4;
+isexe$4.sync = sync$2;
+function isexe$4(path2, options2, cb) {
+  if (typeof options2 === "function") {
+    cb = options2;
+    options2 = {};
   }
   if (!cb) {
     if (typeof Promise !== "function") {
       throw new TypeError("callback not provided");
     }
     return new Promise(function(resolve2, reject) {
-      isexe$2(path2, options || {}, function(er, is) {
+      isexe$4(path2, options2 || {}, function(er, is) {
         if (er) {
           reject(er);
         } else {
@@ -23033,9 +22799,9 @@ function isexe$2(path2, options, cb) {
       });
     });
   }
-  core6(path2, options || {}, function(er, is) {
+  core6(path2, options2 || {}, function(er, is) {
     if (er) {
-      if (er.code === "EACCES" || options && options.ignoreErrors) {
+      if (er.code === "EACCES" || options2 && options2.ignoreErrors) {
         er = null;
         is = false;
       }
@@ -23043,11 +22809,11 @@ function isexe$2(path2, options, cb) {
     cb(er, is);
   });
 }
-function sync(path2, options) {
+function sync$2(path2, options2) {
   try {
-    return core6.sync(path2, options || {});
+    return core6.sync(path2, options2 || {});
   } catch (er) {
-    if (options && options.ignoreErrors || er.code === "EACCES") {
+    if (options2 && options2.ignoreErrors || er.code === "EACCES") {
       return false;
     } else {
       throw er;
@@ -23057,7 +22823,7 @@ function sync(path2, options) {
 var isWindows$1 = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
 var path$2 = require$$0$1;
 var COLON = isWindows$1 ? ";" : ":";
-var isexe$1 = isexe_1;
+var isexe$3 = isexe_1;
 var getNotFoundError$1 = (cmd) => Object.assign(new Error(`not found: ${cmd}`), { code: "ENOENT" });
 var getPathInfo$1 = (cmd, opt) => {
   const colon = opt.colon || COLON;
@@ -23101,7 +22867,7 @@ var which$3 = (cmd, opt, cb) => {
     if (ii === pathExt.length)
       return resolve2(step(i + 1));
     const ext = pathExt[ii];
-    isexe$1(p + ext, { pathExt: pathExtExe }, (er, is) => {
+    isexe$3(p + ext, { pathExt: pathExtExe }, (er, is) => {
       if (!er && is) {
         if (opt.all)
           found.push(p + ext);
@@ -23125,7 +22891,7 @@ var whichSync$1 = (cmd, opt) => {
     for (let j = 0; j < pathExt.length; j++) {
       const cur = p + pathExt[j];
       try {
-        const is = isexe$1.sync(cur, { pathExt: pathExtExe });
+        const is = isexe$3.sync(cur, { pathExt: pathExtExe });
         if (is) {
           if (opt.all)
             found.push(cur);
@@ -23145,9 +22911,9 @@ var whichSync$1 = (cmd, opt) => {
 var which_1 = which$3;
 which$3.sync = whichSync$1;
 var pathKey$2 = { exports: {} };
-var pathKey$1 = (options = {}) => {
-  const environment = options.env || process.env;
-  const platform = options.platform || process.platform;
+var pathKey$1 = (options2 = {}) => {
+  const environment = options2.env || process.env;
+  const platform = options2.platform || process.platform;
   if (platform !== "win32") {
     return "PATH";
   }
@@ -23243,7 +23009,7 @@ var path = require$$0$1;
 var resolveCommand = resolveCommand_1;
 var escape = _escape;
 var readShebang = readShebang_1;
-var isWin$2 = process.platform === "win32";
+var isWin$1 = process.platform === "win32";
 var isExecutableRegExp = /\.(?:com|exe)$/i;
 var isCmdShimRegExp = /node_modules[\\/].bin[\\/][^\\/]+\.cmd$/i;
 function detectShebang(parsed) {
@@ -23257,7 +23023,7 @@ function detectShebang(parsed) {
   return parsed.file;
 }
 function parseNonShell(parsed) {
-  if (!isWin$2) {
+  if (!isWin$1) {
     return parsed;
   }
   const commandFile = detectShebang(parsed);
@@ -23274,27 +23040,27 @@ function parseNonShell(parsed) {
   }
   return parsed;
 }
-function parse$1(command, args, options) {
+function parse$1(command, args, options2) {
   if (args && !Array.isArray(args)) {
-    options = args;
+    options2 = args;
     args = null;
   }
   args = args ? args.slice(0) : [];
-  options = Object.assign({}, options);
+  options2 = Object.assign({}, options2);
   const parsed = {
     command,
     args,
-    options,
+    options: options2,
     file: void 0,
     original: {
       command,
       args
     }
   };
-  return options.shell ? parsed : parseNonShell(parsed);
+  return options2.shell ? parsed : parseNonShell(parsed);
 }
 var parse_1 = parse$1;
-var isWin$1 = process.platform === "win32";
+var isWin = process.platform === "win32";
 function notFoundError(original, syscall) {
   return Object.assign(new Error(`${syscall} ${original.command} ENOENT`), {
     code: "ENOENT",
@@ -23305,7 +23071,7 @@ function notFoundError(original, syscall) {
   });
 }
 function hookChildProcess(cp2, parsed) {
-  if (!isWin$1) {
+  if (!isWin) {
     return;
   }
   const originalEmit = cp2.emit;
@@ -23320,13 +23086,13 @@ function hookChildProcess(cp2, parsed) {
   };
 }
 function verifyENOENT(status, parsed) {
-  if (isWin$1 && status === 1 && !parsed.file) {
+  if (isWin && status === 1 && !parsed.file) {
     return notFoundError(parsed.original, "spawn");
   }
   return null;
 }
 function verifyENOENTSync(status, parsed) {
-  if (isWin$1 && status === 1 && !parsed.file) {
+  if (isWin && status === 1 && !parsed.file) {
     return notFoundError(parsed.original, "spawnSync");
   }
   return null;
@@ -23340,14 +23106,14 @@ var enoent$1 = {
 var cp = require$$0$2;
 var parse2 = parse_1;
 var enoent = enoent$1;
-function spawn(command, args, options) {
-  const parsed = parse2(command, args, options);
+function spawn(command, args, options2) {
+  const parsed = parse2(command, args, options2);
   const spawned = cp.spawn(parsed.command, parsed.args, parsed.options);
   enoent.hookChildProcess(spawned, parsed);
   return spawned;
 }
-function spawnSync(command, args, options) {
-  const parsed = parse2(command, args, options);
+function spawnSync(command, args, options2) {
+  const parsed = parse2(command, args, options2);
   const result = cp.spawnSync(parsed.command, parsed.args, parsed.options);
   result.error = result.error || enoent.verifyENOENTSync(result.status, parsed);
   return result;
@@ -23370,22 +23136,22 @@ function stripFinalNewline(input) {
   }
   return input;
 }
-function pathKey(options = {}) {
+function pathKey(options2 = {}) {
   const {
     env: env2 = process.env,
     platform = process.platform
-  } = options;
+  } = options2;
   if (platform !== "win32") {
     return "PATH";
   }
   return Object.keys(env2).reverse().find((key) => key.toUpperCase() === "PATH") || "Path";
 }
-function npmRunPath(options = {}) {
+function npmRunPath(options2 = {}) {
   const {
     cwd = process$2.cwd(),
     path: path_ = process$2.env[pathKey()],
     execPath = process$2.execPath
-  } = options;
+  } = options2;
   let previous;
   const cwdString = cwd instanceof URL ? url.fileURLToPath(cwd) : cwd;
   let cwdPath = path$3.resolve(cwdString);
@@ -23398,11 +23164,11 @@ function npmRunPath(options = {}) {
   result.push(path$3.resolve(cwdString, execPath, ".."));
   return [...result, path_].join(path$3.delimiter);
 }
-function npmRunPathEnv({ env: env2 = process$2.env, ...options } = {}) {
+function npmRunPathEnv({ env: env2 = process$2.env, ...options2 } = {}) {
   env2 = { ...env2 };
   const path2 = pathKey({ env: env2 });
-  options.path = env2[path2];
-  env2[path2] = npmRunPath(options);
+  options2.path = env2[path2];
+  env2[path2] = npmRunPath(options2);
   return env2;
 }
 var copyProperty = (to, from, property, ignoreNonConfigurable) => {
@@ -23449,7 +23215,7 @@ function mimicFunction(to, from, { ignoreNonConfigurable = false } = {}) {
   return to;
 }
 var calledFunctions = /* @__PURE__ */ new WeakMap();
-var onetime = (function_, options = {}) => {
+var onetime = (function_, options2 = {}) => {
   if (typeof function_ !== "function") {
     throw new TypeError("Expected a function");
   }
@@ -23461,7 +23227,7 @@ var onetime = (function_, options = {}) => {
     if (callCount === 1) {
       returnValue = function_.apply(this, arguments_);
       function_ = null;
-    } else if (options.throw === true) {
+    } else if (options2.throw === true) {
       throw new Error(`Function \`${functionName}\` can only be called once`);
     }
     return returnValue;
@@ -23762,8 +23528,8 @@ var SIGNALS = [
 ];
 var getSignals = () => {
   const realtimeSignals = getRealtimeSignals();
-  const signals = [...SIGNALS, ...realtimeSignals].map(normalizeSignal);
-  return signals;
+  const signals2 = [...SIGNALS, ...realtimeSignals].map(normalizeSignal);
+  return signals2;
 };
 var normalizeSignal = ({
   name,
@@ -23781,8 +23547,8 @@ var normalizeSignal = ({
   return { name, number: number2, description, supported, action: action2, forced, standard };
 };
 var getSignalsByName = () => {
-  const signals = getSignals();
-  return Object.fromEntries(signals.map(getSignalByName));
+  const signals2 = getSignals();
+  return Object.fromEntries(signals2.map(getSignalByName));
 };
 var getSignalByName = ({
   name,
@@ -23795,13 +23561,16 @@ var getSignalByName = ({
 }) => [name, { name, number: number2, description, supported, action: action2, forced, standard }];
 var signalsByName = getSignalsByName();
 var getSignalsByNumber = () => {
-  const signals = getSignals();
+  const signals2 = getSignals();
   const length = SIGRTMAX + 1;
-  const signalsA = Array.from({ length }, (value, number2) => getSignalByNumber(number2, signals));
+  const signalsA = Array.from(
+    { length },
+    (value, number2) => getSignalByNumber(number2, signals2)
+  );
   return Object.assign({}, ...signalsA);
 };
-var getSignalByNumber = (number2, signals) => {
-  const signal = findSignalByNumber(number2, signals);
+var getSignalByNumber = (number2, signals2) => {
+  const signal = findSignalByNumber(number2, signals2);
   if (signal === void 0) {
     return {};
   }
@@ -23818,12 +23587,12 @@ var getSignalByNumber = (number2, signals) => {
     }
   };
 };
-var findSignalByNumber = (number2, signals) => {
-  const signal = signals.find(({ name }) => constants.signals[name] === number2);
+var findSignalByNumber = (number2, signals2) => {
+  const signal = signals2.find(({ name }) => constants.signals[name] === number2);
   if (signal !== void 0) {
     return signal;
   }
-  return signals.find((signalA) => signalA.number === number2);
+  return signals2.find((signalA) => signalA.number === number2);
 };
 getSignalsByNumber();
 var getErrorPrefix = ({ timedOut, timeout, errorCode, signal, signalDescription, exitCode, isCanceled }) => {
@@ -23856,7 +23625,7 @@ var makeError = ({
   timedOut,
   isCanceled,
   killed,
-  parsed: { options: { timeout } }
+  parsed: { options: { timeout, cwd = process$2.cwd() } }
 }) => {
   exitCode = exitCode === null ? void 0 : exitCode;
   signal = signal === null ? void 0 : signal;
@@ -23882,6 +23651,7 @@ ${error2.message}` : execaMessage;
   error2.signalDescription = signalDescription;
   error2.stdout = stdout;
   error2.stderr = stderr;
+  error2.cwd = cwd;
   if (all !== void 0) {
     error2.all = all;
   }
@@ -23895,16 +23665,16 @@ ${error2.message}` : execaMessage;
   return error2;
 };
 var aliases = ["stdin", "stdout", "stderr"];
-var hasAlias = (options) => aliases.some((alias) => options[alias] !== void 0);
-var normalizeStdio = (options) => {
-  if (!options) {
+var hasAlias = (options2) => aliases.some((alias) => options2[alias] !== void 0);
+var normalizeStdio = (options2) => {
+  if (!options2) {
     return;
   }
-  const { stdio } = options;
+  const { stdio } = options2;
   if (stdio === void 0) {
-    return aliases.map((alias) => options[alias]);
+    return aliases.map((alias) => options2[alias]);
   }
-  if (hasAlias(options)) {
+  if (hasAlias(options2)) {
     throw new Error(`It's not possible to provide \`stdio\` in combination with one of ${aliases.map((alias) => `\`${alias}\``).join(", ")}`);
   }
   if (typeof stdio === "string") {
@@ -23916,214 +23686,264 @@ var normalizeStdio = (options) => {
   const length = Math.max(stdio.length, aliases.length);
   return Array.from({ length }, (value, index) => stdio[index]);
 };
-var signalExit = { exports: {} };
-var signals$1 = { exports: {} };
-var hasRequiredSignals;
-function requireSignals() {
-  if (hasRequiredSignals)
-    return signals$1.exports;
-  hasRequiredSignals = 1;
-  (function(module) {
-    module.exports = [
-      "SIGABRT",
-      "SIGALRM",
-      "SIGHUP",
-      "SIGINT",
-      "SIGTERM"
-    ];
-    if (process.platform !== "win32") {
-      module.exports.push(
-        "SIGVTALRM",
-        "SIGXCPU",
-        "SIGXFSZ",
-        "SIGUSR2",
-        "SIGTRAP",
-        "SIGSYS",
-        "SIGQUIT",
-        "SIGIOT"
-        // should detect profiler and enable/disable accordingly.
-        // see #21
-        // 'SIGPROF'
-      );
-    }
-    if (process.platform === "linux") {
-      module.exports.push(
-        "SIGIO",
-        "SIGPOLL",
-        "SIGPWR",
-        "SIGSTKFLT",
-        "SIGUNUSED"
-      );
-    }
-  })(signals$1);
-  return signals$1.exports;
+var signals = [];
+signals.push("SIGHUP", "SIGINT", "SIGTERM");
+if (process.platform !== "win32") {
+  signals.push(
+    "SIGALRM",
+    "SIGABRT",
+    "SIGVTALRM",
+    "SIGXCPU",
+    "SIGXFSZ",
+    "SIGUSR2",
+    "SIGTRAP",
+    "SIGSYS",
+    "SIGQUIT",
+    "SIGIOT"
+    // should detect profiler and enable/disable accordingly.
+    // see #21
+    // 'SIGPROF'
+  );
 }
-var process$1 = commonjsGlobal.process;
-var processOk = function(process2) {
-  return process2 && typeof process2 === "object" && typeof process2.removeListener === "function" && typeof process2.emit === "function" && typeof process2.reallyExit === "function" && typeof process2.listeners === "function" && typeof process2.kill === "function" && typeof process2.pid === "number" && typeof process2.on === "function";
-};
-if (!processOk(process$1)) {
-  signalExit.exports = function() {
-    return function() {
-    };
+if (process.platform === "linux") {
+  signals.push("SIGIO", "SIGPOLL", "SIGPWR", "SIGSTKFLT");
+}
+var processOk = (process2) => !!process2 && typeof process2 === "object" && typeof process2.removeListener === "function" && typeof process2.emit === "function" && typeof process2.reallyExit === "function" && typeof process2.listeners === "function" && typeof process2.kill === "function" && typeof process2.pid === "number" && typeof process2.on === "function";
+var kExitEmitter = Symbol.for("signal-exit emitter");
+var global$1 = globalThis;
+var ObjectDefineProperty = Object.defineProperty.bind(Object);
+var Emitter = class {
+  emitted = {
+    afterExit: false,
+    exit: false
   };
-} else {
-  assert = require$$0$3;
-  signals = requireSignals();
-  isWin = /^win/i.test(process$1.platform);
-  EE = require$$2;
-  if (typeof EE !== "function") {
-    EE = EE.EventEmitter;
+  listeners = {
+    afterExit: [],
+    exit: []
+  };
+  count = 0;
+  id = Math.random();
+  constructor() {
+    if (global$1[kExitEmitter]) {
+      return global$1[kExitEmitter];
+    }
+    ObjectDefineProperty(global$1, kExitEmitter, {
+      value: this,
+      writable: false,
+      enumerable: false,
+      configurable: false
+    });
   }
-  if (process$1.__signal_exit_emitter__) {
-    emitter = process$1.__signal_exit_emitter__;
-  } else {
-    emitter = process$1.__signal_exit_emitter__ = new EE();
-    emitter.count = 0;
-    emitter.emitted = {};
+  on(ev, fn) {
+    this.listeners[ev].push(fn);
   }
-  if (!emitter.infinite) {
-    emitter.setMaxListeners(Infinity);
-    emitter.infinite = true;
+  removeListener(ev, fn) {
+    const list = this.listeners[ev];
+    const i = list.indexOf(fn);
+    if (i === -1) {
+      return;
+    }
+    if (i === 0 && list.length === 1) {
+      list.length = 0;
+    } else {
+      list.splice(i, 1);
+    }
   }
-  signalExit.exports = function(cb, opts) {
-    if (!processOk(commonjsGlobal.process)) {
-      return function() {
+  emit(ev, code, signal) {
+    if (this.emitted[ev]) {
+      return false;
+    }
+    this.emitted[ev] = true;
+    let ret = false;
+    for (const fn of this.listeners[ev]) {
+      ret = fn(code, signal) === true || ret;
+    }
+    if (ev === "exit") {
+      ret = this.emit("afterExit", code, signal) || ret;
+    }
+    return ret;
+  }
+};
+var SignalExitBase = class {
+};
+var signalExitWrap = (handler) => {
+  return {
+    onExit(cb, opts) {
+      return handler.onExit(cb, opts);
+    },
+    load() {
+      return handler.load();
+    },
+    unload() {
+      return handler.unload();
+    }
+  };
+};
+var SignalExitFallback = class extends SignalExitBase {
+  onExit() {
+    return () => {
+    };
+  }
+  load() {
+  }
+  unload() {
+  }
+};
+var SignalExit = class extends SignalExitBase {
+  // "SIGHUP" throws an `ENOSYS` error on Windows,
+  // so use a supported signal instead
+  /* c8 ignore start */
+  #hupSig = process$1.platform === "win32" ? "SIGINT" : "SIGHUP";
+  /* c8 ignore stop */
+  #emitter = new Emitter();
+  #process;
+  #originalProcessEmit;
+  #originalProcessReallyExit;
+  #sigListeners = {};
+  #loaded = false;
+  constructor(process2) {
+    super();
+    this.#process = process2;
+    this.#sigListeners = {};
+    for (const sig of signals) {
+      this.#sigListeners[sig] = () => {
+        const listeners = this.#process.listeners(sig);
+        let { count } = this.#emitter;
+        const p = process2;
+        if (typeof p.__signal_exit_emitter__ === "object" && typeof p.__signal_exit_emitter__.count === "number") {
+          count += p.__signal_exit_emitter__.count;
+        }
+        if (listeners.length === count) {
+          this.unload();
+          const ret = this.#emitter.emit("exit", null, sig);
+          const s = sig === "SIGHUP" ? this.#hupSig : sig;
+          if (!ret)
+            process2.kill(process2.pid, s);
+        }
       };
     }
-    assert.equal(typeof cb, "function", "a callback must be provided for exit handler");
-    if (loaded === false) {
-      load();
+    this.#originalProcessReallyExit = process2.reallyExit;
+    this.#originalProcessEmit = process2.emit;
+  }
+  onExit(cb, opts) {
+    if (!processOk(this.#process)) {
+      return () => {
+      };
     }
-    var ev = "exit";
-    if (opts && opts.alwaysLast) {
-      ev = "afterexit";
+    if (this.#loaded === false) {
+      this.load();
     }
-    var remove2 = function() {
-      emitter.removeListener(ev, cb);
-      if (emitter.listeners("exit").length === 0 && emitter.listeners("afterexit").length === 0) {
-        unload();
+    const ev = opts?.alwaysLast ? "afterExit" : "exit";
+    this.#emitter.on(ev, cb);
+    return () => {
+      this.#emitter.removeListener(ev, cb);
+      if (this.#emitter.listeners["exit"].length === 0 && this.#emitter.listeners["afterExit"].length === 0) {
+        this.unload();
       }
     };
-    emitter.on(ev, cb);
-    return remove2;
-  };
-  unload = function unload2() {
-    if (!loaded || !processOk(commonjsGlobal.process)) {
+  }
+  load() {
+    if (this.#loaded) {
       return;
     }
-    loaded = false;
-    signals.forEach(function(sig) {
+    this.#loaded = true;
+    this.#emitter.count += 1;
+    for (const sig of signals) {
       try {
-        process$1.removeListener(sig, sigListeners[sig]);
-      } catch (er) {
+        const fn = this.#sigListeners[sig];
+        if (fn)
+          this.#process.on(sig, fn);
+      } catch (_) {
       }
-    });
-    process$1.emit = originalProcessEmit;
-    process$1.reallyExit = originalProcessReallyExit;
-    emitter.count -= 1;
-  };
-  signalExit.exports.unload = unload;
-  emit = function emit2(event, code, signal) {
-    if (emitter.emitted[event]) {
-      return;
     }
-    emitter.emitted[event] = true;
-    emitter.emit(event, code, signal);
-  };
-  sigListeners = {};
-  signals.forEach(function(sig) {
-    sigListeners[sig] = function listener() {
-      if (!processOk(commonjsGlobal.process)) {
-        return;
-      }
-      var listeners = process$1.listeners(sig);
-      if (listeners.length === emitter.count) {
-        unload();
-        emit("exit", null, sig);
-        emit("afterexit", null, sig);
-        if (isWin && sig === "SIGHUP") {
-          sig = "SIGINT";
-        }
-        process$1.kill(process$1.pid, sig);
-      }
+    this.#process.emit = (ev, ...a) => {
+      return this.#processEmit(ev, ...a);
     };
-  });
-  signalExit.exports.signals = function() {
-    return signals;
-  };
-  loaded = false;
-  load = function load2() {
-    if (loaded || !processOk(commonjsGlobal.process)) {
+    this.#process.reallyExit = (code) => {
+      return this.#processReallyExit(code);
+    };
+  }
+  unload() {
+    if (!this.#loaded) {
       return;
     }
-    loaded = true;
-    emitter.count += 1;
-    signals = signals.filter(function(sig) {
+    this.#loaded = false;
+    signals.forEach((sig) => {
+      const listener = this.#sigListeners[sig];
+      if (!listener) {
+        throw new Error("Listener not defined for signal: " + sig);
+      }
       try {
-        process$1.on(sig, sigListeners[sig]);
-        return true;
-      } catch (er) {
-        return false;
+        this.#process.removeListener(sig, listener);
+      } catch (_) {
       }
     });
-    process$1.emit = processEmit;
-    process$1.reallyExit = processReallyExit;
-  };
-  signalExit.exports.load = load;
-  originalProcessReallyExit = process$1.reallyExit;
-  processReallyExit = function processReallyExit2(code) {
-    if (!processOk(commonjsGlobal.process)) {
-      return;
+    this.#process.emit = this.#originalProcessEmit;
+    this.#process.reallyExit = this.#originalProcessReallyExit;
+    this.#emitter.count -= 1;
+  }
+  #processReallyExit(code) {
+    if (!processOk(this.#process)) {
+      return 0;
     }
-    process$1.exitCode = code || /* istanbul ignore next */
-    0;
-    emit("exit", process$1.exitCode, null);
-    emit("afterexit", process$1.exitCode, null);
-    originalProcessReallyExit.call(process$1, process$1.exitCode);
-  };
-  originalProcessEmit = process$1.emit;
-  processEmit = function processEmit2(ev, arg) {
-    if (ev === "exit" && processOk(commonjsGlobal.process)) {
-      if (arg !== void 0) {
-        process$1.exitCode = arg;
+    this.#process.exitCode = code || 0;
+    this.#emitter.emit("exit", this.#process.exitCode, null);
+    return this.#originalProcessReallyExit.call(this.#process, this.#process.exitCode);
+  }
+  #processEmit(ev, ...args) {
+    const og = this.#originalProcessEmit;
+    if (ev === "exit" && processOk(this.#process)) {
+      if (typeof args[0] === "number") {
+        this.#process.exitCode = args[0];
       }
-      var ret = originalProcessEmit.apply(this, arguments);
-      emit("exit", process$1.exitCode, null);
-      emit("afterexit", process$1.exitCode, null);
+      const ret = og.call(this.#process, ev, ...args);
+      this.#emitter.emit("exit", this.#process.exitCode, null);
       return ret;
     } else {
-      return originalProcessEmit.apply(this, arguments);
+      return og.call(this.#process, ev, ...args);
     }
-  };
-}
-var assert;
-var signals;
-var isWin;
-var EE;
-var emitter;
-var unload;
-var emit;
-var sigListeners;
-var loaded;
-var load;
-var originalProcessReallyExit;
-var processReallyExit;
-var originalProcessEmit;
-var processEmit;
-var signalExitExports = signalExit.exports;
-var onExit = /* @__PURE__ */ getDefaultExportFromCjs(signalExitExports);
+  }
+};
+var process$1 = globalThis.process;
+var {
+  /**
+   * Called when the process is exiting, whether via signal, explicit
+   * exit, or running out of stuff to do.
+   *
+   * If the global process object is not suitable for instrumentation,
+   * then this will be a no-op.
+   *
+   * Returns a function that may be used to unload signal-exit.
+   */
+  onExit,
+  /**
+   * Load the listeners.  Likely you never need to call this, unless
+   * doing a rather deep integration with signal-exit functionality.
+   * Mostly exposed for the benefit of testing.
+   *
+   * @internal
+   */
+  load,
+  /**
+   * Unload the listeners.  Likely you never need to call this, unless
+   * doing a rather deep integration with signal-exit functionality.
+   * Mostly exposed for the benefit of testing.
+   *
+   * @internal
+   */
+  unload
+} = signalExitWrap(processOk(process$1) ? new SignalExit(process$1) : new SignalExitFallback());
 var DEFAULT_FORCE_KILL_TIMEOUT = 1e3 * 5;
-var spawnedKill = (kill, signal = "SIGTERM", options = {}) => {
+var spawnedKill = (kill, signal = "SIGTERM", options2 = {}) => {
   const killResult = kill(signal);
-  setKillTimeout(kill, signal, options, killResult);
+  setKillTimeout(kill, signal, options2, killResult);
   return killResult;
 };
-var setKillTimeout = (kill, signal, options, killResult) => {
-  if (!shouldForceKill(signal, options, killResult)) {
+var setKillTimeout = (kill, signal, options2, killResult) => {
+  if (!shouldForceKill(signal, options2, killResult)) {
     return;
   }
-  const timeout = getForceKillAfterTimeout(options);
+  const timeout = getForceKillAfterTimeout(options2);
   const t = setTimeout(() => {
     kill("SIGKILL");
   }, timeout);
@@ -24183,11 +24003,11 @@ var setExitHandler = async (spawned, { cleanup, detached }, timedPromise) => {
     removeExitHandler();
   });
 };
-function isStream(stream2) {
-  return stream2 !== null && typeof stream2 === "object" && typeof stream2.pipe === "function";
+function isStream(stream) {
+  return stream !== null && typeof stream === "object" && typeof stream.pipe === "function";
 }
-function isWritableStream(stream2) {
-  return isStream(stream2) && stream2.writable !== false && typeof stream2._write === "function" && typeof stream2._writableState === "object";
+function isWritableStream(stream) {
+  return isStream(stream) && stream.writable !== false && typeof stream._write === "function" && typeof stream._writableState === "object";
 }
 var isExecaChildProcess = (target) => target instanceof ChildProcess && typeof target.then === "function";
 var pipeToTarget = (spawned, streamName, target) => {
@@ -24219,96 +24039,179 @@ var addPipeMethods = (spawned) => {
     spawned.pipeAll = pipeToTarget.bind(void 0, spawned, "all");
   }
 };
-var getStream$2 = { exports: {} };
-var { PassThrough: PassThroughStream } = require$$0$4;
-var bufferStream$1 = (options) => {
-  options = { ...options };
-  const { array } = options;
-  let { encoding } = options;
-  const isBuffer = encoding === "buffer";
-  let objectMode = false;
-  if (array) {
-    objectMode = !(encoding || isBuffer);
-  } else {
-    encoding = encoding || "utf8";
+var getStreamContents = async (stream, { init: init3, convertChunk, getSize, truncateChunk, addChunk, getFinalChunk, finalize }, { maxBuffer = Number.POSITIVE_INFINITY } = {}) => {
+  if (!isAsyncIterable(stream)) {
+    throw new Error("The first argument must be a Readable, a ReadableStream, or an async iterable.");
   }
-  if (isBuffer) {
-    encoding = null;
-  }
-  const stream2 = new PassThroughStream({ objectMode });
-  if (encoding) {
-    stream2.setEncoding(encoding);
-  }
-  let length = 0;
-  const chunks = [];
-  stream2.on("data", (chunk) => {
-    chunks.push(chunk);
-    if (objectMode) {
-      length = chunks.length;
-    } else {
-      length += chunk.length;
+  const state = init3();
+  state.length = 0;
+  try {
+    for await (const chunk of stream) {
+      const chunkType = getChunkType(chunk);
+      const convertedChunk = convertChunk[chunkType](chunk, state);
+      appendChunk({ convertedChunk, state, getSize, truncateChunk, addChunk, maxBuffer });
     }
-  });
-  stream2.getBufferedValue = () => {
-    if (array) {
-      return chunks;
-    }
-    return isBuffer ? Buffer.concat(chunks, length) : chunks.join("");
-  };
-  stream2.getBufferedLength = () => length;
-  return stream2;
+    appendFinalChunk({ state, convertChunk, getSize, truncateChunk, addChunk, getFinalChunk, maxBuffer });
+    return finalize(state);
+  } catch (error2) {
+    error2.bufferedData = finalize(state);
+    throw error2;
+  }
 };
-var { constants: BufferConstants } = require$$0$5;
-var stream = require$$0$4;
-var { promisify } = require$$2$1;
-var bufferStream = bufferStream$1;
-var streamPipelinePromisified = promisify(stream.pipeline);
+var appendFinalChunk = ({ state, getSize, truncateChunk, addChunk, getFinalChunk, maxBuffer }) => {
+  const convertedChunk = getFinalChunk(state);
+  if (convertedChunk !== void 0) {
+    appendChunk({ convertedChunk, state, getSize, truncateChunk, addChunk, maxBuffer });
+  }
+};
+var appendChunk = ({ convertedChunk, state, getSize, truncateChunk, addChunk, maxBuffer }) => {
+  const chunkSize = getSize(convertedChunk);
+  const newLength = state.length + chunkSize;
+  if (newLength <= maxBuffer) {
+    addNewChunk(convertedChunk, state, addChunk, newLength);
+    return;
+  }
+  const truncatedChunk = truncateChunk(convertedChunk, maxBuffer - state.length);
+  if (truncatedChunk !== void 0) {
+    addNewChunk(truncatedChunk, state, addChunk, maxBuffer);
+  }
+  throw new MaxBufferError();
+};
+var addNewChunk = (convertedChunk, state, addChunk, newLength) => {
+  state.contents = addChunk(convertedChunk, state, newLength);
+  state.length = newLength;
+};
+var isAsyncIterable = (stream) => typeof stream === "object" && stream !== null && typeof stream[Symbol.asyncIterator] === "function";
+var getChunkType = (chunk) => {
+  const typeOfChunk = typeof chunk;
+  if (typeOfChunk === "string") {
+    return "string";
+  }
+  if (typeOfChunk !== "object" || chunk === null) {
+    return "others";
+  }
+  if (globalThis.Buffer?.isBuffer(chunk)) {
+    return "buffer";
+  }
+  const prototypeName = objectToString.call(chunk);
+  if (prototypeName === "[object ArrayBuffer]") {
+    return "arrayBuffer";
+  }
+  if (prototypeName === "[object DataView]") {
+    return "dataView";
+  }
+  if (Number.isInteger(chunk.byteLength) && Number.isInteger(chunk.byteOffset) && objectToString.call(chunk.buffer) === "[object ArrayBuffer]") {
+    return "typedArray";
+  }
+  return "others";
+};
+var { toString: objectToString } = Object.prototype;
 var MaxBufferError = class extends Error {
+  name = "MaxBufferError";
   constructor() {
     super("maxBuffer exceeded");
-    this.name = "MaxBufferError";
   }
 };
-async function getStream(inputStream, options) {
-  if (!inputStream) {
-    throw new Error("Expected a stream");
-  }
-  options = {
-    maxBuffer: Infinity,
-    ...options
-  };
-  const { maxBuffer } = options;
-  const stream2 = bufferStream(options);
-  await new Promise((resolve2, reject) => {
-    const rejectPromise = (error2) => {
-      if (error2 && stream2.getBufferedLength() <= BufferConstants.MAX_LENGTH) {
-        error2.bufferedData = stream2.getBufferedValue();
-      }
-      reject(error2);
-    };
-    (async () => {
-      try {
-        await streamPipelinePromisified(inputStream, stream2);
-        resolve2();
-      } catch (error2) {
-        rejectPromise(error2);
-      }
-    })();
-    stream2.on("data", () => {
-      if (stream2.getBufferedLength() > maxBuffer) {
-        rejectPromise(new MaxBufferError());
-      }
-    });
-  });
-  return stream2.getBufferedValue();
+var identity = (value) => value;
+var noop$1 = () => void 0;
+var getContentsProp = ({ contents }) => contents;
+var throwObjectStream = (chunk) => {
+  throw new Error(`Streams in object mode are not supported: ${String(chunk)}`);
+};
+var getLengthProp = (convertedChunk) => convertedChunk.length;
+async function getStreamAsArrayBuffer(stream, options2) {
+  return getStreamContents(stream, arrayBufferMethods, options2);
 }
-getStream$2.exports = getStream;
-getStream$2.exports.buffer = (stream2, options) => getStream(stream2, { ...options, encoding: "buffer" });
-getStream$2.exports.array = (stream2, options) => getStream(stream2, { ...options, array: true });
-getStream$2.exports.MaxBufferError = MaxBufferError;
-var getStreamExports = getStream$2.exports;
-var getStream$1 = /* @__PURE__ */ getDefaultExportFromCjs(getStreamExports);
-var { PassThrough } = require$$0$4;
+var initArrayBuffer = () => ({ contents: new ArrayBuffer(0) });
+var useTextEncoder = (chunk) => textEncoder.encode(chunk);
+var textEncoder = new TextEncoder();
+var useUint8Array = (chunk) => new Uint8Array(chunk);
+var useUint8ArrayWithOffset = (chunk) => new Uint8Array(chunk.buffer, chunk.byteOffset, chunk.byteLength);
+var truncateArrayBufferChunk = (convertedChunk, chunkSize) => convertedChunk.slice(0, chunkSize);
+var addArrayBufferChunk = (convertedChunk, { contents, length: previousLength }, length) => {
+  const newContents = hasArrayBufferResize() ? resizeArrayBuffer(contents, length) : resizeArrayBufferSlow(contents, length);
+  new Uint8Array(newContents).set(convertedChunk, previousLength);
+  return newContents;
+};
+var resizeArrayBufferSlow = (contents, length) => {
+  if (length <= contents.byteLength) {
+    return contents;
+  }
+  const arrayBuffer = new ArrayBuffer(getNewContentsLength(length));
+  new Uint8Array(arrayBuffer).set(new Uint8Array(contents), 0);
+  return arrayBuffer;
+};
+var resizeArrayBuffer = (contents, length) => {
+  if (length <= contents.maxByteLength) {
+    contents.resize(length);
+    return contents;
+  }
+  const arrayBuffer = new ArrayBuffer(length, { maxByteLength: getNewContentsLength(length) });
+  new Uint8Array(arrayBuffer).set(new Uint8Array(contents), 0);
+  return arrayBuffer;
+};
+var getNewContentsLength = (length) => SCALE_FACTOR ** Math.ceil(Math.log(length) / Math.log(SCALE_FACTOR));
+var SCALE_FACTOR = 2;
+var finalizeArrayBuffer = ({ contents, length }) => hasArrayBufferResize() ? contents : contents.slice(0, length);
+var hasArrayBufferResize = () => "resize" in ArrayBuffer.prototype;
+var arrayBufferMethods = {
+  init: initArrayBuffer,
+  convertChunk: {
+    string: useTextEncoder,
+    buffer: useUint8Array,
+    arrayBuffer: useUint8Array,
+    dataView: useUint8ArrayWithOffset,
+    typedArray: useUint8ArrayWithOffset,
+    others: throwObjectStream
+  },
+  getSize: getLengthProp,
+  truncateChunk: truncateArrayBufferChunk,
+  addChunk: addArrayBufferChunk,
+  getFinalChunk: noop$1,
+  finalize: finalizeArrayBuffer
+};
+async function getStreamAsBuffer(stream, options2) {
+  if (!("Buffer" in globalThis)) {
+    throw new Error("getStreamAsBuffer() is only supported in Node.js");
+  }
+  try {
+    return arrayBufferToNodeBuffer(await getStreamAsArrayBuffer(stream, options2));
+  } catch (error2) {
+    if (error2.bufferedData !== void 0) {
+      error2.bufferedData = arrayBufferToNodeBuffer(error2.bufferedData);
+    }
+    throw error2;
+  }
+}
+var arrayBufferToNodeBuffer = (arrayBuffer) => globalThis.Buffer.from(arrayBuffer);
+async function getStreamAsString(stream, options2) {
+  return getStreamContents(stream, stringMethods, options2);
+}
+var initString = () => ({ contents: "", textDecoder: new TextDecoder() });
+var useTextDecoder = (chunk, { textDecoder }) => textDecoder.decode(chunk, { stream: true });
+var addStringChunk = (convertedChunk, { contents }) => contents + convertedChunk;
+var truncateStringChunk = (convertedChunk, chunkSize) => convertedChunk.slice(0, chunkSize);
+var getFinalStringChunk = ({ textDecoder }) => {
+  const finalChunk = textDecoder.decode();
+  return finalChunk === "" ? void 0 : finalChunk;
+};
+var stringMethods = {
+  init: initString,
+  convertChunk: {
+    string: identity,
+    buffer: useTextDecoder,
+    arrayBuffer: useTextDecoder,
+    dataView: useTextDecoder,
+    typedArray: useTextDecoder,
+    others: throwObjectStream
+  },
+  getSize: getLengthProp,
+  truncateChunk: truncateStringChunk,
+  addChunk: addStringChunk,
+  getFinalChunk: getFinalStringChunk,
+  finalize: getContentsProp
+};
+var { PassThrough } = require$$0$3;
 var mergeStream = function() {
   var sources = [];
   var output = new PassThrough({ objectMode: true });
@@ -24354,8 +24257,8 @@ var getInput2 = ({ input, inputFile }) => {
   validateInputOptions(input);
   return createReadStream(inputFile);
 };
-var handleInput = (spawned, options) => {
-  const input = getInput2(options);
+var handleInput = (spawned, options2) => {
+  const input = getInput2(options2);
   if (input === void 0) {
     return;
   }
@@ -24378,25 +24281,33 @@ var makeAllStream = (spawned, { all }) => {
   }
   return mixed;
 };
-var getBufferedData = async (stream2, streamPromise) => {
-  if (!stream2 || streamPromise === void 0) {
+var getBufferedData = async (stream, streamPromise) => {
+  if (!stream || streamPromise === void 0) {
     return;
   }
-  stream2.destroy();
+  await setTimeout$1(0);
+  stream.destroy();
   try {
     return await streamPromise;
   } catch (error2) {
     return error2.bufferedData;
   }
 };
-var getStreamPromise = (stream2, { encoding, buffer, maxBuffer }) => {
-  if (!stream2 || !buffer) {
+var getStreamPromise = (stream, { encoding, buffer, maxBuffer }) => {
+  if (!stream || !buffer) {
     return;
   }
-  if (encoding) {
-    return getStream$1(stream2, { encoding, maxBuffer });
+  if (encoding === "utf8" || encoding === "utf-8") {
+    return getStreamAsString(stream, { maxBuffer });
   }
-  return getStream$1.buffer(stream2, { maxBuffer });
+  if (encoding === null || encoding === "buffer") {
+    return getStreamAsBuffer(stream, { maxBuffer });
+  }
+  return applyEncoding(stream, maxBuffer, encoding);
+};
+var applyEncoding = async (stream, maxBuffer, encoding) => {
+  const buffer = await getStreamAsBuffer(stream, { maxBuffer });
+  return buffer.toString(encoding);
 };
 var getSpawnedResult = async ({ stdout, stderr, all }, { encoding, buffer, maxBuffer }, processDone) => {
   const stdoutPromise = getStreamPromise(stdout, { encoding, buffer, maxBuffer });
@@ -24413,8 +24324,8 @@ var getSpawnedResult = async ({ stdout, stderr, all }, { encoding, buffer, maxBu
     ]);
   }
 };
-var nativePromisePrototype = (/* @__PURE__ */ (async () => {
-})()).constructor.prototype;
+var nativePromisePrototype = (async () => {
+})().constructor.prototype;
 var descriptors = ["then", "catch", "finally"].map((property) => [
   property,
   Reflect.getOwnPropertyDescriptor(nativePromisePrototype, property)
@@ -24445,12 +24356,11 @@ var normalizeArgs = (file, args = []) => {
   return [file, ...args];
 };
 var NO_ESCAPE_REGEXP = /^[\w.-]+$/;
-var DOUBLE_QUOTES_REGEXP = /"/g;
 var escapeArg = (arg) => {
   if (typeof arg !== "string" || NO_ESCAPE_REGEXP.test(arg)) {
     return arg;
   }
-  return `"${arg.replace(DOUBLE_QUOTES_REGEXP, '\\"')}"`;
+  return `"${arg.replaceAll('"', '\\"')}"`;
 };
 var joinCommand = (file, args) => normalizeArgs(file, args).join(" ");
 var getEscapedCommand = (file, args) => normalizeArgs(file, args).map((arg) => escapeArg(arg)).join(" ");
@@ -24458,7 +24368,7 @@ var SPACES_REGEXP = / +/g;
 var parseCommand = (command) => {
   const tokens = [];
   for (const token of command.trim().split(SPACES_REGEXP)) {
-    const previousToken = tokens[tokens.length - 1];
+    const previousToken = tokens.at(-1);
     if (previousToken && previousToken.endsWith("\\")) {
       tokens[tokens.length - 1] = `${previousToken.slice(0, -1)} ${token}`;
     } else {
@@ -24488,18 +24398,18 @@ var getEnv = ({ env: envOption, extendEnv, preferLocal, localDir, execPath }) =>
   }
   return env2;
 };
-var handleArguments = (file, args, options = {}) => {
-  const parsed = crossSpawn._parse(file, args, options);
+var handleArguments = (file, args, options2 = {}) => {
+  const parsed = crossSpawn._parse(file, args, options2);
   file = parsed.command;
   args = parsed.args;
-  options = parsed.options;
-  options = {
+  options2 = parsed.options;
+  options2 = {
     maxBuffer: DEFAULT_MAX_BUFFER,
     buffer: true,
     stripFinalNewline: true,
     extendEnv: true,
     preferLocal: false,
-    localDir: options.cwd || process$2.cwd(),
+    localDir: options2.cwd || process$2.cwd(),
     execPath: process$2.execPath,
     encoding: "utf8",
     reject: true,
@@ -24507,26 +24417,26 @@ var handleArguments = (file, args, options = {}) => {
     all: false,
     windowsHide: true,
     verbose: verboseDefault,
-    ...options
+    ...options2
   };
-  options.env = getEnv(options);
-  options.stdio = normalizeStdio(options);
+  options2.env = getEnv(options2);
+  options2.stdio = normalizeStdio(options2);
   if (process$2.platform === "win32" && path$3.basename(file, ".exe") === "cmd") {
     args.unshift("/q");
   }
-  return { file, args, options, parsed };
+  return { file, args, options: options2, parsed };
 };
-var handleOutput = (options, value, error2) => {
+var handleOutput = (options2, value, error2) => {
   if (typeof value !== "string" && !Buffer$1.isBuffer(value)) {
     return error2 === void 0 ? void 0 : "";
   }
-  if (options.stripFinalNewline) {
+  if (options2.stripFinalNewline) {
     return stripFinalNewline(value);
   }
   return value;
 };
-function execa(file, args, options) {
-  const parsed = handleArguments(file, args, options);
+function execa(file, args, options2) {
+  const parsed = handleArguments(file, args, options2);
   const command = joinCommand(file, args);
   const escapedCommand = getEscapedCommand(file, args);
   logCommand(escapedCommand, parsed.options);
@@ -24602,9 +24512,207 @@ function execa(file, args, options) {
   mergePromise(spawned, handlePromiseOnce);
   return spawned;
 }
-function execaCommand(command, options) {
+function execaCommand(command, options2) {
   const [file, ...args] = parseCommand(command);
-  return execa(file, args, options);
+  return execa(file, args, options2);
+}
+var Node = class {
+  value;
+  next;
+  constructor(value) {
+    this.value = value;
+  }
+};
+var Queue = class {
+  #head;
+  #tail;
+  #size;
+  constructor() {
+    this.clear();
+  }
+  enqueue(value) {
+    const node = new Node(value);
+    if (this.#head) {
+      this.#tail.next = node;
+      this.#tail = node;
+    } else {
+      this.#head = node;
+      this.#tail = node;
+    }
+    this.#size++;
+  }
+  dequeue() {
+    const current = this.#head;
+    if (!current) {
+      return;
+    }
+    this.#head = this.#head.next;
+    this.#size--;
+    return current.value;
+  }
+  clear() {
+    this.#head = void 0;
+    this.#tail = void 0;
+    this.#size = 0;
+  }
+  get size() {
+    return this.#size;
+  }
+  *[Symbol.iterator]() {
+    let current = this.#head;
+    while (current) {
+      yield current.value;
+      current = current.next;
+    }
+  }
+};
+function pLimit(concurrency) {
+  if (!((Number.isInteger(concurrency) || concurrency === Number.POSITIVE_INFINITY) && concurrency > 0)) {
+    throw new TypeError("Expected `concurrency` to be a number from 1 and up");
+  }
+  const queue = new Queue();
+  let activeCount = 0;
+  const next = () => {
+    activeCount--;
+    if (queue.size > 0) {
+      queue.dequeue()();
+    }
+  };
+  const run4 = async (fn, resolve2, args) => {
+    activeCount++;
+    const result = (async () => fn(...args))();
+    resolve2(result);
+    try {
+      await result;
+    } catch {
+    }
+    next();
+  };
+  const enqueue = (fn, resolve2, args) => {
+    queue.enqueue(run4.bind(void 0, fn, resolve2, args));
+    (async () => {
+      await Promise.resolve();
+      if (activeCount < concurrency && queue.size > 0) {
+        queue.dequeue()();
+      }
+    })();
+  };
+  const generator = (fn, ...args) => new Promise((resolve2) => {
+    enqueue(fn, resolve2, args);
+  });
+  Object.defineProperties(generator, {
+    activeCount: {
+      get: () => activeCount
+    },
+    pendingCount: {
+      get: () => queue.size
+    },
+    clearQueue: {
+      value: () => {
+        queue.clear();
+      }
+    }
+  });
+  return generator;
+}
+var EndError = class extends Error {
+  constructor(value) {
+    super();
+    this.value = value;
+  }
+};
+var testElement = async (element, tester) => tester(await element);
+var finder = async (element) => {
+  const values = await Promise.all(element);
+  if (values[1] === true) {
+    throw new EndError(values[0]);
+  }
+  return false;
+};
+async function pLocate(iterable, tester, {
+  concurrency = Number.POSITIVE_INFINITY,
+  preserveOrder = true
+} = {}) {
+  const limit = pLimit(concurrency);
+  const items = [...iterable].map((element) => [element, limit(testElement, element, tester)]);
+  const checkLimit = pLimit(preserveOrder ? 1 : Number.POSITIVE_INFINITY);
+  try {
+    await Promise.all(items.map((element) => checkLimit(finder, element)));
+  } catch (error2) {
+    if (error2 instanceof EndError) {
+      return error2.value;
+    }
+    throw error2;
+  }
+}
+var typeMappings = {
+  directory: "isDirectory",
+  file: "isFile"
+};
+function checkType(type) {
+  if (Object.hasOwnProperty.call(typeMappings, type)) {
+    return;
+  }
+  throw new Error(`Invalid type specified: ${type}`);
+}
+var matchType = (type, stat) => stat[typeMappings[type]]();
+var toPath$1 = (urlOrPath) => urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
+async function locatePath(paths, {
+  cwd = process$2.cwd(),
+  type = "file",
+  allowSymlinks = true,
+  concurrency,
+  preserveOrder
+} = {}) {
+  checkType(type);
+  cwd = toPath$1(cwd);
+  const statFunction = allowSymlinks ? promises.stat : promises.lstat;
+  return pLocate(paths, async (path_) => {
+    try {
+      const stat = await statFunction(path$3.resolve(cwd, path_));
+      return matchType(type, stat);
+    } catch {
+      return false;
+    }
+  }, { concurrency, preserveOrder });
+}
+var toPath = (urlOrPath) => urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
+var findUpStop = Symbol("findUpStop");
+async function findUpMultiple(name, options2 = {}) {
+  let directory = path$3.resolve(toPath(options2.cwd) || "");
+  const { root } = path$3.parse(directory);
+  const stopAt = path$3.resolve(directory, options2.stopAt || root);
+  const limit = options2.limit || Number.POSITIVE_INFINITY;
+  const paths = [name].flat();
+  const runMatcher = async (locateOptions) => {
+    if (typeof name !== "function") {
+      return locatePath(paths, locateOptions);
+    }
+    const foundPath = await name(locateOptions.cwd);
+    if (typeof foundPath === "string") {
+      return locatePath([foundPath], locateOptions);
+    }
+    return foundPath;
+  };
+  const matches = [];
+  while (true) {
+    const foundPath = await runMatcher({ ...options2, cwd: directory });
+    if (foundPath === findUpStop) {
+      break;
+    }
+    if (foundPath) {
+      matches.push(path$3.resolve(directory, foundPath));
+    }
+    if (directory === stopAt || matches.length >= limit) {
+      break;
+    }
+    directory = path$3.dirname(directory);
+  }
+  return matches;
+}
+async function findUp(name, options2 = {}) {
+  const matches = await findUpMultiple(name, { ...options2, limit: 1 });
+  return matches[0];
 }
 var ESC$1 = "\x1B[";
 var OSC = "\x1B]";
@@ -24693,32 +24801,32 @@ ansiEscapes.link = (text2, url2) => {
     BEL
   ].join("");
 };
-ansiEscapes.image = (buffer, options = {}) => {
+ansiEscapes.image = (buffer, options2 = {}) => {
   let returnValue = `${OSC}1337;File=inline=1`;
-  if (options.width) {
-    returnValue += `;width=${options.width}`;
+  if (options2.width) {
+    returnValue += `;width=${options2.width}`;
   }
-  if (options.height) {
-    returnValue += `;height=${options.height}`;
+  if (options2.height) {
+    returnValue += `;height=${options2.height}`;
   }
-  if (options.preserveAspectRatio === false) {
+  if (options2.preserveAspectRatio === false) {
     returnValue += ";preserveAspectRatio=0";
   }
   return returnValue + ":" + buffer.toString("base64") + BEL;
 };
 ansiEscapes.iTerm = {
   setCwd: (cwd = process.cwd()) => `${OSC}50;CurrentDir=${cwd}${BEL}`,
-  annotation: (message, options = {}) => {
+  annotation: (message, options2 = {}) => {
     let returnValue = `${OSC}1337;`;
-    const hasX = typeof options.x !== "undefined";
-    const hasY = typeof options.y !== "undefined";
-    if ((hasX || hasY) && !(hasX && hasY && typeof options.length !== "undefined")) {
+    const hasX = typeof options2.x !== "undefined";
+    const hasY = typeof options2.y !== "undefined";
+    if ((hasX || hasY) && !(hasX && hasY && typeof options2.length !== "undefined")) {
       throw new Error("`x`, `y` and `length` must be defined when `x` or `y` is defined");
     }
     message = message.replace(/\|/g, "");
-    returnValue += options.isHidden ? "AddHiddenAnnotation=" : "AddAnnotation=";
-    if (options.length > 0) {
-      returnValue += (hasX ? [message, options.length, options.x, options.y] : [options.length, message]).join("|");
+    returnValue += options2.isHidden ? "AddHiddenAnnotation=" : "AddAnnotation=";
+    if (options2.length > 0) {
+      returnValue += (hasX ? [message, options2.length, options2.x, options2.y] : [options2.length, message]).join("|");
     } else {
       returnValue += message;
     }
@@ -24731,7 +24839,7 @@ var hasFlag$2 = (flag, argv = process.argv) => {
   const terminatorPosition = argv.indexOf("--");
   return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
 };
-var os = require$$0$6;
+var os = require$$0$4;
 var tty = require$$1;
 var hasFlag$1 = hasFlag$2;
 var { env } = process;
@@ -24817,8 +24925,8 @@ function supportsColor$1(haveStream, streamIsTTY) {
   }
   return min;
 }
-function getSupportLevel(stream2) {
-  const level = supportsColor$1(stream2, stream2 && stream2.isTTY);
+function getSupportLevel(stream) {
+  const level = supportsColor$1(stream, stream && stream.isTTY);
   return translateLevel(level);
 }
 var supportsColor_1 = {
@@ -24844,7 +24952,7 @@ function parseVersion(versionString) {
     patch: versions[2]
   };
 }
-function supportsHyperlink(stream2) {
+function supportsHyperlink(stream) {
   const { env: env2 } = process;
   if ("FORCE_HYPERLINK" in env2) {
     return !(env2.FORCE_HYPERLINK.length > 0 && parseInt(env2.FORCE_HYPERLINK, 10) === 0);
@@ -24855,10 +24963,10 @@ function supportsHyperlink(stream2) {
   if (hasFlag("hyperlink=true") || hasFlag("hyperlink=always")) {
     return true;
   }
-  if (!supportsColor.supportsColor(stream2)) {
+  if (!supportsColor.supportsColor(stream)) {
     return false;
   }
-  if (stream2 && !stream2.isTTY) {
+  if (stream && !stream.isTTY) {
     return false;
   }
   if (process.platform === "win32") {
@@ -24898,17 +25006,17 @@ var supportsHyperlinks = {
   stderr: supportsHyperlink(process.stderr)
 };
 var supportsHyperlinks$1 = /* @__PURE__ */ getDefaultExportFromCjs(supportsHyperlinks);
-function terminalLink(text2, url2, { target = "stdout", ...options } = {}) {
+function terminalLink(text2, url2, { target = "stdout", ...options2 } = {}) {
   if (!supportsHyperlinks$1[target]) {
-    if (options.fallback === false) {
+    if (options2.fallback === false) {
       return text2;
     }
-    return typeof options.fallback === "function" ? options.fallback(text2, url2) : `${text2} (\u200B${url2}\u200B)`;
+    return typeof options2.fallback === "function" ? options2.fallback(text2, url2) : `${text2} (\u200B${url2}\u200B)`;
   }
   return ansiEscapes.link(text2, url2);
 }
 terminalLink.isSupported = supportsHyperlinks$1.stdout;
-terminalLink.stderr = (text2, url2, options = {}) => terminalLink(text2, url2, { target: "stderr", ...options });
+terminalLink.stderr = (text2, url2, options2 = {}) => terminalLink(text2, url2, { target: "stderr", ...options2 });
 terminalLink.stderr.isSupported = supportsHyperlinks$1.stderr;
 var prompts$3 = {};
 var FORCE_COLOR$1;
@@ -25234,7 +25342,7 @@ var util = {
   wrap: wrap$3,
   entriesToDisplay: entriesToDisplay$3
 };
-var readline = require$$0$7;
+var readline = require$$0$5;
 var { action } = util;
 var EventEmitter = require$$2;
 var { beep, cursor: cursor$9 } = src;
@@ -26438,28 +26546,28 @@ Instructions:
     return prefix + title + color$3.gray(desc || "");
   }
   // shared with autocompleteMultiselect
-  paginateOptions(options) {
-    if (options.length === 0) {
+  paginateOptions(options2) {
+    if (options2.length === 0) {
       return color$3.red("No matches for this query.");
     }
-    let { startIndex, endIndex } = entriesToDisplay$1(this.cursor, options.length, this.optionsPerPage);
+    let { startIndex, endIndex } = entriesToDisplay$1(this.cursor, options2.length, this.optionsPerPage);
     let prefix, styledOptions = [];
     for (let i = startIndex; i < endIndex; i++) {
       if (i === startIndex && startIndex > 0) {
         prefix = figures$2.arrowUp;
-      } else if (i === endIndex - 1 && endIndex < options.length) {
+      } else if (i === endIndex - 1 && endIndex < options2.length) {
         prefix = figures$2.arrowDown;
       } else {
         prefix = " ";
       }
-      styledOptions.push(this.renderOption(this.cursor, options[i], i, prefix));
+      styledOptions.push(this.renderOption(this.cursor, options2[i], i, prefix));
     }
     return "\n" + styledOptions.join("\n");
   }
   // shared with autocomleteMultiselect
-  renderOptions(options) {
+  renderOptions(options2) {
     if (!this.done) {
-      return this.paginateOptions(options);
+      return this.paginateOptions(options2);
     }
     return "";
   }
@@ -27086,7 +27194,152 @@ function override(answers) {
 var lib$1 = Object.assign(prompt, { prompt, prompts: prompts$2, inject, override });
 var prompts = lib$1;
 var prompts$1 = /* @__PURE__ */ getDefaultExportFromCjs(prompts);
-var isexe = isexe_1;
+var cjs = {};
+var posix$1 = {};
+Object.defineProperty(posix$1, "__esModule", { value: true });
+posix$1.sync = posix$1.isexe = void 0;
+var fs_1$1 = require$$0;
+var promises_1$1 = require$$1$1;
+var isexe$2 = async (path2, options2 = {}) => {
+  const { ignoreErrors = false } = options2;
+  try {
+    return checkStat$1(await (0, promises_1$1.stat)(path2), options2);
+  } catch (e) {
+    const er = e;
+    if (ignoreErrors || er.code === "EACCES")
+      return false;
+    throw er;
+  }
+};
+posix$1.isexe = isexe$2;
+var sync$1 = (path2, options2 = {}) => {
+  const { ignoreErrors = false } = options2;
+  try {
+    return checkStat$1((0, fs_1$1.statSync)(path2), options2);
+  } catch (e) {
+    const er = e;
+    if (ignoreErrors || er.code === "EACCES")
+      return false;
+    throw er;
+  }
+};
+posix$1.sync = sync$1;
+var checkStat$1 = (stat, options2) => stat.isFile() && checkMode(stat, options2);
+var checkMode = (stat, options2) => {
+  const myUid = options2.uid ?? process.getuid?.();
+  const myGroups = options2.groups ?? process.getgroups?.() ?? [];
+  const myGid = options2.gid ?? process.getgid?.() ?? myGroups[0];
+  if (myUid === void 0 || myGid === void 0) {
+    throw new Error("cannot get uid or gid");
+  }
+  const groups = /* @__PURE__ */ new Set([myGid, ...myGroups]);
+  const mod = stat.mode;
+  const uid = stat.uid;
+  const gid = stat.gid;
+  const u = parseInt("100", 8);
+  const g = parseInt("010", 8);
+  const o = parseInt("001", 8);
+  const ug = u | g;
+  return !!(mod & o || mod & g && groups.has(gid) || mod & u && uid === myUid || mod & ug && myUid === 0);
+};
+var win32 = {};
+Object.defineProperty(win32, "__esModule", { value: true });
+win32.sync = win32.isexe = void 0;
+var fs_1 = require$$0;
+var promises_1 = require$$1$1;
+var isexe$1 = async (path2, options2 = {}) => {
+  const { ignoreErrors = false } = options2;
+  try {
+    return checkStat(await (0, promises_1.stat)(path2), path2, options2);
+  } catch (e) {
+    const er = e;
+    if (ignoreErrors || er.code === "EACCES")
+      return false;
+    throw er;
+  }
+};
+win32.isexe = isexe$1;
+var sync = (path2, options2 = {}) => {
+  const { ignoreErrors = false } = options2;
+  try {
+    return checkStat((0, fs_1.statSync)(path2), path2, options2);
+  } catch (e) {
+    const er = e;
+    if (ignoreErrors || er.code === "EACCES")
+      return false;
+    throw er;
+  }
+};
+win32.sync = sync;
+var checkPathExt = (path2, options2) => {
+  const { pathExt = process.env.PATHEXT || "" } = options2;
+  const peSplit = pathExt.split(";");
+  if (peSplit.indexOf("") !== -1) {
+    return true;
+  }
+  for (let i = 0; i < peSplit.length; i++) {
+    const p = peSplit[i].toLowerCase();
+    const ext = path2.substring(path2.length - p.length).toLowerCase();
+    if (p && ext === p) {
+      return true;
+    }
+  }
+  return false;
+};
+var checkStat = (stat, path2, options2) => stat.isFile() && checkPathExt(path2, options2);
+var options = {};
+Object.defineProperty(options, "__esModule", { value: true });
+(function(exports) {
+  var __createBinding = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() {
+        return m[k];
+      } };
+    }
+    Object.defineProperty(o, k2, desc);
+  } : function(o, m, k, k2) {
+    if (k2 === void 0)
+      k2 = k;
+    o[k2] = m[k];
+  });
+  var __setModuleDefault = commonjsGlobal && commonjsGlobal.__setModuleDefault || (Object.create ? function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+  } : function(o, v) {
+    o["default"] = v;
+  });
+  var __importStar = commonjsGlobal && commonjsGlobal.__importStar || function(mod) {
+    if (mod && mod.__esModule)
+      return mod;
+    var result = {};
+    if (mod != null) {
+      for (var k in mod)
+        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+          __createBinding(result, mod, k);
+    }
+    __setModuleDefault(result, mod);
+    return result;
+  };
+  var __exportStar = commonjsGlobal && commonjsGlobal.__exportStar || function(m, exports2) {
+    for (var p in m)
+      if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports2, p))
+        __createBinding(exports2, m, p);
+  };
+  Object.defineProperty(exports, "__esModule", { value: true });
+  exports.sync = exports.isexe = exports.posix = exports.win32 = void 0;
+  const posix2 = __importStar(posix$1);
+  exports.posix = posix2;
+  const win32$1 = __importStar(win32);
+  exports.win32 = win32$1;
+  __exportStar(options, exports);
+  const platform = process.env._ISEXE_TEST_PLATFORM_ || process.platform;
+  const impl = platform === "win32" ? win32$1 : posix2;
+  exports.isexe = impl.isexe;
+  exports.sync = impl.sync;
+})(cjs);
+var { isexe, sync: isexeSync } = cjs;
 var { join, delimiter, sep, posix } = require$$0$1;
 var isWindows = process.platform === "win32";
 var rSlash = new RegExp(`[${posix.sep}${sep === posix.sep ? "" : sep}]`.replace(/(\\)/g, "\\$1"));
@@ -27105,11 +27358,7 @@ var getPathInfo = (cmd, {
   ];
   if (isWindows) {
     const pathExtExe = optPathExt || [".EXE", ".CMD", ".BAT", ".COM"].join(optDelimiter);
-    const pathExt = pathExtExe.split(optDelimiter).reduce((acc, item2) => {
-      acc.push(item2);
-      acc.push(item2.toLowerCase());
-      return acc;
-    }, []);
+    const pathExt = pathExtExe.split(optDelimiter).flatMap((item2) => [item2, item2.toLowerCase()]);
     if (cmd.includes(".") && pathExt[0] !== "") {
       pathExt.unshift("");
     }
@@ -27153,7 +27402,7 @@ var whichSync = (cmd, opt = {}) => {
     const p = getPathPart(pathEnvPart, cmd);
     for (const ext of pathExt) {
       const withExt = p + ext;
-      const is = isexe.sync(withExt, { pathExt: pathExtExe, ignoreErrors: true });
+      const is = isexeSync(withExt, { pathExt: pathExtExe, ignoreErrors: true });
       if (is) {
         if (!opt.all) {
           return withExt;
@@ -27193,16 +27442,18 @@ async function detect({ autoInstall, programmatic, cwd } = {}) {
     try {
       const pkg = JSON.parse(fs$1.readFileSync(packageJsonPath, "utf8"));
       if (typeof pkg.packageManager === "string") {
-        const [name, ver] = pkg.packageManager.split("@");
+        const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
         version2 = ver;
-        if (name === "yarn" && Number.parseInt(ver) > 1)
+        if (name === "yarn" && Number.parseInt(ver) > 1) {
           agent = "yarn@berry";
-        else if (name === "pnpm" && Number.parseInt(ver) < 7)
+          version2 = "berry";
+        } else if (name === "pnpm" && Number.parseInt(ver) < 7) {
           agent = "pnpm@6";
-        else if (name in AGENTS)
+        } else if (name in AGENTS) {
           agent = name;
-        else if (!programmatic)
+        } else if (!programmatic) {
           console.warn("[ni] Unknown packageManager:", pkg.packageManager);
+        }
       }
     } catch {
     }
@@ -27224,9 +27475,41 @@ async function detect({ autoInstall, programmatic, cwd } = {}) {
       if (!tryInstall)
         process$2.exit(1);
     }
-    await execaCommand(`npm i -g ${agent}${version2 ? `@${version2}` : ""}`, { stdio: "inherit", cwd });
+    await execaCommand(`npm i -g ${agent.split("@")[0]}${version2 ? `@${version2}` : ""}`, { stdio: "inherit", cwd });
   }
   return agent;
+}
+var customRcPath = process$2.env.NI_CONFIG_FILE;
+var home = process$2.platform === "win32" ? process$2.env.USERPROFILE : process$2.env.HOME;
+var defaultRcPath = path$3.join(home || "~/", ".nirc");
+var rcPath = customRcPath || defaultRcPath;
+var defaultConfig = {
+  defaultAgent: "prompt",
+  globalAgent: "npm"
+};
+var config2;
+async function getConfig2() {
+  if (!config2) {
+    config2 = Object.assign(
+      {},
+      defaultConfig,
+      fs$1.existsSync(rcPath) ? ini$1.parse(fs$1.readFileSync(rcPath, "utf-8")) : null
+    );
+    const agent = await detect({ programmatic: true });
+    if (agent)
+      config2.defaultAgent = agent;
+  }
+  return config2;
+}
+async function getDefaultAgent(programmatic) {
+  const { defaultAgent } = await getConfig2();
+  if (defaultAgent === "prompt" && (programmatic || process$2.env.CI))
+    return "npm";
+  return defaultAgent;
+}
+async function getGlobalAgent() {
+  const { globalAgent } = await getConfig2();
+  return globalAgent;
 }
 var UnsupportedCommand = class extends Error {
   constructor({ agent, command }) {
@@ -27350,11 +27633,11 @@ function init2(open, close) {
     return txt === void 0 ? chain([open], [blk]) : $.enabled ? run$1([blk], txt + "") : txt + "";
   };
 }
-async function getCliCommand(fn, args, options = {}, cwd = options.cwd ?? process$2.cwd()) {
+async function getCliCommand(fn, args, options2 = {}, cwd = options2.cwd ?? process$2.cwd()) {
   const isGlobal = args.includes("-g");
   if (isGlobal)
     return await fn(await getGlobalAgent(), args);
-  let agent = await detect({ ...options, cwd }) || await getDefaultAgent(options.programmatic);
+  let agent = await detect({ ...options2, cwd }) || await getDefaultAgent(options2.programmatic);
   if (agent === "prompt") {
     agent = (await prompts$1({
       name: "agent",
@@ -27366,7 +27649,7 @@ async function getCliCommand(fn, args, options = {}, cwd = options.cwd ?? proces
       return;
   }
   return await fn(agent, args, {
-    programmatic: options.programmatic,
+    programmatic: options2.programmatic,
     hasLock: Boolean(agent),
     cwd
   });
@@ -27374,7 +27657,7 @@ async function getCliCommand(fn, args, options = {}, cwd = options.cwd ?? proces
 
 // src/tasks/knip.ts
 async function buildRunKnipCommand(buildScriptName) {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter jsonExt"], {
+  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
     programmatic: true
   });
   if (!cmd) {
@@ -27395,9 +27678,9 @@ async function run2(runCmd) {
   return result;
 }
 function parseJsonReport(rawJson) {
-  const entries = JSON.parse(rawJson);
+  const { files, issues } = JSON.parse(rawJson) ?? {};
   const out = {
-    files: [],
+    files: files.filter((file) => !!file) ?? [],
     dependencies: {},
     devDependencies: {},
     optionalPeerDependencies: {},
@@ -27411,22 +27694,16 @@ function parseJsonReport(rawJson) {
     duplicates: {}
   };
   const summary = {};
-  for (const entry of entries) {
-    const fileName = entry.file;
-    for (const [type, result] of Object.entries(entry)) {
+  if (out.files.length > 0) {
+    summary.files = out.files.length;
+  }
+  for (const issue of issues) {
+    const fileName = issue.file;
+    for (const [type, result] of Object.entries(issue)) {
       if (result === void 0 || result === null) {
         continue;
       }
       switch (type) {
-        case "files":
-          if (result === true) {
-            out.files.push(fileName);
-            if (summary.files === void 0) {
-              summary.files = 0;
-            }
-            summary.files++;
-          }
-          break;
         case "dependencies":
         case "devDependencies":
         case "optionalPeerDependencies":
@@ -27631,7 +27908,7 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
 function getJsonFromOutput(output) {
   const lines2 = output.split(/\n/).reverse();
   for (const line of lines2) {
-    if (line.startsWith("[")) {
+    if (line.startsWith("{") && line.endsWith("}")) {
       return line;
     }
   }
