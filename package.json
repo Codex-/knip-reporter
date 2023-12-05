@@ -14,7 +14,6 @@
     "format": "pnpm run format:check --write",
     "lint": "eslint --ext \".js,.ts\" .",
     "lint:fix": "pnpm run lint --fix",
-    "release": "release-it",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "knip": "knip"

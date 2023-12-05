@@ -17807,10 +17807,10 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       command_1.issueCommand("error", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
     exports.error = error2;
-    function warning3(message, properties = {}) {
+    function warning4(message, properties = {}) {
       command_1.issueCommand("warning", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
-    exports.warning = warning3;
+    exports.warning = warning4;
     function notice(message, properties = {}) {
       command_1.issueCommand("notice", utils_1.toCommandProperties(properties), message instanceof Error ? message.toString() : message);
     }
@@ -27667,10 +27667,10 @@ async function buildRunKnipCommand(buildScriptName) {
   return cmd;
 }
 async function run2(runCmd) {
-  const result = await new Promise((resolve2, reject) => {
+  const result = await new Promise((resolve2) => {
     exec(runCmd, (_err, stdout, stderr) => {
       if (stderr.length > 0) {
-        reject(stderr);
+        core7.warning("knip stderr:\n" + stderr);
       }
       resolve2(stdout);
     });

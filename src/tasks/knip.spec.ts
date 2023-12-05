@@ -1,5 +1,6 @@
 import * as cp from "node:child_process";
 
+import * as core from "@actions/core";
 import * as ni from "@antfu/ni";
 import { afterAll, describe, expect, it, vi } from "vitest";
 
@@ -66,16 +67,35 @@ describe("knip", () => {
       expect(results).toStrictEqual("resolved promise");
     });
 
-    it("throws if stderr is rejected by the promise", async () => {
+    it("emits a warning log if stderr isn't empty", async () => {
+      const warnSpy = vi.spyOn(core, "warning");
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
-        func(undefined, "", "rejected promise");
+        func(undefined, "", "stderr output");
       }) as any);
 
-      await expect(async () => run("test cmd")).rejects.toThrowError("rejected promise");
+      await run("test cmd");
+
+      expect(warnSpy.mock.lastCall?.[0]).toStrictEqual("knip stderr:\nstderr output");
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
+    });
+
+    it("emits a warning log if stderr without preventing stdout from being returned", async () => {
+      const warnSpy = vi.spyOn(core, "warning");
+      const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func(undefined, "stdout output", "stderr output");
+      }) as any);
+
+      const result = await run("test cmd");
+
+      expect(warnSpy.mock.lastCall?.[0]).toStrictEqual("knip stderr:\nstderr output");
+      expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
+      expect(result).toStrictEqual("stdout output");
     });
   });
 
@@ -603,7 +623,7 @@ describe("knip", () => {
 > knip-reporter@0.0.0 knip /Users/x/dev/p/knip-reporter
 > knip "--reporter" "json"
 
-{"foo":"bar"}
+{"files":["foo.ts"],"issues":[{"foo":"bar"}]}
 
 ${JSON.stringify(reportJson)}
  ELIFECYCLE  Command failed with exit code 3.

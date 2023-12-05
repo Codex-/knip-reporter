@@ -22,17 +22,18 @@ export async function buildRunKnipCommand(buildScriptName: string): Promise<stri
 }
 
 export async function run(runCmd: string): Promise<string> {
-  const result = await new Promise<string>((resolve, reject) => {
+  const result = await new Promise<string>((resolve) => {
     exec(runCmd, (_err, stdout, stderr) => {
       // Knip will exit with a non-zero code on there being results
-      // We only reject the promise if there has been content written to stderr
-      // Since knip having results will always gives an error exit status
+      // If there is anything in the stderr stream, log the output as a warning
+      // as knip having results will always give an error exit code
       if (stderr.length > 0) {
-        reject(stderr);
+        core.warning("knip stderr:\n" + stderr);
       }
       resolve(stdout);
     });
   });
+  // Knip always returns an object
   return result;
 }
 
