@@ -203,7 +203,7 @@ export function buildSectionName(name: string): string {
 export function buildArraySection(
   name: string,
   rawResults: Record<string, Item[] | Item[][]>,
-  annotationsEnabled: boolean
+  annotationsEnabled: boolean,
 ): { section: string[]; annotations: ItemMeta[] } {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
@@ -219,30 +219,30 @@ export function buildArraySection(
           core.debug(`[buildArraySection]: ${fileName} result ${JSON.stringify(result)}`);
           if (Array.isArray(result)) {
             if (annotationsEnabled) {
-              result.map(member => {
+              result.map((member) => {
                 core.debug(`[buildArraySection] member: ${member}`);
                 isValidAnnotationBody(member) &&
-                annotations.push({
-                  path: fileName,
-                  identifier: member.name,
-                  start_line: member.line,
-                  start_column: member.col,
-                  type: "export",
-                })
-            });
+                  annotations.push({
+                    path: fileName,
+                    identifier: member.name,
+                    start_line: member.line,
+                    start_column: member.col,
+                    type: "export",
+                  });
+              });
             }
             return result.map((item) => `\`${item.name}\``).join(", ");
           }
           if (annotationsEnabled) {
             core.debug(`[buildArraySection] result: ${result}`);
             isValidAnnotationBody(result) &&
-            annotations.push({
-              path: fileName,
-              identifier: result.name,
-              start_line: result.line,
-              start_column: result.col,
-              type: "export",
-            })
+              annotations.push({
+                path: fileName,
+                identifier: result.name,
+                start_line: result.line,
+                start_column: result.col,
+                type: "export",
+              });
           }
           return `\`${result.name}\``;
         })
@@ -252,7 +252,10 @@ export function buildArraySection(
 
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return { section: processSectionToMessages(sectionHeader, tableHeader, tableBody), annotations: annotations };
+  return {
+    section: processSectionToMessages(sectionHeader, tableHeader, tableBody),
+    annotations: annotations,
+  };
 }
 
 function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
@@ -388,12 +391,14 @@ export function buildMarkdownSections(
       case "types":
       case "duplicates":
         if (Object.keys(report[key]).length > 0) {
-          const {section, annotations} = buildArraySection(key, report[key], annotationsEnabled);
+          const { section, annotations } = buildArraySection(key, report[key], annotationsEnabled);
           for (const s of section) {
             outputSections.push(s);
           }
           outputAnnotations.push(...annotations);
-          core.debug(`[buildMarkdownSections]: Parsed arrays ${key} (${Object.keys(report[key]).length})`);
+          core.debug(
+            `[buildMarkdownSections]: Parsed arrays ${key} (${Object.keys(report[key]).length})`,
+          );
           core.debug(`[buildMarkdownSections]: Total annotations ${outputAnnotations.length}`);
         }
         break;
@@ -410,7 +415,9 @@ export function buildMarkdownSections(
           for (const section of sections) {
             outputSections.push(section);
           }
-          core.debug(`[buildMarkdownSections]: Parsed maps ${key} (${Object.keys(report[key]).length})`);
+          core.debug(
+            `[buildMarkdownSections]: Parsed maps ${key} (${Object.keys(report[key]).length})`,
+          );
         }
         break;
     }

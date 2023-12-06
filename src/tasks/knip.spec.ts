@@ -174,7 +174,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("dependencies", dependencies, false);
+      const { section } = buildArraySection("dependencies", dependencies, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -203,7 +203,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("devDependencies", devDependencies, false);
+      const { section } = buildArraySection("devDependencies", devDependencies, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -221,7 +221,11 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("optionalPeerDependencies", optionalPeerDependencies, false);
+      const { section } = buildArraySection(
+        "optionalPeerDependencies",
+        optionalPeerDependencies,
+        false,
+      );
       expect(section).toMatchSnapshot();
     });
 
@@ -237,7 +241,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("unlisted", unlisted, false);
+      const { section } = buildArraySection("unlisted", unlisted, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -250,7 +254,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("binaries", binaries, false);
+      const { section } = buildArraySection("binaries", binaries, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -266,7 +270,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("unresolved", unresolved, false);
+      const { section } = buildArraySection("unresolved", unresolved, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -296,7 +300,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("exports", exports, false);
+      const { section } = buildArraySection("exports", exports, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -340,7 +344,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("types", types, false);
+      const { section } = buildArraySection("types", types, false);
       expect(section).toMatchSnapshot();
     });
 
@@ -368,7 +372,7 @@ describe("knip", () => {
         ],
       };
 
-      const {section, } = buildArraySection("duplicates", duplicates, false);
+      const { section } = buildArraySection("duplicates", duplicates, false);
       expect(section).toMatchSnapshot();
     });
   });
