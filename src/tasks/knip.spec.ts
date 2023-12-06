@@ -567,7 +567,7 @@ describe("knip", () => {
       }
       expect(sections).toMatchSnapshot();
 
-      expect(annotations).toHaveLength(19);
+      expect(annotations).toHaveLength(27);
       for (const annotation of annotations) {
         expect(annotation).toBeTypeOf("object");
       }
@@ -584,7 +584,7 @@ describe("knip", () => {
       }
       expect(sections).toMatchSnapshot();
 
-      expect(annotations).toHaveLength(19);
+      expect(annotations).toHaveLength(27);
       for (const annotation of annotations) {
         expect(annotation).toBeTypeOf("object");
       }

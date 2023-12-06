@@ -587,6 +587,62 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
 exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
 [
   {
+    "identifier": "specialFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 48,
+    "type": "export",
+  },
+  {
+    "identifier": "uselessFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 50,
+    "type": "export",
+  },
+  {
+    "identifier": "sheepinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 14,
+    "start_line": 83,
+    "type": "export",
+  },
+  {
+    "identifier": "cowinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 13,
+    "start_line": 75,
+    "type": "export",
+  },
+  {
+    "identifier": "SpecialAgent",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "export",
+  },
+  {
+    "identifier": "Zoni",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "export",
+  },
+  {
+    "identifier": "Lombax",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "export",
+  },
+  {
+    "identifier": "Homeworld",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "export",
+  },
+  {
     "identifier": "Magmos",
     "path": "DrNefarious.ts",
     "start_column": 5,
@@ -799,6 +855,62 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 
 exports[`knip > buildMarkdownSections > outputs verbose sections and annotations 2`] = `
 [
+  {
+    "identifier": "specialFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 48,
+    "type": "export",
+  },
+  {
+    "identifier": "uselessFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 50,
+    "type": "export",
+  },
+  {
+    "identifier": "sheepinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 14,
+    "start_line": 83,
+    "type": "export",
+  },
+  {
+    "identifier": "cowinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 13,
+    "start_line": 75,
+    "type": "export",
+  },
+  {
+    "identifier": "SpecialAgent",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "export",
+  },
+  {
+    "identifier": "Zoni",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "export",
+  },
+  {
+    "identifier": "Lombax",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "export",
+  },
+  {
+    "identifier": "Homeworld",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "export",
+  },
   {
     "identifier": "Magmos",
     "path": "DrNefarious.ts",
