@@ -518,6 +518,11 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
+    it("should transform a enumMembers map section to markdown if verbose and annotations are disabled", () => {
+      const section = buildMapSection("enumMembers", enumMembers, false, false);
+      expect(section).toMatchSnapshot();
+    });
+
     it("should transform a enumMembers map section and annotations", () => {
       const section = buildMapSection("enumMembers", enumMembers, true, false);
       expect(section).toMatchSnapshot();
@@ -530,6 +535,11 @@ describe("knip", () => {
 
     it("should transform a classMembers map section to markdown", () => {
       const section = buildMapSection("classMembers", classMembers, false, true);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a classMembers map section to markdown if verbose and annotations are disabled", () => {
+      const section = buildMapSection("classMembers", classMembers, false, false);
       expect(section).toMatchSnapshot();
     });
 

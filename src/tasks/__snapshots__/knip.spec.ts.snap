@@ -241,6 +241,21 @@ exports[`knip > buildMapSection > should transform a classMembers map section to
 }
 `;
 
+exports[`knip > buildMapSection > should transform a classMembers map section to markdown if verbose and annotations are disabled 1`] = `
+{
+  "annotations": [],
+  "sections": [
+    "### Unused Class Members (7)
+
+|Filename|Class|Member|
+|-|-|-|
+|Qwark.ts|InsaneQwark|\`destroy\`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
+  ],
+}
+`;
+
 exports[`knip > buildMapSection > should transform a enumMembers map section and annotations 1`] = `
 {
   "annotations": [
@@ -436,6 +451,21 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
       "type": "enum",
     },
   ],
+  "sections": [
+    "### Unused Enum Members (12)
+
+|Filename|Enum|Member|
+|-|-|-|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan \`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+  ],
+}
+`;
+
+exports[`knip > buildMapSection > should transform a enumMembers map section to markdown if verbose and annotations are disabled 1`] = `
+{
+  "annotations": [],
   "sections": [
     "### Unused Enum Members (12)
 

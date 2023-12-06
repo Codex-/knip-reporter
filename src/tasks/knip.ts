@@ -251,6 +251,7 @@ export function buildMapSection(
   const annotations: ItemMeta[] = [];
   const resultType = name === "classMembers" ? "Class" : "Enum";
   const resultMetaType = name === "classMembers" ? "class" : "enum";
+  const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
 
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
@@ -265,18 +266,18 @@ export function buildMapSection(
             type: resultMetaType,
           });
         }
-        if (verboseEnabled) {
+        if (shouldBuildMarkdown) {
           itemNames.push(`\`${member.name}\``);
         }
       }
       totalUnused += members.length;
-      if (verboseEnabled) {
+      if (shouldBuildMarkdown) {
         tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
       }
     }
   }
 
-  if (verboseEnabled) {
+  if (shouldBuildMarkdown) {
     const tableHeader = ["Filename", resultType, "Member"];
     const sectionHeaderName = `${resultType} Members`;
     const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
