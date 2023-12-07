@@ -17,9 +17,28 @@ export const CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 
 type Unpacked<T> = T extends Array<infer U> ? U : T;
 export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>;
-export interface AnnotationsCount {
-  classMembers: number;
-  enumMembers: number;
+export class AnnotationsCount {
+  // public exports: number = 0;
+  // public types: number = 0;
+  public enumMembers: number = 0;
+  public classMembers: number = 0;
+
+  public increaseCount(type: ItemMeta["type"]): void {
+    switch (type) {
+      // case "export":
+      //   this.exports++;
+      //   break;
+      // case "type":
+      //   this.types++;
+      //   break;
+      case "class":
+        this.classMembers++;
+        break;
+      case "enum":
+        this.enumMembers++;
+        break;
+    }
+  }
 }
 
 export async function updateCheckAnnotations(
@@ -33,8 +52,8 @@ export async function updateCheckAnnotations(
     }'`,
   );
 
-  let classMemberCount = 0;
-  let enumMemberCount = 0;
+  const count = new AnnotationsCount();
+
   let i = 0;
   while (i < itemMeta.length) {
     const currentEndIndex =
@@ -53,11 +72,7 @@ export async function updateCheckAnnotations(
         continue;
       }
 
-      if (meta.type === "class") {
-        classMemberCount++;
-      } else {
-        enumMemberCount++;
-      }
+      count.increaseCount(meta.type);
 
       const annotation: Annotation = {
         path: meta.path,
@@ -85,7 +100,7 @@ export async function updateCheckAnnotations(
     `[updateCheckAnnotations]: Pushing annotations (${itemMeta.length}) to check ${checkId} completed`,
   );
 
-  return { classMembers: classMemberCount, enumMembers: enumMemberCount };
+  return count;
 }
 
 export async function resolveCheck(

@@ -7,5 +7,5 @@ export interface ItemMeta {
   identifier: string;
   start_line: number;
   start_column: number;
-  type: "class" | "enum";
+  type: "export" | "type" | "class" | "enum";
 }
