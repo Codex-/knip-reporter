@@ -74,6 +74,9 @@ export async function updateCheckAnnotations(
 
       count.increaseCount(meta.type);
 
+      const typeMessage =
+        meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
+
       const annotation: Annotation = {
         path: meta.path,
         start_line: meta.start_line,
@@ -81,7 +84,7 @@ export async function updateCheckAnnotations(
         start_column: meta.start_column,
         end_column: meta.start_column + meta.identifier.length,
         annotation_level: ignoreResults ? "warning" : "failure",
-        message: `${meta.identifier} is an unused ${meta.type} member`,
+        message: `${meta.identifier} is an unused ` + typeMessage,
       };
       annotations.push(annotation);
     }

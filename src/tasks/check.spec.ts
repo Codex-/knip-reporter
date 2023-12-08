@@ -126,6 +126,20 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
+          type: "export",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "type",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
           type: "class",
         },
         {
@@ -139,6 +153,8 @@ describe("check", () => {
 
       let counts = await updateCheckAnnotations(0, items, false);
 
+      expect(counts.exports).toStrictEqual(1);
+      expect(counts.types).toStrictEqual(1);
       expect(counts.classMembers).toStrictEqual(1);
       expect(counts.enumMembers).toStrictEqual(1);
 
@@ -161,6 +177,20 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
+          type: "export",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "type",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
           type: "class",
         },
         {
@@ -174,6 +204,8 @@ describe("check", () => {
 
       counts = await updateCheckAnnotations(0, items, false);
 
+      expect(counts.exports).toStrictEqual(2);
+      expect(counts.types).toStrictEqual(2);
       expect(counts.classMembers).toStrictEqual(3);
       expect(counts.enumMembers).toStrictEqual(2);
     });
@@ -195,12 +227,26 @@ describe("check", () => {
 
     it("should only make three requests with 150 annotations", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
+      const iToType = (i: number): ItemMeta["type"] => {
+        switch (i % 4) {
+          case 0:
+            return "export";
+          case 1:
+            return "type";
+          case 2:
+            return "class";
+          case 3:
+            return "enum";
+          default:
+            throw new Error();
+        }
+      };
       const items: ItemMeta[] = [...Array(150).keys()].map((i) => ({
         path: "some/path",
         identifier: `Var${i}`,
         start_line: 0,
         start_column: 0,
-        type: i % 2 ? "class" : "enum",
+        type: iToType(i),
       }));
 
       await updateCheckAnnotations(0, items, false);
