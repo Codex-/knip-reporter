@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import * as api from "../api.ts";
 import {
   type Annotation,
-  type AnnotationsCount,
+  AnnotationsCount,
   CHECK_ANNOTATIONS_UPDATE_LIMIT,
   createCheckId,
   resolveCheck,
@@ -266,7 +266,7 @@ describe("check", () => {
     it("should resolve a check with the provided conclusion", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
 
-      await resolveCheck(123, "success", { classMembers: 0, enumMembers: 0 });
+      await resolveCheck(123, "success", new AnnotationsCount());
 
       expect(updateCheckSpy.mock.lastCall?.[0]).toStrictEqual(123);
       expect(updateCheckSpy.mock.lastCall?.[1]).toStrictEqual("completed");
@@ -274,7 +274,7 @@ describe("check", () => {
       expect((updateCheckSpy.mock.lastCall?.[2]?.summary.length ?? 0) > 0).toStrictEqual(true);
       expect(updateCheckSpy.mock.lastCall?.[3]).toStrictEqual("success");
 
-      await resolveCheck(456, "failure", { classMembers: 0, enumMembers: 0 });
+      await resolveCheck(456, "failure", new AnnotationsCount());
 
       expect(updateCheckSpy.mock.lastCall?.[0]).toStrictEqual(456);
       expect(updateCheckSpy.mock.lastCall?.[1]).toStrictEqual("completed");
@@ -285,29 +285,36 @@ describe("check", () => {
 
     it("should send a summary of counts", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
+      const count = new AnnotationsCount();
+      count.exports = 100;
+      count.types = 200;
+      count.classMembers = 300;
+      count.enumMembers = 400;
 
-      await resolveCheck(123, "success", { classMembers: 100, enumMembers: 200 });
+      await resolveCheck(123, "success", count);
 
       const summary = updateCheckSpy.mock.lastCall?.[2]?.summary;
-      expect(summary).toMatch(/\|Class Members\|100\|/);
-      expect(summary).toMatch(/\|Enum Members\|200\|/);
+      expect(summary).toMatch(/\|Exports\|100\|/);
+      expect(summary).toMatch(/\|Types\|200\|/);
+      expect(summary).toMatch(/\|Class Members\|300\|/);
+      expect(summary).toMatch(/\|Enum Members\|400\|/);
     });
   });
 
   describe("summaryMarkdownTable", () => {
     it("should transform an annotations summary to a markdown table", () => {
-      let count: AnnotationsCount = {
-        classMembers: 123,
-        enumMembers: 456,
-      };
+      const count = new AnnotationsCount();
+      count.exports = 123;
+      count.types = 456;
+      count.classMembers = 789;
+      count.enumMembers = 101112;
 
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
 
-      count = {
-        classMembers: 456,
-        enumMembers: 789,
-      };
-
+      count.exports = 131415;
+      count.types = 161718;
+      count.classMembers = 192021;
+      count.enumMembers = 222324;
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
     });
   });

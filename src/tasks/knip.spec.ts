@@ -555,7 +555,7 @@ describe("knip", () => {
   });
 
   describe("buildMarkdownSections", () => {
-    it("outputs only sections with defaults", () => {
+    it("outputs only sections", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
       const { sections, annotations } = buildMarkdownSections(parsedReport, false, true);
 
@@ -577,7 +577,7 @@ describe("knip", () => {
       }
       expect(sections).toMatchSnapshot();
 
-      expect(annotations).toHaveLength(19);
+      expect(annotations).toHaveLength(27);
       for (const annotation of annotations) {
         expect(annotation).toBeTypeOf("object");
       }
@@ -588,13 +588,13 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
       const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
 
-      expect(sections).toHaveLength(10);
+      expect(sections).toHaveLength(8);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
       }
       expect(sections).toMatchSnapshot();
 
-      expect(annotations).toHaveLength(19);
+      expect(annotations).toHaveLength(27);
       for (const annotation of annotations) {
         expect(annotation).toBeTypeOf("object");
       }

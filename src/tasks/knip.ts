@@ -228,15 +228,77 @@ export function buildArraySection(
   return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 
+function getMetaType(type: string): ItemMeta["type"] {
+  switch (type) {
+    case "classMembers":
+      return "class";
+    case "enumMembers":
+      return "enum";
+    case "exports":
+      return "export";
+    case "types":
+      return "type";
+    default:
+      throw new Error(`Unhandled meta type: ${type}`);
+  }
+}
+
+/**
+ * Build a section where the result is a collection and supports annotations
+ *
+ * @returns a tuple of the markdown sections if verbose and annotations if enabled
+ */
+export function buildArraySectionWithAnnotations(
+  name: string,
+  rawResults: Record<string, Item[]>,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
+): { sections: string[]; annotations: ItemMeta[] } {
+  const tableBody: string[][] = [];
+  const annotations: ItemMeta[] = [];
+  const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
+  const metaType = getMetaType(name);
+
+  let totalUnused = 0;
+  for (const [filename, results] of Object.entries(rawResults)) {
+    const itemNames = [];
+    for (const item of results) {
+      if (annotationsEnabled && isValidAnnotationBody(item)) {
+        annotations.push({
+          path: filename,
+          identifier: item.name,
+          start_line: item.line,
+          start_column: item.col,
+          type: metaType,
+        });
+      }
+      if (shouldBuildMarkdown) {
+        itemNames.push(`\`${item.name}\``);
+      }
+    }
+    totalUnused += results.length;
+    if (shouldBuildMarkdown) {
+      tableBody.push([filename, itemNames.join("<br/>")]);
+    }
+  }
+
+  if (shouldBuildMarkdown) {
+    const tableHeader = ["Filename", name];
+    const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
+    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+
+    return { sections: processedSections, annotations: annotations };
+  }
+
+  return { sections: [], annotations: annotations };
+}
+
 function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
   return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
 }
 
 /**
  * Build a section where the result is a map
- *
- * As these sections are the only sections that return code identifiers
- * we process the sections and annotations.
  *
  * @returns a tuple of the markdown sections if verbose and annotations if enabled
  */
@@ -246,13 +308,14 @@ export function buildMapSection(
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
 ): { sections: string[]; annotations: ItemMeta[] } {
-  let totalUnused = 0;
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
-  const resultType = name === "classMembers" ? "Class" : "Enum";
   const resultMetaType = name === "classMembers" ? "class" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
+  const metaType = getMetaType(name);
+  const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
 
+  let totalUnused = 0;
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       const itemNames = [];
@@ -345,6 +408,13 @@ export function buildMarkdownSections(
   const outputAnnotations: ItemMeta[] = [];
   const outputSections: string[] = [];
   for (const key of Object.keys(report)) {
+    let buildWithAnnotations:
+      | (() => {
+          sections: string[];
+          annotations: ItemMeta[];
+        })
+      | undefined = undefined;
+    let length = 0;
     switch (key) {
       case "files":
         if (report.files.length > 0) {
@@ -358,9 +428,23 @@ export function buildMarkdownSections(
       case "unlisted":
       case "binaries":
       case "unresolved":
+        if (Object.keys(report[key]).length > 0) {
+          for (const section of buildArraySection(key, report[key])) {
+            outputSections.push(section);
+          }
+          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+        }
+        break;
       case "exports":
       case "types":
-      case "duplicates":
+        if (Object.keys(report[key]).length > 0) {
+          buildWithAnnotations = () =>
+            buildArraySectionWithAnnotations(key, report[key], annotationsEnabled, verboseEnabled);
+          length = Object.keys(report[key]).length;
+        }
+        break;
+      case "duplicates": // TODO duplicates also supports annotations, add this in another feature branch
+        // copy paste from unresolved, temporarily until this is handled properly
         if (Object.keys(report[key]).length > 0) {
           for (const section of buildArraySection(key, report[key])) {
             outputSections.push(section);
@@ -371,19 +455,20 @@ export function buildMarkdownSections(
       case "enumMembers":
       case "classMembers":
         if (Object.keys(report[key]).length > 0) {
-          const { sections, annotations } = buildMapSection(
-            key,
-            report[key],
-            annotationsEnabled,
-            verboseEnabled,
-          );
-          outputAnnotations.push(...annotations);
-          for (const section of sections) {
-            outputSections.push(section);
-          }
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
+          buildWithAnnotations = () =>
+            buildMapSection(key, report[key], annotationsEnabled, verboseEnabled);
+          length = Object.keys(report[key]).length;
         }
         break;
+    }
+
+    if (buildWithAnnotations) {
+      const { sections, annotations } = buildWithAnnotations();
+      outputAnnotations.push(...annotations);
+      for (const section of sections) {
+        outputSections.push(section);
+      }
+      core.debug(`[buildMarkdownSections]: Parsed ${key} (${length})`);
     }
   }
 

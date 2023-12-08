@@ -18,19 +18,19 @@ export const CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 type Unpacked<T> = T extends Array<infer U> ? U : T;
 export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>;
 export class AnnotationsCount {
-  // public exports: number = 0;
-  // public types: number = 0;
+  public exports: number = 0;
+  public types: number = 0;
   public enumMembers: number = 0;
   public classMembers: number = 0;
 
   public increaseCount(type: ItemMeta["type"]): void {
     switch (type) {
-      // case "export":
-      //   this.exports++;
-      //   break;
-      // case "type":
-      //   this.types++;
-      //   break;
+      case "export":
+        this.exports++;
+        break;
+      case "type":
+        this.types++;
+        break;
       case "class":
         this.classMembers++;
         break;
@@ -118,7 +118,12 @@ export async function resolveCheck(
   );
 }
 
-export function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsCount): string {
+export function summaryMarkdownTable({
+  exports,
+  types,
+  classMembers,
+  enumMembers,
+}: AnnotationsCount): string {
   const markdownTableOptions: MarkdownTableOptions = {
     alignDelimiters: false,
     padding: false,
@@ -126,6 +131,8 @@ export function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsC
   return markdownTable(
     [
       ["Type", "Found"],
+      ["Exports", `${exports}`],
+      ["Types", `${types}`],
       ["Class Members", `${classMembers}`],
       ["Enum Members", `${enumMembers}`],
     ],

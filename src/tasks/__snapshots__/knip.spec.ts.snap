@@ -478,7 +478,7 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
 }
 `;
 
-exports[`knip > buildMarkdownSections > outputs only sections with defaults 1`] = `
+exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 [
   "### Unused files (3)
 
@@ -592,19 +592,6 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
 |Filename|unresolved|
 |-|-|
 |jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
-  "### Unused exports (3)
-
-|Filename|exports|
-|-|-|
-|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
-|packages/a/src/Weapons.ts|\`sheepinator\`|",
-  "### Unused types (5)
-
-|Filename|types|
-|-|-|
-|packages/a/src/Weapons.ts|\`cowinator\`|
-|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
-|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
   "### Duplicates (2)
 
 |Filename|duplicates|
@@ -616,6 +603,62 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
 
 exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
 [
+  {
+    "identifier": "specialFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 48,
+    "type": "export",
+  },
+  {
+    "identifier": "uselessFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 50,
+    "type": "export",
+  },
+  {
+    "identifier": "sheepinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 14,
+    "start_line": 83,
+    "type": "export",
+  },
+  {
+    "identifier": "cowinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 13,
+    "start_line": 75,
+    "type": "type",
+  },
+  {
+    "identifier": "SpecialAgent",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "type",
+  },
+  {
+    "identifier": "Zoni",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "type",
+  },
+  {
+    "identifier": "Lombax",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "type",
+  },
+  {
+    "identifier": "Homeworld",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "type",
+  },
   {
     "identifier": "Magmos",
     "path": "DrNefarious.ts",
@@ -829,6 +872,62 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 
 exports[`knip > buildMarkdownSections > outputs verbose sections and annotations 2`] = `
 [
+  {
+    "identifier": "specialFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 48,
+    "type": "export",
+  },
+  {
+    "identifier": "uselessFunc",
+    "path": "packages/a/src/Utils.ts",
+    "start_column": 14,
+    "start_line": 50,
+    "type": "export",
+  },
+  {
+    "identifier": "sheepinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 14,
+    "start_line": 83,
+    "type": "export",
+  },
+  {
+    "identifier": "cowinator",
+    "path": "packages/a/src/Weapons.ts",
+    "start_column": 13,
+    "start_line": 75,
+    "type": "type",
+  },
+  {
+    "identifier": "SpecialAgent",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "type",
+  },
+  {
+    "identifier": "Zoni",
+    "path": "packages/b/Clank.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "type",
+  },
+  {
+    "identifier": "Lombax",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 7,
+    "type": "type",
+  },
+  {
+    "identifier": "Homeworld",
+    "path": "packages/b/Ratchet.ts",
+    "start_column": 13,
+    "start_line": 11,
+    "type": "type",
+  },
   {
     "identifier": "Magmos",
     "path": "DrNefarious.ts",
