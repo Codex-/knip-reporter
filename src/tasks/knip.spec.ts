@@ -7,6 +7,7 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import {
   buildArraySection,
+  buildArraySectionWithAnnotations,
   buildFilesSection,
   buildMapSection,
   buildMarkdownSections,
@@ -270,80 +271,6 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a exports array section to markdown", () => {
-      const exports = {
-        "packages/a/src/Utils.ts": [
-          {
-            col: 14,
-            line: 48,
-            name: "specialFunc",
-            pos: 1587,
-          },
-          {
-            col: 14,
-            line: 50,
-            name: "uselessFunc",
-            pos: 1686,
-          },
-        ],
-        "packages/a/src/Weapons.ts": [
-          {
-            col: 14,
-            line: 83,
-            name: "sheepinator",
-            pos: 3858,
-          },
-        ],
-      };
-
-      const section = buildArraySection("exports", exports);
-      expect(section).toMatchSnapshot();
-    });
-
-    it("should transform a types array section to markdown", () => {
-      const types = {
-        "packages/a/src/Weapons.ts": [
-          {
-            col: 13,
-            line: 75,
-            name: "cowinator",
-            pos: 3686,
-          },
-        ],
-        "packages/b/Clank.ts": [
-          {
-            col: 13,
-            line: 7,
-            name: "SpecialAgent",
-            pos: 310,
-          },
-          {
-            col: 13,
-            line: 11,
-            name: "Zoni",
-            pos: 407,
-          },
-        ],
-        "packages/b/Ratchet.ts": [
-          {
-            col: 13,
-            line: 7,
-            name: "Lombax",
-            pos: 310,
-          },
-          {
-            col: 13,
-            line: 11,
-            name: "Homeworld",
-            pos: 407,
-          },
-        ],
-      };
-
-      const section = buildArraySection("types", types);
-      expect(section).toMatchSnapshot();
-    });
-
     it("should transform a duplicate array array section to markdown", () => {
       const duplicates = {
         "Lombax.ts": [
@@ -369,6 +296,111 @@ describe("knip", () => {
       };
 
       const section = buildArraySection("duplicates", duplicates);
+      expect(section).toMatchSnapshot();
+    });
+  });
+
+  describe("buildArraySectionWithAnnotations", () => {
+    const exports = {
+      "packages/a/src/Utils.ts": [
+        {
+          col: 14,
+          line: 48,
+          name: "specialFunc",
+          pos: 1587,
+        },
+        {
+          col: 14,
+          line: 50,
+          name: "uselessFunc",
+          pos: 1686,
+        },
+      ],
+      "packages/a/src/Weapons.ts": [
+        {
+          col: 14,
+          line: 83,
+          name: "sheepinator",
+          pos: 3858,
+        },
+      ],
+    };
+    const types = {
+      "packages/a/src/Weapons.ts": [
+        {
+          col: 13,
+          line: 75,
+          name: "cowinator",
+          pos: 3686,
+        },
+      ],
+      "packages/b/Clank.ts": [
+        {
+          col: 13,
+          line: 7,
+          name: "SpecialAgent",
+          pos: 310,
+        },
+        {
+          col: 13,
+          line: 11,
+          name: "Zoni",
+          pos: 407,
+        },
+      ],
+      "packages/b/Ratchet.ts": [
+        {
+          col: 13,
+          line: 7,
+          name: "Lombax",
+          pos: 310,
+        },
+        {
+          col: 13,
+          line: 11,
+          name: "Homeworld",
+          pos: 407,
+        },
+      ],
+    };
+
+    it("should transform a exports array section to markdown", () => {
+      const section = buildArraySectionWithAnnotations("exports", exports, false, true);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a exports array section to markdown if verbose and annotations are disabled", () => {
+      const section = buildArraySectionWithAnnotations("exports", exports, false, false);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a exports array section to annotations", () => {
+      const section = buildArraySectionWithAnnotations("exports", exports, true, false);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a exports array section to markdown and annotations", () => {
+      const section = buildArraySectionWithAnnotations("exports", exports, true, true);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a types array section to markdown", () => {
+      const section = buildArraySectionWithAnnotations("types", types, false, true);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a types array section to markdown if verbose and annotations are disabled", () => {
+      const section = buildArraySectionWithAnnotations("types", types, false, false);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a types array section to annotations", () => {
+      const section = buildArraySectionWithAnnotations("types", types, true, false);
+      expect(section).toMatchSnapshot();
+    });
+
+    it("should transform a types array section to markdown and annotations", () => {
+      const section = buildArraySectionWithAnnotations("types", types, true, true);
       expect(section).toMatchSnapshot();
     });
   });
@@ -523,7 +555,7 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a enumMembers map section and annotations", () => {
+    it("should transform a enumMembers map section to annotations", () => {
       const section = buildMapSection("enumMembers", enumMembers, true, false);
       expect(section).toMatchSnapshot();
     });
@@ -543,7 +575,7 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section and annotations", () => {
+    it("should transform a classMembers map section to annotations", () => {
       const section = buildMapSection("classMembers", classMembers, true, false);
       expect(section).toMatchSnapshot();
     });
