@@ -27817,6 +27817,8 @@ function getMetaType(type) {
       return "export";
     case "types":
       return "type";
+    case "duplicates":
+      return "duplicate";
     default:
       throw new Error(`Unhandled meta type: ${type}`);
   }
@@ -27830,6 +27832,29 @@ function buildArraySectionWithAnnotations(name, rawResults, annotationsEnabled, 
   for (const [filename, results] of Object.entries(rawResults)) {
     const itemNames = [];
     for (const item2 of results) {
+      if (Array.isArray(item2)) {
+        for (let i = 0; i < item2.length; i++) {
+          const duplicate = item2[i];
+          const otherDuplicates = [...item2.slice(0, i), ...item2.slice(i + 1, item2.length)].map(
+            (dupe) => dupe.name
+          );
+          if (annotationsEnabled && isValidAnnotationBody(duplicate)) {
+            annotations.push({
+              path: filename,
+              identifier: duplicate.name,
+              start_line: duplicate.line,
+              start_column: duplicate.col,
+              type: "duplicate",
+              duplicateIdentifiers: otherDuplicates
+            });
+          }
+        }
+        if (shouldBuildMarkdown) {
+          itemNames.push(item2.map((dup) => `\`${dup.name}\``).join(", "));
+        }
+        totalUnused += item2.length;
+        continue;
+      }
       if (annotationsEnabled && isValidAnnotationBody(item2)) {
         annotations.push({
           path: filename,
@@ -27842,8 +27867,8 @@ function buildArraySectionWithAnnotations(name, rawResults, annotationsEnabled, 
       if (shouldBuildMarkdown) {
         itemNames.push(`\`${item2.name}\``);
       }
+      totalUnused++;
     }
-    totalUnused += results.length;
     if (shouldBuildMarkdown) {
       tableBody.push([filename, itemNames.join("<br/>")]);
     }
@@ -27937,50 +27962,45 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
 function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
   const outputAnnotations = [];
   const outputSections = [];
-  for (const key of Object.keys(report)) {
+  for (const [key, value] of Object.entries(report)) {
     let buildWithAnnotations = void 0;
     let length = 0;
+    if (key === "files") {
+      if (report.files.length > 0) {
+        outputSections.push(buildFilesSection(report.files));
+        core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+      }
+      continue;
+    }
+    if (Object.keys(value).length <= 0) {
+      continue;
+    }
     switch (key) {
-      case "files":
-        if (report.files.length > 0) {
-          outputSections.push(buildFilesSection(report.files));
-          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
-        }
-        break;
       case "dependencies":
       case "devDependencies":
       case "optionalPeerDependencies":
       case "unlisted":
       case "binaries":
       case "unresolved":
-        if (Object.keys(report[key]).length > 0) {
-          for (const section of buildArraySection(key, report[key])) {
-            outputSections.push(section);
-          }
-          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
-        }
+        const sections = buildArraySection(key, value);
+        outputSections.push(...sections);
+        core7.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
         break;
       case "exports":
       case "types":
-        if (Object.keys(report[key]).length > 0) {
-          buildWithAnnotations = () => buildArraySectionWithAnnotations(key, report[key], annotationsEnabled, verboseEnabled);
-          length = Object.keys(report[key]).length;
-        }
-        break;
       case "duplicates":
-        if (Object.keys(report[key]).length > 0) {
-          for (const section of buildArraySection(key, report[key])) {
-            outputSections.push(section);
-          }
-          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
-        }
+        buildWithAnnotations = () => buildArraySectionWithAnnotations(
+          key,
+          value,
+          annotationsEnabled,
+          verboseEnabled
+        );
+        length = Object.keys(value).length;
         break;
       case "enumMembers":
       case "classMembers":
-        if (Object.keys(report[key]).length > 0) {
-          buildWithAnnotations = () => buildMapSection(key, report[key], annotationsEnabled, verboseEnabled);
-          length = Object.keys(report[key]).length;
-        }
+        buildWithAnnotations = () => buildMapSection(key, value, annotationsEnabled, verboseEnabled);
+        length = Object.keys(value).length;
         break;
     }
     if (buildWithAnnotations) {
@@ -27989,7 +28009,7 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
       for (const section of sections) {
         outputSections.push(section);
       }
-      core7.debug(`[buildMarkdownSections]: Parsed ${key} (${length})`);
+      core7.debug(`[buildSection]: Parsed ${key} (${length})`);
     }
   }
   return { sections: outputSections, annotations: outputAnnotations };

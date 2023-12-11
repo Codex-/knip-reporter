@@ -148,16 +148,17 @@ describe("comment", () => {
     it("should increase the number on the injected comment for each comment generated", () => {
       const comments = buildComments("hello", manyShortSections);
 
-      expect(comments).toHaveLength(3);
+      expect(comments).toHaveLength(4);
       expect(comments[0]).toContain("<!-- hello-0 -->");
       expect(comments[1]).toContain("<!-- hello-1 -->");
       expect(comments[2]).toContain("<!-- hello-2 -->");
+      expect(comments[3]).toContain("<!-- hello-3 -->");
     });
 
     it("should output multiple comments if all sections exceed the max character limit", () => {
       const comments = buildComments("hello", manyShortSections);
 
-      expect(comments).toHaveLength(3);
+      expect(comments).toHaveLength(4);
       expect(comments).toMatchSnapshot();
     });
 

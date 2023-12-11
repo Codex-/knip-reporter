@@ -738,12 +738,12 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|",
-  "### Duplicates (2)
+  "### Duplicates (5)
 
 |Filename|duplicates|
 |-|-|
-|Lombax.ts|\`Ratchet\`, \`default\`|
-|WarBot.ts|\`Kit\`, \`default\`|",
+|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
+|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
 ]
 `;
 
@@ -786,12 +786,6 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
 |Filename|unresolved|
 |-|-|
 |jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
-  "### Duplicates (2)
-
-|Filename|duplicates|
-|-|-|
-|Lombax.ts|\`Ratchet\`, \`default\`|
-|WarBot.ts|\`Kit\`, \`default\`|",
 ]
 `;
 
@@ -986,6 +980,59 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
     "start_line": 327,
     "type": "class",
   },
+  {
+    "duplicateIdentifiers": [
+      "EvilRatchet",
+    ],
+    "identifier": "Ratchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Ratchet",
+    ],
+    "identifier": "EvilRatchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "EvilKit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "Kit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "EvilKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "EvilKit",
+    ],
+    "identifier": "DefinitelyNotKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 10,
+    "type": "duplicate",
+  },
 ]
 `;
 
@@ -1055,12 +1102,12 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|",
-  "### Duplicates (2)
+  "### Duplicates (5)
 
 |Filename|duplicates|
 |-|-|
-|Lombax.ts|\`Ratchet\`, \`default\`|
-|WarBot.ts|\`Kit\`, \`default\`|",
+|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
+|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
 ]
 `;
 
@@ -1255,6 +1302,59 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
     "start_line": 327,
     "type": "class",
   },
+  {
+    "duplicateIdentifiers": [
+      "EvilRatchet",
+    ],
+    "identifier": "Ratchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Ratchet",
+    ],
+    "identifier": "EvilRatchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "EvilKit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "Kit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "EvilKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "EvilKit",
+    ],
+    "identifier": "DefinitelyNotKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 10,
+    "type": "duplicate",
+  },
 ]
 `;
 
@@ -1380,20 +1480,38 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
     "Lombax.ts": [
       [
         {
+          "col": 15,
+          "line": 8,
           "name": "Ratchet",
+          "pos": 358,
         },
         {
-          "name": "default",
+          "col": 15,
+          "line": 9,
+          "name": "EvilRatchet",
+          "pos": 358,
         },
       ],
     ],
     "WarBot.ts": [
       [
         {
+          "col": 15,
+          "line": 8,
           "name": "Kit",
+          "pos": 358,
         },
         {
-          "name": "default",
+          "col": 15,
+          "line": 9,
+          "name": "EvilKit",
+          "pos": 358,
+        },
+        {
+          "col": 15,
+          "line": 10,
+          "name": "DefinitelyNotKit",
+          "pos": 358,
         },
       ],
     ],

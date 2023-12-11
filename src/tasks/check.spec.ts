@@ -227,7 +227,7 @@ describe("check", () => {
 
     it("should only make three requests with 150 annotations", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
-      const iToType = (i: number): ItemMeta["type"] => {
+      const iToType = (i: number): Exclude<ItemMeta["type"], "duplicate"> => {
         switch (i % 4) {
           case 0:
             return "export";

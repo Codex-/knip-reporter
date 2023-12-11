@@ -609,7 +609,7 @@ describe("knip", () => {
       }
       expect(sections).toMatchSnapshot();
 
-      expect(annotations).toHaveLength(27);
+      expect(annotations).toHaveLength(32);
       for (const annotation of annotations) {
         expect(annotation).toBeTypeOf("object");
       }
@@ -620,13 +620,13 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
       const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
 
-      expect(sections).toHaveLength(8);
+      expect(sections).toHaveLength(7);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
       }
       expect(sections).toMatchSnapshot();
 
-      expect(annotations).toHaveLength(27);
+      expect(annotations).toHaveLength(32);
       for (const annotation of annotations) {
         expect(annotation).toBeTypeOf("object");
       }
