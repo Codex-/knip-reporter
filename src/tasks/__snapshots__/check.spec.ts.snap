@@ -5,9 +5,9 @@ exports[`check > summaryMarkdownTable > should transform an annotations summary 
 |-|-|
 |Exports|123|
 |Types|456|
-|Class Members|789|
-|Enum Members|101112|
-|Duplicates|131415|"
+|Duplicates|789|
+|Class Members|101112|
+|Enum Members|131415|"
 `;
 
 exports[`check > summaryMarkdownTable > should transform an annotations summary to a markdown table 2`] = `
@@ -15,9 +15,9 @@ exports[`check > summaryMarkdownTable > should transform an annotations summary 
 |-|-|
 |Exports|131415|
 |Types|161718|
-|Class Members|192021|
-|Enum Members|222324|
-|Duplicates|252627|"
+|Duplicates|192021|
+|Class Members|222324|
+|Enum Members|252627|"
 `;
 
 exports[`check > updateCheckAnnotations > should only make three requests with 150 annotations 1`] = `

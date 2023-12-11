@@ -86,6 +86,11 @@ interface ParsedReport {
   types: Record<string, Item[]>;
 
   /**
+   * Duplicate exports `duplicates`
+   */
+  duplicates: Record<string, Array<Item[]>>;
+
+  /**
    * Unused exported enum members `enumMembers`
    */
   enumMembers: Record<string, Record<string, Item[]>>;
@@ -94,11 +99,6 @@ interface ParsedReport {
    * Unused exported class members `classMembers`
    */
   classMembers: Record<string, Record<string, Item[]>>;
-
-  /**
-   * Duplicate exports `duplicates`
-   */
-  duplicates: Record<string, Array<Item[]>>;
 }
 type ParsedReportKey = keyof ParsedReport;
 
@@ -115,9 +115,9 @@ export function parseJsonReport(rawJson: string): ParsedReport {
     unresolved: {},
     exports: {},
     types: {},
+    duplicates: {},
     enumMembers: {},
     classMembers: {},
-    duplicates: {},
   };
   const summary: Partial<Record<ParsedReportKey, number>> = {};
   if (out.files.length > 0) {

@@ -442,17 +442,17 @@ describe("check", () => {
       const count = new AnnotationsCount();
       count.exports = 123;
       count.types = 456;
-      count.classMembers = 789;
-      count.enumMembers = 101112;
-      count.duplicates = 131415;
+      count.duplicates = 789;
+      count.classMembers = 101112;
+      count.enumMembers = 131415;
 
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
 
       count.exports = 131415;
       count.types = 161718;
-      count.classMembers = 192021;
-      count.enumMembers = 222324;
-      count.duplicates = 252627;
+      count.duplicates = 192021;
+      count.classMembers = 222324;
+      count.enumMembers = 252627;
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
     });
   });

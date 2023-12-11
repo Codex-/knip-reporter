@@ -724,6 +724,12 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 |packages/a/src/Weapons.ts|\`cowinator\`|
 |packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
 |packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+  "### Duplicates (5)
+
+|Filename|duplicates|
+|-|-|
+|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
+|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
   "### Unused Enum Members (12)
 
 |Filename|Enum|Member|
@@ -738,12 +744,6 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|",
-  "### Duplicates (5)
-
-|Filename|duplicates|
-|-|-|
-|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
-|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
 ]
 `;
 
@@ -848,6 +848,59 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
     "type": "type",
   },
   {
+    "duplicateIdentifiers": [
+      "EvilRatchet",
+    ],
+    "identifier": "Ratchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Ratchet",
+    ],
+    "identifier": "EvilRatchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "EvilKit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "Kit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "EvilKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "EvilKit",
+    ],
+    "identifier": "DefinitelyNotKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 10,
+    "type": "duplicate",
+  },
+  {
     "identifier": "Magmos",
     "path": "DrNefarious.ts",
     "start_column": 5,
@@ -980,59 +1033,6 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
     "start_line": 327,
     "type": "class",
   },
-  {
-    "duplicateIdentifiers": [
-      "EvilRatchet",
-    ],
-    "identifier": "Ratchet",
-    "path": "Lombax.ts",
-    "start_column": 15,
-    "start_line": 8,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "Ratchet",
-    ],
-    "identifier": "EvilRatchet",
-    "path": "Lombax.ts",
-    "start_column": 15,
-    "start_line": 9,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "EvilKit",
-      "DefinitelyNotKit",
-    ],
-    "identifier": "Kit",
-    "path": "WarBot.ts",
-    "start_column": 15,
-    "start_line": 8,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "Kit",
-      "DefinitelyNotKit",
-    ],
-    "identifier": "EvilKit",
-    "path": "WarBot.ts",
-    "start_column": 15,
-    "start_line": 9,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "Kit",
-      "EvilKit",
-    ],
-    "identifier": "DefinitelyNotKit",
-    "path": "WarBot.ts",
-    "start_column": 15,
-    "start_line": 10,
-    "type": "duplicate",
-  },
 ]
 `;
 
@@ -1088,6 +1088,12 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 |packages/a/src/Weapons.ts|\`cowinator\`|
 |packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
 |packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+  "### Duplicates (5)
+
+|Filename|duplicates|
+|-|-|
+|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
+|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
   "### Unused Enum Members (12)
 
 |Filename|Enum|Member|
@@ -1102,12 +1108,6 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|",
-  "### Duplicates (5)
-
-|Filename|duplicates|
-|-|-|
-|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
-|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
 ]
 `;
 
@@ -1170,6 +1170,59 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
     "type": "type",
   },
   {
+    "duplicateIdentifiers": [
+      "EvilRatchet",
+    ],
+    "identifier": "Ratchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Ratchet",
+    ],
+    "identifier": "EvilRatchet",
+    "path": "Lombax.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "EvilKit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "Kit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 8,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "DefinitelyNotKit",
+    ],
+    "identifier": "EvilKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 9,
+    "type": "duplicate",
+  },
+  {
+    "duplicateIdentifiers": [
+      "Kit",
+      "EvilKit",
+    ],
+    "identifier": "DefinitelyNotKit",
+    "path": "WarBot.ts",
+    "start_column": 15,
+    "start_line": 10,
+    "type": "duplicate",
+  },
+  {
     "identifier": "Magmos",
     "path": "DrNefarious.ts",
     "start_column": 5,
@@ -1301,59 +1354,6 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
     "start_column": 9,
     "start_line": 327,
     "type": "class",
-  },
-  {
-    "duplicateIdentifiers": [
-      "EvilRatchet",
-    ],
-    "identifier": "Ratchet",
-    "path": "Lombax.ts",
-    "start_column": 15,
-    "start_line": 8,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "Ratchet",
-    ],
-    "identifier": "EvilRatchet",
-    "path": "Lombax.ts",
-    "start_column": 15,
-    "start_line": 9,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "EvilKit",
-      "DefinitelyNotKit",
-    ],
-    "identifier": "Kit",
-    "path": "WarBot.ts",
-    "start_column": 15,
-    "start_line": 8,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "Kit",
-      "DefinitelyNotKit",
-    ],
-    "identifier": "EvilKit",
-    "path": "WarBot.ts",
-    "start_column": 15,
-    "start_line": 9,
-    "type": "duplicate",
-  },
-  {
-    "duplicateIdentifiers": [
-      "Kit",
-      "EvilKit",
-    ],
-    "identifier": "DefinitelyNotKit",
-    "path": "WarBot.ts",
-    "start_column": 15,
-    "start_line": 10,
-    "type": "duplicate",
   },
 ]
 `;
