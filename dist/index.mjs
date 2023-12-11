@@ -22176,12 +22176,37 @@ async function createCheckId(name, title) {
   return id;
 }
 var CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
+var AnnotationsCount = class {
+  exports = 0;
+  types = 0;
+  enumMembers = 0;
+  classMembers = 0;
+  duplicates = 0;
+  increaseCount(type) {
+    switch (type) {
+      case "export":
+        this.exports++;
+        break;
+      case "type":
+        this.types++;
+        break;
+      case "class":
+        this.classMembers++;
+        break;
+      case "enum":
+        this.enumMembers++;
+        break;
+      case "duplicate":
+        this.duplicates++;
+        break;
+    }
+  }
+};
 async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
   core3.debug(
     `[updateCheckAnnotations]: Begin pushing annotations (${itemMeta.length}) with level '${ignoreResults ? "warning" : "failure"}'`
   );
-  let classMemberCount = 0;
-  let enumMemberCount = 0;
+  const count = new AnnotationsCount();
   let i = 0;
   while (i < itemMeta.length) {
     const currentEndIndex = i + CHECK_ANNOTATIONS_UPDATE_LIMIT < itemMeta.length ? i + CHECK_ANNOTATIONS_UPDATE_LIMIT : itemMeta.length;
@@ -22194,11 +22219,7 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
       if (!meta) {
         continue;
       }
-      if (meta.type === "class") {
-        classMemberCount++;
-      } else {
-        enumMemberCount++;
-      }
+      count.increaseCount(meta.type);
       const annotation = {
         path: meta.path,
         start_line: meta.start_line,
@@ -22206,8 +22227,33 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
         start_column: meta.start_column,
         end_column: meta.start_column + meta.identifier.length,
         annotation_level: ignoreResults ? "warning" : "failure",
-        message: `${meta.identifier} is an unused ${meta.type} member`
+        message: ""
       };
+      switch (meta.type) {
+        case "type":
+        case "export":
+        case "class":
+        case "enum":
+          {
+            const typeMessage = meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
+            annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
+          }
+          break;
+        case "duplicate":
+          const duplicatesStr = (() => {
+            const names = meta.duplicateIdentifiers.map((name) => `'${name}'`);
+            if (names.length <= 1) {
+              return names.join("");
+            }
+            if (names.length === 2) {
+              return `${names[0]} and ${names[1]}`;
+            }
+            const last = names.pop();
+            return `${names.join(", ")} and ${last}`;
+          })();
+          annotation.message = `'${meta.identifier}' is a duplicate` + (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
+          break;
+      }
       annotations.push(annotation);
     }
     core3.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);
@@ -22221,7 +22267,7 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
   core3.debug(
     `[updateCheckAnnotations]: Pushing annotations (${itemMeta.length}) to check ${checkId} completed`
   );
-  return { classMembers: classMemberCount, enumMembers: enumMemberCount };
+  return count;
 }
 async function resolveCheck(checkId, conclusion, counts) {
   core3.debug(`[resolveCheck]: Updating check ${checkId} conclusion (${conclusion})`);
@@ -22233,7 +22279,13 @@ async function resolveCheck(checkId, conclusion, counts) {
     conclusion
   );
 }
-function summaryMarkdownTable({ classMembers, enumMembers }) {
+function summaryMarkdownTable({
+  exports,
+  types,
+  classMembers,
+  enumMembers,
+  duplicates
+}) {
   const markdownTableOptions = {
     alignDelimiters: false,
     padding: false
@@ -22241,8 +22293,11 @@ function summaryMarkdownTable({ classMembers, enumMembers }) {
   return markdownTable(
     [
       ["Type", "Found"],
+      ["Exports", `${exports}`],
+      ["Types", `${types}`],
       ["Class Members", `${classMembers}`],
-      ["Enum Members", `${enumMembers}`]
+      ["Enum Members", `${enumMembers}`],
+      ["Duplicates", `${duplicates}`]
     ],
     markdownTableOptions
   );
@@ -27782,16 +27837,91 @@ function buildArraySection(name, rawResults) {
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
   return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
+function getMetaType(type) {
+  switch (type) {
+    case "classMembers":
+      return "class";
+    case "enumMembers":
+      return "enum";
+    case "exports":
+      return "export";
+    case "types":
+      return "type";
+    case "duplicates":
+      return "duplicate";
+    default:
+      throw new Error(`Unhandled meta type: ${type}`);
+  }
+}
+function buildArraySectionWithAnnotations(name, rawResults, annotationsEnabled, verboseEnabled) {
+  const tableBody = [];
+  const annotations = [];
+  const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
+  const metaType = getMetaType(name);
+  let totalUnused = 0;
+  for (const [filename, results] of Object.entries(rawResults)) {
+    const itemNames = [];
+    for (const item2 of results) {
+      if (Array.isArray(item2)) {
+        for (let i = 0; i < item2.length; i++) {
+          const duplicate = item2[i];
+          const otherDuplicates = [...item2.slice(0, i), ...item2.slice(i + 1, item2.length)].map(
+            (dupe) => dupe.name
+          );
+          if (annotationsEnabled && isValidAnnotationBody(duplicate)) {
+            annotations.push({
+              path: filename,
+              identifier: duplicate.name,
+              start_line: duplicate.line,
+              start_column: duplicate.col,
+              type: "duplicate",
+              duplicateIdentifiers: otherDuplicates
+            });
+          }
+        }
+        if (shouldBuildMarkdown) {
+          itemNames.push(item2.map((dup) => `\`${dup.name}\``).join(", "));
+        }
+        totalUnused += item2.length;
+        continue;
+      }
+      if (annotationsEnabled && isValidAnnotationBody(item2)) {
+        annotations.push({
+          path: filename,
+          identifier: item2.name,
+          start_line: item2.line,
+          start_column: item2.col,
+          type: metaType
+        });
+      }
+      if (shouldBuildMarkdown) {
+        itemNames.push(`\`${item2.name}\``);
+      }
+      totalUnused++;
+    }
+    if (shouldBuildMarkdown) {
+      tableBody.push([filename, itemNames.join("<br/>")]);
+    }
+  }
+  if (shouldBuildMarkdown) {
+    const tableHeader = ["Filename", name];
+    const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
+    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+    return { sections: processedSections, annotations };
+  }
+  return { sections: [], annotations };
+}
 function isValidAnnotationBody(item2) {
   return item2.pos !== void 0 && item2.line !== void 0 && item2.col !== void 0;
 }
 function buildMapSection(name, rawResults, annotationsEnabled, verboseEnabled) {
-  let totalUnused = 0;
   const tableBody = [];
   const annotations = [];
-  const resultType = name === "classMembers" ? "Class" : "Enum";
   const resultMetaType = name === "classMembers" ? "class" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
+  const metaType = getMetaType(name);
+  const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
+  let totalUnused = 0;
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       const itemNames = [];
@@ -27862,46 +27992,54 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
 function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
   const outputAnnotations = [];
   const outputSections = [];
-  for (const key of Object.keys(report)) {
+  for (const [key, value] of Object.entries(report)) {
+    let buildWithAnnotations = void 0;
+    let length = 0;
+    if (key === "files") {
+      if (report.files.length > 0) {
+        outputSections.push(buildFilesSection(report.files));
+        core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+      }
+      continue;
+    }
+    if (Object.keys(value).length <= 0) {
+      continue;
+    }
     switch (key) {
-      case "files":
-        if (report.files.length > 0) {
-          outputSections.push(buildFilesSection(report.files));
-          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
-        }
-        break;
       case "dependencies":
       case "devDependencies":
       case "optionalPeerDependencies":
       case "unlisted":
       case "binaries":
       case "unresolved":
+        const sections = buildArraySection(key, value);
+        outputSections.push(...sections);
+        core7.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
+        break;
       case "exports":
       case "types":
       case "duplicates":
-        if (Object.keys(report[key]).length > 0) {
-          for (const section of buildArraySection(key, report[key])) {
-            outputSections.push(section);
-          }
-          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
-        }
+        buildWithAnnotations = () => buildArraySectionWithAnnotations(
+          key,
+          value,
+          annotationsEnabled,
+          verboseEnabled
+        );
+        length = Object.keys(value).length;
         break;
       case "enumMembers":
       case "classMembers":
-        if (Object.keys(report[key]).length > 0) {
-          const { sections, annotations } = buildMapSection(
-            key,
-            report[key],
-            annotationsEnabled,
-            verboseEnabled
-          );
-          outputAnnotations.push(...annotations);
-          for (const section of sections) {
-            outputSections.push(section);
-          }
-          core7.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
-        }
+        buildWithAnnotations = () => buildMapSection(key, value, annotationsEnabled, verboseEnabled);
+        length = Object.keys(value).length;
         break;
+    }
+    if (buildWithAnnotations) {
+      const { sections, annotations } = buildWithAnnotations();
+      outputAnnotations.push(...annotations);
+      for (const section of sections) {
+        outputSections.push(section);
+      }
+      core7.debug(`[buildSection]: Parsed ${key} (${length})`);
     }
   }
   return { sections: outputSections, annotations: outputAnnotations };
@@ -27959,7 +28097,7 @@ async function run3() {
       github2.context.payload.pull_request.number,
       knipSections
     );
-    let counts = { classMembers: 0, enumMembers: 0 };
+    let counts = new AnnotationsCount();
     if (config3.annotations) {
       counts = await updateCheckAnnotations(checkId, knipAnnotations, config3.ignoreResults);
     }

@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 import * as api from "../api.ts";
 import {
   type Annotation,
-  type AnnotationsCount,
+  AnnotationsCount,
   CHECK_ANNOTATIONS_UPDATE_LIMIT,
   createCheckId,
   resolveCheck,
@@ -41,6 +41,49 @@ describe("check", () => {
           start_line: 0,
           start_column: 0,
           type: "class",
+        },
+      ];
+
+      await updateCheckAnnotations(0, items, false);
+
+      expect(updateCheckSpy).toHaveBeenCalledOnce();
+      expect(updateCheckSpy.mock.lastCall?.[2]?.annotations).toMatchSnapshot();
+    });
+
+    it("should transform a duplicate ItemMeta to a valid annotation", async () => {
+      const updateCheckSpy = vi.spyOn(api, "updateCheck");
+      const items: ItemMeta[] = [
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: [],
+        },
+        {
+          path: "some/path",
+          identifier: "Var2",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var3"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var4",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var5", "Var6"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var7",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var8", "Var9", "Var10"],
         },
       ];
 
@@ -126,6 +169,28 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
+          type: "export",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "type",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var2"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
           type: "class",
         },
         {
@@ -139,6 +204,9 @@ describe("check", () => {
 
       let counts = await updateCheckAnnotations(0, items, false);
 
+      expect(counts.exports).toStrictEqual(1);
+      expect(counts.types).toStrictEqual(1);
+      expect(counts.duplicates).toStrictEqual(1);
       expect(counts.classMembers).toStrictEqual(1);
       expect(counts.enumMembers).toStrictEqual(1);
 
@@ -149,13 +217,44 @@ describe("check", () => {
         start_column: 0,
         type: "class",
       });
+      items.push({
+        path: "some/path",
+        identifier: "Var",
+        start_line: 0,
+        start_column: 0,
+        type: "duplicate",
+        duplicateIdentifiers: ["Var2", "Var3"],
+      });
 
       counts = await updateCheckAnnotations(0, items, false);
 
+      expect(counts.duplicates).toStrictEqual(2);
       expect(counts.classMembers).toStrictEqual(2);
       expect(counts.enumMembers).toStrictEqual(1);
 
       items.push(
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "export",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "type",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var2"],
+        },
         {
           path: "some/path",
           identifier: "Var",
@@ -174,6 +273,9 @@ describe("check", () => {
 
       counts = await updateCheckAnnotations(0, items, false);
 
+      expect(counts.exports).toStrictEqual(2);
+      expect(counts.types).toStrictEqual(2);
+      expect(counts.duplicates).toStrictEqual(3);
       expect(counts.classMembers).toStrictEqual(3);
       expect(counts.enumMembers).toStrictEqual(2);
     });
@@ -195,13 +297,47 @@ describe("check", () => {
 
     it("should only make three requests with 150 annotations", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
-      const items: ItemMeta[] = [...Array(150).keys()].map((i) => ({
-        path: "some/path",
-        identifier: `Var${i}`,
-        start_line: 0,
-        start_column: 0,
-        type: i % 2 ? "class" : "enum",
-      }));
+      const iToType = (i: number): ItemMeta["type"] => {
+        switch (i % 5) {
+          case 0:
+            return "export";
+          case 1:
+            return "type";
+          case 2:
+            return "duplicate";
+          case 3:
+            return "class";
+          case 4:
+            return "enum";
+          default:
+            throw new Error();
+        }
+      };
+      const items: ItemMeta[] = [...Array(150).keys()].map((i) => {
+        const type = iToType(i);
+        const meta: Omit<ItemMeta, "type"> = {
+          path: "some/path",
+          identifier: `Var${i}`,
+          start_line: 0,
+          start_column: 0,
+        };
+        switch (type) {
+          case "type":
+          case "export":
+          case "class":
+          case "enum":
+            return {
+              ...meta,
+              type: type,
+            };
+          case "duplicate":
+            return {
+              ...meta,
+              type: type,
+              duplicateIdentifiers: ["Var2"],
+            };
+        }
+      });
 
       await updateCheckAnnotations(0, items, false);
 
@@ -266,7 +402,7 @@ describe("check", () => {
     it("should resolve a check with the provided conclusion", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
 
-      await resolveCheck(123, "success", { classMembers: 0, enumMembers: 0 });
+      await resolveCheck(123, "success", new AnnotationsCount());
 
       expect(updateCheckSpy.mock.lastCall?.[0]).toStrictEqual(123);
       expect(updateCheckSpy.mock.lastCall?.[1]).toStrictEqual("completed");
@@ -274,7 +410,7 @@ describe("check", () => {
       expect((updateCheckSpy.mock.lastCall?.[2]?.summary.length ?? 0) > 0).toStrictEqual(true);
       expect(updateCheckSpy.mock.lastCall?.[3]).toStrictEqual("success");
 
-      await resolveCheck(456, "failure", { classMembers: 0, enumMembers: 0 });
+      await resolveCheck(456, "failure", new AnnotationsCount());
 
       expect(updateCheckSpy.mock.lastCall?.[0]).toStrictEqual(456);
       expect(updateCheckSpy.mock.lastCall?.[1]).toStrictEqual("completed");
@@ -285,29 +421,38 @@ describe("check", () => {
 
     it("should send a summary of counts", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
+      const count = new AnnotationsCount();
+      count.exports = 100;
+      count.types = 200;
+      count.classMembers = 300;
+      count.enumMembers = 400;
 
-      await resolveCheck(123, "success", { classMembers: 100, enumMembers: 200 });
+      await resolveCheck(123, "success", count);
 
       const summary = updateCheckSpy.mock.lastCall?.[2]?.summary;
-      expect(summary).toMatch(/\|Class Members\|100\|/);
-      expect(summary).toMatch(/\|Enum Members\|200\|/);
+      expect(summary).toMatch(/\|Exports\|100\|/);
+      expect(summary).toMatch(/\|Types\|200\|/);
+      expect(summary).toMatch(/\|Class Members\|300\|/);
+      expect(summary).toMatch(/\|Enum Members\|400\|/);
     });
   });
 
   describe("summaryMarkdownTable", () => {
     it("should transform an annotations summary to a markdown table", () => {
-      let count: AnnotationsCount = {
-        classMembers: 123,
-        enumMembers: 456,
-      };
+      const count = new AnnotationsCount();
+      count.exports = 123;
+      count.types = 456;
+      count.classMembers = 789;
+      count.enumMembers = 101112;
+      count.duplicates = 131415;
 
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
 
-      count = {
-        classMembers: 456,
-        enumMembers: 789,
-      };
-
+      count.exports = 131415;
+      count.types = 161718;
+      count.classMembers = 192021;
+      count.enumMembers = 222324;
+      count.duplicates = 252627;
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
     });
   });

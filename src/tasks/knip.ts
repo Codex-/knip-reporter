@@ -100,6 +100,7 @@ interface ParsedReport {
    */
   duplicates: Record<string, Array<Item[]>>;
 }
+type ParsedReportKey = keyof ParsedReport;
 
 export function parseJsonReport(rawJson: string): ParsedReport {
   // Default JSON reporter results in a collection with a single object
@@ -118,7 +119,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
     classMembers: {},
     duplicates: {},
   };
-  const summary: Partial<Record<keyof ParsedReport, number>> = {};
+  const summary: Partial<Record<ParsedReportKey, number>> = {};
   if (out.files.length > 0) {
     summary.files = out.files.length;
   }
@@ -228,6 +229,99 @@ export function buildArraySection(
   return processSectionToMessages(sectionHeader, tableHeader, tableBody);
 }
 
+function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
+  switch (type) {
+    case "classMembers":
+      return "class";
+    case "enumMembers":
+      return "enum";
+    case "exports":
+      return "export";
+    case "types":
+      return "type";
+    case "duplicates":
+      return "duplicate";
+    default:
+      throw new Error(`Unhandled meta type: ${type}`);
+  }
+}
+
+/**
+ * Build a section where the result is a collection and supports annotations
+ *
+ * @returns a tuple of the markdown sections if verbose and annotations if enabled
+ */
+export function buildArraySectionWithAnnotations(
+  name: ParsedReportKey,
+  rawResults: Record<string, Item[] | Item[][]>,
+  annotationsEnabled: boolean,
+  verboseEnabled: boolean,
+): { sections: string[]; annotations: ItemMeta[] } {
+  const tableBody: string[][] = [];
+  const annotations: ItemMeta[] = [];
+  const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
+  const metaType = getMetaType(name);
+
+  let totalUnused = 0;
+  for (const [filename, results] of Object.entries(rawResults)) {
+    const itemNames = [];
+    for (const item of results) {
+      // Handle the duplicates case
+      if (Array.isArray(item)) {
+        for (let i = 0; i < item.length; i++) {
+          const duplicate = item[i]!;
+          const otherDuplicates = [...item.slice(0, i), ...item.slice(i + 1, item.length)].map(
+            (dupe) => dupe.name,
+          );
+
+          if (annotationsEnabled && isValidAnnotationBody(duplicate)) {
+            annotations.push({
+              path: filename,
+              identifier: duplicate.name,
+              start_line: duplicate.line,
+              start_column: duplicate.col,
+              type: "duplicate",
+              duplicateIdentifiers: otherDuplicates,
+            });
+          }
+        }
+        if (shouldBuildMarkdown) {
+          itemNames.push(item.map((dup) => `\`${dup.name}\``).join(", "));
+        }
+        totalUnused += item.length;
+        continue;
+      }
+
+      if (annotationsEnabled && isValidAnnotationBody(item)) {
+        annotations.push({
+          path: filename,
+          identifier: item.name,
+          start_line: item.line,
+          start_column: item.col,
+          type: metaType as Exclude<ItemMeta["type"], "duplicate">,
+        });
+      }
+      if (shouldBuildMarkdown) {
+        itemNames.push(`\`${item.name}\``);
+      }
+      totalUnused++;
+    }
+    if (shouldBuildMarkdown) {
+      tableBody.push([filename, itemNames.join("<br/>")]);
+    }
+  }
+
+  if (shouldBuildMarkdown) {
+    const tableHeader = ["Filename", name];
+    const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
+    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+
+    return { sections: processedSections, annotations: annotations };
+  }
+
+  return { sections: [], annotations: annotations };
+}
+
 function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
   return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
 }
@@ -235,24 +329,22 @@ function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<
 /**
  * Build a section where the result is a map
  *
- * As these sections are the only sections that return code identifiers
- * we process the sections and annotations.
- *
  * @returns a tuple of the markdown sections if verbose and annotations if enabled
  */
 export function buildMapSection(
-  name: string,
+  name: ParsedReportKey,
   rawResults: Record<string, Record<string, Item[]>>,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
 ): { sections: string[]; annotations: ItemMeta[] } {
-  let totalUnused = 0;
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
-  const resultType = name === "classMembers" ? "Class" : "Enum";
   const resultMetaType = name === "classMembers" ? "class" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
+  const metaType = getMetaType(name);
+  const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
 
+  let totalUnused = 0;
   for (const [filename, results] of Object.entries(rawResults)) {
     for (const [definitionName, members] of Object.entries(results)) {
       const itemNames = [];
@@ -344,46 +436,66 @@ export function buildMarkdownSections(
 ): { sections: string[]; annotations: ItemMeta[] } {
   const outputAnnotations: ItemMeta[] = [];
   const outputSections: string[] = [];
-  for (const key of Object.keys(report)) {
+  for (const [key, value] of Object.entries(report)) {
+    let buildWithAnnotations:
+      | (() => {
+          sections: string[];
+          annotations: ItemMeta[];
+        })
+      | undefined = undefined;
+    let length = 0;
+
+    if (key === "files") {
+      if (report.files.length > 0) {
+        outputSections.push(buildFilesSection(report.files));
+        core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+      }
+      continue;
+    }
+
+    if (Object.keys(value).length <= 0) {
+      continue;
+    }
+
     switch (key) {
-      case "files":
-        if (report.files.length > 0) {
-          outputSections.push(buildFilesSection(report.files));
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
-        }
-        break;
       case "dependencies":
       case "devDependencies":
       case "optionalPeerDependencies":
       case "unlisted":
       case "binaries":
       case "unresolved":
+        const sections = buildArraySection(key, value);
+        outputSections.push(...sections);
+        core.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
+        break;
       case "exports":
       case "types":
       case "duplicates":
-        if (Object.keys(report[key]).length > 0) {
-          for (const section of buildArraySection(key, report[key])) {
-            outputSections.push(section);
-          }
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
-        }
-        break;
-      case "enumMembers":
-      case "classMembers":
-        if (Object.keys(report[key]).length > 0) {
-          const { sections, annotations } = buildMapSection(
-            key,
-            report[key],
+        buildWithAnnotations = () =>
+          buildArraySectionWithAnnotations(
+            key as ParsedReportKey,
+            value,
             annotationsEnabled,
             verboseEnabled,
           );
-          outputAnnotations.push(...annotations);
-          for (const section of sections) {
-            outputSections.push(section);
-          }
-          core.debug(`[buildMarkdownSections]: Parsed ${key} (${Object.keys(report[key]).length})`);
-        }
+        length = Object.keys(value).length;
         break;
+      case "enumMembers":
+      case "classMembers":
+        buildWithAnnotations = () =>
+          buildMapSection(key as ParsedReportKey, value, annotationsEnabled, verboseEnabled);
+        length = Object.keys(value).length;
+
+        break;
+    }
+
+    if (buildWithAnnotations) {
+      const { sections, annotations } = buildWithAnnotations();
+      outputAnnotations.push(...annotations);
+      for (const section of sections) {
+        outputSections.push(section);
+      }
+      core.debug(`[buildSection]: Parsed ${key} (${length})`);
     }
   }
 

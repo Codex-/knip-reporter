@@ -17,9 +17,33 @@ export const CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 
 type Unpacked<T> = T extends Array<infer U> ? U : T;
 export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>;
-export interface AnnotationsCount {
-  classMembers: number;
-  enumMembers: number;
+export class AnnotationsCount {
+  public exports: number = 0;
+  public types: number = 0;
+  public enumMembers: number = 0;
+  public classMembers: number = 0;
+  public duplicates: number = 0;
+
+  public increaseCount(type: ItemMeta["type"]): void {
+    switch (type) {
+      case "export":
+        this.exports++;
+        break;
+      case "type":
+        this.types++;
+        break;
+
+      case "class":
+        this.classMembers++;
+        break;
+      case "enum":
+        this.enumMembers++;
+        break;
+      case "duplicate":
+        this.duplicates++;
+        break;
+    }
+  }
 }
 
 export async function updateCheckAnnotations(
@@ -33,8 +57,8 @@ export async function updateCheckAnnotations(
     }'`,
   );
 
-  let classMemberCount = 0;
-  let enumMemberCount = 0;
+  const count = new AnnotationsCount();
+
   let i = 0;
   while (i < itemMeta.length) {
     const currentEndIndex =
@@ -53,11 +77,7 @@ export async function updateCheckAnnotations(
         continue;
       }
 
-      if (meta.type === "class") {
-        classMemberCount++;
-      } else {
-        enumMemberCount++;
-      }
+      count.increaseCount(meta.type);
 
       const annotation: Annotation = {
         path: meta.path,
@@ -66,8 +86,38 @@ export async function updateCheckAnnotations(
         start_column: meta.start_column,
         end_column: meta.start_column + meta.identifier.length,
         annotation_level: ignoreResults ? "warning" : "failure",
-        message: `${meta.identifier} is an unused ${meta.type} member`,
+        message: "",
       };
+      switch (meta.type) {
+        case "type":
+        case "export":
+        case "class":
+        case "enum":
+          {
+            const typeMessage =
+              meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
+            annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
+          }
+          break;
+        case "duplicate":
+          // eslint-disable-next-line no-case-declarations
+          const duplicatesStr = (() => {
+            const names = meta.duplicateIdentifiers.map((name) => `'${name}'`);
+            if (names.length <= 1) {
+              return names.join(""); // coerce to string if empty collection
+            }
+            if (names.length === 2) {
+              return `${names[0]} and ${names[1]}`;
+            }
+            const last = names.pop();
+            return `${names.join(", ")} and ${last}`;
+          })();
+          annotation.message =
+            `'${meta.identifier}' is a duplicate` +
+            (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
+          break;
+      }
+
       annotations.push(annotation);
     }
 
@@ -85,7 +135,7 @@ export async function updateCheckAnnotations(
     `[updateCheckAnnotations]: Pushing annotations (${itemMeta.length}) to check ${checkId} completed`,
   );
 
-  return { classMembers: classMemberCount, enumMembers: enumMemberCount };
+  return count;
 }
 
 export async function resolveCheck(
@@ -103,7 +153,13 @@ export async function resolveCheck(
   );
 }
 
-export function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsCount): string {
+export function summaryMarkdownTable({
+  exports,
+  types,
+  classMembers,
+  enumMembers,
+  duplicates,
+}: AnnotationsCount): string {
   const markdownTableOptions: MarkdownTableOptions = {
     alignDelimiters: false,
     padding: false,
@@ -111,8 +167,11 @@ export function summaryMarkdownTable({ classMembers, enumMembers }: AnnotationsC
   return markdownTable(
     [
       ["Type", "Found"],
+      ["Exports", `${exports}`],
+      ["Types", `${types}`],
       ["Class Members", `${classMembers}`],
       ["Enum Members", `${enumMembers}`],
+      ["Duplicates", `${duplicates}`],
     ],
     markdownTableOptions,
   );

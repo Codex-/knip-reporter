@@ -329,7 +329,12 @@ export const reportJson = {
       types: [],
       enumMembers: {},
       classMembers: {},
-      duplicates: [[{ name: "Ratchet" }, { name: "default" }]],
+      duplicates: [
+        [
+          { name: "Ratchet", line: 8, col: 15, pos: 358 },
+          { name: "EvilRatchet", line: 9, col: 15, pos: 358 },
+        ],
+      ],
     },
     {
       file: "WarBot.ts",
@@ -343,7 +348,13 @@ export const reportJson = {
       types: [],
       enumMembers: {},
       classMembers: {},
-      duplicates: [[{ name: "Kit" }, { name: "default" }]],
+      duplicates: [
+        [
+          { name: "Kit", line: 8, col: 15, pos: 358 },
+          { name: "EvilKit", line: 9, col: 15, pos: 358 },
+          { name: "DefinitelyNotKit", line: 10, col: 15, pos: 358 },
+        ],
+      ],
     },
   ],
 };

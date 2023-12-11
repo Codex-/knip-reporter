@@ -4,7 +4,7 @@ import * as github from "@actions/github";
 import { configToStr, getConfig } from "./action.ts";
 import { init } from "./api.ts";
 import {
-  type AnnotationsCount,
+  AnnotationsCount,
   createCheckId,
   resolveCheck,
   updateCheckAnnotations,
@@ -48,7 +48,7 @@ async function run(): Promise<void> {
       knipSections,
     );
 
-    let counts: AnnotationsCount = { classMembers: 0, enumMembers: 0 };
+    let counts = new AnnotationsCount();
     if (config.annotations) {
       counts = await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
     }
