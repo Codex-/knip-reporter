@@ -20,9 +20,9 @@ export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotati
 export class AnnotationsCount {
   public exports: number = 0;
   public types: number = 0;
-  public duplicates: number = 0;
   public enumMembers: number = 0;
   public classMembers: number = 0;
+  public duplicates: number = 0;
 
   public increaseCount(type: ItemMeta["type"]): void {
     switch (type) {
@@ -32,14 +32,15 @@ export class AnnotationsCount {
       case "type":
         this.types++;
         break;
-      case "duplicate":
-        this.duplicates++;
-        break;
+
       case "class":
         this.classMembers++;
         break;
       case "enum":
         this.enumMembers++;
+        break;
+      case "duplicate":
+        this.duplicates++;
         break;
     }
   }
@@ -157,6 +158,7 @@ export function summaryMarkdownTable({
   types,
   classMembers,
   enumMembers,
+  duplicates,
 }: AnnotationsCount): string {
   const markdownTableOptions: MarkdownTableOptions = {
     alignDelimiters: false,
@@ -169,6 +171,7 @@ export function summaryMarkdownTable({
       ["Types", `${types}`],
       ["Class Members", `${classMembers}`],
       ["Enum Members", `${enumMembers}`],
+      ["Duplicates", `${duplicates}`],
     ],
     markdownTableOptions,
   );

@@ -22179,9 +22179,9 @@ var CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 var AnnotationsCount = class {
   exports = 0;
   types = 0;
-  duplicates = 0;
   enumMembers = 0;
   classMembers = 0;
+  duplicates = 0;
   increaseCount(type) {
     switch (type) {
       case "export":
@@ -22190,14 +22190,14 @@ var AnnotationsCount = class {
       case "type":
         this.types++;
         break;
-      case "duplicate":
-        this.duplicates++;
-        break;
       case "class":
         this.classMembers++;
         break;
       case "enum":
         this.enumMembers++;
+        break;
+      case "duplicate":
+        this.duplicates++;
         break;
     }
   }
@@ -22283,7 +22283,8 @@ function summaryMarkdownTable({
   exports,
   types,
   classMembers,
-  enumMembers
+  enumMembers,
+  duplicates
 }) {
   const markdownTableOptions = {
     alignDelimiters: false,
@@ -22295,7 +22296,8 @@ function summaryMarkdownTable({
       ["Exports", `${exports}`],
       ["Types", `${types}`],
       ["Class Members", `${classMembers}`],
-      ["Enum Members", `${enumMembers}`]
+      ["Enum Members", `${enumMembers}`],
+      ["Duplicates", `${duplicates}`]
     ],
     markdownTableOptions
   );

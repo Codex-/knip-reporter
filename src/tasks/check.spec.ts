@@ -444,6 +444,7 @@ describe("check", () => {
       count.types = 456;
       count.classMembers = 789;
       count.enumMembers = 101112;
+      count.duplicates = 131415;
 
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
 
@@ -451,6 +452,7 @@ describe("check", () => {
       count.types = 161718;
       count.classMembers = 192021;
       count.enumMembers = 222324;
+      count.duplicates = 252627;
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
     });
   });
