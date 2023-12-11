@@ -50,6 +50,49 @@ describe("check", () => {
       expect(updateCheckSpy.mock.lastCall?.[2]?.annotations).toMatchSnapshot();
     });
 
+    it("should transform a duplicate ItemMeta to a valid annotation", async () => {
+      const updateCheckSpy = vi.spyOn(api, "updateCheck");
+      const items: ItemMeta[] = [
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: [],
+        },
+        {
+          path: "some/path",
+          identifier: "Var2",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var3"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var4",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var5", "Var6"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var7",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var8", "Var9", "Var10"],
+        },
+      ];
+
+      await updateCheckAnnotations(0, items, false);
+
+      expect(updateCheckSpy).toHaveBeenCalledOnce();
+      expect(updateCheckSpy.mock.lastCall?.[2]?.annotations).toMatchSnapshot();
+    });
+
     it("should output a warning annotation if ignoreResults is enabled", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
       const items: ItemMeta[] = [
@@ -140,6 +183,14 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var2"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
           type: "class",
         },
         {
@@ -155,6 +206,7 @@ describe("check", () => {
 
       expect(counts.exports).toStrictEqual(1);
       expect(counts.types).toStrictEqual(1);
+      expect(counts.duplicates).toStrictEqual(1);
       expect(counts.classMembers).toStrictEqual(1);
       expect(counts.enumMembers).toStrictEqual(1);
 
@@ -165,9 +217,18 @@ describe("check", () => {
         start_column: 0,
         type: "class",
       });
+      items.push({
+        path: "some/path",
+        identifier: "Var",
+        start_line: 0,
+        start_column: 0,
+        type: "duplicate",
+        duplicateIdentifiers: ["Var2", "Var3"],
+      });
 
       counts = await updateCheckAnnotations(0, items, false);
 
+      expect(counts.duplicates).toStrictEqual(2);
       expect(counts.classMembers).toStrictEqual(2);
       expect(counts.enumMembers).toStrictEqual(1);
 
@@ -191,6 +252,14 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var2"],
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
           type: "class",
         },
         {
@@ -206,6 +275,7 @@ describe("check", () => {
 
       expect(counts.exports).toStrictEqual(2);
       expect(counts.types).toStrictEqual(2);
+      expect(counts.duplicates).toStrictEqual(3);
       expect(counts.classMembers).toStrictEqual(3);
       expect(counts.enumMembers).toStrictEqual(2);
     });
@@ -227,27 +297,47 @@ describe("check", () => {
 
     it("should only make three requests with 150 annotations", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
-      const iToType = (i: number): Exclude<ItemMeta["type"], "duplicate"> => {
-        switch (i % 4) {
+      const iToType = (i: number): ItemMeta["type"] => {
+        switch (i % 5) {
           case 0:
             return "export";
           case 1:
             return "type";
           case 2:
-            return "class";
+            return "duplicate";
           case 3:
+            return "class";
+          case 4:
             return "enum";
           default:
             throw new Error();
         }
       };
-      const items: ItemMeta[] = [...Array(150).keys()].map((i) => ({
-        path: "some/path",
-        identifier: `Var${i}`,
-        start_line: 0,
-        start_column: 0,
-        type: iToType(i),
-      }));
+      const items: ItemMeta[] = [...Array(150).keys()].map((i) => {
+        const type = iToType(i);
+        const meta: Omit<ItemMeta, "type"> = {
+          path: "some/path",
+          identifier: `Var${i}`,
+          start_line: 0,
+          start_column: 0,
+        };
+        switch (type) {
+          case "type":
+          case "export":
+          case "class":
+          case "enum":
+            return {
+              ...meta,
+              type: type,
+            };
+          case "duplicate":
+            return {
+              ...meta,
+              type: type,
+              duplicateIdentifiers: ["Var2"],
+            };
+        }
+      });
 
       await updateCheckAnnotations(0, items, false);
 

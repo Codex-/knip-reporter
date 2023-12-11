@@ -22179,6 +22179,7 @@ var CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 var AnnotationsCount = class {
   exports = 0;
   types = 0;
+  duplicates = 0;
   enumMembers = 0;
   classMembers = 0;
   increaseCount(type) {
@@ -22188,6 +22189,9 @@ var AnnotationsCount = class {
         break;
       case "type":
         this.types++;
+        break;
+      case "duplicate":
+        this.duplicates++;
         break;
       case "class":
         this.classMembers++;
@@ -22216,7 +22220,6 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
         continue;
       }
       count.increaseCount(meta.type);
-      const typeMessage = meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
       const annotation = {
         path: meta.path,
         start_line: meta.start_line,
@@ -22224,8 +22227,33 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
         start_column: meta.start_column,
         end_column: meta.start_column + meta.identifier.length,
         annotation_level: ignoreResults ? "warning" : "failure",
-        message: `${meta.identifier} is an unused ` + typeMessage
+        message: ""
       };
+      switch (meta.type) {
+        case "type":
+        case "export":
+        case "class":
+        case "enum":
+          {
+            const typeMessage = meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
+            annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
+          }
+          break;
+        case "duplicate":
+          const duplicatesStr = (() => {
+            const names = meta.duplicateIdentifiers.map((name) => `'${name}'`);
+            if (names.length <= 1) {
+              return names.join("");
+            }
+            if (names.length === 2) {
+              return `${names[0]} and ${names[1]}`;
+            }
+            const last = names.pop();
+            return `${names.join(", ")} and ${last}`;
+          })();
+          annotation.message = `'${meta.identifier}' is a duplicate` + (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
+          break;
+      }
       annotations.push(annotation);
     }
     core3.debug(`[updateCheckAnnotations]: Updating check ${checkId}`);

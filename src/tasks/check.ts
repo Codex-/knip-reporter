@@ -20,6 +20,7 @@ export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotati
 export class AnnotationsCount {
   public exports: number = 0;
   public types: number = 0;
+  public duplicates: number = 0;
   public enumMembers: number = 0;
   public classMembers: number = 0;
 
@@ -30,6 +31,9 @@ export class AnnotationsCount {
         break;
       case "type":
         this.types++;
+        break;
+      case "duplicate":
+        this.duplicates++;
         break;
       case "class":
         this.classMembers++;
@@ -74,9 +78,6 @@ export async function updateCheckAnnotations(
 
       count.increaseCount(meta.type);
 
-      const typeMessage =
-        meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
-
       const annotation: Annotation = {
         path: meta.path,
         start_line: meta.start_line,
@@ -84,8 +85,38 @@ export async function updateCheckAnnotations(
         start_column: meta.start_column,
         end_column: meta.start_column + meta.identifier.length,
         annotation_level: ignoreResults ? "warning" : "failure",
-        message: `${meta.identifier} is an unused ` + typeMessage,
+        message: "",
       };
+      switch (meta.type) {
+        case "type":
+        case "export":
+        case "class":
+        case "enum":
+          {
+            const typeMessage =
+              meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
+            annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
+          }
+          break;
+        case "duplicate":
+          // eslint-disable-next-line no-case-declarations
+          const duplicatesStr = (() => {
+            const names = meta.duplicateIdentifiers.map((name) => `'${name}'`);
+            if (names.length <= 1) {
+              return names.join(""); // coerce to string if empty collection
+            }
+            if (names.length === 2) {
+              return `${names[0]} and ${names[1]}`;
+            }
+            const last = names.pop();
+            return `${names.join(", ")} and ${last}`;
+          })();
+          annotation.message =
+            `'${meta.identifier}' is a duplicate` +
+            (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
+          break;
+      }
+
       annotations.push(annotation);
     }
 
