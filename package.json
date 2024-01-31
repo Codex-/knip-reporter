@@ -34,23 +34,23 @@
     "markdown-table": "^3.0.3"
   },
   "devDependencies": {
-    "@types/node": "^20.10.6",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
-    "@vitest/coverage-v8": "^1.1.1",
+    "@types/node": "^20.11.13",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
+    "@vitest/coverage-v8": "^1.2.2",
     "chalk": "^5.3.0",
-    "changelogithub": "^0.13.2",
-    "esbuild": "^0.19.11",
+    "changelogithub": "^0.13.3",
+    "esbuild": "^0.20.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-github": "^4.10.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "knip": "^3.9.0",
-    "prettier": "3.1.1",
+    "knip": "^3.13.2",
+    "prettier": "3.2.4",
     "typescript": "^5.3.3",
-    "vitest": "^1.1.1",
+    "vitest": "^1.2.2",
     "yaml": "^2.3.4"
   }
 }
