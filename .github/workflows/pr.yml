@@ -4,6 +4,7 @@ on:
 
 permissions:
   checks: write
+  issues: write
 
 jobs:
   test:
