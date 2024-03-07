@@ -22,3 +22,5 @@ jobs:
       - run: pnpm i
       - name: Knip Reporter
         uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
