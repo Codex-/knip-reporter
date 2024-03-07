@@ -1,7 +1,7 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-  ignore: ["dist"],
+  ignore: ["dist/**"],
 };
 
 export default config;
