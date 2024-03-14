@@ -25,7 +25,7 @@ permissions:
 
 steps:
   - name: Post the knip results
-    uses: codex-/knip-reporter@v1
+    uses: codex-/knip-reporter@v2
 ```
 
 ## Config
@@ -39,7 +39,7 @@ The following inputs are supported
 | `comment_id`          | ID to use when updating the PR comment. Spaces will be replaced with dashes. | `false`  | `${{ github.workflow }}-knip-reporter` |
 | `annotations`         | Annotate the project code with the knip results.                             | `false`  | `true`                                 |
 | `verbose`             | Include annotated items in the comment report.                               | `false`  | `false`                                |
-| `ignore_result`       | Do not fail the action run if knip results are found.                        | `false`  | `false`                                |
+| `ignore_results`      | Do not fail the action run if knip results are found.                        | `false`  | `false`                                |
 
 ### Issues
 
