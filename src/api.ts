@@ -63,7 +63,7 @@ export async function listCommentIds(
         continue;
       }
 
-      if (body?.includes(cfgCommentId)) {
+      if (body.includes(cfgCommentId)) {
         messageIds.push(id);
       }
     }
@@ -118,8 +118,13 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
 export async function createCheck(name: string, title: string): Promise<CreateCheckResponse> {
-  if (github.context.payload.pull_request?.head.sha === undefined) {
+  let headSha: string = github.context.sha;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  if (github.context.payload.pull_request?.head?.sha === undefined) {
     core.warning("Unable to find correct head_sha from payload, using base context sha");
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    headSha = github.context.payload.pull_request.head.sha as string;
   }
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
@@ -127,7 +132,7 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     name: name,
-    head_sha: github.context.payload.pull_request?.head.sha ?? github.context.sha,
+    head_sha: headSha,
     status: "in_progress",
     output: {
       title: title,
