@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`API > createCheck > should not throw 1`] = `
-[MockFunction newApi] {
+[MockFunction create] {
   "calls": [
     [
       {
@@ -30,7 +30,7 @@ exports[`API > createCheck > should not throw 1`] = `
 `;
 
 exports[`API > createComment > should not throw 1`] = `
-[MockFunction newApi] {
+[MockFunction createComment] {
   "calls": [
     [
       {
@@ -54,7 +54,7 @@ exports[`API > createComment > should not throw 1`] = `
 `;
 
 exports[`API > deleteComment > should not throw 1`] = `
-[MockFunction newApi] {
+[MockFunction deleteComment] {
   "calls": [
     [
       {
@@ -77,7 +77,7 @@ exports[`API > deleteComment > should not throw 1`] = `
 `;
 
 exports[`API > updateComment > should not throw 1`] = `
-[MockFunction newApi] {
+[MockFunction updateComment] {
   "calls": [
     [
       {

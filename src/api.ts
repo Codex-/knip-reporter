@@ -30,6 +30,7 @@ export async function createComment(
     body: body,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 201) {
     throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
   }
@@ -52,6 +53,7 @@ export async function listCommentIds(
 
   const messageIds: number[] = [];
   for await (const { data, status } of restIter) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (status !== 200) {
       throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
     }
@@ -89,6 +91,7 @@ export async function updateComment(
     body: body,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 200) {
     throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
   }
@@ -105,6 +108,7 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
     comment_id: commentId,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 204) {
     throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
   }
@@ -131,6 +135,7 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 201) {
     throw new Error(`Failed to create check, expected 201 but received ${response.status}`);
   }
@@ -160,6 +165,7 @@ export async function updateCheck(
     output: output,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 200) {
     throw new Error(`Failed to update check, expected 200 but received ${response.status}`);
   }

@@ -1,15 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import {
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  type SpyInstance,
-  vi,
-} from "vitest";
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from "vitest";
 
 import type { ActionConfig } from "./action.ts";
 import {
@@ -23,6 +14,49 @@ import {
 } from "./api.ts";
 
 vi.mock("@actions/core");
+vi.mock("@actions/github");
+
+async function* mockPageIterator<T, P>(
+  apiMethod: (params?: P) => Promise<T>,
+  params: P,
+): AsyncGenerator<T, void> {
+  yield await apiMethod(params);
+}
+
+interface MockResponse {
+  data: any;
+  status: number;
+}
+
+const mockOctokit = {
+  rest: {
+    checks: {
+      create: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+      update: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+    },
+    issues: {
+      createComment: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+      deleteComment: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+      listComments: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+      updateComment: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+    },
+  },
+  paginate: {
+    iterator: mockPageIterator,
+  },
+};
 
 describe("API", () => {
   const cfg: ActionConfig = {
@@ -33,27 +67,15 @@ describe("API", () => {
     verbose: false,
     ignoreResults: false,
   };
-  type Octokit = ReturnType<(typeof github)["getOctokit"]>;
-  let octokit: Octokit;
-
-  beforeAll(() => {
-    octokit = github.getOctokit("token", {
-      request: {
-        fetch: vi.fn(async () => {
-          throw new Error("API calls should be mocked");
-        }),
-      },
-    });
-  });
 
   beforeEach(() => {
     process.env.GITHUB_REPOSITORY = "a/b";
 
     vi.spyOn(core, "getInput").mockReturnValue("");
-    vi.spyOn(github, "getOctokit").mockReturnValue(octokit);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    vi.spyOn(github, "getOctokit").mockReturnValue(mockOctokit as any);
     init(cfg);
 
-    // vi.spyOn(github.context, 'payload')
     if (!github.context.payload.pull_request) {
       github.context.payload.pull_request = { head: {} } as any;
     }
@@ -66,12 +88,10 @@ describe("API", () => {
 
   describe("createComment", () => {
     it("should not throw", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 201,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "createComment").mockResolvedValue({
+        data: {},
+        status: 201,
+      });
 
       const state = await createComment(123456, "");
       expect(state.status).toStrictEqual(201);
@@ -79,12 +99,10 @@ describe("API", () => {
     });
 
     it("should pass through issue_number", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 201,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "createComment").mockResolvedValue({
+        data: {},
+        status: 201,
+      });
 
       await createComment(123, "");
       expect(restSpy.mock.calls[0]![0]!.issue_number).toStrictEqual(123);
@@ -93,12 +111,10 @@ describe("API", () => {
     });
 
     it("should pass through body", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 201,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "createComment").mockResolvedValue({
+        data: {},
+        status: 201,
+      });
 
       await createComment(123, "first");
       expect(restSpy.mock.calls[0]![0]!.body).toStrictEqual("first");
@@ -108,12 +124,10 @@ describe("API", () => {
 
     it("should throw if a non-201 status is returned", async () => {
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.issues, "createComment").mockReturnValue(
-        Promise.resolve({
-          data: undefined,
-          status: errorStatus,
-        }) as any,
-      );
+      vi.spyOn(mockOctokit.rest.issues, "createComment").mockResolvedValue({
+        data: undefined,
+        status: errorStatus,
+      });
 
       await expect(createComment(123456, "")).rejects.toThrow(
         `Failed to create comment, expected 201 but received ${errorStatus}`,
@@ -123,29 +137,28 @@ describe("API", () => {
 
   describe("listCommentIds", () => {
     let listCommentsToReturn: any[];
-    let listCommentsSpy: SpyInstance;
+    let listCommentsSpy: MockInstance;
 
     beforeEach(() => {
       // This mock may look like a case of "set foo assert foo is foo" but we don't need to test the
       // github API, we're testing that our iterator handling works as expected.
       let call = 0;
-      listCommentsSpy = vi
-        .spyOn(octokit.rest.issues, "listComments")
-        .mockImplementation((async () => {
-          const toReturn = listCommentsToReturn[call];
-          call++;
+      listCommentsSpy = vi.spyOn(mockOctokit.rest.issues, "listComments").mockImplementation(() => {
+        const toReturn = listCommentsToReturn[call];
+        call++;
 
-          if (!toReturn) {
-            return undefined;
-          }
+        if (!toReturn) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return undefined as any;
+        }
 
-          return {
-            data: toReturn,
-            status: 200,
-          };
-        }) as any);
+        return Promise.resolve({
+          data: toReturn,
+          status: 200,
+        });
+      });
 
-      vi.spyOn(octokit.paginate, "iterator").mockImplementation((rest: any) => {
+      vi.spyOn(mockOctokit.paginate, "iterator").mockImplementation((rest) => {
         return (async function* () {
           const boundRest = rest;
           let results: any = await boundRest();
@@ -195,12 +208,10 @@ describe("API", () => {
       listCommentsSpy.mockRestore();
 
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.issues, "listComments").mockReturnValue(
-        Promise.resolve({
-          data: undefined,
-          status: errorStatus,
-        } as any),
-      );
+      vi.spyOn(mockOctokit.rest.issues, "listComments").mockResolvedValue({
+        data: undefined,
+        status: errorStatus,
+      });
 
       await expect(listCommentIds("knip", 123456)).rejects.toThrow(
         `Failed to find comment ID, expected 200 but received ${errorStatus}`,
@@ -210,12 +221,10 @@ describe("API", () => {
 
   describe("updateComment", () => {
     it("should not throw", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "updateComment").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       const state = await updateComment(123456, "");
       expect(state.status).toStrictEqual(200);
@@ -223,12 +232,10 @@ describe("API", () => {
     });
 
     it("should pass through comment_id", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "updateComment").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       await updateComment(123, "");
       expect(restSpy.mock.calls[0]![0]!.comment_id).toStrictEqual(123);
@@ -237,12 +244,10 @@ describe("API", () => {
     });
 
     it("should pass through body", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "updateComment").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       await updateComment(123, "first");
       expect(restSpy.mock.calls[0]![0]!.body).toStrictEqual("first");
@@ -252,12 +257,10 @@ describe("API", () => {
 
     it("should throw if a non-200 status is returned", async () => {
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.issues, "updateComment").mockReturnValue(
-        Promise.resolve({
-          data: undefined,
-          status: errorStatus,
-        }) as any,
-      );
+      vi.spyOn(mockOctokit.rest.issues, "updateComment").mockResolvedValue({
+        data: undefined,
+        status: errorStatus,
+      });
 
       await expect(updateComment(123456, "")).rejects.toThrow(
         `Failed to update comment, expected 200 but received ${errorStatus}`,
@@ -267,12 +270,10 @@ describe("API", () => {
 
   describe("deleteComment", () => {
     it("should not throw", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "deleteComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 204,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "deleteComment").mockResolvedValue({
+        data: {},
+        status: 204,
+      });
 
       const state = await deleteComment(123456);
       expect(state.status).toStrictEqual(204);
@@ -280,12 +281,10 @@ describe("API", () => {
     });
 
     it("should pass through comment_id", async () => {
-      const restSpy = vi.spyOn(octokit.rest.issues, "deleteComment").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 204,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.issues, "deleteComment").mockResolvedValue({
+        data: {},
+        status: 204,
+      });
 
       await deleteComment(123);
       expect(restSpy.mock.calls[0]![0]!.comment_id).toStrictEqual(123);
@@ -295,12 +294,10 @@ describe("API", () => {
 
     it("should throw if a non-204 status is returned", async () => {
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.issues, "deleteComment").mockReturnValue(
-        Promise.resolve({
-          data: undefined,
-          status: errorStatus,
-        }) as any,
-      );
+      vi.spyOn(mockOctokit.rest.issues, "deleteComment").mockResolvedValue({
+        data: undefined,
+        status: errorStatus,
+      });
 
       await expect(deleteComment(123456)).rejects.toThrow(
         `Failed to delete comment, expected 204 but received ${errorStatus}`,
@@ -310,12 +307,10 @@ describe("API", () => {
 
   describe("createCheck", () => {
     it("should not throw", async () => {
-      const restSpy = vi.spyOn(octokit.rest.checks, "create").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 201,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
+        data: {},
+        status: 201,
+      });
 
       const state = await createCheck("knip-reporter", "Knip reporter analysis");
       expect(state.status).toStrictEqual(201);
@@ -324,12 +319,10 @@ describe("API", () => {
 
     it("should throw if a non-201 status is returned", async () => {
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.checks, "create").mockReturnValue(
-        Promise.resolve({
-          data: undefined,
-          status: errorStatus,
-        }) as any,
-      );
+      vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
+        data: undefined,
+        status: errorStatus,
+      });
 
       await expect(createCheck("knip-reporter", "Knip reporter analysis")).rejects.toThrow(
         `Failed to create check, expected 201 but received ${errorStatus}`,
@@ -339,24 +332,20 @@ describe("API", () => {
 
   describe("updateCheck", () => {
     it("should not throw", async () => {
-      vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       const state = await updateCheck(123, "in_progress");
       expect(state.status).toStrictEqual(200);
     });
 
     it("should pass through check_run_id", async () => {
-      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       await updateCheck(123, "in_progress");
       expect(restSpy.mock.calls[0]![0]!.check_run_id).toStrictEqual(123);
@@ -365,12 +354,10 @@ describe("API", () => {
     });
 
     it("should pass through status", async () => {
-      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       await updateCheck(123, "in_progress");
       expect(restSpy.mock.calls[0]![0]!.status).toStrictEqual("in_progress");
@@ -379,12 +366,10 @@ describe("API", () => {
     });
 
     it("should pass through output", async () => {
-      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       await updateCheck(123, "in_progress", { title: "Test Output 1", summary: "Test Summary 1" });
       expect(restSpy.mock.calls[0]![0]!.output).toStrictEqual({
@@ -399,12 +384,10 @@ describe("API", () => {
     });
 
     it("should pass through conclusion", async () => {
-      const restSpy = vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
-        Promise.resolve({
-          data: {},
-          status: 200,
-        }) as any,
-      );
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
+        data: {},
+        status: 200,
+      });
 
       await updateCheck(123, "in_progress", undefined, "failure");
       expect(restSpy.mock.calls[0]![0]!.conclusion).toStrictEqual("failure");
@@ -414,12 +397,10 @@ describe("API", () => {
 
     it("should throw if a non-200 status is returned", async () => {
       const errorStatus = 401;
-      vi.spyOn(octokit.rest.checks, "update").mockReturnValue(
-        Promise.resolve({
-          data: undefined,
-          status: errorStatus,
-        }) as any,
-      );
+      vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
+        data: undefined,
+        status: errorStatus,
+      });
 
       await expect(updateCheck(123, "completed")).rejects.toThrow(
         `Failed to update check, expected 200 but received ${errorStatus}`,
