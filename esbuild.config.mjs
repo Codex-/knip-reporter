@@ -19,8 +19,8 @@ import { analyzeMetafile, build } from "esbuild";
       // Ensure require is properly defined: https://github.com/evanw/esbuild/issues/1921
       banner: {
         js:
-          "import { createRequire } from 'module';\n" +
-          "const require = createRequire(import.meta.url);",
+          "import { createRequire as __knip_cr } from 'node:module';\n" +
+          "const require = __knip_cr(import.meta.url);",
       },
     });
 
