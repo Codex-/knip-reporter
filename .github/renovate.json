@@ -12,6 +12,9 @@
   },
   "packageRules": [
     {
+      "matchManagers": ["github-actions"]
+    },
+    {
       "matchDepTypes": ["engines"],
       "enabled": false
     }
