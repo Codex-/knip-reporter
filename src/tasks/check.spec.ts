@@ -21,6 +21,7 @@ describe("check", () => {
     it("should return the ID of a newly created Check", async () => {
       const createCheckSpy = vi
         .spyOn(api, "createCheck")
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         .mockResolvedValue({ data: { id: 123 } } as any);
       const id = await createCheckId("testName", "testTitle");
 
@@ -350,7 +351,7 @@ describe("check", () => {
 
     it("should send all items provided", async () => {
       const pushedAnnotations: Annotation[] = [];
-      vi.spyOn(api, "updateCheck").mockImplementation((async (
+      vi.spyOn(api, "updateCheck").mockImplementation(((
         _id: Parameters<typeof api.updateCheck>["0"],
         _status: Parameters<typeof api.updateCheck>["1"],
         output: Parameters<typeof api.updateCheck>["2"],
@@ -376,7 +377,7 @@ describe("check", () => {
     it("should accurately report the count to the debug logger", async () => {
       const countLogs: string[] = [];
       vi.spyOn(core, "debug").mockImplementation((msg: string) => {
-        if (/Processing/.test(msg)) {
+        if (msg.includes("Processing")) {
           countLogs.push(msg);
         }
       });

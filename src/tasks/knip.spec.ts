@@ -46,7 +46,7 @@ describe("knip", () => {
     });
 
     it("should throw if a command could not be generated", async () => {
-      vi.spyOn(ni, "getCliCommand").mockImplementation(async () => undefined);
+      vi.spyOn(ni, "getCliCommand").mockResolvedValue(undefined);
 
       await expect(async () => buildRunKnipCommand("knip")).rejects.toThrowError(
         "Unable to generate command for package manager",
@@ -56,6 +56,7 @@ describe("knip", () => {
 
   describe("run", () => {
     it("returns stdout from the resolved promise", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
         func: (error: any, stdout: string, stderr: string) => void,
@@ -70,6 +71,7 @@ describe("knip", () => {
 
     it("emits a warning log if stderr isn't empty", async () => {
       const warnSpy = vi.spyOn(core, "warning");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
         func: (error: any, stdout: string, stderr: string) => void,
@@ -85,6 +87,7 @@ describe("knip", () => {
 
     it("emits a warning log if stderr without preventing stdout from being returned", async () => {
       const warnSpy = vi.spyOn(core, "warning");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
         func: (error: any, stdout: string, stderr: string) => void,
@@ -673,6 +676,7 @@ ${JSON.stringify(reportJson)}
 `;
       /* eslint-enable no-irregular-whitespace */
       const jsonStr = getJsonFromOutput(cliOutput);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       expect(() => JSON.parse(jsonStr)).not.toThrow();
       const jsonObj = JSON.parse(jsonStr);
       expect(jsonObj).toBeTypeOf("object");

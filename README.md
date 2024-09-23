@@ -22,6 +22,7 @@ on:
 permissions:
   checks: write
   issues: write
+  pull-requests: write
 
 steps:
   - name: Post the knip results

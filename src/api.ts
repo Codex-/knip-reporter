@@ -22,6 +22,10 @@ export async function createComment(
   pullRequestNumber: number,
   body: string,
 ): Promise<CreateCommentResponse> {
+  core.debug(
+    `[createComment]: Creating comment on ${github.context.payload.pull_request?.html_url} (${pullRequestNumber})`,
+  );
+
   // https://docs.github.com/en/rest/issues/comments#create-an-issue-comment
   const response = await octokit.rest.issues.createComment({
     owner: github.context.repo.owner,
@@ -30,6 +34,7 @@ export async function createComment(
     body: body,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 201) {
     throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
   }
@@ -52,6 +57,7 @@ export async function listCommentIds(
 
   const messageIds: number[] = [];
   for await (const { data, status } of restIter) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (status !== 200) {
       throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
     }
@@ -61,7 +67,7 @@ export async function listCommentIds(
         continue;
       }
 
-      if (body?.includes(cfgCommentId)) {
+      if (body.includes(cfgCommentId)) {
         messageIds.push(id);
       }
     }
@@ -89,6 +95,7 @@ export async function updateComment(
     body: body,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 200) {
     throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
   }
@@ -105,6 +112,7 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
     comment_id: commentId,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 204) {
     throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
   }
@@ -114,8 +122,13 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
 export async function createCheck(name: string, title: string): Promise<CreateCheckResponse> {
-  if (github.context.payload.pull_request?.head.sha === undefined) {
+  let headSha: string = github.context.sha;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  if (github.context.payload.pull_request?.head?.sha === undefined) {
     core.warning("Unable to find correct head_sha from payload, using base context sha");
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    headSha = github.context.payload.pull_request.head.sha as string;
   }
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
@@ -123,7 +136,7 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
     owner: github.context.repo.owner,
     repo: github.context.repo.repo,
     name: name,
-    head_sha: github.context.payload.pull_request?.head.sha ?? github.context.sha,
+    head_sha: headSha,
     status: "in_progress",
     output: {
       title: title,
@@ -131,6 +144,7 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 201) {
     throw new Error(`Failed to create check, expected 201 but received ${response.status}`);
   }
@@ -160,6 +174,7 @@ export async function updateCheck(
     output: output,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (response.status !== 200) {
     throw new Error(`Failed to update check, expected 200 but received ${response.status}`);
   }
