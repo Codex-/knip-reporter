@@ -22,6 +22,10 @@ export async function createComment(
   pullRequestNumber: number,
   body: string,
 ): Promise<CreateCommentResponse> {
+  core.debug(
+    `[createComment]: Creating comment on ${github.context.payload.pull_request?.html_url} (${pullRequestNumber})`,
+  );
+
   // https://docs.github.com/en/rest/issues/comments#create-an-issue-comment
   const response = await octokit.rest.issues.createComment({
     owner: github.context.repo.owner,
