@@ -15,10 +15,10 @@ export async function buildRunKnipCommand(buildScriptName: string): Promise<stri
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
   }
+  const command = `${cmd.command} ${cmd.args.join(" ")}`;
+  core.debug(`[buildRunKnipCommand] command: '${command}'`);
 
-  core.debug(`knip command: ${cmd}`);
-
-  return cmd;
+  return command;
 }
 
 export async function run(runCmd: string): Promise<string> {
