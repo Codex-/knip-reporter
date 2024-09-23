@@ -37,7 +37,12 @@ export async function run(runCmd: string): Promise<string> {
   return result;
 }
 
-type Item = { name: string; pos?: number; line?: number; col?: number };
+interface Item {
+  name: string;
+  pos?: number;
+  line?: number;
+  col?: number;
+}
 
 interface ParsedReport {
   /**
@@ -88,7 +93,7 @@ interface ParsedReport {
   /**
    * Duplicate exports `duplicates`
    */
-  duplicates: Record<string, Array<Item[]>>;
+  duplicates: Record<string, Item[][]>;
 
   /**
    * Unused exported enum members `enumMembers`
@@ -102,11 +107,16 @@ interface ParsedReport {
 }
 type ParsedReportKey = keyof ParsedReport;
 
+interface UnknownIssue {
+  file: string;
+}
+
 export function parseJsonReport(rawJson: string): ParsedReport {
   // Default JSON reporter results in a collection with a single object
-  const { files, issues }: { files: string[]; issues: any } = JSON.parse(rawJson) ?? {};
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { files, issues }: { files: string[]; issues: UnknownIssue[] } = JSON.parse(rawJson) ?? {};
   const out: ParsedReport = {
-    files: files.filter((file) => !!file) ?? [],
+    files: files.filter((file) => !!file),
     dependencies: {},
     devDependencies: {},
     optionalPeerDependencies: {},
@@ -147,17 +157,19 @@ export function parseJsonReport(rawJson: string): ParsedReport {
             if (summary[type] === undefined) {
               summary[type] = 0;
             }
-            summary[type]! += result.length;
+            summary[type] += result.length;
           }
           break;
         case "enumMembers":
         case "classMembers":
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           if (typeof result === "object" && Object.keys(result).length > 0) {
             out[type][fileName] = result as Record<string, Item[]>;
             if (summary[type] === undefined) {
               summary[type] = 0;
             }
-            summary[type]! += Object.keys(result).length;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            summary[type] += Object.keys(result).length;
           }
       }
     }
@@ -269,6 +281,7 @@ export function buildArraySectionWithAnnotations(
       // Handle the duplicates case
       if (Array.isArray(item)) {
         for (let i = 0; i < item.length; i++) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           const duplicate = item[i]!;
           const otherDuplicates = [...item.slice(0, i), ...item.slice(i + 1, item.length)].map(
             (dupe) => dupe.name,
@@ -395,6 +408,7 @@ export function processSectionToMessages(
   let output = [
     sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions),
   ];
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const originalOutputLength = output[0]!.length;
   if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     // Output doesn't violate the limit, simply return and move on
@@ -436,7 +450,9 @@ export function buildMarkdownSections(
 ): { sections: string[]; annotations: ItemMeta[] } {
   const outputAnnotations: ItemMeta[] = [];
   const outputSections: string[] = [];
-  for (const [key, value] of Object.entries(report)) {
+  for (const key of Object.keys(report) as Array<keyof ParsedReport>) {
+    const value = report[key];
+
     let buildWithAnnotations:
       | (() => {
           sections: string[];
@@ -463,18 +479,19 @@ export function buildMarkdownSections(
       case "optionalPeerDependencies":
       case "unlisted":
       case "binaries":
-      case "unresolved":
-        const sections = buildArraySection(key, value);
+      case "unresolved": {
+        const sections = buildArraySection(key, value as Parameters<typeof buildArraySection>[1]);
         outputSections.push(...sections);
         core.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
         break;
+      }
       case "exports":
       case "types":
       case "duplicates":
-        buildWithAnnotations = () =>
+        buildWithAnnotations = (): ReturnType<typeof buildArraySectionWithAnnotations> =>
           buildArraySectionWithAnnotations(
-            key as ParsedReportKey,
-            value,
+            key,
+            value as Parameters<typeof buildArraySectionWithAnnotations>[1],
             annotationsEnabled,
             verboseEnabled,
           );
@@ -482,8 +499,13 @@ export function buildMarkdownSections(
         break;
       case "enumMembers":
       case "classMembers":
-        buildWithAnnotations = () =>
-          buildMapSection(key as ParsedReportKey, value, annotationsEnabled, verboseEnabled);
+        buildWithAnnotations = (): ReturnType<typeof buildMapSection> =>
+          buildMapSection(
+            key,
+            value as Parameters<typeof buildMapSection>[1],
+            annotationsEnabled,
+            verboseEnabled,
+          );
         length = Object.keys(value).length;
 
         break;
@@ -532,9 +554,11 @@ export async function runKnipTasks(
 
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
-  const report = await timeTask("Parse knip report", async () => parseJsonReport(output));
-  const sectionsAndAnnotations = await timeTask("Convert report to markdown", async () =>
-    buildMarkdownSections(report, annotationsEnabled, verboseEnabled),
+  const report = await timeTask("Parse knip report", () =>
+    Promise.resolve(parseJsonReport(output)),
+  );
+  const sectionsAndAnnotations = await timeTask("Convert report to markdown", () =>
+    Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled)),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);

@@ -50,6 +50,7 @@ async function run(): Promise<void> {
 
     let counts = new AnnotationsCount();
     if (config.annotations) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       counts = await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
     }
 
@@ -59,8 +60,10 @@ async function run(): Promise<void> {
 
     if (config.annotations) {
       if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         await resolveCheck(checkId!, "failure", counts);
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         await resolveCheck(checkId!, "success", counts);
       }
     }
@@ -74,8 +77,9 @@ async function run(): Promise<void> {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     core.setFailed(`🧨 Failed: ${error}`);
   }
 }
 
-(() => run())();
+((): Promise<void> => run())();

@@ -12,7 +12,7 @@ vi.mock("../api.ts");
 describe("comment", () => {
   describe("createOrUpdateComments", () => {
     it("should create comments", async () => {
-      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((async () => ({
+      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((() => ({
         data: { id: 0 },
       })) as unknown as typeof api.createComment);
       const comments = ["test1", "test2", "test3"];
@@ -26,7 +26,7 @@ describe("comment", () => {
     });
 
     it("should update comments", async () => {
-      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((async () => ({
+      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((() => ({
         data: { id: 0 },
       })) as unknown as typeof api.createComment);
       const updateCommentSpy = vi.spyOn(api, "updateComment");
@@ -44,7 +44,7 @@ describe("comment", () => {
     });
 
     it("should update if possible or create", async () => {
-      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((async () => ({
+      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((() => ({
         data: { id: 0 },
       })) as unknown as typeof api.createComment);
       const updateCommentSpy = vi.spyOn(api, "updateComment");
@@ -67,7 +67,7 @@ describe("comment", () => {
     });
 
     it("should return extraneous IDs to be delete", async () => {
-      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((async () => ({
+      const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((() => ({
         data: { id: 0 },
       })) as unknown as typeof api.createComment);
       const updateCommentSpy = vi.spyOn(api, "updateComment");

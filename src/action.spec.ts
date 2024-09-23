@@ -39,6 +39,7 @@ describe("Action", () => {
         case "token":
         case "command_script_name":
         case "comment_id":
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:
           throw new Error(`invalid input requested ${input}`);
@@ -50,6 +51,7 @@ describe("Action", () => {
         case "annotations":
         case "verbose":
         case "ignore_results":
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:
           throw new Error(`invalid input requested ${input}`);

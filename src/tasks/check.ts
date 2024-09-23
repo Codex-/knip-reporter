@@ -18,11 +18,11 @@ export const CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 type Unpacked<T> = T extends Array<infer U> ? U : T;
 export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>;
 export class AnnotationsCount {
-  public exports: number = 0;
-  public types: number = 0;
-  public duplicates: number = 0;
-  public enumMembers: number = 0;
-  public classMembers: number = 0;
+  public exports = 0;
+  public types = 0;
+  public duplicates = 0;
+  public enumMembers = 0;
+  public classMembers = 0;
 
   public increaseCount(type: ItemMeta["type"]): void {
     switch (type) {
@@ -98,9 +98,8 @@ export async function updateCheckAnnotations(
             annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
           }
           break;
-        case "duplicate":
-          // eslint-disable-next-line no-case-declarations
-          const duplicatesStr = (() => {
+        case "duplicate": {
+          const duplicatesStr = ((): string => {
             const names = meta.duplicateIdentifiers.map((name) => `'${name}'`);
             if (names.length <= 1) {
               return names.join(""); // coerce to string if empty collection
@@ -115,6 +114,7 @@ export async function updateCheckAnnotations(
             `'${meta.identifier}' is a duplicate` +
             (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
           break;
+        }
       }
 
       annotations.push(annotation);

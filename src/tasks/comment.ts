@@ -90,8 +90,8 @@ export async function createOrUpdateComments(
 ): Promise<number[]> {
   let existingIdsIndex = 0;
   for (const comment of commentsToPost) {
-    if (existingCommentIds?.[existingIdsIndex] !== undefined) {
-      const commentId = existingCommentIds[existingIdsIndex]!;
+    const commentId = existingCommentIds?.[existingIdsIndex];
+    if (commentId !== undefined) {
       await updateComment(commentId, comment);
       core.debug(`[createOrUpdateComments]: updated comment (${commentId})`);
       existingIdsIndex++;
@@ -102,7 +102,7 @@ export async function createOrUpdateComments(
   }
 
   // Extraneous comments should be deleted
-  if (existingCommentIds && existingCommentIds?.length > existingIdsIndex) {
+  if (existingCommentIds && existingCommentIds.length > existingIdsIndex) {
     const toDelete = existingCommentIds.slice(existingIdsIndex);
     core.debug(`[createOrUpdateComments]: extraneous comments to delete: [${toDelete.join(", ")}]`);
     return toDelete;
