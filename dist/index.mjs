@@ -6,11 +6,11 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+var __require = /* @__PURE__ */ ((x2) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x2, {
   get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
+}) : x2)(function(x2) {
   if (typeof require !== "undefined") return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
+  throw Error('Dynamic require of "' + x2 + '" is not supported');
 });
 var __esm = (fn, res) => function __init() {
   return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
@@ -229,11 +229,11 @@ function v1(options2, buf, offset) {
   }
   let msecs = options2.msecs !== void 0 ? options2.msecs : Date.now();
   let nsecs = options2.nsecs !== void 0 ? options2.nsecs : _lastNSecs + 1;
-  const dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
-  if (dt < 0 && options2.clockseq === void 0) {
+  const dt2 = msecs - _lastMSecs + (nsecs - _lastNSecs) / 1e4;
+  if (dt2 < 0 && options2.clockseq === void 0) {
     clockseq = clockseq + 1 & 16383;
   }
-  if ((dt < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
+  if ((dt2 < 0 || msecs > _lastMSecs) && options2.nsecs === void 0) {
     nsecs = 0;
   }
   if (nsecs >= 1e4) {
@@ -602,8 +602,8 @@ var require_proxy = __commonJS({
       if (typeof reqPort === "number") {
         upperReqHosts.push(`${upperReqHosts[0]}:${reqPort}`);
       }
-      for (const upperNoProxyItem of noProxy.split(",").map((x) => x.trim().toUpperCase()).filter((x) => x)) {
-        if (upperNoProxyItem === "*" || upperReqHosts.some((x) => x === upperNoProxyItem || x.endsWith(`.${upperNoProxyItem}`) || upperNoProxyItem.startsWith(".") && x.endsWith(`${upperNoProxyItem}`))) {
+      for (const upperNoProxyItem of noProxy.split(",").map((x2) => x2.trim().toUpperCase()).filter((x2) => x2)) {
+        if (upperNoProxyItem === "*" || upperReqHosts.some((x2) => x2 === upperNoProxyItem || x2.endsWith(`.${upperNoProxyItem}`) || upperNoProxyItem.startsWith(".") && x2.endsWith(`${upperNoProxyItem}`))) {
           return true;
         }
       }
@@ -1419,7 +1419,7 @@ var require_util = __commonJS({
         let val = obj[key];
         if (!val) {
           if (Array.isArray(headers[i + 1])) {
-            obj[key] = headers[i + 1].map((x) => x.toString("utf8"));
+            obj[key] = headers[i + 1].map((x2) => x2.toString("utf8"));
           } else {
             obj[key] = headers[i + 1].toString("utf8");
           }
@@ -1960,14 +1960,14 @@ var require_HeaderParser = __commonJS({
       }
       const lines2 = this.buffer.split(RE_CRLF);
       const len = lines2.length;
-      let m, h;
+      let m, h2;
       for (var i = 0; i < len; ++i) {
         if (lines2[i].length === 0) {
           continue;
         }
         if (lines2[i][0] === "	" || lines2[i][0] === " ") {
-          if (h) {
-            this.header[h][this.header[h].length - 1] += lines2[i];
+          if (h2) {
+            this.header[h2][this.header[h2].length - 1] += lines2[i];
             continue;
           }
         }
@@ -1976,9 +1976,9 @@ var require_HeaderParser = __commonJS({
           return;
         }
         m = RE_HDR.exec(lines2[i]);
-        h = m[1].toLowerCase();
-        this.header[h] = this.header[h] || [];
-        this.header[h].push(m[2] || "");
+        h2 = m[1].toLowerCase();
+        this.header[h2] = this.header[h2] || [];
+        this.header[h2].push(m[2] || "");
         if (++this.npairs === this.maxHeaderPairs) {
           break;
         }
@@ -2246,6 +2246,7 @@ var require_decodeText = __commonJS({
             return decoders.utf8;
           case "latin1":
           case "ascii":
+          // TODO: Make these a separate, strict decoder?
           case "us-ascii":
           case "iso-8859-1":
           case "iso8859-1":
@@ -2945,6 +2946,7 @@ var require_basename = __commonJS({
       for (var i = path2.length - 1; i >= 0; --i) {
         switch (path2.charCodeAt(i)) {
           case 47:
+          // '/'
           case 92:
             path2 = path2.slice(i + 1);
             return path2 === ".." || path2 === "." ? "" : path2;
@@ -3994,17 +3996,17 @@ var require_util2 = __commonJS({
     }
     function isValidReasonPhrase(statusText) {
       for (let i = 0; i < statusText.length; ++i) {
-        const c2 = statusText.charCodeAt(i);
-        if (!(c2 === 9 || // HTAB
-        c2 >= 32 && c2 <= 126 || // SP / VCHAR
-        c2 >= 128 && c2 <= 255)) {
+        const c = statusText.charCodeAt(i);
+        if (!(c === 9 || // HTAB
+        c >= 32 && c <= 126 || // SP / VCHAR
+        c >= 128 && c <= 255)) {
           return false;
         }
       }
       return true;
     }
-    function isTokenCharCode(c2) {
-      switch (c2) {
+    function isTokenCharCode(c) {
+      switch (c) {
         case 34:
         case 40:
         case 41:
@@ -4024,7 +4026,7 @@ var require_util2 = __commonJS({
         case 125:
           return false;
         default:
-          return c2 >= 33 && c2 <= 126;
+          return c >= 33 && c <= 126;
       }
     }
     function isValidHTTPToken(characters) {
@@ -4179,7 +4181,21 @@ var require_util2 = __commonJS({
           return referrerOrigin;
         }
         case "strict-origin":
+        // eslint-disable-line
+        /**
+           * 1. If referrerURL is a potentially trustworthy URL and
+           * request’s current URL is not a potentially trustworthy URL,
+           * then return no referrer.
+           * 2. Return referrerOrigin
+          */
         case "no-referrer-when-downgrade":
+        // eslint-disable-line
+        /**
+         * 1. If referrerURL is a potentially trustworthy URL and
+         * request’s current URL is not a potentially trustworthy URL,
+         * then return no referrer.
+         * 2. Return referrerOrigin
+        */
         default:
           return isNonPotentiallyTrustWorthy ? "no-referrer" : referrerOrigin;
       }
@@ -4586,11 +4602,11 @@ var require_webidl = __commonJS({
         message: `"${context3.value}" is an invalid ${context3.type}.`
       });
     };
-    webidl.brandCheck = function(V, I, opts = void 0) {
-      if (opts?.strict !== false && !(V instanceof I)) {
+    webidl.brandCheck = function(V, I2, opts = void 0) {
+      if (opts?.strict !== false && !(V instanceof I2)) {
         throw new TypeError("Illegal invocation");
       } else {
-        return V?.[Symbol.toStringTag] === I.prototype[Symbol.toStringTag];
+        return V?.[Symbol.toStringTag] === I2.prototype[Symbol.toStringTag];
       }
     };
     webidl.argumentLengthCheck = function({ length }, min, ctx) {
@@ -4647,44 +4663,44 @@ var require_webidl = __commonJS({
         lowerBound = Math.pow(-2, bitLength) - 1;
         upperBound = Math.pow(2, bitLength - 1) - 1;
       }
-      let x = Number(V);
-      if (x === 0) {
-        x = 0;
+      let x2 = Number(V);
+      if (x2 === 0) {
+        x2 = 0;
       }
       if (opts.enforceRange === true) {
-        if (Number.isNaN(x) || x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY) {
+        if (Number.isNaN(x2) || x2 === Number.POSITIVE_INFINITY || x2 === Number.NEGATIVE_INFINITY) {
           throw webidl.errors.exception({
             header: "Integer conversion",
             message: `Could not convert ${V} to an integer.`
           });
         }
-        x = webidl.util.IntegerPart(x);
-        if (x < lowerBound || x > upperBound) {
+        x2 = webidl.util.IntegerPart(x2);
+        if (x2 < lowerBound || x2 > upperBound) {
           throw webidl.errors.exception({
             header: "Integer conversion",
-            message: `Value must be between ${lowerBound}-${upperBound}, got ${x}.`
+            message: `Value must be between ${lowerBound}-${upperBound}, got ${x2}.`
           });
         }
-        return x;
+        return x2;
       }
-      if (!Number.isNaN(x) && opts.clamp === true) {
-        x = Math.min(Math.max(x, lowerBound), upperBound);
-        if (Math.floor(x) % 2 === 0) {
-          x = Math.floor(x);
+      if (!Number.isNaN(x2) && opts.clamp === true) {
+        x2 = Math.min(Math.max(x2, lowerBound), upperBound);
+        if (Math.floor(x2) % 2 === 0) {
+          x2 = Math.floor(x2);
         } else {
-          x = Math.ceil(x);
+          x2 = Math.ceil(x2);
         }
-        return x;
+        return x2;
       }
-      if (Number.isNaN(x) || x === 0 && Object.is(0, x) || x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY) {
+      if (Number.isNaN(x2) || x2 === 0 && Object.is(0, x2) || x2 === Number.POSITIVE_INFINITY || x2 === Number.NEGATIVE_INFINITY) {
         return 0;
       }
-      x = webidl.util.IntegerPart(x);
-      x = x % Math.pow(2, bitLength);
-      if (signedness === "signed" && x >= Math.pow(2, bitLength) - 1) {
-        return x - Math.pow(2, bitLength);
+      x2 = webidl.util.IntegerPart(x2);
+      x2 = x2 % Math.pow(2, bitLength);
+      if (signedness === "signed" && x2 >= Math.pow(2, bitLength) - 1) {
+        return x2 - Math.pow(2, bitLength);
       }
-      return x;
+      return x2;
     };
     webidl.util.IntegerPart = function(n) {
       const r = Math.floor(Math.abs(n));
@@ -4819,39 +4835,39 @@ var require_webidl = __commonJS({
       return String(V);
     };
     webidl.converters.ByteString = function(V) {
-      const x = webidl.converters.DOMString(V);
-      for (let index = 0; index < x.length; index++) {
-        if (x.charCodeAt(index) > 255) {
+      const x2 = webidl.converters.DOMString(V);
+      for (let index = 0; index < x2.length; index++) {
+        if (x2.charCodeAt(index) > 255) {
           throw new TypeError(
-            `Cannot convert argument to a ByteString because the character at index ${index} has a value of ${x.charCodeAt(index)} which is greater than 255.`
+            `Cannot convert argument to a ByteString because the character at index ${index} has a value of ${x2.charCodeAt(index)} which is greater than 255.`
           );
         }
       }
-      return x;
+      return x2;
     };
     webidl.converters.USVString = toUSVString;
     webidl.converters.boolean = function(V) {
-      const x = Boolean(V);
-      return x;
+      const x2 = Boolean(V);
+      return x2;
     };
     webidl.converters.any = function(V) {
       return V;
     };
     webidl.converters["long long"] = function(V) {
-      const x = webidl.util.ConvertToInt(V, 64, "signed");
-      return x;
+      const x2 = webidl.util.ConvertToInt(V, 64, "signed");
+      return x2;
     };
     webidl.converters["unsigned long long"] = function(V) {
-      const x = webidl.util.ConvertToInt(V, 64, "unsigned");
-      return x;
+      const x2 = webidl.util.ConvertToInt(V, 64, "unsigned");
+      return x2;
     };
     webidl.converters["unsigned long"] = function(V) {
-      const x = webidl.util.ConvertToInt(V, 32, "unsigned");
-      return x;
+      const x2 = webidl.util.ConvertToInt(V, 32, "unsigned");
+      return x2;
     };
     webidl.converters["unsigned short"] = function(V, opts) {
-      const x = webidl.util.ConvertToInt(V, 16, "unsigned", opts);
-      return x;
+      const x2 = webidl.util.ConvertToInt(V, 16, "unsigned", opts);
+      return x2;
     };
     webidl.converters.ArrayBuffer = function(V, opts = {}) {
       if (webidl.util.Type(V) !== "Object" || !types.isAnyArrayBuffer(V)) {
@@ -5625,7 +5641,7 @@ var require_body = __commonJS({
         const boundary = `----formdata-undici-0${`${Math.floor(Math.random() * 1e11)}`.padStart(11, "0")}`;
         const prefix = `--${boundary}\r
 Content-Disposition: form-data`;
-        const escape2 = (str) => str.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
+        const escape = (str) => str.replace(/\n/g, "%0A").replace(/\r/g, "%0D").replace(/"/g, "%22");
         const normalizeLinefeeds = (value) => value.replace(/\r?\n|\r/g, "\r\n");
         const blobParts = [];
         const rn = new Uint8Array([13, 10]);
@@ -5633,14 +5649,14 @@ Content-Disposition: form-data`;
         let hasUnknownSizeValue = false;
         for (const [name, value] of object) {
           if (typeof value === "string") {
-            const chunk2 = textEncoder.encode(prefix + `; name="${escape2(normalizeLinefeeds(name))}"\r
+            const chunk2 = textEncoder.encode(prefix + `; name="${escape(normalizeLinefeeds(name))}"\r
 \r
 ${normalizeLinefeeds(value)}\r
 `);
             blobParts.push(chunk2);
             length += chunk2.byteLength;
           } else {
-            const chunk2 = textEncoder.encode(`${prefix}; name="${escape2(normalizeLinefeeds(name))}"` + (value.name ? `; filename="${escape2(value.name)}"` : "") + `\r
+            const chunk2 = textEncoder.encode(`${prefix}; name="${escape(normalizeLinefeeds(name))}"` + (value.name ? `; filename="${escape(value.name)}"` : "") + `\r
 Content-Type: ${value.type || "application/octet-stream"}\r
 \r
 `);
@@ -6951,7 +6967,7 @@ var require_constants3 = __commonJS({
         exports.HEADER_CHARS.push(i);
       }
     }
-    exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS.filter((c2) => c2 !== 44);
+    exports.CONNECTION_TOKEN_CHARS = exports.HEADER_CHARS.filter((c) => c !== 44);
     exports.MAJOR = exports.NUM_MAP;
     exports.MINOR = exports.MAJOR;
     var HEADER_STATE;
@@ -7560,35 +7576,35 @@ var require_client = __commonJS({
       return await WebAssembly.instantiate(mod, {
         env: {
           /* eslint-disable camelcase */
-          wasm_on_url: (p, at, len) => {
+          wasm_on_url: (p, at2, len) => {
             return 0;
           },
-          wasm_on_status: (p, at, len) => {
+          wasm_on_status: (p, at2, len) => {
             assert.strictEqual(currentParser.ptr, p);
-            const start = at - currentBufferPtr + currentBufferRef.byteOffset;
+            const start = at2 - currentBufferPtr + currentBufferRef.byteOffset;
             return currentParser.onStatus(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
           },
           wasm_on_message_begin: (p) => {
             assert.strictEqual(currentParser.ptr, p);
             return currentParser.onMessageBegin() || 0;
           },
-          wasm_on_header_field: (p, at, len) => {
+          wasm_on_header_field: (p, at2, len) => {
             assert.strictEqual(currentParser.ptr, p);
-            const start = at - currentBufferPtr + currentBufferRef.byteOffset;
+            const start = at2 - currentBufferPtr + currentBufferRef.byteOffset;
             return currentParser.onHeaderField(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
           },
-          wasm_on_header_value: (p, at, len) => {
+          wasm_on_header_value: (p, at2, len) => {
             assert.strictEqual(currentParser.ptr, p);
-            const start = at - currentBufferPtr + currentBufferRef.byteOffset;
+            const start = at2 - currentBufferPtr + currentBufferRef.byteOffset;
             return currentParser.onHeaderValue(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
           },
           wasm_on_headers_complete: (p, statusCode, upgrade, shouldKeepAlive) => {
             assert.strictEqual(currentParser.ptr, p);
             return currentParser.onHeadersComplete(statusCode, Boolean(upgrade), Boolean(shouldKeepAlive)) || 0;
           },
-          wasm_on_body: (p, at, len) => {
+          wasm_on_body: (p, at2, len) => {
             assert.strictEqual(currentParser.ptr, p);
-            const start = at - currentBufferPtr + currentBufferRef.byteOffset;
+            const start = at2 - currentBufferPtr + currentBufferRef.byteOffset;
             return currentParser.onBody(new FastBuffer(currentBufferRef.buffer, start, len)) || 0;
           },
           wasm_on_message_complete: (p) => {
@@ -8916,11 +8932,11 @@ var require_fixed_queue = __commonJS({
       }
       shift() {
         const tail = this.tail;
-        const next2 = tail.shift();
+        const next = tail.shift();
         if (tail.isEmpty() && tail.next !== null) {
           this.tail = tail.next;
         }
-        return next2;
+        return next;
       }
     };
   }
@@ -9002,7 +9018,7 @@ var require_pool_base = __commonJS({
             pool.emit("drain", origin, [pool, ...targets]);
           }
           if (pool[kClosedResolve] && queue.isEmpty()) {
-            Promise.all(pool[kClients].map((c2) => c2.close())).then(pool[kClosedResolve]);
+            Promise.all(pool[kClients].map((c) => c.close())).then(pool[kClosedResolve]);
           }
         };
         this[kOnConnect] = (origin, targets) => {
@@ -9051,7 +9067,7 @@ var require_pool_base = __commonJS({
       }
       async [kClose]() {
         if (this[kQueue].isEmpty()) {
-          return Promise.all(this[kClients].map((c2) => c2.close()));
+          return Promise.all(this[kClients].map((c) => c.close()));
         } else {
           return new Promise((resolve2) => {
             this[kClosedResolve] = resolve2;
@@ -9066,7 +9082,7 @@ var require_pool_base = __commonJS({
           }
           item2.handler.onError(err);
         }
-        return Promise.all(this[kClients].map((c2) => c2.destroy(err)));
+        return Promise.all(this[kClients].map((c) => c.destroy(err)));
       }
       [kDispatch](opts, handler) {
         const dispatcher = this[kGetDispatcher]();
@@ -9992,7 +10008,7 @@ var require_api_request = __commonJS({
 var require_api_stream = __commonJS({
   "node_modules/.pnpm/undici@5.28.4/node_modules/undici/lib/api/api-stream.js"(exports, module) {
     "use strict";
-    var { finished, PassThrough } = __require("stream");
+    var { finished, PassThrough: PassThrough2 } = __require("stream");
     var {
       InvalidArgumentError,
       InvalidReturnValueError,
@@ -10070,7 +10086,7 @@ var require_api_stream = __commonJS({
         if (this.throwOnError && statusCode >= 400) {
           const parsedHeaders = responseHeaders === "raw" ? util2.parseHeaders(rawHeaders) : headers;
           const contentType = parsedHeaders["content-type"];
-          res = new PassThrough();
+          res = new PassThrough2();
           this.callback = null;
           this.runInAsyncScope(
             getResolveErrorBodyCallback,
@@ -10169,7 +10185,7 @@ var require_api_pipeline = __commonJS({
     var {
       Readable,
       Duplex,
-      PassThrough
+      PassThrough: PassThrough2
     } = __require("stream");
     var {
       InvalidArgumentError,
@@ -10353,7 +10369,7 @@ var require_api_pipeline = __commonJS({
         this.dispatch({ ...opts, body: pipelineHandler.req }, pipelineHandler);
         return pipelineHandler.ret;
       } catch (err) {
-        return new PassThrough().destroy(err);
+        return new PassThrough2().destroy(err);
       }
     }
     module.exports = pipeline;
@@ -10759,7 +10775,7 @@ var require_mock_utils = __commonJS({
       return Object.entries(data).reduce((keyValuePairs, [key, value]) => [
         ...keyValuePairs,
         Buffer.from(`${key}`),
-        Array.isArray(value) ? value.map((x) => Buffer.from(`${x}`)) : Buffer.from(`${value}`)
+        Array.isArray(value) ? value.map((x2) => Buffer.from(`${x2}`)) : Buffer.from(`${value}`)
       ], []);
     }
     function getStatusText(statusCode) {
@@ -12768,20 +12784,20 @@ var require_request2 = __commonJS({
         if (init3.referrerPolicy !== void 0) {
           request.referrerPolicy = init3.referrerPolicy;
         }
-        let mode2;
+        let mode;
         if (init3.mode !== void 0) {
-          mode2 = init3.mode;
+          mode = init3.mode;
         } else {
-          mode2 = fallbackMode;
+          mode = fallbackMode;
         }
-        if (mode2 === "navigate") {
+        if (mode === "navigate") {
           throw webidl.errors.exception({
             header: "Request constructor",
             message: "invalid request mode navigate."
           });
         }
-        if (mode2 != null) {
-          request.mode = mode2;
+        if (mode != null) {
+          request.mode = mode;
         }
         if (init3.credentials !== void 0) {
           request.credentials = init3.credentials;
@@ -12854,7 +12870,7 @@ var require_request2 = __commonJS({
         this[kHeaders][kHeadersList] = request.headersList;
         this[kHeaders][kGuard] = "request";
         this[kHeaders][kRealm] = this[kRealm];
-        if (mode2 === "no-cors") {
+        if (mode === "no-cors") {
           if (!corsSafeListedMethodsSet.has(request.method)) {
             throw new TypeError(
               `'${request.method} is unsupported in no-cors mode.`
@@ -14170,7 +14186,7 @@ var require_fetch = __commonJS({
                   const key = headersList[n + 0].toString("latin1");
                   const val = headersList[n + 1].toString("latin1");
                   if (key.toLowerCase() === "content-encoding") {
-                    codings = val.toLowerCase().split(",").map((x) => x.trim());
+                    codings = val.toLowerCase().split(",").map((x2) => x2.trim());
                   } else if (key.toLowerCase() === "location") {
                     location = val;
                   }
@@ -14181,7 +14197,7 @@ var require_fetch = __commonJS({
                 for (const key of keys) {
                   const val = headersList[key];
                   if (key.toLowerCase() === "content-encoding") {
-                    codings = val.toLowerCase().split(",").map((x) => x.trim()).reverse();
+                    codings = val.toLowerCase().split(",").map((x2) => x2.trim()).reverse();
                   } else if (key.toLowerCase() === "location") {
                     location = val;
                   }
@@ -14802,8 +14818,8 @@ var require_util4 = __commonJS({
       return new TextDecoder(encoding).decode(sliced);
     }
     function BOMSniffing(ioQueue) {
-      const [a, b, c2] = ioQueue;
-      if (a === 239 && b === 187 && c2 === 191) {
+      const [a, b, c] = ioQueue;
+      if (a === 239 && b === 187 && c === 191) {
         return "UTF-8";
       } else if (a === 254 && b === 255) {
         return "UTF-16BE";
@@ -16994,18 +17010,18 @@ var require_receiver = __commonJS({
         const buffer = Buffer.allocUnsafe(n);
         let offset = 0;
         while (offset !== n) {
-          const next2 = this.#buffers[0];
-          const { length } = next2;
+          const next = this.#buffers[0];
+          const { length } = next;
           if (length + offset === n) {
             buffer.set(this.#buffers.shift(), offset);
             break;
           } else if (length + offset > n) {
-            buffer.set(next2.subarray(0, n - offset), offset);
-            this.#buffers[0] = next2.subarray(n - offset);
+            buffer.set(next.subarray(0, n - offset), offset);
+            this.#buffers[0] = next.subarray(n - offset);
             break;
           } else {
             buffer.set(this.#buffers.shift(), offset);
-            offset += next2.length;
+            offset += next.length;
           }
         }
         this.#byteOffset -= n;
@@ -18205,7 +18221,7 @@ var require_lib = __commonJS({
       }
     };
     exports.HttpClient = HttpClient;
-    var lowercaseKeys = (obj) => Object.keys(obj).reduce((c2, k) => (c2[k.toLowerCase()] = obj[k], c2), {});
+    var lowercaseKeys = (obj) => Object.keys(obj).reduce((c, k) => (c[k.toLowerCase()] = obj[k], c), {});
   }
 });
 
@@ -18853,7 +18869,7 @@ var require_core = __commonJS({
     }
     exports.getInput = getInput2;
     function getMultilineInput(name, options2) {
-      const inputs = getInput2(name, options2).split("\n").filter((x) => x !== "");
+      const inputs = getInput2(name, options2).split("\n").filter((x2) => x2 !== "");
       if (options2 && options2.trimWhitespace === false) {
         return inputs;
       }
@@ -19434,8 +19450,8 @@ var require_dist_node2 = __commonJS({
       }).join("");
     }
     function encodeUnreserved(str) {
-      return encodeURIComponent(str).replace(/[!'()*]/g, function(c2) {
-        return "%" + c2.charCodeAt(0).toString(16).toUpperCase();
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return "%" + c.charCodeAt(0).toString(16).toUpperCase();
       });
     }
     function encodeValue(operator, value, key) {
@@ -19555,7 +19571,7 @@ var require_dist_node2 = __commonJS({
         return template.replace(/\/$/, "");
       }
     }
-    function parse3(options2) {
+    function parse2(options2) {
       let method = options2.method.toUpperCase();
       let url = (options2.url || "/").replace(/:([a-z]\w+)/g, "{$1}");
       let headers = Object.assign({}, options2.headers);
@@ -19619,7 +19635,7 @@ var require_dist_node2 = __commonJS({
       );
     }
     function endpointWithDefaults(defaults, route, options2) {
-      return parse3(merge(defaults, route, options2));
+      return parse2(merge(defaults, route, options2));
     }
     function withDefaults(oldDefaults, newDefaults) {
       const DEFAULTS2 = merge(oldDefaults, newDefaults);
@@ -19628,7 +19644,7 @@ var require_dist_node2 = __commonJS({
         DEFAULTS: DEFAULTS2,
         defaults: withDefaults.bind(null, DEFAULTS2),
         merge: merge.bind(null, DEFAULTS2),
-        parse: parse3
+        parse: parse2
       });
     }
     var endpoint = withDefaults(null, DEFAULTS);
@@ -23037,7 +23053,7 @@ var require_github = __commonJS({
 });
 
 // src/main.ts
-var core8 = __toESM(require_core(), 1);
+var core7 = __toESM(require_core(), 1);
 var github2 = __toESM(require_github(), 1);
 
 // src/action.ts
@@ -23574,104 +23590,34 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
 }
 
 // src/tasks/knip.ts
-var core7 = __toESM(require_core(), 1);
+var core6 = __toESM(require_core(), 1);
 import { exec } from "node:child_process";
 
-// node_modules/.pnpm/@antfu+ni@0.22.0/node_modules/@antfu/ni/dist/shared/ni.ea70549b.mjs
-import fs$1, { promises, existsSync } from "node:fs";
-import path$3, { join as join$1, dirname, resolve } from "node:path";
-import process$2 from "node:process";
-import require$$0$2 from "child_process";
-import require$$0$1 from "path";
-import require$$0 from "fs";
-import { fileURLToPath } from "node:url";
-import require$$0$3 from "os";
+// node_modules/.pnpm/@antfu+ni@0.23.0/node_modules/@antfu/ni/dist/shared/ni.7b6d0b44.mjs
+import fs, { promises, existsSync } from "node:fs";
+import path, { join as join$1, dirname as dirname$1, resolve as resolve$1 } from "node:path";
+import process$1 from "node:process";
+import { createRequire } from "node:module";
+import { spawn } from "child_process";
+import require$$1$2, { normalize, delimiter as delimiter$2, resolve, dirname } from "path";
+import { cwd } from "process";
+import { PassThrough } from "stream";
+import me from "readline";
+import require$$0 from "os";
 import require$$1 from "tty";
-import require$$0$4 from "readline";
 import require$$2 from "events";
 import os$1 from "node:os";
+import require$$0$1 from "fs";
 import require$$1$1 from "fs/promises";
-function npmRun(agent) {
-  return (args) => {
-    if (args.length > 1)
-      return `${agent} run ${args[0]} -- ${args.slice(1).join(" ")}`;
-    else
-      return `${agent} run ${args[0]}`;
-  };
-}
-var yarn = {
-  "agent": "yarn {0}",
-  "run": "yarn run {0}",
-  "install": "yarn install {0}",
-  "frozen": "yarn install --frozen-lockfile",
-  "global": "yarn global add {0}",
-  "add": "yarn add {0}",
-  "upgrade": "yarn upgrade {0}",
-  "upgrade-interactive": "yarn upgrade-interactive {0}",
-  "execute": "npx {0}",
-  "uninstall": "yarn remove {0}",
-  "global_uninstall": "yarn global remove {0}"
-};
-var pnpm = {
-  "agent": "pnpm {0}",
-  "run": "pnpm run {0}",
-  "install": "pnpm i {0}",
-  "frozen": "pnpm i --frozen-lockfile",
-  "global": "pnpm add -g {0}",
-  "add": "pnpm add {0}",
-  "upgrade": "pnpm update {0}",
-  "upgrade-interactive": "pnpm update -i {0}",
-  "execute": "pnpm dlx {0}",
-  "uninstall": "pnpm remove {0}",
-  "global_uninstall": "pnpm remove --global {0}"
-};
-var bun = {
-  "agent": "bun {0}",
-  "run": "bun run {0}",
-  "install": "bun install {0}",
-  "frozen": "bun install --frozen-lockfile",
-  "global": "bun add -g {0}",
-  "add": "bun add {0}",
-  "upgrade": "bun update {0}",
-  "upgrade-interactive": "bun update {0}",
-  "execute": "bunx {0}",
-  "uninstall": "bun remove {0}",
-  "global_uninstall": "bun remove -g {0}"
-};
-var AGENTS = {
-  "npm": {
-    "agent": "npm {0}",
-    "run": npmRun("npm"),
-    "install": "npm i {0}",
-    "frozen": "npm ci",
-    "global": "npm i -g {0}",
-    "add": "npm i {0}",
-    "upgrade": "npm update {0}",
-    "upgrade-interactive": null,
-    "execute": "npx {0}",
-    "uninstall": "npm uninstall {0}",
-    "global_uninstall": "npm uninstall -g {0}"
-  },
-  "yarn": yarn,
-  "yarn@berry": {
-    ...yarn,
-    "frozen": "yarn install --immutable",
-    "upgrade": "yarn up {0}",
-    "upgrade-interactive": "yarn up -i {0}",
-    "execute": "yarn dlx {0}",
-    // Yarn 2+ removed 'global', see https://github.com/yarnpkg/berry/issues/821
-    "global": "npm i -g {0}",
-    "global_uninstall": "npm uninstall -g {0}"
-  },
-  "pnpm": pnpm,
-  // pnpm v6.x or below
-  "pnpm@6": {
-    ...pnpm,
-    run: npmRun("pnpm")
-  },
-  "bun": bun
-};
-var agents = Object.keys(AGENTS);
+import fsPromises from "node:fs/promises";
+var AGENTS = [
+  "npm",
+  "yarn",
+  "yarn@berry",
+  "pnpm",
+  "pnpm@6",
+  "bun"
+];
 var LOCKS = {
   "bun.lockb": "bun",
   "pnpm-lock.yaml": "pnpm",
@@ -23687,9 +23633,103 @@ var INSTALL_PAGE = {
   "yarn@berry": "https://yarnpkg.com/getting-started/install",
   "npm": "https://docs.npmjs.com/cli/v8/configuring-npm/install"
 };
+function npmRun(agent) {
+  return (args) => {
+    if (args.length > 1) {
+      return [agent, "run", args[0], "--", ...args.slice(1)];
+    } else {
+      return [agent, "run", args[0]];
+    }
+  };
+}
+var yarn = {
+  "agent": ["yarn", 0],
+  "run": ["yarn", "run", 0],
+  "install": ["yarn", "install", 0],
+  "frozen": ["yarn", "install", "--frozen-lockfile"],
+  "global": ["yarn", "global", "add", 0],
+  "add": ["yarn", "add", 0],
+  "upgrade": ["yarn", "upgrade", 0],
+  "upgrade-interactive": ["yarn", "upgrade-interactive", 0],
+  "execute": ["npx", 0],
+  "uninstall": ["yarn", "remove", 0],
+  "global_uninstall": ["yarn", "global", "remove", 0]
+};
+var pnpm = {
+  "agent": ["pnpm", 0],
+  "run": ["pnpm", "run", 0],
+  "install": ["pnpm", "i", 0],
+  "frozen": ["pnpm", "i", "--frozen-lockfile"],
+  "global": ["pnpm", "add", "-g", 0],
+  "add": ["pnpm", "add", 0],
+  "upgrade": ["pnpm", "update", 0],
+  "upgrade-interactive": ["pnpm", "update", "-i", 0],
+  "execute": ["pnpm", "dlx", 0],
+  "uninstall": ["pnpm", "remove", 0],
+  "global_uninstall": ["pnpm", "remove", "--global", 0]
+};
+var bun = {
+  "agent": ["bun", 0],
+  "run": ["bun", "run", 0],
+  "install": ["bun", "install", 0],
+  "frozen": ["bun", "install", "--frozen-lockfile"],
+  "global": ["bun", "add", "-g", 0],
+  "add": ["bun", "add", 0],
+  "upgrade": ["bun", "update", 0],
+  "upgrade-interactive": ["bun", "update", 0],
+  "execute": ["bun", "x", 0],
+  "uninstall": ["bun", "remove", 0],
+  "global_uninstall": ["bun", "remove", "-g", 0]
+};
+var COMMANDS = {
+  "npm": {
+    "agent": ["npm", 0],
+    "run": npmRun("npm"),
+    "install": ["npm", "i", 0],
+    "frozen": ["npm", "ci"],
+    "global": ["npm", "i", "-g", 0],
+    "add": ["npm", "i", 0],
+    "upgrade": ["npm", "update", 0],
+    "upgrade-interactive": null,
+    "execute": ["npx", 0],
+    "uninstall": ["npm", "uninstall", 0],
+    "global_uninstall": ["npm", "uninstall", "-g", 0]
+  },
+  "yarn": yarn,
+  "yarn@berry": {
+    ...yarn,
+    "frozen": ["yarn", "install", "--immutable"],
+    "upgrade": ["yarn", "up", 0],
+    "upgrade-interactive": ["yarn", "up", "-i", 0],
+    "execute": ["yarn", "dlx", 0],
+    // Yarn 2+ removed 'global', see https://github.com/yarnpkg/berry/issues/821
+    "global": ["npm", "i", "-g", 0],
+    "global_uninstall": ["npm", "uninstall", "-g", 0]
+  },
+  "pnpm": pnpm,
+  // pnpm v6.x or below
+  "pnpm@6": {
+    ...pnpm,
+    run: npmRun("pnpm")
+  },
+  "bun": bun
+};
+function constructCommand(value, args) {
+  if (value == null)
+    return null;
+  const list = typeof value === "function" ? value(args) : value.flatMap((v) => {
+    if (typeof v === "number")
+      return args;
+    return [v];
+  });
+  return {
+    command: list[0],
+    args: list.slice(1)
+  };
+}
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
-function getDefaultExportFromCjs(x) {
-  return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
+function getDefaultExportFromCjs(x2) {
+  return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
 }
 var { hasOwnProperty } = Object.prototype;
 var encode = (obj, opt = {}) => {
@@ -23821,8 +23861,8 @@ var decode = (str, opt = {}) => {
     }
     const parts = splitSections(k, ".");
     p = out;
-    const l = parts.pop();
-    const nl = l.replace(/\\\./g, ".");
+    const l2 = parts.pop();
+    const nl = l2.replace(/\\\./g, ".");
     for (const part of parts) {
       if (part === "__proto__") {
         continue;
@@ -23832,7 +23872,7 @@ var decode = (str, opt = {}) => {
       }
       p = p[part];
     }
-    if (p === out && nl === l) {
+    if (p === out && nl === l2) {
       continue;
     }
     p[nl] = out[k];
@@ -23865,21 +23905,21 @@ var unsafe = (val) => {
   } else {
     let esc = false;
     let unesc = "";
-    for (let i = 0, l = val.length; i < l; i++) {
-      const c2 = val.charAt(i);
+    for (let i = 0, l2 = val.length; i < l2; i++) {
+      const c = val.charAt(i);
       if (esc) {
-        if ("\\;#".indexOf(c2) !== -1) {
-          unesc += c2;
+        if ("\\;#".indexOf(c) !== -1) {
+          unesc += c;
         } else {
-          unesc += "\\" + c2;
+          unesc += "\\" + c;
         }
         esc = false;
-      } else if (";#".indexOf(c2) !== -1) {
+      } else if (";#".indexOf(c) !== -1) {
         break;
-      } else if (c2 === "\\") {
+      } else if (c === "\\") {
         esc = true;
       } else {
-        unesc += c2;
+        unesc += c;
       }
     }
     if (esc) {
@@ -23898,1053 +23938,609 @@ var ini = {
   unsafe
 };
 var ini$1 = /* @__PURE__ */ getDefaultExportFromCjs(ini);
-var stringArgv = {};
-(function(exports) {
-  exports.__esModule = true;
-  function parseArgsStringToArgv2(value, env2, file) {
-    var myRegexp = /([^\s'"]([^\s'"]*(['"])([^\3]*?)\3)+[^\s'"]*)|[^\s'"]+|(['"])([^\5]*?)\5/gi;
-    var myString = value;
-    var myArray = [];
-    if (env2) {
-      myArray.push(env2);
-    }
-    if (file) {
-      myArray.push(file);
-    }
-    var match;
-    do {
-      match = myRegexp.exec(myString);
-      if (match !== null) {
-        myArray.push(firstString(match[1], match[6], match[0]));
+async function detect$1({ cwd: cwd2, onUnknown } = {}) {
+  for (const directory of lookup(cwd2)) {
+    for (const lock of Object.keys(LOCKS)) {
+      if (await fileExists(path.join(directory, lock))) {
+        const name = LOCKS[lock];
+        const result2 = await parsePackageJson(path.join(directory, "package.json"), onUnknown);
+        if (result2)
+          return result2;
+        else
+          return { name, agent: name };
       }
-    } while (match !== null);
-    return myArray;
+    }
+    const result = await parsePackageJson(path.join(directory, "package.json"), onUnknown);
+    if (result)
+      return result;
   }
-  exports["default"] = parseArgsStringToArgv2;
-  exports.parseArgsStringToArgv = parseArgsStringToArgv2;
-  function firstString() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-      args[_i] = arguments[_i];
-    }
-    for (var i = 0; i < args.length; i++) {
-      var arg = args[i];
-      if (typeof arg === "string") {
-        return arg;
-      }
-    }
+  return null;
+}
+function* lookup(cwd2 = process$1.cwd()) {
+  let directory = path.resolve(cwd2);
+  const { root } = path.parse(directory);
+  while (directory && directory !== root) {
+    yield directory;
+    directory = path.dirname(directory);
   }
-})(stringArgv);
-var typeDetect = { exports: {} };
-(function(module, exports) {
-  (function(global2, factory) {
-    module.exports = factory();
-  })(commonjsGlobal, function() {
-    var promiseExists = typeof Promise === "function";
-    var globalObject = typeof self === "object" ? self : commonjsGlobal;
-    var symbolExists = typeof Symbol !== "undefined";
-    var mapExists = typeof Map !== "undefined";
-    var setExists = typeof Set !== "undefined";
-    var weakMapExists = typeof WeakMap !== "undefined";
-    var weakSetExists = typeof WeakSet !== "undefined";
-    var dataViewExists = typeof DataView !== "undefined";
-    var symbolIteratorExists = symbolExists && typeof Symbol.iterator !== "undefined";
-    var symbolToStringTagExists = symbolExists && typeof Symbol.toStringTag !== "undefined";
-    var setEntriesExists = setExists && typeof Set.prototype.entries === "function";
-    var mapEntriesExists = mapExists && typeof Map.prototype.entries === "function";
-    var setIteratorPrototype = setEntriesExists && Object.getPrototypeOf((/* @__PURE__ */ new Set()).entries());
-    var mapIteratorPrototype = mapEntriesExists && Object.getPrototypeOf((/* @__PURE__ */ new Map()).entries());
-    var arrayIteratorExists = symbolIteratorExists && typeof Array.prototype[Symbol.iterator] === "function";
-    var arrayIteratorPrototype = arrayIteratorExists && Object.getPrototypeOf([][Symbol.iterator]());
-    var stringIteratorExists = symbolIteratorExists && typeof String.prototype[Symbol.iterator] === "function";
-    var stringIteratorPrototype = stringIteratorExists && Object.getPrototypeOf(""[Symbol.iterator]());
-    var toStringLeftSliceLength = 8;
-    var toStringRightSliceLength = -1;
-    function typeDetect2(obj) {
-      var typeofObj = typeof obj;
-      if (typeofObj !== "object") {
-        return typeofObj;
-      }
-      if (obj === null) {
-        return "null";
-      }
-      if (obj === globalObject) {
-        return "global";
-      }
-      if (Array.isArray(obj) && (symbolToStringTagExists === false || !(Symbol.toStringTag in obj))) {
-        return "Array";
-      }
-      if (typeof window === "object" && window !== null) {
-        if (typeof window.location === "object" && obj === window.location) {
-          return "Location";
-        }
-        if (typeof window.document === "object" && obj === window.document) {
-          return "Document";
-        }
-        if (typeof window.navigator === "object") {
-          if (typeof window.navigator.mimeTypes === "object" && obj === window.navigator.mimeTypes) {
-            return "MimeTypeArray";
-          }
-          if (typeof window.navigator.plugins === "object" && obj === window.navigator.plugins) {
-            return "PluginArray";
-          }
-        }
-        if ((typeof window.HTMLElement === "function" || typeof window.HTMLElement === "object") && obj instanceof window.HTMLElement) {
-          if (obj.tagName === "BLOCKQUOTE") {
-            return "HTMLQuoteElement";
-          }
-          if (obj.tagName === "TD") {
-            return "HTMLTableDataCellElement";
-          }
-          if (obj.tagName === "TH") {
-            return "HTMLTableHeaderCellElement";
-          }
-        }
-      }
-      var stringTag = symbolToStringTagExists && obj[Symbol.toStringTag];
-      if (typeof stringTag === "string") {
-        return stringTag;
-      }
-      var objPrototype = Object.getPrototypeOf(obj);
-      if (objPrototype === RegExp.prototype) {
-        return "RegExp";
-      }
-      if (objPrototype === Date.prototype) {
-        return "Date";
-      }
-      if (promiseExists && objPrototype === Promise.prototype) {
-        return "Promise";
-      }
-      if (setExists && objPrototype === Set.prototype) {
-        return "Set";
-      }
-      if (mapExists && objPrototype === Map.prototype) {
-        return "Map";
-      }
-      if (weakSetExists && objPrototype === WeakSet.prototype) {
-        return "WeakSet";
-      }
-      if (weakMapExists && objPrototype === WeakMap.prototype) {
-        return "WeakMap";
-      }
-      if (dataViewExists && objPrototype === DataView.prototype) {
-        return "DataView";
-      }
-      if (mapExists && objPrototype === mapIteratorPrototype) {
-        return "Map Iterator";
-      }
-      if (setExists && objPrototype === setIteratorPrototype) {
-        return "Set Iterator";
-      }
-      if (arrayIteratorExists && objPrototype === arrayIteratorPrototype) {
-        return "Array Iterator";
-      }
-      if (stringIteratorExists && objPrototype === stringIteratorPrototype) {
-        return "String Iterator";
-      }
-      if (objPrototype === null) {
-        return "Object";
-      }
-      return Object.prototype.toString.call(obj).slice(toStringLeftSliceLength, toStringRightSliceLength);
-    }
-    return typeDetect2;
-  });
-})(typeDetect);
-var typeDetectExports = typeDetect.exports;
-var { parseArgsStringToArgv } = stringArgv;
-var detectType = typeDetectExports;
-var normalizeArgs_1 = normalizeArgs$1;
-function normalizeArgs$1(params) {
-  let command, args, options2, callback, error2;
+}
+async function parsePackageJson(filepath, onUnknown) {
+  if (!filepath || !await fileExists(filepath))
+    return null;
   try {
-    ({ command, args, options: options2, callback } = shiftArgs(params));
-    let commandArgs = [];
-    if (typeof command === "string" && args === void 0) {
-      command = splitArgString(command);
-    }
-    if (Array.isArray(command)) {
-      commandArgs = command.slice(1);
-      command = command[0];
-    }
-    if (typeof args === "string") {
-      args = splitArgString(args);
-    }
-    if (Array.isArray(args)) {
-      args = commandArgs.concat(args);
-    }
-    if (args === void 0 || args === null) {
-      args = commandArgs;
-    }
-    if (options2 === void 0 || options2 === null) {
-      options2 = {};
-    }
-    options2.encoding = options2.encoding || "utf8";
-    validateArgs(command, args, options2, callback);
-  } catch (err) {
-    error2 = err;
-    command = String(command || "");
-    args = (Array.isArray(args) ? args : []).map((arg) => String(arg || ""));
-  }
-  return { command, args, options: options2, callback, error: error2 };
-}
-function shiftArgs(params) {
-  params = Array.prototype.slice.call(params);
-  let command, args, options2, callback;
-  let lastParam = params[params.length - 1];
-  if (typeof lastParam === "function") {
-    callback = lastParam;
-    params.pop();
-  }
-  lastParam = params[params.length - 1];
-  if (lastParam === null || lastParam === void 0 || typeof lastParam === "object" && !Array.isArray(lastParam)) {
-    options2 = lastParam;
-    params.pop();
-  }
-  command = params.shift();
-  if (params.length === 0) {
-    args = void 0;
-  } else if (params.length === 1 && Array.isArray(params[0])) {
-    args = params[0];
-  } else if (params.length === 1 && params[0] === "") {
-    args = [];
-  } else {
-    args = params;
-  }
-  return { command, args, options: options2, callback };
-}
-function validateArgs(command, args, options2, callback) {
-  if (command === void 0 || command === null) {
-    throw new Error("The command to execute is missing.");
-  }
-  if (typeof command !== "string") {
-    throw new Error("The command to execute should be a string, not " + friendlyType(command));
-  }
-  if (!Array.isArray(args)) {
-    throw new Error(
-      "The command arguments should be a string or an array, not " + friendlyType(args)
-    );
-  }
-  for (let i = 0; i < args.length; i++) {
-    let arg = args[i];
-    if (typeof arg !== "string") {
-      throw new Error(
-        `The command arguments should be strings, but argument #${i + 1} is ` + friendlyType(arg)
-      );
-    }
-  }
-  if (typeof options2 !== "object") {
-    throw new Error(
-      "The options should be an object, not " + friendlyType(options2)
-    );
-  }
-  if (callback !== void 0 && callback !== null) {
-    if (typeof callback !== "function") {
-      throw new Error("The callback should be a function, not " + friendlyType(callback));
-    }
-  }
-}
-function splitArgString(argString) {
-  try {
-    return parseArgsStringToArgv(argString);
-  } catch (error2) {
-    throw new Error(`Could not parse the string: ${argString}
-${error2.message}`);
-  }
-}
-function friendlyType(val) {
-  let type = detectType(val);
-  let firstChar = String(type)[0].toLowerCase();
-  if (["a", "e", "i", "o", "u"].indexOf(firstChar) === -1) {
-    return `a ${type}.`;
-  } else {
-    return `an ${type}.`;
-  }
-}
-var process$1 = class Process {
-  /**
-   * @param {object} props - Initial property values
-   */
-  constructor({ command, args, pid, stdout, stderr, output, status, signal, options: options2 }) {
-    options2 = options2 || {};
-    stdout = stdout || (options2.encoding === "buffer" ? Buffer.from([]) : "");
-    stderr = stderr || (options2.encoding === "buffer" ? Buffer.from([]) : "");
-    output = output || [options2.input || null, stdout, stderr];
-    this.command = command || "";
-    this.args = args || [];
-    this.pid = pid || 0;
-    this.stdout = output[1];
-    this.stderr = output[2];
-    this.output = output;
-    this.status = status;
-    this.signal = signal || null;
-  }
-  /**
-   * Returns the full command and arguments used to spawn the process
-   *
-   * @type {string}
-   */
-  toString() {
-    let string = this.command;
-    for (let arg of this.args) {
-      arg = arg.replace(/"/g, '\\"');
-      if (arg.indexOf(" ") >= 0) {
-        string += ` "${arg}"`;
+    const pkg = JSON.parse(fs.readFileSync(filepath, "utf8"));
+    let agent;
+    if (typeof pkg.packageManager === "string") {
+      const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
+      let version2 = ver;
+      if (name === "yarn" && Number.parseInt(ver) > 1) {
+        agent = "yarn@berry";
+        version2 = "berry";
+        return { name, agent, version: version2 };
+      } else if (name === "pnpm" && Number.parseInt(ver) < 7) {
+        agent = "pnpm@6";
+        return { name, agent, version: version2 };
+      } else if (AGENTS.includes(name)) {
+        agent = name;
+        return { name, agent, version: version2 };
       } else {
-        string += ` ${arg}`;
+        return onUnknown?.(pkg.packageManager) ?? null;
       }
     }
-    return string;
+  } catch {
   }
-};
-var processError = class ProcessError extends Error {
-  constructor(process2) {
-    let message = `${process2.toString()} exited with a status of ${process2.status}.`;
-    if (process2.stderr.length > 0) {
-      message += "\n\n" + process2.stderr.toString().trim();
-    }
-    super(message);
-    Object.assign(this, process2);
-    this.name = ProcessError.name;
-  }
-};
-var Process2 = process$1;
-var ProcessError2 = processError;
-var normalizeResult_1 = normalizeResult$1;
-function normalizeResult$1({ command, args, pid, stdout, stderr, output, status, signal, options: options2, error: error2 }) {
-  let process2 = new Process2({ command, args, pid, stdout, stderr, output, status, signal, options: options2 });
-  if (error2) {
-    if (process2.status === void 0) {
-      process2.status = null;
-    }
-    throw Object.assign(error2, process2);
-  } else if (process2.status) {
-    throw new ProcessError2(process2);
-  } else {
-    return process2;
-  }
+  return null;
 }
-var crossSpawn = { exports: {} };
-var windows;
-var hasRequiredWindows;
-function requireWindows() {
-  if (hasRequiredWindows) return windows;
-  hasRequiredWindows = 1;
-  windows = isexe2;
-  isexe2.sync = sync2;
-  var fs2 = require$$0;
-  function checkPathExt2(path2, options2) {
-    var pathext = options2.pathExt !== void 0 ? options2.pathExt : process.env.PATHEXT;
-    if (!pathext) {
+async function fileExists(filePath) {
+  try {
+    const stats = await fsPromises.stat(filePath);
+    if (stats.isFile()) {
       return true;
     }
-    pathext = pathext.split(";");
-    if (pathext.indexOf("") !== -1) {
+  } catch {
+  }
+  return false;
+}
+var require2 = createRequire(import.meta.url);
+var St = Object.create;
+var $$1 = Object.defineProperty;
+var kt = Object.getOwnPropertyDescriptor;
+var Tt = Object.getOwnPropertyNames;
+var At = Object.getPrototypeOf;
+var Rt = Object.prototype.hasOwnProperty;
+var h = /* @__PURE__ */ ((t) => typeof require2 < "u" ? require2 : typeof Proxy < "u" ? new Proxy(t, {
+  get: (e, n) => (typeof require2 < "u" ? require2 : e)[n]
+}) : t)(function(t) {
+  if (typeof require2 < "u") return require2.apply(this, arguments);
+  throw Error('Dynamic require of "' + t + '" is not supported');
+});
+var l = (t, e) => () => (e || t((e = { exports: {} }).exports, e), e.exports);
+var $t = (t, e, n, r) => {
+  if (e && typeof e == "object" || typeof e == "function")
+    for (let s of Tt(e))
+      !Rt.call(t, s) && s !== n && $$1(t, s, { get: () => e[s], enumerable: !(r = kt(e, s)) || r.enumerable });
+  return t;
+};
+var Nt = (t, e, n) => (n = t != null ? St(At(t)) : {}, $t(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
+  e || !t || !t.__esModule ? $$1(n, "default", { value: t, enumerable: true }) : n,
+  t
+));
+var W = l((Se, H) => {
+  H.exports = z;
+  z.sync = Wt;
+  var j = h("fs");
+  function Ht(t, e) {
+    var n = e.pathExt !== void 0 ? e.pathExt : process.env.PATHEXT;
+    if (!n || (n = n.split(";"), n.indexOf("") !== -1))
       return true;
-    }
-    for (var i = 0; i < pathext.length; i++) {
-      var p = pathext[i].toLowerCase();
-      if (p && path2.substr(-p.length).toLowerCase() === p) {
+    for (var r = 0; r < n.length; r++) {
+      var s = n[r].toLowerCase();
+      if (s && t.substr(-s.length).toLowerCase() === s)
         return true;
-      }
     }
     return false;
   }
-  function checkStat2(stat, path2, options2) {
-    if (!stat.isSymbolicLink() && !stat.isFile()) {
-      return false;
-    }
-    return checkPathExt2(path2, options2);
+  function F(t, e, n) {
+    return !t.isSymbolicLink() && !t.isFile() ? false : Ht(e, n);
   }
-  function isexe2(path2, options2, cb) {
-    fs2.stat(path2, function(er, stat) {
-      cb(er, er ? false : checkStat2(stat, path2, options2));
+  function z(t, e, n) {
+    j.stat(t, function(r, s) {
+      n(r, r ? false : F(s, t, e));
     });
   }
-  function sync2(path2, options2) {
-    return checkStat2(fs2.statSync(path2), path2, options2);
+  function Wt(t, e) {
+    return F(j.statSync(t), t, e);
   }
-  return windows;
-}
-var mode;
-var hasRequiredMode;
-function requireMode() {
-  if (hasRequiredMode) return mode;
-  hasRequiredMode = 1;
-  mode = isexe2;
-  isexe2.sync = sync2;
-  var fs2 = require$$0;
-  function isexe2(path2, options2, cb) {
-    fs2.stat(path2, function(er, stat) {
-      cb(er, er ? false : checkStat2(stat, options2));
+});
+var X = l((ke, B) => {
+  B.exports = K;
+  K.sync = Dt;
+  var D = h("fs");
+  function K(t, e, n) {
+    D.stat(t, function(r, s) {
+      n(r, r ? false : M(s, e));
     });
   }
-  function sync2(path2, options2) {
-    return checkStat2(fs2.statSync(path2), options2);
+  function Dt(t, e) {
+    return M(D.statSync(t), e);
   }
-  function checkStat2(stat, options2) {
-    return stat.isFile() && checkMode2(stat, options2);
+  function M(t, e) {
+    return t.isFile() && Kt(t, e);
   }
-  function checkMode2(stat, options2) {
-    var mod = stat.mode;
-    var uid = stat.uid;
-    var gid = stat.gid;
-    var myUid = options2.uid !== void 0 ? options2.uid : process.getuid && process.getuid();
-    var myGid = options2.gid !== void 0 ? options2.gid : process.getgid && process.getgid();
-    var u = parseInt("100", 8);
-    var g = parseInt("010", 8);
-    var o = parseInt("001", 8);
-    var ug = u | g;
-    var ret = mod & o || mod & g && gid === myGid || mod & u && uid === myUid || mod & ug && myUid === 0;
-    return ret;
+  function Kt(t, e) {
+    var n = t.mode, r = t.uid, s = t.gid, o = e.uid !== void 0 ? e.uid : process.getuid && process.getuid(), i = e.gid !== void 0 ? e.gid : process.getgid && process.getgid(), u = parseInt("100", 8), c = parseInt("010", 8), a = parseInt("001", 8), f = u | c, p = n & a || n & c && s === i || n & u && r === o || n & f && o === 0;
+    return p;
   }
-  return mode;
-}
-var core6;
-if (process.platform === "win32" || commonjsGlobal.TESTING_WINDOWS) {
-  core6 = requireWindows();
-} else {
-  core6 = requireMode();
-}
-var isexe_1 = isexe$4;
-isexe$4.sync = sync$2;
-function isexe$4(path2, options2, cb) {
-  if (typeof options2 === "function") {
-    cb = options2;
-    options2 = {};
-  }
-  if (!cb) {
-    if (typeof Promise !== "function") {
-      throw new TypeError("callback not provided");
-    }
-    return new Promise(function(resolve2, reject) {
-      isexe$4(path2, options2 || {}, function(er, is) {
-        if (er) {
-          reject(er);
-        } else {
-          resolve2(is);
-        }
+});
+var U = l((Ae, G) => {
+  h("fs");
+  var v;
+  process.platform === "win32" || global.TESTING_WINDOWS ? v = W() : v = X();
+  G.exports = y;
+  y.sync = Mt;
+  function y(t, e, n) {
+    if (typeof e == "function" && (n = e, e = {}), !n) {
+      if (typeof Promise != "function")
+        throw new TypeError("callback not provided");
+      return new Promise(function(r, s) {
+        y(t, e || {}, function(o, i) {
+          o ? s(o) : r(i);
+        });
       });
+    }
+    v(t, e || {}, function(r, s) {
+      r && (r.code === "EACCES" || e && e.ignoreErrors) && (r = null, s = false), n(r, s);
     });
   }
-  core6(path2, options2 || {}, function(er, is) {
-    if (er) {
-      if (er.code === "EACCES" || options2 && options2.ignoreErrors) {
-        er = null;
-        is = false;
-      }
-    }
-    cb(er, is);
-  });
-}
-function sync$2(path2, options2) {
-  try {
-    return core6.sync(path2, options2 || {});
-  } catch (er) {
-    if (options2 && options2.ignoreErrors || er.code === "EACCES") {
-      return false;
-    } else {
-      throw er;
-    }
-  }
-}
-var isWindows$1 = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
-var path$2 = require$$0$1;
-var COLON = isWindows$1 ? ";" : ":";
-var isexe$3 = isexe_1;
-var getNotFoundError$1 = (cmd) => Object.assign(new Error(`not found: ${cmd}`), { code: "ENOENT" });
-var getPathInfo$1 = (cmd, opt) => {
-  const colon = opt.colon || COLON;
-  const pathEnv = cmd.match(/\//) || isWindows$1 && cmd.match(/\\/) ? [""] : [
-    // windows always checks the cwd first
-    ...isWindows$1 ? [process.cwd()] : [],
-    ...(opt.path || process.env.PATH || /* istanbul ignore next: very unusual */
-    "").split(colon)
-  ];
-  const pathExtExe = isWindows$1 ? opt.pathExt || process.env.PATHEXT || ".EXE;.CMD;.BAT;.COM" : "";
-  const pathExt = isWindows$1 ? pathExtExe.split(colon) : [""];
-  if (isWindows$1) {
-    if (cmd.indexOf(".") !== -1 && pathExt[0] !== "")
-      pathExt.unshift("");
-  }
-  return {
-    pathEnv,
-    pathExt,
-    pathExtExe
-  };
-};
-var which$3 = (cmd, opt, cb) => {
-  if (typeof opt === "function") {
-    cb = opt;
-    opt = {};
-  }
-  if (!opt)
-    opt = {};
-  const { pathEnv, pathExt, pathExtExe } = getPathInfo$1(cmd, opt);
-  const found = [];
-  const step = (i) => new Promise((resolve2, reject) => {
-    if (i === pathEnv.length)
-      return opt.all && found.length ? resolve2(found) : reject(getNotFoundError$1(cmd));
-    const ppRaw = pathEnv[i];
-    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-    const pCmd = path$2.join(pathPart, cmd);
-    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
-    resolve2(subStep(p, i, 0));
-  });
-  const subStep = (p, i, ii) => new Promise((resolve2, reject) => {
-    if (ii === pathExt.length)
-      return resolve2(step(i + 1));
-    const ext = pathExt[ii];
-    isexe$3(p + ext, { pathExt: pathExtExe }, (er, is) => {
-      if (!er && is) {
-        if (opt.all)
-          found.push(p + ext);
-        else
-          return resolve2(p + ext);
-      }
-      return resolve2(subStep(p, i, ii + 1));
-    });
-  });
-  return cb ? step(0).then((res) => cb(null, res), cb) : step(0);
-};
-var whichSync$1 = (cmd, opt) => {
-  opt = opt || {};
-  const { pathEnv, pathExt, pathExtExe } = getPathInfo$1(cmd, opt);
-  const found = [];
-  for (let i = 0; i < pathEnv.length; i++) {
-    const ppRaw = pathEnv[i];
-    const pathPart = /^".*"$/.test(ppRaw) ? ppRaw.slice(1, -1) : ppRaw;
-    const pCmd = path$2.join(pathPart, cmd);
-    const p = !pathPart && /^\.[\\\/]/.test(cmd) ? cmd.slice(0, 2) + pCmd : pCmd;
-    for (let j = 0; j < pathExt.length; j++) {
-      const cur = p + pathExt[j];
-      try {
-        const is = isexe$3.sync(cur, { pathExt: pathExtExe });
-        if (is) {
-          if (opt.all)
-            found.push(cur);
-          else
-            return cur;
-        }
-      } catch (ex) {
-      }
-    }
-  }
-  if (opt.all && found.length)
-    return found;
-  if (opt.nothrow)
-    return null;
-  throw getNotFoundError$1(cmd);
-};
-var which_1 = which$3;
-which$3.sync = whichSync$1;
-var pathKey$1 = { exports: {} };
-var pathKey = (options2 = {}) => {
-  const environment = options2.env || process.env;
-  const platform = options2.platform || process.platform;
-  if (platform !== "win32") {
-    return "PATH";
-  }
-  return Object.keys(environment).reverse().find((key) => key.toUpperCase() === "PATH") || "Path";
-};
-pathKey$1.exports = pathKey;
-pathKey$1.exports.default = pathKey;
-var pathKeyExports = pathKey$1.exports;
-var path$1 = require$$0$1;
-var which$2 = which_1;
-var getPathKey = pathKeyExports;
-function resolveCommandAttempt(parsed, withoutPathExt) {
-  const env2 = parsed.options.env || process.env;
-  const cwd = process.cwd();
-  const hasCustomCwd = parsed.options.cwd != null;
-  const shouldSwitchCwd = hasCustomCwd && process.chdir !== void 0 && !process.chdir.disabled;
-  if (shouldSwitchCwd) {
+  function Mt(t, e) {
     try {
-      process.chdir(parsed.options.cwd);
-    } catch (err) {
+      return v.sync(t, e || {});
+    } catch (n) {
+      if (e && e.ignoreErrors || n.code === "EACCES")
+        return false;
+      throw n;
     }
   }
-  let resolved;
-  try {
-    resolved = which$2.sync(parsed.command, {
-      path: env2[getPathKey({ env: env2 })],
-      pathExt: withoutPathExt ? path$1.delimiter : void 0
+});
+var et = l((Re, tt) => {
+  var g = process.platform === "win32" || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys", Y = h("path"), Bt = g ? ";" : ":", V = U(), J = (t) => Object.assign(new Error(`not found: ${t}`), { code: "ENOENT" }), Q = (t, e) => {
+    let n = e.colon || Bt, r = t.match(/\//) || g && t.match(/\\/) ? [""] : [
+      // windows always checks the cwd first
+      ...g ? [process.cwd()] : [],
+      ...(e.path || process.env.PATH || /* istanbul ignore next: very unusual */
+      "").split(n)
+    ], s = g ? e.pathExt || process.env.PATHEXT || ".EXE;.CMD;.BAT;.COM" : "", o = g ? s.split(n) : [""];
+    return g && t.indexOf(".") !== -1 && o[0] !== "" && o.unshift(""), {
+      pathEnv: r,
+      pathExt: o,
+      pathExtExe: s
+    };
+  }, Z = (t, e, n) => {
+    typeof e == "function" && (n = e, e = {}), e || (e = {});
+    let { pathEnv: r, pathExt: s, pathExtExe: o } = Q(t, e), i = [], u = (a) => new Promise((f, p) => {
+      if (a === r.length)
+        return e.all && i.length ? f(i) : p(J(t));
+      let d = r[a], w = /^".*"$/.test(d) ? d.slice(1, -1) : d, m = Y.join(w, t), b = !w && /^\.[\\\/]/.test(t) ? t.slice(0, 2) + m : m;
+      f(c(b, a, 0));
+    }), c = (a, f, p) => new Promise((d, w) => {
+      if (p === s.length)
+        return d(u(f + 1));
+      let m = s[p];
+      V(a + m, { pathExt: o }, (b, Ot) => {
+        if (!b && Ot)
+          if (e.all)
+            i.push(a + m);
+          else
+            return d(a + m);
+        return d(c(a, f, p + 1));
+      });
     });
-  } catch (e) {
-  } finally {
-    if (shouldSwitchCwd) {
-      process.chdir(cwd);
-    }
-  }
-  if (resolved) {
-    resolved = path$1.resolve(hasCustomCwd ? parsed.options.cwd : "", resolved);
-  }
-  return resolved;
-}
-function resolveCommand$1(parsed) {
-  return resolveCommandAttempt(parsed) || resolveCommandAttempt(parsed, true);
-}
-var resolveCommand_1 = resolveCommand$1;
-var _escape = {};
-var metaCharsRegExp = /([()\][%!^"`<>&|;, *?])/g;
-function escapeCommand(arg) {
-  arg = arg.replace(metaCharsRegExp, "^$1");
-  return arg;
-}
-function escapeArgument(arg, doubleEscapeMetaChars) {
-  arg = `${arg}`;
-  arg = arg.replace(/(\\*)"/g, '$1$1\\"');
-  arg = arg.replace(/(\\*)$/, "$1$1");
-  arg = `"${arg}"`;
-  arg = arg.replace(metaCharsRegExp, "^$1");
-  if (doubleEscapeMetaChars) {
-    arg = arg.replace(metaCharsRegExp, "^$1");
-  }
-  return arg;
-}
-_escape.command = escapeCommand;
-_escape.argument = escapeArgument;
-var shebangRegex$1 = /^#!(.*)/;
-var shebangRegex = shebangRegex$1;
-var shebangCommand$1 = (string = "") => {
-  const match = string.match(shebangRegex);
-  if (!match) {
-    return null;
-  }
-  const [path2, argument] = match[0].replace(/#! ?/, "").split(" ");
-  const binary = path2.split("/").pop();
-  if (binary === "env") {
-    return argument;
-  }
-  return argument ? `${binary} ${argument}` : binary;
-};
-var fs = require$$0;
-var shebangCommand = shebangCommand$1;
-function readShebang$1(command) {
-  const size = 150;
-  const buffer = Buffer.alloc(size);
-  let fd;
-  try {
-    fd = fs.openSync(command, "r");
-    fs.readSync(fd, buffer, 0, size, 0);
-    fs.closeSync(fd);
-  } catch (e) {
-  }
-  return shebangCommand(buffer.toString());
-}
-var readShebang_1 = readShebang$1;
-var path = require$$0$1;
-var resolveCommand = resolveCommand_1;
-var escape = _escape;
-var readShebang = readShebang_1;
-var isWin$1 = process.platform === "win32";
-var isExecutableRegExp = /\.(?:com|exe)$/i;
-var isCmdShimRegExp = /node_modules[\\/].bin[\\/][^\\/]+\.cmd$/i;
-function detectShebang(parsed) {
-  parsed.file = resolveCommand(parsed);
-  const shebang = parsed.file && readShebang(parsed.file);
-  if (shebang) {
-    parsed.args.unshift(parsed.file);
-    parsed.command = shebang;
-    return resolveCommand(parsed);
-  }
-  return parsed.file;
-}
-function parseNonShell(parsed) {
-  if (!isWin$1) {
-    return parsed;
-  }
-  const commandFile = detectShebang(parsed);
-  const needsShell = !isExecutableRegExp.test(commandFile);
-  if (parsed.options.forceShell || needsShell) {
-    const needsDoubleEscapeMetaChars = isCmdShimRegExp.test(commandFile);
-    parsed.command = path.normalize(parsed.command);
-    parsed.command = escape.command(parsed.command);
-    parsed.args = parsed.args.map((arg) => escape.argument(arg, needsDoubleEscapeMetaChars));
-    const shellCommand = [parsed.command].concat(parsed.args).join(" ");
-    parsed.args = ["/d", "/s", "/c", `"${shellCommand}"`];
-    parsed.command = process.env.comspec || "cmd.exe";
-    parsed.options.windowsVerbatimArguments = true;
-  }
-  return parsed;
-}
-function parse$1(command, args, options2) {
-  if (args && !Array.isArray(args)) {
-    options2 = args;
-    args = null;
-  }
-  args = args ? args.slice(0) : [];
-  options2 = Object.assign({}, options2);
-  const parsed = {
-    command,
-    args,
-    options: options2,
-    file: void 0,
-    original: {
-      command,
-      args
-    }
-  };
-  return options2.shell ? parsed : parseNonShell(parsed);
-}
-var parse_1 = parse$1;
-var isWin = process.platform === "win32";
-function notFoundError(original, syscall) {
-  return Object.assign(new Error(`${syscall} ${original.command} ENOENT`), {
-    code: "ENOENT",
-    errno: "ENOENT",
-    syscall: `${syscall} ${original.command}`,
-    path: original.command,
-    spawnargs: original.args
-  });
-}
-function hookChildProcess(cp2, parsed) {
-  if (!isWin) {
-    return;
-  }
-  const originalEmit = cp2.emit;
-  cp2.emit = function(name, arg1) {
-    if (name === "exit") {
-      const err = verifyENOENT(arg1, parsed);
-      if (err) {
-        return originalEmit.call(cp2, "error", err);
+    return n ? u(0).then((a) => n(null, a), n) : u(0);
+  }, Xt = (t, e) => {
+    e = e || {};
+    let { pathEnv: n, pathExt: r, pathExtExe: s } = Q(t, e), o = [];
+    for (let i = 0; i < n.length; i++) {
+      let u = n[i], c = /^".*"$/.test(u) ? u.slice(1, -1) : u, a = Y.join(c, t), f = !c && /^\.[\\\/]/.test(t) ? t.slice(0, 2) + a : a;
+      for (let p = 0; p < r.length; p++) {
+        let d = f + r[p];
+        try {
+          if (V.sync(d, { pathExt: s }))
+            if (e.all)
+              o.push(d);
+            else
+              return d;
+        } catch {
+        }
       }
     }
-    return originalEmit.apply(cp2, arguments);
+    if (e.all && o.length)
+      return o;
+    if (e.nothrow)
+      return null;
+    throw J(t);
   };
-}
-function verifyENOENT(status, parsed) {
-  if (isWin && status === 1 && !parsed.file) {
-    return notFoundError(parsed.original, "spawn");
-  }
-  return null;
-}
-function verifyENOENTSync(status, parsed) {
-  if (isWin && status === 1 && !parsed.file) {
-    return notFoundError(parsed.original, "spawnSync");
-  }
-  return null;
-}
-var enoent$1 = {
-  hookChildProcess,
-  verifyENOENT,
-  verifyENOENTSync,
-  notFoundError
-};
-var cp = require$$0$2;
-var parse2 = parse_1;
-var enoent = enoent$1;
-function spawn$1(command, args, options2) {
-  const parsed = parse2(command, args, options2);
-  const spawned = cp.spawn(parsed.command, parsed.args, parsed.options);
-  enoent.hookChildProcess(spawned, parsed);
-  return spawned;
-}
-function spawnSync(command, args, options2) {
-  const parsed = parse2(command, args, options2);
-  const result = cp.spawnSync(parsed.command, parsed.args, parsed.options);
-  result.error = result.error || enoent.verifyENOENTSync(result.status, parsed);
-  return result;
-}
-crossSpawn.exports = spawn$1;
-crossSpawn.exports.spawn = spawn$1;
-crossSpawn.exports.sync = spawnSync;
-crossSpawn.exports._parse = parse2;
-crossSpawn.exports._enoent = enoent;
-var crossSpawnExports = crossSpawn.exports;
-crossSpawnExports.sync;
-var next = commonjsGlobal.process && process.nextTick || commonjsGlobal.setImmediate || function(f) {
-  setTimeout(f, 0);
-};
-var callMeMaybe = function maybe(cb, promise) {
-  if (cb) {
-    promise.then(function(result) {
-      next(function() {
-        cb(null, result);
-      });
-    }, function(err) {
-      next(function() {
-        cb(err);
-      });
-    });
-    return void 0;
-  } else {
-    return promise;
-  }
-};
-var normalizeArgs = normalizeArgs_1;
-var normalizeResult = normalizeResult_1;
-var maybe2 = callMeMaybe;
-var spawn = crossSpawnExports;
-var async_1 = async$1;
-function async$1() {
-  let { command, args, options: options2, callback, error: error2 } = normalizeArgs(arguments);
-  return maybe2(callback, new Promise((resolve2, reject) => {
-    if (error2) {
-      normalizeResult({ command, args, options: options2, error: error2 });
-    } else {
-      let spawnedProcess;
+  tt.exports = Z;
+  Z.sync = Xt;
+});
+var rt = l(($e, _) => {
+  var nt = (t = {}) => {
+    let e = t.env || process.env;
+    return (t.platform || process.platform) !== "win32" ? "PATH" : Object.keys(e).reverse().find((r) => r.toUpperCase() === "PATH") || "Path";
+  };
+  _.exports = nt;
+  _.exports.default = nt;
+});
+var ct = l((Ne, it) => {
+  var st = h("path"), Gt = et(), Ut = rt();
+  function ot(t, e) {
+    let n = t.options.env || process.env, r = process.cwd(), s = t.options.cwd != null, o = s && process.chdir !== void 0 && !process.chdir.disabled;
+    if (o)
       try {
-        spawnedProcess = spawn(command, args, options2);
-      } catch (error3) {
-        normalizeResult({ error: error3, command, args, options: options2 });
+        process.chdir(t.options.cwd);
+      } catch {
       }
-      let pid = spawnedProcess.pid;
-      let stdout = options2.encoding === "buffer" ? Buffer.from([]) : "";
-      let stderr = options2.encoding === "buffer" ? Buffer.from([]) : "";
-      spawnedProcess.stdout && spawnedProcess.stdout.on("data", (data) => {
-        if (typeof stdout === "string") {
-          stdout += data.toString();
-        } else {
-          stdout = Buffer.concat([stdout, data]);
-        }
+    let i;
+    try {
+      i = Gt.sync(t.command, {
+        path: n[Ut({ env: n })],
+        pathExt: e ? st.delimiter : void 0
       });
-      spawnedProcess.stderr && spawnedProcess.stderr.on("data", (data) => {
-        if (typeof stderr === "string") {
-          stderr += data.toString();
-        } else {
-          stderr = Buffer.concat([stderr, data]);
-        }
-      });
-      spawnedProcess.on("error", (error3) => {
-        try {
-          normalizeResult({ error: error3, command, args, options: options2, pid, stdout, stderr });
-        } catch (error4) {
-          reject(error4);
-        }
-      });
-      spawnedProcess.on("exit", (status, signal) => {
-        try {
-          resolve2(normalizeResult({ command, args, options: options2, pid, stdout, stderr, status, signal }));
-        } catch (error3) {
-          reject(error3);
-        }
-      });
+    } catch {
+    } finally {
+      o && process.chdir(r);
     }
-  }));
+    return i && (i = st.resolve(s ? t.options.cwd : "", i)), i;
+  }
+  function Yt(t) {
+    return ot(t) || ot(t, true);
+  }
+  it.exports = Yt;
+});
+var at = l((qe, C) => {
+  var P = /([()\][%!^"`<>&|;, *?])/g;
+  function Vt(t) {
+    return t = t.replace(P, "^$1"), t;
+  }
+  function Jt(t, e) {
+    return t = `${t}`, t = t.replace(/(\\*)"/g, '$1$1\\"'), t = t.replace(/(\\*)$/, "$1$1"), t = `"${t}"`, t = t.replace(P, "^$1"), e && (t = t.replace(P, "^$1")), t;
+  }
+  C.exports.command = Vt;
+  C.exports.argument = Jt;
+});
+var lt = l((Ie, ut) => {
+  ut.exports = /^#!(.*)/;
+});
+var dt = l((Le, pt) => {
+  var Qt = lt();
+  pt.exports = (t = "") => {
+    let e = t.match(Qt);
+    if (!e)
+      return null;
+    let [n, r] = e[0].replace(/#! ?/, "").split(" "), s = n.split("/").pop();
+    return s === "env" ? r : r ? `${s} ${r}` : s;
+  };
+});
+var ht = l((je, ft) => {
+  var O = h("fs"), Zt = dt();
+  function te(t) {
+    let n = Buffer.alloc(150), r;
+    try {
+      r = O.openSync(t, "r"), O.readSync(r, n, 0, 150, 0), O.closeSync(r);
+    } catch {
+    }
+    return Zt(n.toString());
+  }
+  ft.exports = te;
+});
+var wt = l((Fe, Et) => {
+  var ee = h("path"), mt = ct(), gt = at(), ne = ht(), re = process.platform === "win32", se = /\.(?:com|exe)$/i, oe = /node_modules[\\/].bin[\\/][^\\/]+\.cmd$/i;
+  function ie(t) {
+    t.file = mt(t);
+    let e = t.file && ne(t.file);
+    return e ? (t.args.unshift(t.file), t.command = e, mt(t)) : t.file;
+  }
+  function ce(t) {
+    if (!re)
+      return t;
+    let e = ie(t), n = !se.test(e);
+    if (t.options.forceShell || n) {
+      let r = oe.test(e);
+      t.command = ee.normalize(t.command), t.command = gt.command(t.command), t.args = t.args.map((o) => gt.argument(o, r));
+      let s = [t.command].concat(t.args).join(" ");
+      t.args = ["/d", "/s", "/c", `"${s}"`], t.command = process.env.comspec || "cmd.exe", t.options.windowsVerbatimArguments = true;
+    }
+    return t;
+  }
+  function ae(t, e, n) {
+    e && !Array.isArray(e) && (n = e, e = null), e = e ? e.slice(0) : [], n = Object.assign({}, n);
+    let r = {
+      command: t,
+      args: e,
+      options: n,
+      file: void 0,
+      original: {
+        command: t,
+        args: e
+      }
+    };
+    return n.shell ? r : ce(r);
+  }
+  Et.exports = ae;
+});
+var bt = l((ze, vt) => {
+  var S = process.platform === "win32";
+  function k(t, e) {
+    return Object.assign(new Error(`${e} ${t.command} ENOENT`), {
+      code: "ENOENT",
+      errno: "ENOENT",
+      syscall: `${e} ${t.command}`,
+      path: t.command,
+      spawnargs: t.args
+    });
+  }
+  function ue(t, e) {
+    if (!S)
+      return;
+    let n = t.emit;
+    t.emit = function(r, s) {
+      if (r === "exit") {
+        let o = xt(s, e);
+        if (o)
+          return n.call(t, "error", o);
+      }
+      return n.apply(t, arguments);
+    };
+  }
+  function xt(t, e) {
+    return S && t === 1 && !e.file ? k(e.original, "spawn") : null;
+  }
+  function le(t, e) {
+    return S && t === 1 && !e.file ? k(e.original, "spawnSync") : null;
+  }
+  vt.exports = {
+    hookChildProcess: ue,
+    verifyENOENT: xt,
+    verifyENOENTSync: le,
+    notFoundError: k
+  };
+});
+var Pt = l((He, E) => {
+  var yt = h("child_process"), T = wt(), A = bt();
+  function _t(t, e, n) {
+    let r = T(t, e, n), s = yt.spawn(r.command, r.args, r.options);
+    return A.hookChildProcess(s, r), s;
+  }
+  function pe(t, e, n) {
+    let r = T(t, e, n), s = yt.spawnSync(r.command, r.args, r.options);
+    return s.error = s.error || A.verifyENOENTSync(s.status, r), s;
+  }
+  E.exports = _t;
+  E.exports.spawn = _t;
+  E.exports.sync = pe;
+  E.exports._parse = T;
+  E.exports._enoent = A;
+});
+var Lt = /^path$/i;
+var q = { key: "PATH", value: "" };
+function jt(t) {
+  for (let e in t) {
+    if (!Object.prototype.hasOwnProperty.call(t, e) || !Lt.test(e))
+      continue;
+    let n = t[e];
+    return n ? { key: e, value: n } : q;
+  }
+  return q;
 }
-var async = async_1;
-var Node = class {
-  value;
-  next;
-  constructor(value) {
-    this.value = value;
+function Ft(t, e) {
+  let n = e.value.split(delimiter$2), r = t, s;
+  do
+    n.push(resolve(r, "node_modules", ".bin")), s = r, r = dirname(r);
+  while (r !== s);
+  return { key: e.key, value: n.join(delimiter$2) };
+}
+function I(t, e) {
+  let n = {
+    ...process.env,
+    ...e
+  }, r = Ft(t, jt(n));
+  return n[r.key] = r.value, n;
+}
+var L = (t) => {
+  let e = t.length, n = new PassThrough(), r = () => {
+    --e === 0 && n.emit("end");
+  };
+  for (let s of t)
+    s.pipe(n, { end: false }), s.on("end", r);
+  return n;
+};
+var Ct = Nt(Pt(), 1);
+var x = class extends Error {
+  result;
+  output;
+  get exitCode() {
+    if (this.result.exitCode !== null)
+      return this.result.exitCode;
+  }
+  constructor(e, n) {
+    super(`Process exited with non-zero status (${e.exitCode})`), this.result = e, this.output = n;
   }
 };
-var Queue = class {
-  #head;
-  #tail;
-  #size;
-  constructor() {
-    this.clear();
+var ge = {
+  timeout: void 0,
+  persist: false
+};
+var Ee = {
+  windowsHide: true
+};
+function we(t, e) {
+  return {
+    command: normalize(t),
+    args: e ?? []
+  };
+}
+function xe(t) {
+  let e = new AbortController();
+  for (let n of t) {
+    if (n.aborted)
+      return e.abort(), n;
+    let r = () => {
+      e.abort(n.reason);
+    };
+    n.addEventListener("abort", r, {
+      signal: e.signal
+    });
   }
-  enqueue(value) {
-    const node = new Node(value);
-    if (this.#head) {
-      this.#tail.next = node;
-      this.#tail = node;
-    } else {
-      this.#head = node;
-      this.#tail = node;
+  return e.signal;
+}
+var R = class {
+  _process;
+  _aborted = false;
+  _options;
+  _command;
+  _args;
+  _resolveClose;
+  _processClosed;
+  _thrownError;
+  get process() {
+    return this._process;
+  }
+  get pid() {
+    return this._process?.pid;
+  }
+  get exitCode() {
+    if (this._process && this._process.exitCode !== null)
+      return this._process.exitCode;
+  }
+  constructor(e, n, r) {
+    this._options = {
+      ...ge,
+      ...r
+    }, this._command = e, this._args = n ?? [], this._processClosed = new Promise((s) => {
+      this._resolveClose = s;
+    });
+  }
+  kill(e) {
+    return this._process?.kill(e) === true;
+  }
+  get aborted() {
+    return this._aborted;
+  }
+  get killed() {
+    return this._process?.killed === true;
+  }
+  pipe(e, n, r) {
+    return be(e, n, {
+      ...r,
+      stdin: this
+    });
+  }
+  async *[Symbol.asyncIterator]() {
+    let e = this._process;
+    if (!e)
+      return;
+    let n = [];
+    this._streamErr && n.push(this._streamErr), this._streamOut && n.push(this._streamOut);
+    let r = L(n), s = me.createInterface({
+      input: r
+    });
+    for await (let o of s)
+      yield o.toString();
+    if (await this._processClosed, e.removeAllListeners(), this._thrownError)
+      throw this._thrownError;
+    if (this._options?.throwOnError && this.exitCode !== 0 && this.exitCode !== void 0)
+      throw new x(this);
+  }
+  async _waitForOutput() {
+    let e = this._process;
+    if (!e)
+      throw new Error("No process was started");
+    let n = "", r = "";
+    if (this._streamErr)
+      for await (let o of this._streamErr)
+        n += o.toString();
+    if (this._streamOut)
+      for await (let o of this._streamOut)
+        r += o.toString();
+    if (await this._processClosed, this._options?.stdin && await this._options.stdin, e.removeAllListeners(), this._thrownError)
+      throw this._thrownError;
+    let s = {
+      stderr: n,
+      stdout: r
+    };
+    if (this._options.throwOnError && this.exitCode !== 0 && this.exitCode !== void 0)
+      throw new x(this, s);
+    return s;
+  }
+  then(e, n) {
+    return this._waitForOutput().then(e, n);
+  }
+  _streamOut;
+  _streamErr;
+  spawn() {
+    let e = cwd(), n = this._options, r = {
+      ...Ee,
+      ...n.nodeOptions
+    }, s = [];
+    this._resetState(), n.timeout !== void 0 && s.push(AbortSignal.timeout(n.timeout)), n.signal !== void 0 && s.push(n.signal), n.persist === true && (r.detached = true), s.length > 0 && (r.signal = xe(s)), r.env = I(e, r.env);
+    let { command: o, args: i } = we(this._command, this._args), u = (0, Ct._parse)(o, i, r), c = spawn(
+      u.command,
+      u.args,
+      u.options
+    );
+    if (c.stderr && (this._streamErr = c.stderr), c.stdout && (this._streamOut = c.stdout), this._process = c, c.once("error", this._onError), c.once("close", this._onClose), n.stdin !== void 0 && c.stdin && n.stdin.process) {
+      let { stdout: a } = n.stdin.process;
+      a && a.pipe(c.stdin);
     }
-    this.#size++;
   }
-  dequeue() {
-    const current = this.#head;
-    if (!current) {
+  _resetState() {
+    this._aborted = false, this._processClosed = new Promise((e) => {
+      this._resolveClose = e;
+    }), this._thrownError = void 0;
+  }
+  _onError = (e) => {
+    if (e.name === "AbortError" && (!(e.cause instanceof Error) || e.cause.name !== "TimeoutError")) {
+      this._aborted = true;
       return;
     }
-    this.#head = this.#head.next;
-    this.#size--;
-    return current.value;
-  }
-  clear() {
-    this.#head = void 0;
-    this.#tail = void 0;
-    this.#size = 0;
-  }
-  get size() {
-    return this.#size;
-  }
-  *[Symbol.iterator]() {
-    let current = this.#head;
-    while (current) {
-      yield current.value;
-      current = current.next;
-    }
-  }
-};
-function pLimit(concurrency) {
-  if (!((Number.isInteger(concurrency) || concurrency === Number.POSITIVE_INFINITY) && concurrency > 0)) {
-    throw new TypeError("Expected `concurrency` to be a number from 1 and up");
-  }
-  const queue = new Queue();
-  let activeCount = 0;
-  const next2 = () => {
-    activeCount--;
-    if (queue.size > 0) {
-      queue.dequeue()();
-    }
+    this._thrownError = e;
   };
-  const run4 = async (fn, resolve2, args) => {
-    activeCount++;
-    const result = (async () => fn(...args))();
-    resolve2(result);
-    try {
-      await result;
-    } catch {
-    }
-    next2();
+  _onClose = () => {
+    this._resolveClose && this._resolveClose();
   };
-  const enqueue = (fn, resolve2, args) => {
-    queue.enqueue(run4.bind(void 0, fn, resolve2, args));
-    (async () => {
-      await Promise.resolve();
-      if (activeCount < concurrency && queue.size > 0) {
-        queue.dequeue()();
-      }
-    })();
-  };
-  const generator = (fn, ...args) => new Promise((resolve2) => {
-    enqueue(fn, resolve2, args);
-  });
-  Object.defineProperties(generator, {
-    activeCount: {
-      get: () => activeCount
-    },
-    pendingCount: {
-      get: () => queue.size
-    },
-    clearQueue: {
-      value: () => {
-        queue.clear();
-      }
-    }
-  });
-  return generator;
-}
-var EndError = class extends Error {
-  constructor(value) {
-    super();
-    this.value = value;
-  }
 };
-var testElement = async (element, tester) => tester(await element);
-var finder = async (element) => {
-  const values = await Promise.all(element);
-  if (values[1] === true) {
-    throw new EndError(values[0]);
-  }
-  return false;
+var ve = (t, e, n) => {
+  let r = new R(t, e, n);
+  return r.spawn(), r;
 };
-async function pLocate(iterable, tester, {
-  concurrency = Number.POSITIVE_INFINITY,
-  preserveOrder = true
-} = {}) {
-  const limit = pLimit(concurrency);
-  const items = [...iterable].map((element) => [element, limit(testElement, element, tester)]);
-  const checkLimit = pLimit(preserveOrder ? 1 : Number.POSITIVE_INFINITY);
-  try {
-    await Promise.all(items.map((element) => checkLimit(finder, element)));
-  } catch (error2) {
-    if (error2 instanceof EndError) {
-      return error2.value;
-    }
-    throw error2;
-  }
-}
-var typeMappings = {
-  directory: "isDirectory",
-  file: "isFile"
-};
-function checkType(type) {
-  if (Object.hasOwnProperty.call(typeMappings, type)) {
-    return;
-  }
-  throw new Error(`Invalid type specified: ${type}`);
-}
-var matchType = (type, stat) => stat[typeMappings[type]]();
-var toPath$1 = (urlOrPath) => urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
-async function locatePath(paths, {
-  cwd = process$2.cwd(),
-  type = "file",
-  allowSymlinks = true,
-  concurrency,
-  preserveOrder
-} = {}) {
-  checkType(type);
-  cwd = toPath$1(cwd);
-  const statFunction = allowSymlinks ? promises.stat : promises.lstat;
-  return pLocate(paths, async (path_) => {
-    try {
-      const stat = await statFunction(path$3.resolve(cwd, path_));
-      return matchType(type, stat);
-    } catch {
-      return false;
-    }
-  }, { concurrency, preserveOrder });
-}
-var toPath = (urlOrPath) => urlOrPath instanceof URL ? fileURLToPath(urlOrPath) : urlOrPath;
-var findUpStop = Symbol("findUpStop");
-async function findUpMultiple(name, options2 = {}) {
-  let directory = path$3.resolve(toPath(options2.cwd) || "");
-  const { root } = path$3.parse(directory);
-  const stopAt = path$3.resolve(directory, options2.stopAt || root);
-  const limit = options2.limit || Number.POSITIVE_INFINITY;
-  const paths = [name].flat();
-  const runMatcher = async (locateOptions) => {
-    if (typeof name !== "function") {
-      return locatePath(paths, locateOptions);
-    }
-    const foundPath = await name(locateOptions.cwd);
-    if (typeof foundPath === "string") {
-      return locatePath([foundPath], locateOptions);
-    }
-    return foundPath;
-  };
-  const matches = [];
-  while (true) {
-    const foundPath = await runMatcher({ ...options2, cwd: directory });
-    if (foundPath === findUpStop) {
-      break;
-    }
-    if (foundPath) {
-      matches.push(path$3.resolve(directory, foundPath));
-    }
-    if (directory === stopAt || matches.length >= limit) {
-      break;
-    }
-    directory = path$3.dirname(directory);
-  }
-  return matches;
-}
-async function findUp(name, options2 = {}) {
-  const matches = await findUpMultiple(name, { ...options2, limit: 1 });
-  return matches[0];
-}
+var be = ve;
 var ESC$1 = "\x1B[";
 var OSC = "\x1B]";
 var BEL = "\x07";
 var SEP = ";";
 var isTerminalApp = process.env.TERM_PROGRAM === "Apple_Terminal";
 var ansiEscapes = {};
-ansiEscapes.cursorTo = (x, y) => {
-  if (typeof x !== "number") {
+ansiEscapes.cursorTo = (x2, y) => {
+  if (typeof x2 !== "number") {
     throw new TypeError("The `x` argument is required");
   }
   if (typeof y !== "number") {
-    return ESC$1 + (x + 1) + "G";
+    return ESC$1 + (x2 + 1) + "G";
   }
-  return ESC$1 + (y + 1) + ";" + (x + 1) + "H";
+  return ESC$1 + (y + 1) + ";" + (x2 + 1) + "H";
 };
-ansiEscapes.cursorMove = (x, y) => {
-  if (typeof x !== "number") {
+ansiEscapes.cursorMove = (x2, y) => {
+  if (typeof x2 !== "number") {
     throw new TypeError("The `x` argument is required");
   }
   let returnValue = "";
-  if (x < 0) {
-    returnValue += ESC$1 + -x + "D";
-  } else if (x > 0) {
-    returnValue += ESC$1 + x + "C";
+  if (x2 < 0) {
+    returnValue += ESC$1 + -x2 + "D";
+  } else if (x2 > 0) {
+    returnValue += ESC$1 + x2 + "C";
   }
   if (y < 0) {
     returnValue += ESC$1 + -y + "A";
@@ -25022,7 +24618,7 @@ ansiEscapes.image = (buffer, options2 = {}) => {
   return returnValue + ":" + buffer.toString("base64") + BEL;
 };
 ansiEscapes.iTerm = {
-  setCwd: (cwd = process.cwd()) => `${OSC}50;CurrentDir=${cwd}${BEL}`,
+  setCwd: (cwd2 = process.cwd()) => `${OSC}50;CurrentDir=${cwd2}${BEL}`,
   annotation: (message, options2 = {}) => {
     let returnValue = `${OSC}1337;`;
     const hasX = typeof options2.x !== "undefined";
@@ -25040,29 +24636,29 @@ ansiEscapes.iTerm = {
     return returnValue + BEL;
   }
 };
-var hasFlag$2 = (flag, argv = process.argv) => {
+var hasFlag$2 = (flag, argv2 = process.argv) => {
   const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
-  const position = argv.indexOf(prefix + flag);
-  const terminatorPosition = argv.indexOf("--");
+  const position = argv2.indexOf(prefix + flag);
+  const terminatorPosition = argv2.indexOf("--");
   return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
 };
-var os = require$$0$3;
+var os = require$$0;
 var tty = require$$1;
 var hasFlag$1 = hasFlag$2;
-var { env } = process;
+var { env: env$1 } = process;
 var forceColor;
 if (hasFlag$1("no-color") || hasFlag$1("no-colors") || hasFlag$1("color=false") || hasFlag$1("color=never")) {
   forceColor = 0;
 } else if (hasFlag$1("color") || hasFlag$1("colors") || hasFlag$1("color=true") || hasFlag$1("color=always")) {
   forceColor = 1;
 }
-if ("FORCE_COLOR" in env) {
-  if (env.FORCE_COLOR === "true") {
+if ("FORCE_COLOR" in env$1) {
+  if (env$1.FORCE_COLOR === "true") {
     forceColor = 1;
-  } else if (env.FORCE_COLOR === "false") {
+  } else if (env$1.FORCE_COLOR === "false") {
     forceColor = 0;
   } else {
-    forceColor = env.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env.FORCE_COLOR, 10), 3);
+    forceColor = env$1.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env$1.FORCE_COLOR, 10), 3);
   }
 }
 function translateLevel(level) {
@@ -25090,7 +24686,7 @@ function supportsColor$1(haveStream, streamIsTTY) {
     return 0;
   }
   const min = forceColor || 0;
-  if (env.TERM === "dumb") {
+  if (env$1.TERM === "dumb") {
     return min;
   }
   if (process.platform === "win32") {
@@ -25100,34 +24696,34 @@ function supportsColor$1(haveStream, streamIsTTY) {
     }
     return 1;
   }
-  if ("CI" in env) {
-    if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "GITHUB_ACTIONS", "BUILDKITE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
+  if ("CI" in env$1) {
+    if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "GITHUB_ACTIONS", "BUILDKITE"].some((sign) => sign in env$1) || env$1.CI_NAME === "codeship") {
       return 1;
     }
     return min;
   }
-  if ("TEAMCITY_VERSION" in env) {
-    return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+  if ("TEAMCITY_VERSION" in env$1) {
+    return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env$1.TEAMCITY_VERSION) ? 1 : 0;
   }
-  if (env.COLORTERM === "truecolor") {
+  if (env$1.COLORTERM === "truecolor") {
     return 3;
   }
-  if ("TERM_PROGRAM" in env) {
-    const version2 = parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
-    switch (env.TERM_PROGRAM) {
+  if ("TERM_PROGRAM" in env$1) {
+    const version2 = parseInt((env$1.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
+    switch (env$1.TERM_PROGRAM) {
       case "iTerm.app":
         return version2 >= 3 ? 3 : 2;
       case "Apple_Terminal":
         return 2;
     }
   }
-  if (/-256(color)?$/i.test(env.TERM)) {
+  if (/-256(color)?$/i.test(env$1.TERM)) {
     return 2;
   }
-  if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+  if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env$1.TERM)) {
     return 1;
   }
-  if ("COLORTERM" in env) {
+  if ("COLORTERM" in env$1) {
     return 1;
   }
   return min;
@@ -25226,48 +24822,48 @@ terminalLink.isSupported = supportsHyperlinks$1.stdout;
 terminalLink.stderr = (text2, url, options2 = {}) => terminalLink(text2, url, { target: "stderr", ...options2 });
 terminalLink.stderr.isSupported = supportsHyperlinks$1.stderr;
 var prompts$3 = {};
-var FORCE_COLOR$1;
-var NODE_DISABLE_COLORS$1;
-var NO_COLOR$1;
-var TERM$1;
-var isTTY$1 = true;
+var FORCE_COLOR;
+var NODE_DISABLE_COLORS;
+var NO_COLOR;
+var TERM;
+var isTTY = true;
 if (typeof process !== "undefined") {
-  ({ FORCE_COLOR: FORCE_COLOR$1, NODE_DISABLE_COLORS: NODE_DISABLE_COLORS$1, NO_COLOR: NO_COLOR$1, TERM: TERM$1 } = process.env || {});
-  isTTY$1 = process.stdout && process.stdout.isTTY;
+  ({ FORCE_COLOR, NODE_DISABLE_COLORS, NO_COLOR, TERM } = process.env || {});
+  isTTY = process.stdout && process.stdout.isTTY;
 }
-var $$1 = {
-  enabled: !NODE_DISABLE_COLORS$1 && NO_COLOR$1 == null && TERM$1 !== "dumb" && (FORCE_COLOR$1 != null && FORCE_COLOR$1 !== "0" || isTTY$1),
+var $ = {
+  enabled: !NODE_DISABLE_COLORS && NO_COLOR == null && TERM !== "dumb" && (FORCE_COLOR != null && FORCE_COLOR !== "0" || isTTY),
   // modifiers
-  reset: init$1(0, 0),
-  bold: init$1(1, 22),
-  dim: init$1(2, 22),
-  italic: init$1(3, 23),
-  underline: init$1(4, 24),
-  inverse: init$1(7, 27),
-  hidden: init$1(8, 28),
-  strikethrough: init$1(9, 29),
+  reset: init2(0, 0),
+  bold: init2(1, 22),
+  dim: init2(2, 22),
+  italic: init2(3, 23),
+  underline: init2(4, 24),
+  inverse: init2(7, 27),
+  hidden: init2(8, 28),
+  strikethrough: init2(9, 29),
   // colors
-  black: init$1(30, 39),
-  red: init$1(31, 39),
-  green: init$1(32, 39),
-  yellow: init$1(33, 39),
-  blue: init$1(34, 39),
-  magenta: init$1(35, 39),
-  cyan: init$1(36, 39),
-  white: init$1(37, 39),
-  gray: init$1(90, 39),
-  grey: init$1(90, 39),
+  black: init2(30, 39),
+  red: init2(31, 39),
+  green: init2(32, 39),
+  yellow: init2(33, 39),
+  blue: init2(34, 39),
+  magenta: init2(35, 39),
+  cyan: init2(36, 39),
+  white: init2(37, 39),
+  gray: init2(90, 39),
+  grey: init2(90, 39),
   // background colors
-  bgBlack: init$1(40, 49),
-  bgRed: init$1(41, 49),
-  bgGreen: init$1(42, 49),
-  bgYellow: init$1(43, 49),
-  bgBlue: init$1(44, 49),
-  bgMagenta: init$1(45, 49),
-  bgCyan: init$1(46, 49),
-  bgWhite: init$1(47, 49)
+  bgBlack: init2(40, 49),
+  bgRed: init2(41, 49),
+  bgGreen: init2(42, 49),
+  bgYellow: init2(43, 49),
+  bgBlue: init2(44, 49),
+  bgMagenta: init2(45, 49),
+  bgCyan: init2(46, 49),
+  bgWhite: init2(47, 49)
 };
-function run$2(arr, str) {
+function run$1(arr, str) {
   let i = 0, tmp, beg = "", end = "";
   for (; i < arr.length; i++) {
     tmp = arr[i];
@@ -25279,37 +24875,37 @@ function run$2(arr, str) {
   }
   return beg + str + end;
 }
-function chain$1(has, keys) {
+function chain(has, keys) {
   let ctx = { has, keys };
-  ctx.reset = $$1.reset.bind(ctx);
-  ctx.bold = $$1.bold.bind(ctx);
-  ctx.dim = $$1.dim.bind(ctx);
-  ctx.italic = $$1.italic.bind(ctx);
-  ctx.underline = $$1.underline.bind(ctx);
-  ctx.inverse = $$1.inverse.bind(ctx);
-  ctx.hidden = $$1.hidden.bind(ctx);
-  ctx.strikethrough = $$1.strikethrough.bind(ctx);
-  ctx.black = $$1.black.bind(ctx);
-  ctx.red = $$1.red.bind(ctx);
-  ctx.green = $$1.green.bind(ctx);
-  ctx.yellow = $$1.yellow.bind(ctx);
-  ctx.blue = $$1.blue.bind(ctx);
-  ctx.magenta = $$1.magenta.bind(ctx);
-  ctx.cyan = $$1.cyan.bind(ctx);
-  ctx.white = $$1.white.bind(ctx);
-  ctx.gray = $$1.gray.bind(ctx);
-  ctx.grey = $$1.grey.bind(ctx);
-  ctx.bgBlack = $$1.bgBlack.bind(ctx);
-  ctx.bgRed = $$1.bgRed.bind(ctx);
-  ctx.bgGreen = $$1.bgGreen.bind(ctx);
-  ctx.bgYellow = $$1.bgYellow.bind(ctx);
-  ctx.bgBlue = $$1.bgBlue.bind(ctx);
-  ctx.bgMagenta = $$1.bgMagenta.bind(ctx);
-  ctx.bgCyan = $$1.bgCyan.bind(ctx);
-  ctx.bgWhite = $$1.bgWhite.bind(ctx);
+  ctx.reset = $.reset.bind(ctx);
+  ctx.bold = $.bold.bind(ctx);
+  ctx.dim = $.dim.bind(ctx);
+  ctx.italic = $.italic.bind(ctx);
+  ctx.underline = $.underline.bind(ctx);
+  ctx.inverse = $.inverse.bind(ctx);
+  ctx.hidden = $.hidden.bind(ctx);
+  ctx.strikethrough = $.strikethrough.bind(ctx);
+  ctx.black = $.black.bind(ctx);
+  ctx.red = $.red.bind(ctx);
+  ctx.green = $.green.bind(ctx);
+  ctx.yellow = $.yellow.bind(ctx);
+  ctx.blue = $.blue.bind(ctx);
+  ctx.magenta = $.magenta.bind(ctx);
+  ctx.cyan = $.cyan.bind(ctx);
+  ctx.white = $.white.bind(ctx);
+  ctx.gray = $.gray.bind(ctx);
+  ctx.grey = $.grey.bind(ctx);
+  ctx.bgBlack = $.bgBlack.bind(ctx);
+  ctx.bgRed = $.bgRed.bind(ctx);
+  ctx.bgGreen = $.bgGreen.bind(ctx);
+  ctx.bgYellow = $.bgYellow.bind(ctx);
+  ctx.bgBlue = $.bgBlue.bind(ctx);
+  ctx.bgMagenta = $.bgMagenta.bind(ctx);
+  ctx.bgCyan = $.bgCyan.bind(ctx);
+  ctx.bgWhite = $.bgWhite.bind(ctx);
   return ctx;
 }
-function init$1(open, close) {
+function init2(open, close) {
   let blk = {
     open: `\x1B[${open}m`,
     close: `\x1B[${close}m`,
@@ -25318,12 +24914,12 @@ function init$1(open, close) {
   return function(txt) {
     if (this !== void 0 && this.has !== void 0) {
       !!~this.has.indexOf(open) || (this.has.push(open), this.keys.push(blk));
-      return txt === void 0 ? this : $$1.enabled ? run$2(this.keys, txt + "") : txt + "";
+      return txt === void 0 ? this : $.enabled ? run$1(this.keys, txt + "") : txt + "";
     }
-    return txt === void 0 ? chain$1([open], [blk]) : $$1.enabled ? run$2([blk], txt + "") : txt + "";
+    return txt === void 0 ? chain([open], [blk]) : $.enabled ? run$1([blk], txt + "") : txt + "";
   };
 }
-var kleur = $$1;
+var kleur = $;
 var action$1 = (key, isSelect) => {
   if (key.meta && key.name !== "escape") return;
   if (key.ctrl) {
@@ -25369,14 +24965,14 @@ var ESC = "\x1B";
 var CSI = `${ESC}[`;
 var beep$1 = "\x07";
 var cursor$b = {
-  to(x, y) {
-    if (!y) return `${CSI}${x + 1}G`;
-    return `${CSI}${y + 1};${x + 1}H`;
+  to(x2, y) {
+    if (!y) return `${CSI}${x2 + 1}G`;
+    return `${CSI}${y + 1};${x2 + 1}H`;
   },
-  move(x, y) {
+  move(x2, y) {
     let ret = "";
-    if (x < 0) ret += `${CSI}${-x}D`;
-    else if (x > 0) ret += `${CSI}${x}C`;
+    if (x2 < 0) ret += `${CSI}${-x2}D`;
+    else if (x2 > 0) ret += `${CSI}${x2}C`;
     if (y < 0) ret += `${CSI}${-y}A`;
     else if (y > 0) ret += `${CSI}${y}B`;
     return ret;
@@ -25456,7 +25052,7 @@ var win = {
 };
 var figures$8 = process.platform === "win32" ? win : main;
 var figures_1 = figures$8;
-var c = kleur;
+var c$1 = kleur;
 var figures$7 = figures_1;
 var styles = Object.freeze({
   password: { scale: 1, render: (input) => "*".repeat(input.length) },
@@ -25466,14 +25062,14 @@ var styles = Object.freeze({
 });
 var render = (type) => styles[type] || styles.default;
 var symbols = Object.freeze({
-  aborted: c.red(figures$7.cross),
-  done: c.green(figures$7.tick),
-  exited: c.yellow(figures$7.cross),
-  default: c.cyan("?")
+  aborted: c$1.red(figures$7.cross),
+  done: c$1.green(figures$7.tick),
+  exited: c$1.yellow(figures$7.cross),
+  default: c$1.cyan("?")
 });
 var symbol = (done, aborted, exited) => aborted ? symbols.aborted : exited ? symbols.exited : done ? symbols.done : symbols.default;
-var delimiter$1 = (completing) => c.gray(completing ? figures$7.ellipsis : figures$7.pointerSmall);
-var item = (expandable, expanded) => c.gray(expandable ? expanded ? figures$7.pointerSmall : "+" : figures$7.line);
+var delimiter$1 = (completing) => c$1.gray(completing ? figures$7.ellipsis : figures$7.pointerSmall);
+var item = (expandable, expanded) => c$1.gray(expandable ? expanded ? figures$7.pointerSmall : "+" : figures$7.line);
 var style$9 = {
   styles,
   render,
@@ -25486,7 +25082,7 @@ var strip = strip$2;
 var lines$2 = function(msg, perLine) {
   let lines2 = String(strip(msg) || "").split(/\r?\n/);
   if (!perLine) return lines2.length;
-  return lines2.map((l) => Math.ceil(l.length / perLine)).reduce((a, b) => a + b);
+  return lines2.map((l2) => Math.ceil(l2.length / perLine)).reduce((a, b) => a + b);
 };
 var wrap$3 = (msg, opts = {}) => {
   const tab = Number.isSafeInteger(parseInt(opts.margin)) ? new Array(parseInt(opts.margin)).fill(" ").join("") : opts.margin || "";
@@ -25515,7 +25111,7 @@ var util = {
   wrap: wrap$3,
   entriesToDisplay: entriesToDisplay$3
 };
-var readline = require$$0$4;
+var readline = me;
 var { action } = util;
 var EventEmitter = require$$2;
 var { beep, cursor: cursor$9 } = src;
@@ -25658,10 +25254,10 @@ var TextPrompt = class extends Prompt$7 {
     this.cursor = this.cursor + n;
     this.cursorOffset += n;
   }
-  _(c2, key) {
+  _(c, key) {
     let s1 = this.value.slice(0, this.cursor);
     let s2 = this.value.slice(this.cursor);
-    this.value = `${s1}${c2}${s2}`;
+    this.value = `${s1}${c}${s2}`;
     this.red = false;
     this.cursor = this.placeholder ? 0 : s1.length + 1;
     this.render();
@@ -25734,8 +25330,8 @@ var TextPrompt = class extends Prompt$7 {
     ].join(` `);
     if (this.error) {
       this.outputError += this.errorMsg.split(`
-`).reduce((a, l, i) => a + `
-${i ? " " : figures$6.pointerSmall} ${color$8.red().italic(l)}`, ``);
+`).reduce((a, l2, i) => a + `
+${i ? " " : figures$6.pointerSmall} ${color$8.red().italic(l2)}`, ``);
     }
     this.out.write(erase$5.line + cursor$8.to(0) + this.outputText + cursor$8.save + this.outputError + cursor$8.restore + cursor$8.move(this.cursorOffset, 0));
   }
@@ -25827,8 +25423,8 @@ var SelectPrompt = class extends Prompt$6 {
     this.moveCursor((this.cursor + 1) % this.choices.length);
     this.render();
   }
-  _(c2, key) {
-    if (c2 === " ") return this.submit();
+  _(c, key) {
+    if (c === " ") return this.submit();
   }
   get selection() {
     return this.choices[this.cursor];
@@ -25944,12 +25540,12 @@ var TogglePrompt = class extends Prompt$5 {
     this.fire();
     this.render();
   }
-  _(c2, key) {
-    if (c2 === " ") {
+  _(c, key) {
+    if (c === " ") {
       this.value = !this.value;
-    } else if (c2 === "1") {
+    } else if (c === "1") {
       this.value = true;
-    } else if (c2 === "0") {
+    } else if (c === "0") {
       this.value = false;
     } else return this.bell();
     this.render();
@@ -26307,19 +25903,19 @@ var DatePrompt = class extends Prompt$4 {
     this.render();
   }
   right() {
-    let next2 = this.parts[this.cursor].next();
-    if (next2 == null) return this.bell();
-    this.moveCursor(this.parts.indexOf(next2));
+    let next = this.parts[this.cursor].next();
+    if (next == null) return this.bell();
+    this.moveCursor(this.parts.indexOf(next));
     this.render();
   }
   next() {
-    let next2 = this.parts[this.cursor].next();
-    this.moveCursor(next2 ? this.parts.indexOf(next2) : this.parts.findIndex((part) => part instanceof DatePart2));
+    let next = this.parts[this.cursor].next();
+    this.moveCursor(next ? this.parts.indexOf(next) : this.parts.findIndex((part) => part instanceof DatePart2));
     this.render();
   }
-  _(c2) {
-    if (/\d/.test(c2)) {
-      this.typed += c2;
+  _(c) {
+    if (/\d/.test(c)) {
+      this.typed += c;
       this.parts[this.cursor].setTo(this.typed);
       this.render();
     }
@@ -26337,8 +25933,8 @@ var DatePrompt = class extends Prompt$4 {
     ].join(" ");
     if (this.error) {
       this.outputText += this.errorMsg.split("\n").reduce(
-        (a, l, i) => a + `
-${i ? ` ` : figures$4.pointerSmall} ${color$5.red().italic(l)}`,
+        (a, l2, i) => a + `
+${i ? ` ` : figures$4.pointerSmall} ${color$5.red().italic(l2)}`,
         ``
       );
     }
@@ -26390,11 +25986,11 @@ var NumberPrompt = class extends Prompt$3 {
   get value() {
     return this._value;
   }
-  parse(x) {
-    return this.float ? parseFloat(x) : parseInt(x);
+  parse(x2) {
+    return this.float ? parseFloat(x2) : parseInt(x2);
   }
-  valid(c2) {
-    return c2 === `-` || c2 === `.` && this.float || isNumber.test(c2);
+  valid(c) {
+    return c === `-` || c === `.` && this.float || isNumber.test(c);
   }
   reset() {
     this.typed = ``;
@@ -26406,8 +26002,8 @@ var NumberPrompt = class extends Prompt$3 {
     this.abort();
   }
   abort() {
-    let x = this.value;
-    this.value = x !== `` ? x : this.initial;
+    let x2 = this.value;
+    this.value = x2 !== `` ? x2 : this.initial;
     this.done = this.aborted = true;
     this.error = false;
     this.fire();
@@ -26432,8 +26028,8 @@ var NumberPrompt = class extends Prompt$3 {
       this.render();
       return;
     }
-    let x = this.value;
-    this.value = x !== `` ? x : this.initial;
+    let x2 = this.value;
+    this.value = x2 !== `` ? x2 : this.initial;
     this.done = true;
     this.aborted = false;
     this.error = false;
@@ -26481,14 +26077,14 @@ var NumberPrompt = class extends Prompt$3 {
     this.fire();
     this.render();
   }
-  _(c2, key) {
-    if (!this.valid(c2)) return this.bell();
+  _(c, key) {
+    if (!this.valid(c)) return this.bell();
     const now = Date.now();
     if (now - this.lastHit > 1e3) this.typed = ``;
-    this.typed += c2;
+    this.typed += c;
     this.lastHit = now;
     this.color = `cyan`;
-    if (c2 === `.`) return this.fire();
+    if (c === `.`) return this.fire();
     this.value = Math.min(this.parse(this.typed), this.max);
     if (this.value > this.max) this.value = this.max;
     if (this.value < this.min) this.value = this.min;
@@ -26512,8 +26108,8 @@ var NumberPrompt = class extends Prompt$3 {
     ].join(` `);
     if (this.error) {
       this.outputError += this.errorMsg.split(`
-`).reduce((a, l, i) => a + `
-${i ? ` ` : figures$3.pointerSmall} ${color$4.red().italic(l)}`, ``);
+`).reduce((a, l2, i) => a + `
+${i ? ` ` : figures$3.pointerSmall} ${color$4.red().italic(l2)}`, ``);
     }
     this.out.write(erase$2.line + cursor$4.to(0) + this.outputText + cursor$4.save + this.outputError + cursor$4.restore);
   }
@@ -26642,10 +26238,10 @@ var MultiselectPrompt$1 = class MultiselectPrompt extends Prompt$2 {
     this.value.filter((v) => !v.disabled).forEach((v) => v.selected = newSelected);
     this.render();
   }
-  _(c2, key) {
-    if (c2 === " ") {
+  _(c, key) {
+    if (c === " ") {
       this.handleSpaceToggle();
-    } else if (c2 === "a") {
+    } else if (c === "a") {
       this.toggleAll();
     } else {
       return this.bell();
@@ -26794,8 +26390,8 @@ var AutocompletePrompt = class extends Prompt$1 {
     if (this.completing !== p) return;
     this.suggestions = suggestions.map((s, i, arr) => ({ title: getTitle(arr, i), value: getVal(arr, i), description: s.description }));
     this.completing = false;
-    const l = Math.max(suggestions.length - 1, 0);
-    this.moveSelect(Math.min(l, this.select));
+    const l2 = Math.max(suggestions.length - 1, 0);
+    this.moveSelect(Math.min(l2, this.select));
     cb && cb();
   }
   reset() {
@@ -26834,10 +26430,10 @@ var AutocompletePrompt = class extends Prompt$1 {
     this.out.write("\n");
     this.close();
   }
-  _(c2, key) {
+  _(c, key) {
     let s1 = this.input.slice(0, this.cursor);
     let s2 = this.input.slice(this.cursor);
-    this.input = `${s1}${c2}${s2}`;
+    this.input = `${s1}${c}${s2}`;
     this.cursor = s1.length + 1;
     this.complete(this.render);
     this.render();
@@ -27032,15 +26628,15 @@ var AutocompleteMultiselectPrompt = class extends MultiselectPrompt2 {
       this.render();
     }
   }
-  handleInputChange(c2) {
-    this.inputValue = this.inputValue + c2;
+  handleInputChange(c) {
+    this.inputValue = this.inputValue + c;
     this.updateFilteredOptions();
   }
-  _(c2, key) {
-    if (c2 === " ") {
+  _(c, key) {
+    if (c === " ") {
       this.handleSpaceToggle();
     } else {
-      this.handleInputChange(c2);
+      this.handleInputChange(c);
     }
   }
   renderInstructions() {
@@ -27140,12 +26736,12 @@ var ConfirmPrompt = class extends Prompt2 {
     this.out.write("\n");
     this.close();
   }
-  _(c2, key) {
-    if (c2.toLowerCase() === "y") {
+  _(c, key) {
+    if (c.toLowerCase() === "y") {
       this.value = true;
       return this.submit();
     }
-    if (c2.toLowerCase() === "n") {
+    if (c.toLowerCase() === "n") {
       this.value = false;
       return this.submit();
     }
@@ -27188,9 +26784,9 @@ var elements = {
       const onSubmit = opts.onSubmit || noop2;
       const onExit = opts.onExit || noop2;
       p.on("state", args.onState || noop2);
-      p.on("submit", (x) => res(onSubmit(x)));
-      p.on("exit", (x) => res(onExit(x)));
-      p.on("abort", (x) => rej(onAbort(x)));
+      p.on("submit", (x2) => res(onSubmit(x2)));
+      p.on("exit", (x2) => res(onExit(x2)));
+      p.on("abort", (x2) => rej(onAbort(x2)));
     });
   }
   $2.text = (args) => toPrompt("TextPrompt", args);
@@ -27311,7 +26907,7 @@ var cjs = {};
 var posix$1 = {};
 Object.defineProperty(posix$1, "__esModule", { value: true });
 posix$1.sync = posix$1.isexe = void 0;
-var fs_1$1 = require$$0;
+var fs_1$1 = require$$0$1;
 var promises_1$1 = require$$1$1;
 var isexe$2 = async (path2, options2 = {}) => {
   const { ignoreErrors = false } = options2;
@@ -27358,7 +26954,7 @@ var checkMode = (stat, options2) => {
 var win32 = {};
 Object.defineProperty(win32, "__esModule", { value: true });
 win32.sync = win32.isexe = void 0;
-var fs_1 = require$$0;
+var fs_1 = require$$0$1;
 var promises_1 = require$$1$1;
 var isexe$1 = async (path2, options2 = {}) => {
   const { ignoreErrors = false } = options2;
@@ -27446,7 +27042,7 @@ Object.defineProperty(options, "__esModule", { value: true });
   exports.sync = impl.sync;
 })(cjs);
 var { isexe, sync: isexeSync } = cjs;
-var { join, delimiter, sep, posix } = require$$0$1;
+var { join, delimiter, sep, posix } = require$$1$2;
 var isWindows = process.platform === "win32";
 var rSlash = new RegExp(`[${posix.sep}${sep === posix.sep ? "" : sep}]`.replace(/(\\)/g, "\\$1"));
 var rRel = new RegExp(`^\\.${rSlash.source}`);
@@ -27528,103 +27124,62 @@ var whichSync = (cmd, opt = {}) => {
 var lib = which;
 which.sync = whichSync;
 var which$1 = /* @__PURE__ */ getDefaultExportFromCjs(lib);
-var FORCE_COLOR;
-var NODE_DISABLE_COLORS;
-var NO_COLOR;
-var TERM;
-var isTTY = true;
-if (typeof process !== "undefined") {
-  ({ FORCE_COLOR, NODE_DISABLE_COLORS, NO_COLOR, TERM } = process.env || {});
-  isTTY = process.stdout && process.stdout.isTTY;
+function commonjsRequire(path2) {
+  throw new Error('Could not dynamically require "' + path2 + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
-var $ = {
-  enabled: !NODE_DISABLE_COLORS && NO_COLOR == null && TERM !== "dumb" && (FORCE_COLOR != null && FORCE_COLOR !== "0" || isTTY),
-  // modifiers
-  reset: init2(0, 0),
-  bold: init2(1, 22),
-  dim: init2(2, 22),
-  italic: init2(3, 23),
-  underline: init2(4, 24),
-  inverse: init2(7, 27),
-  hidden: init2(8, 28),
-  strikethrough: init2(9, 29),
-  // colors
-  black: init2(30, 39),
-  red: init2(31, 39),
-  green: init2(32, 39),
-  yellow: init2(33, 39),
-  blue: init2(34, 39),
-  magenta: init2(35, 39),
-  cyan: init2(36, 39),
-  white: init2(37, 39),
-  gray: init2(90, 39),
-  grey: init2(90, 39),
-  // background colors
-  bgBlack: init2(40, 49),
-  bgRed: init2(41, 49),
-  bgGreen: init2(42, 49),
-  bgYellow: init2(43, 49),
-  bgBlue: init2(44, 49),
-  bgMagenta: init2(45, 49),
-  bgCyan: init2(46, 49),
-  bgWhite: init2(47, 49)
+var picocolors = { exports: {} };
+var argv = process.argv || [];
+var env = process.env;
+var isColorSupported = !("NO_COLOR" in env || argv.includes("--no-color")) && ("FORCE_COLOR" in env || argv.includes("--color") || process.platform === "win32" || commonjsRequire != null && require$$1.isatty(1) && env.TERM !== "dumb" || "CI" in env);
+var formatter = (open, close, replace = open) => (input) => {
+  let string = "" + input;
+  let index = string.indexOf(close, open.length);
+  return ~index ? open + replaceClose(string, close, replace, index) + close : open + string + close;
 };
-function run$1(arr, str) {
-  let i = 0, tmp, beg = "", end = "";
-  for (; i < arr.length; i++) {
-    tmp = arr[i];
-    beg += tmp.open;
-    end += tmp.close;
-    if (!!~str.indexOf(tmp.close)) {
-      str = str.replace(tmp.rgx, tmp.close + tmp.open);
-    }
-  }
-  return beg + str + end;
-}
-function chain(has, keys) {
-  let ctx = { has, keys };
-  ctx.reset = $.reset.bind(ctx);
-  ctx.bold = $.bold.bind(ctx);
-  ctx.dim = $.dim.bind(ctx);
-  ctx.italic = $.italic.bind(ctx);
-  ctx.underline = $.underline.bind(ctx);
-  ctx.inverse = $.inverse.bind(ctx);
-  ctx.hidden = $.hidden.bind(ctx);
-  ctx.strikethrough = $.strikethrough.bind(ctx);
-  ctx.black = $.black.bind(ctx);
-  ctx.red = $.red.bind(ctx);
-  ctx.green = $.green.bind(ctx);
-  ctx.yellow = $.yellow.bind(ctx);
-  ctx.blue = $.blue.bind(ctx);
-  ctx.magenta = $.magenta.bind(ctx);
-  ctx.cyan = $.cyan.bind(ctx);
-  ctx.white = $.white.bind(ctx);
-  ctx.gray = $.gray.bind(ctx);
-  ctx.grey = $.grey.bind(ctx);
-  ctx.bgBlack = $.bgBlack.bind(ctx);
-  ctx.bgRed = $.bgRed.bind(ctx);
-  ctx.bgGreen = $.bgGreen.bind(ctx);
-  ctx.bgYellow = $.bgYellow.bind(ctx);
-  ctx.bgBlue = $.bgBlue.bind(ctx);
-  ctx.bgMagenta = $.bgMagenta.bind(ctx);
-  ctx.bgCyan = $.bgCyan.bind(ctx);
-  ctx.bgWhite = $.bgWhite.bind(ctx);
-  return ctx;
-}
-function init2(open, close) {
-  let blk = {
-    open: `\x1B[${open}m`,
-    close: `\x1B[${close}m`,
-    rgx: new RegExp(`\\x1b\\[${close}m`, "g")
+var replaceClose = (string, close, replace, index) => {
+  let result = "";
+  let cursor2 = 0;
+  do {
+    result += string.substring(cursor2, index) + replace;
+    cursor2 = index + close.length;
+    index = string.indexOf(close, cursor2);
+  } while (~index);
+  return result + string.substring(cursor2);
+};
+var createColors = (enabled = isColorSupported) => {
+  let init3 = enabled ? formatter : () => String;
+  return {
+    isColorSupported: enabled,
+    reset: init3("\x1B[0m", "\x1B[0m"),
+    bold: init3("\x1B[1m", "\x1B[22m", "\x1B[22m\x1B[1m"),
+    dim: init3("\x1B[2m", "\x1B[22m", "\x1B[22m\x1B[2m"),
+    italic: init3("\x1B[3m", "\x1B[23m"),
+    underline: init3("\x1B[4m", "\x1B[24m"),
+    inverse: init3("\x1B[7m", "\x1B[27m"),
+    hidden: init3("\x1B[8m", "\x1B[28m"),
+    strikethrough: init3("\x1B[9m", "\x1B[29m"),
+    black: init3("\x1B[30m", "\x1B[39m"),
+    red: init3("\x1B[31m", "\x1B[39m"),
+    green: init3("\x1B[32m", "\x1B[39m"),
+    yellow: init3("\x1B[33m", "\x1B[39m"),
+    blue: init3("\x1B[34m", "\x1B[39m"),
+    magenta: init3("\x1B[35m", "\x1B[39m"),
+    cyan: init3("\x1B[36m", "\x1B[39m"),
+    white: init3("\x1B[37m", "\x1B[39m"),
+    gray: init3("\x1B[90m", "\x1B[39m"),
+    bgBlack: init3("\x1B[40m", "\x1B[49m"),
+    bgRed: init3("\x1B[41m", "\x1B[49m"),
+    bgGreen: init3("\x1B[42m", "\x1B[49m"),
+    bgYellow: init3("\x1B[43m", "\x1B[49m"),
+    bgBlue: init3("\x1B[44m", "\x1B[49m"),
+    bgMagenta: init3("\x1B[45m", "\x1B[49m"),
+    bgCyan: init3("\x1B[46m", "\x1B[49m"),
+    bgWhite: init3("\x1B[47m", "\x1B[49m")
   };
-  return function(txt) {
-    if (this !== void 0 && this.has !== void 0) {
-      !!~this.has.indexOf(open) || (this.has.push(open), this.keys.push(blk));
-      return txt === void 0 ? this : $.enabled ? run$1(this.keys, txt + "") : txt + "";
-    }
-    return txt === void 0 ? chain([open], [blk]) : $.enabled ? run$1([blk], txt + "") : txt + "";
-  };
-}
+};
+picocolors.exports = createColors();
+picocolors.exports.createColors = createColors;
+var picocolorsExports = picocolors.exports;
 var CLI_TEMP_DIR = join$1(os$1.tmpdir(), "antfu-ni");
 function exclude(arr, ...v) {
   return arr.slice().filter((item2) => !v.includes(item2));
@@ -27632,59 +27187,52 @@ function exclude(arr, ...v) {
 function cmdExists(cmd) {
   return which$1.sync(cmd, { nothrow: true }) !== null;
 }
-async function detect({ autoInstall, programmatic, cwd } = {}) {
-  let agent = null;
-  let version2 = null;
-  const lockPath = await findUp(Object.keys(LOCKS), { cwd });
-  let packageJsonPath;
-  if (lockPath)
-    packageJsonPath = path$3.resolve(lockPath, "../package.json");
-  else
-    packageJsonPath = await findUp("package.json", { cwd });
-  if (packageJsonPath && fs$1.existsSync(packageJsonPath)) {
-    try {
-      const pkg = JSON.parse(fs$1.readFileSync(packageJsonPath, "utf8"));
-      if (typeof pkg.packageManager === "string") {
-        const [name, ver] = pkg.packageManager.replace(/^\^/, "").split("@");
-        version2 = ver;
-        if (name === "yarn" && Number.parseInt(ver) > 1) {
-          agent = "yarn@berry";
-          version2 = "berry";
-        } else if (name === "pnpm" && Number.parseInt(ver) < 7) {
-          agent = "pnpm@6";
-        } else if (name in AGENTS) {
-          agent = name;
-        } else if (!programmatic) {
-          console.warn("[ni] Unknown packageManager:", pkg.packageManager);
-        }
+async function detect({ autoInstall, programmatic, cwd: cwd2 } = {}) {
+  const {
+    name,
+    agent,
+    version: version2
+  } = await detect$1({
+    cwd: cwd2,
+    onUnknown: (packageManager) => {
+      if (!programmatic) {
+        console.warn("[ni] Unknown packageManager:", packageManager);
       }
-    } catch {
+      return void 0;
     }
-  }
-  if (!agent && lockPath)
-    agent = LOCKS[path$3.basename(lockPath)];
-  if (agent && !cmdExists(agent.split("@")[0]) && !programmatic) {
+  }) || {};
+  if (name && !cmdExists(name) && !programmatic) {
     if (!autoInstall) {
-      console.warn(`[ni] Detected ${agent} but it doesn't seem to be installed.
+      console.warn(`[ni] Detected ${name} but it doesn't seem to be installed.
 `);
-      if (process$2.env.CI)
-        process$2.exit(1);
-      const link = terminalLink(agent, INSTALL_PAGE[agent]);
+      if (process$1.env.CI)
+        process$1.exit(1);
+      const link = terminalLink(name, INSTALL_PAGE[name]);
       const { tryInstall } = await prompts$1({
         name: "tryInstall",
         type: "confirm",
         message: `Would you like to globally install ${link}?`
       });
       if (!tryInstall)
-        process$2.exit(1);
+        process$1.exit(1);
     }
-    await async(`npm i -g ${agent.split("@")[0]}${version2 ? `@${version2}` : ""}`, { stdio: "inherit", cwd });
+    await ve(
+      "npm",
+      ["i", "-g", `${name}${version2 ? `@${version2}` : ""}`],
+      {
+        nodeOptions: {
+          stdio: "inherit",
+          cwd: cwd2
+        },
+        throwOnError: true
+      }
+    );
   }
   return agent;
 }
-var customRcPath = process$2.env.NI_CONFIG_FILE;
-var home = process$2.platform === "win32" ? process$2.env.USERPROFILE : process$2.env.HOME;
-var defaultRcPath = path$3.join(home || "~/", ".nirc");
+var customRcPath = process$1.env.NI_CONFIG_FILE;
+var home = process$1.platform === "win32" ? process$1.env.USERPROFILE : process$1.env.HOME;
+var defaultRcPath = path.join(home || "~/", ".nirc");
 var rcPath = customRcPath || defaultRcPath;
 var defaultConfig = {
   defaultAgent: "prompt",
@@ -27696,8 +27244,12 @@ async function getConfig2() {
     config2 = Object.assign(
       {},
       defaultConfig,
-      fs$1.existsSync(rcPath) ? ini$1.parse(fs$1.readFileSync(rcPath, "utf-8")) : null
+      fs.existsSync(rcPath) ? ini$1.parse(fs.readFileSync(rcPath, "utf-8")) : null
     );
+    if (process$1.env.NI_DEFAULT_AGENT)
+      config2.defaultAgent = process$1.env.NI_DEFAULT_AGENT;
+    if (process$1.env.NI_GLOBAL_AGENT)
+      config2.globalAgent = process$1.env.NI_GLOBAL_AGENT;
     const agent = await detect({ programmatic: true });
     if (agent)
       config2.defaultAgent = agent;
@@ -27706,7 +27258,7 @@ async function getConfig2() {
 }
 async function getDefaultAgent(programmatic) {
   const { defaultAgent } = await getConfig2();
-  if (defaultAgent === "prompt" && (programmatic || process$2.env.CI))
+  if (defaultAgent === "prompt" && (programmatic || process$1.env.CI))
     return "npm";
   return defaultAgent;
 }
@@ -27720,36 +27272,38 @@ var UnsupportedCommand = class extends Error {
   }
 };
 function getCommand(agent, command, args = []) {
-  if (!(agent in AGENTS))
+  if (!COMMANDS[agent])
     throw new Error(`Unsupported agent "${agent}"`);
-  const c2 = AGENTS[agent][command];
-  if (typeof c2 === "function")
-    return c2(args);
-  if (!c2)
+  if (!COMMANDS[agent][command])
     throw new UnsupportedCommand({ agent, command });
-  const quote = (arg) => !arg.startsWith("--") && arg.includes(" ") ? JSON.stringify(arg) : arg;
-  return c2.replace("{0}", args.map(quote).join(" ")).trim();
+  return constructCommand(COMMANDS[agent][command], args);
 }
 var parseNr = (agent, args) => {
   if (args.length === 0)
     args.push("start");
+  let hasIfPresent = false;
   if (args.includes("--if-present")) {
     args = exclude(args, "--if-present");
-    args[0] = `--if-present ${args[0]}`;
+    hasIfPresent = true;
   }
-  return getCommand(agent, "run", args);
+  const cmd = getCommand(agent, "run", args);
+  if (!cmd)
+    return cmd;
+  if (hasIfPresent)
+    cmd.args.splice(1, 0, "--if-present");
+  return cmd;
 };
-async function getCliCommand(fn, args, options2 = {}, cwd = options2.cwd ?? process$2.cwd()) {
+async function getCliCommand(fn, args, options2 = {}, cwd2 = options2.cwd ?? process$1.cwd()) {
   const isGlobal = args.includes("-g");
   if (isGlobal)
     return await fn(await getGlobalAgent(), args);
-  let agent = await detect({ ...options2, cwd }) || await getDefaultAgent(options2.programmatic);
+  let agent = await detect({ ...options2, cwd: cwd2 }) || await getDefaultAgent(options2.programmatic);
   if (agent === "prompt") {
     agent = (await prompts$1({
       name: "agent",
       type: "select",
       message: "Choose the agent",
-      choices: agents.filter((i) => !i.includes("@")).map((value) => ({ title: value, value }))
+      choices: AGENTS.filter((i) => !i.includes("@")).map((value) => ({ title: value, value }))
     })).agent;
     if (!agent)
       return;
@@ -27757,7 +27311,7 @@ async function getCliCommand(fn, args, options2 = {}, cwd = options2.cwd ?? proc
   return await fn(agent, args, {
     programmatic: options2.programmatic,
     hasLock: Boolean(agent),
-    cwd
+    cwd: cwd2
   });
 }
 
@@ -27769,14 +27323,15 @@ async function buildRunKnipCommand(buildScriptName) {
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
   }
-  core7.debug(`knip command: ${cmd}`);
-  return cmd;
+  const command = `${cmd.command} ${cmd.args.join(" ")}`;
+  core6.debug(`[buildRunKnipCommand] command: '${command}'`);
+  return command;
 }
 async function run2(runCmd) {
   const result = await new Promise((resolve2) => {
     exec(runCmd, (_err, stdout, stderr) => {
       if (stderr.length > 0) {
-        core7.warning("knip stderr:\n" + stderr);
+        core6.warning("knip stderr:\n" + stderr);
       }
       resolve2(stdout);
     });
@@ -27839,7 +27394,7 @@ function parseJsonReport(rawJson) {
       }
     }
   }
-  core7.debug(
+  core6.debug(
     `[parseJsonReport]: results summary: {${Object.entries(summary).map(([key, value]) => `${key}: ${value}`).join(", ")}}`
   );
   return out;
@@ -28018,7 +27573,7 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     return output;
   }
-  core7.info(`    - Splitting section ${sectionHeader}`);
+  core6.info(`    - Splitting section ${sectionHeader}`);
   output = [];
   const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
@@ -28037,7 +27592,7 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
     tableBodySliceStart = tableBodySliceEnd;
     tableBodySliceEnd += tableBodyItemWindow;
   }
-  core7.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  core6.info(`    \u2714 Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
   return output;
 }
 function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
@@ -28050,7 +27605,7 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
     if (key === "files") {
       if (report.files.length > 0) {
         outputSections.push(buildFilesSection(report.files));
-        core7.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
+        core6.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
       }
       continue;
     }
@@ -28066,7 +27621,7 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
       case "unresolved": {
         const sections = buildArraySection(key, value);
         outputSections.push(...sections);
-        core7.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
+        core6.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
         break;
       }
       case "exports":
@@ -28097,7 +27652,7 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
       for (const section of sections) {
         outputSections.push(section);
       }
-      core7.debug(`[buildSection]: Parsed ${key} (${length})`);
+      core6.debug(`[buildSection]: Parsed ${key} (${length})`);
     }
   }
   return { sections: outputSections, annotations: outputAnnotations };
@@ -28113,7 +27668,7 @@ function getJsonFromOutput(output) {
 }
 async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled) {
   const taskMs = Date.now();
-  core7.info("- Running Knip tasks");
+  core6.info("- Running Knip tasks");
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
   const report = await timeTask(
@@ -28124,7 +27679,7 @@ async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled)
     "Convert report to markdown",
     () => Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled))
   );
-  core7.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
+  core6.info(`\u2714 Running Knip tasks (${Date.now() - taskMs}ms)`);
   return sectionsAndAnnotations;
 }
 
@@ -28133,8 +27688,8 @@ async function run3() {
   try {
     const config3 = getConfig();
     const actionMs = Date.now();
-    core8.info("- knip-reporter action");
-    core8.info(configToStr(config3));
+    core7.info("- knip-reporter action");
+    core7.info(configToStr(config3));
     if (github2.context.payload.pull_request === void 0) {
       throw new Error(
         `knip-reporter currently only supports 'pull_request' events, current event: ${github2.context.eventName}`
@@ -28163,7 +27718,7 @@ async function run3() {
       counts = await updateCheckAnnotations(checkId, knipAnnotations, config3.ignoreResults);
     }
     if (!config3.ignoreResults && knipSections.length > 0) {
-      core8.setFailed("knip has resulted in findings, please see the report for more details");
+      core7.setFailed("knip has resulted in findings, please see the report for more details");
     }
     if (config3.annotations) {
       if (!config3.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
@@ -28172,15 +27727,15 @@ async function run3() {
         await resolveCheck(checkId, "success", counts);
       }
     }
-    core8.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
+    core7.info(`\u2714 knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error2) {
     if (error2 instanceof Error) {
-      core8.error(`\u{1F9E8} Failed: ${error2.message}`);
-      core8.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
-      core8.setFailed(error2);
+      core7.error(`\u{1F9E8} Failed: ${error2.message}`);
+      core7.error(`\u{1F4DA} Stack: ${error2.stack ?? ""}`);
+      core7.setFailed(error2);
       return;
     }
-    core8.setFailed(`\u{1F9E8} Failed: ${error2}`);
+    core7.setFailed(`\u{1F9E8} Failed: ${error2}`);
   }
 }
 (() => run3())();
