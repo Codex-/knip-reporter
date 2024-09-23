@@ -94,8 +94,14 @@ describe("API", () => {
       });
 
       const state = await createComment(123456, "");
+      expect(restSpy).toHaveBeenCalledOnce();
       expect(state.status).toStrictEqual(201);
-      expect(restSpy).toMatchSnapshot();
+      expect(state).toMatchInlineSnapshot(`
+        {
+          "data": {},
+          "status": 201,
+        }
+      `);
     });
 
     it("should pass through issue_number", async () => {
@@ -227,8 +233,14 @@ describe("API", () => {
       });
 
       const state = await updateComment(123456, "");
+      expect(restSpy).toHaveBeenCalledOnce();
       expect(state.status).toStrictEqual(200);
-      expect(restSpy).toMatchSnapshot();
+      expect(state).toMatchInlineSnapshot(`
+        {
+          "data": {},
+          "status": 200,
+        }
+      `);
     });
 
     it("should pass through comment_id", async () => {
@@ -276,8 +288,14 @@ describe("API", () => {
       });
 
       const state = await deleteComment(123456);
+      expect(restSpy).toHaveBeenCalledOnce();
       expect(state.status).toStrictEqual(204);
-      expect(restSpy).toMatchSnapshot();
+      expect(state).toMatchInlineSnapshot(`
+        {
+          "data": {},
+          "status": 204,
+        }
+      `);
     });
 
     it("should pass through comment_id", async () => {
@@ -313,8 +331,14 @@ describe("API", () => {
       });
 
       const state = await createCheck("knip-reporter", "Knip reporter analysis");
+      expect(restSpy).toHaveBeenCalledOnce();
       expect(state.status).toStrictEqual(201);
-      expect(restSpy).toMatchSnapshot();
+      expect(state).toMatchInlineSnapshot(`
+        {
+          "data": {},
+          "status": 201,
+        }
+      `);
     });
 
     it("should throw if a non-201 status is returned", async () => {
