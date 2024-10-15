@@ -9,9 +9,12 @@ import { timeTask } from "./task.ts";
 import type { ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string, cwd?: string): Promise<string> {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+  const knipArgs = [buildScriptName, "--reporter json"];
+  if (cwd) {
+    knipArgs.push(`--directory ${cwd}`);
+  }
+  const cmd = await getCliCommand(parseNr, knipArgs, {
     programmatic: true,
-    cwd,
   });
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
