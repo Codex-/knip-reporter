@@ -8,7 +8,7 @@ import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
 import type { ItemMeta } from "./types.ts";
 
-export async function buildRunKnipCommand(buildScriptName: string, cwd: string): Promise<string> {
+export async function buildRunKnipCommand(buildScriptName: string, cwd?: string): Promise<string> {
   const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
     programmatic: true,
     cwd,
