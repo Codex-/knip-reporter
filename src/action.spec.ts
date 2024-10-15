@@ -32,6 +32,7 @@ describe("Action", () => {
       annotations: actionInputs.annotations?.default,
       verbose: actionInputs.verbose?.default,
       ignore_results: actionInputs.ignore_results?.default,
+      working_directory: actionInputs.working_directory?.default,
     };
 
     vi.spyOn(core, "getInput").mockImplementation((input: string) => {
@@ -39,6 +40,7 @@ describe("Action", () => {
         case "token":
         case "command_script_name":
         case "comment_id":
+        case "working_directory":
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:

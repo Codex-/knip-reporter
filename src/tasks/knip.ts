@@ -8,9 +8,10 @@ import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
 import type { ItemMeta } from "./types.ts";
 
-export async function buildRunKnipCommand(buildScriptName: string): Promise<string> {
+export async function buildRunKnipCommand(buildScriptName: string, cwd: string): Promise<string> {
   const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
     programmatic: true,
+    cwd,
   });
   if (!cmd) {
     throw new Error("Unable to generate command for package manager");
@@ -548,11 +549,12 @@ export async function runKnipTasks(
   buildScriptName: string,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  cwd: string,
 ): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),

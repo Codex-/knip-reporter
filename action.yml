@@ -29,6 +29,10 @@ inputs:
     description: Do not fail the action run if knip results are found.
     default: false
     required: false
+  working_directory:
+    description: Directory in which to run the knip action.
+    default: "."
+    required: false
 runs:
   using: node20
   main: dist/index.mjs
