@@ -548,9 +548,9 @@ var require_file_command = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@actions+http-client@2.2.1/node_modules/@actions/http-client/lib/proxy.js
+// node_modules/.pnpm/@actions+http-client@2.2.3/node_modules/@actions/http-client/lib/proxy.js
 var require_proxy = __commonJS({
-  "node_modules/.pnpm/@actions+http-client@2.2.1/node_modules/@actions/http-client/lib/proxy.js"(exports) {
+  "node_modules/.pnpm/@actions+http-client@2.2.3/node_modules/@actions/http-client/lib/proxy.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.checkBypass = exports.getProxyUrl = void 0;
@@ -568,10 +568,10 @@ var require_proxy = __commonJS({
       })();
       if (proxyVar) {
         try {
-          return new URL(proxyVar);
+          return new DecodedURL(proxyVar);
         } catch (_a) {
           if (!proxyVar.startsWith("http://") && !proxyVar.startsWith("https://"))
-            return new URL(`http://${proxyVar}`);
+            return new DecodedURL(`http://${proxyVar}`);
         }
       } else {
         return void 0;
@@ -614,6 +614,19 @@ var require_proxy = __commonJS({
       const hostLower = host.toLowerCase();
       return hostLower === "localhost" || hostLower.startsWith("127.") || hostLower.startsWith("[::1]") || hostLower.startsWith("[0:0:0:0:0:0:0:1]");
     }
+    var DecodedURL = class extends URL {
+      constructor(url, base) {
+        super(url, base);
+        this._decodedUsername = decodeURIComponent(super.username);
+        this._decodedPassword = decodeURIComponent(super.password);
+      }
+      get username() {
+        return this._decodedUsername;
+      }
+      get password() {
+        return this._decodedPassword;
+      }
+    };
   }
 });
 
@@ -17606,9 +17619,9 @@ var require_undici = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@actions+http-client@2.2.1/node_modules/@actions/http-client/lib/index.js
+// node_modules/.pnpm/@actions+http-client@2.2.3/node_modules/@actions/http-client/lib/index.js
 var require_lib = __commonJS({
-  "node_modules/.pnpm/@actions+http-client@2.2.1/node_modules/@actions/http-client/lib/index.js"(exports) {
+  "node_modules/.pnpm/@actions+http-client@2.2.3/node_modules/@actions/http-client/lib/index.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -18148,7 +18161,7 @@ var require_lib = __commonJS({
         }
         const usingSsl = parsedUrl.protocol === "https:";
         proxyAgent = new undici_1.ProxyAgent(Object.assign({ uri: proxyUrl.href, pipelining: !this._keepAlive ? 0 : 1 }, (proxyUrl.username || proxyUrl.password) && {
-          token: `${proxyUrl.username}:${proxyUrl.password}`
+          token: `Basic ${Buffer.from(`${proxyUrl.username}:${proxyUrl.password}`).toString("base64")}`
         }));
         this._proxyAgentDispatcher = proxyAgent;
         if (usingSsl && this._ignoreSslError) {
@@ -18225,9 +18238,9 @@ var require_lib = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@actions+http-client@2.2.1/node_modules/@actions/http-client/lib/auth.js
+// node_modules/.pnpm/@actions+http-client@2.2.3/node_modules/@actions/http-client/lib/auth.js
 var require_auth = __commonJS({
-  "node_modules/.pnpm/@actions+http-client@2.2.1/node_modules/@actions/http-client/lib/auth.js"(exports) {
+  "node_modules/.pnpm/@actions+http-client@2.2.3/node_modules/@actions/http-client/lib/auth.js"(exports) {
     "use strict";
     var __awaiter = exports && exports.__awaiter || function(thisArg, _arguments, P, generator) {
       function adopt(value) {
@@ -23065,7 +23078,8 @@ function getConfig() {
     commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
     annotations: core.getBooleanInput("annotations", { required: false }),
     verbose: core.getBooleanInput("verbose", { required: false }),
-    ignoreResults: core.getBooleanInput("ignore_results", { required: false })
+    ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
+    workingDirectory: core.getInput("working_directory", { required: false }) || void 0
   };
 }
 function configToStr(cfg) {
@@ -23076,6 +23090,7 @@ function configToStr(cfg) {
     annotations: ${cfg.annotations}
     verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
+    workingDirectory: ${cfg.workingDirectory}
 `;
 }
 
@@ -27316,8 +27331,12 @@ async function getCliCommand(fn, args, options2 = {}, cwd2 = options2.cwd ?? pro
 }
 
 // src/tasks/knip.ts
-async function buildRunKnipCommand(buildScriptName) {
-  const cmd = await getCliCommand(parseNr, [buildScriptName, "--reporter json"], {
+async function buildRunKnipCommand(buildScriptName, cwd2) {
+  const knipArgs = [buildScriptName, "--reporter json"];
+  if (cwd2) {
+    knipArgs.push(`--directory ${cwd2}`);
+  }
+  const cmd = await getCliCommand(parseNr, knipArgs, {
     programmatic: true
   });
   if (!cmd) {
@@ -27666,10 +27685,10 @@ function getJsonFromOutput(output) {
   }
   throw new Error("Unable to find JSON blob");
 }
-async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled) {
+async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled, cwd2) {
   const taskMs = Date.now();
   core6.info("- Running Knip tasks");
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName));
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd2));
   const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
   const report = await timeTask(
     "Parse knip report",
@@ -27706,7 +27725,8 @@ async function run3() {
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config3.commandScriptName,
       config3.annotations,
-      config3.verbose
+      config3.verbose,
+      config3.workingDirectory
     );
     await runCommentTask(
       config3.commentId,

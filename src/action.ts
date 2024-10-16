@@ -37,7 +37,7 @@ export interface ActionConfig {
   /**
    * Directory in which to run the knip action.
    */
-  workingDirectory: string;
+  workingDirectory?: string;
 }
 
 export function getConfig(): ActionConfig {
@@ -48,7 +48,7 @@ export function getConfig(): ActionConfig {
     annotations: core.getBooleanInput("annotations", { required: false }),
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
-    workingDirectory: core.getInput("working_directory", { required: false }) || ".",
+    workingDirectory: core.getInput("working_directory", { required: false }) || undefined,
   };
 }
 

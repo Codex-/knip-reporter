@@ -552,7 +552,7 @@ export async function runKnipTasks(
   buildScriptName: string,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
-  cwd: string,
+  cwd?: string,
 ): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
