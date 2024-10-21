@@ -2,7 +2,7 @@ import * as cp from "node:child_process";
 
 import * as core from "@actions/core";
 import * as ni from "@antfu/ni";
-import { afterAll, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, describe, expect, it, vi, type MockInstance } from "vitest";
 
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import {
@@ -38,6 +38,12 @@ describe("knip", () => {
   });
 
   describe("buildRunKnipCommand", () => {
+    let niGetCliCommandMock: MockInstance<typeof ni.getCliCommand> | undefined;
+
+    afterEach(() => {
+      niGetCliCommandMock?.mockRestore();
+    });
+
     it("should build a command with extended JSON reporter", async () => {
       const cmd = await buildRunKnipCommand("knip");
 
@@ -46,11 +52,19 @@ describe("knip", () => {
     });
 
     it("should throw if a command could not be generated", async () => {
-      vi.spyOn(ni, "getCliCommand").mockResolvedValue(undefined);
+      niGetCliCommandMock = vi.spyOn(ni, "getCliCommand").mockResolvedValue(undefined);
 
-      await expect(async () => buildRunKnipCommand("knip")).rejects.toThrowError(
+      await expect(buildRunKnipCommand("knip")).rejects.toThrowError(
         "Unable to generate command for package manager",
       );
+    });
+
+    it("should build a command with working directory specific", async () => {
+      const cmd = await buildRunKnipCommand("knip", "./working/directory");
+
+      expect(cmd).toMatch("knip");
+      expect(cmd).toMatch("--reporter json");
+      expect(cmd).toMatch("--directory ./working/directory");
     });
   });
 

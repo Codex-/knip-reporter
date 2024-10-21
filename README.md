@@ -41,6 +41,7 @@ The following inputs are supported
 | `annotations`         | Annotate the project code with the knip results.                             | `false`  | `true`                                 |
 | `verbose`             | Include annotated items in the comment report.                               | `false`  | `false`                                |
 | `ignore_results`      | Do not fail the action run if knip results are found.                        | `false`  | `false`                                |
+| `working_directory`   | Run knip in a different directory.                                           | `false`  | `.`                                    |
 
 ### Issues
 

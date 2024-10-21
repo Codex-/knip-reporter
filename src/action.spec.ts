@@ -32,6 +32,7 @@ describe("Action", () => {
       annotations: actionInputs.annotations?.default,
       verbose: actionInputs.verbose?.default,
       ignore_results: actionInputs.ignore_results?.default,
+      working_directory: actionInputs.working_directory?.default,
     };
 
     vi.spyOn(core, "getInput").mockImplementation((input: string) => {
@@ -39,6 +40,7 @@ describe("Action", () => {
         case "token":
         case "command_script_name":
         case "comment_id":
+        case "working_directory":
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:
@@ -73,6 +75,7 @@ describe("Action", () => {
         actionInputs.comment_id?.default.replaceAll(/\s/g, "-"),
       );
       expect(config.ignoreResults).toStrictEqual(actionInputs.ignore_results?.default);
+      expect(config.workingDirectory).toStrictEqual(actionInputs.working_directory?.default);
     });
 
     describe("custom values", () => {
@@ -130,6 +133,13 @@ describe("Action", () => {
         const config: ActionConfig = getConfig();
 
         expect(config.ignoreResults).toStrictEqual(true);
+      });
+
+      it("should load a custom value for workingDirectory", () => {
+        mockEnvConfig.working_directory = "some_directory";
+        const config: ActionConfig = getConfig();
+
+        expect(config.workingDirectory).toStrictEqual("some_directory");
       });
     });
   });

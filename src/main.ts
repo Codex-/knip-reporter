@@ -40,6 +40,7 @@ async function run(): Promise<void> {
       config.commandScriptName,
       config.annotations,
       config.verbose,
+      config.workingDirectory,
     );
 
     await runCommentTask(

@@ -66,6 +66,7 @@ describe("API", () => {
     annotations: true,
     verbose: false,
     ignoreResults: false,
+    workingDirectory: ".",
   };
 
   beforeEach(() => {
