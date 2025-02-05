@@ -12,7 +12,7 @@
     "build:types": "tsc",
     "format:check": "prettier --check \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "format": "pnpm run format:check --write",
-    "lint": "eslint",
+    "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
