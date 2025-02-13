@@ -30,7 +30,7 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
-    "@antfu/ni": "^0.23.2",
+    "@antfu/ni": "^23.3.1",
     "markdown-table": "^3.0.4"
   },
   "devDependencies": {
