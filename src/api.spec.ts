@@ -77,9 +77,7 @@ describe("API", () => {
     vi.spyOn(github, "getOctokit").mockReturnValue(mockOctokit as any);
     init(cfg);
 
-    if (!github.context.payload.pull_request) {
-      github.context.payload.pull_request = { head: {} } as any;
-    }
+    github.context.payload.pull_request ??= { head: {} } as any;
     github.context.payload.pull_request!.head.sha = "12345678";
   });
 

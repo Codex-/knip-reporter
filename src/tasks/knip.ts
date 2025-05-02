@@ -158,9 +158,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
             out[type][fileName] = result;
-            if (summary[type] === undefined) {
-              summary[type] = 0;
-            }
+            summary[type] ??= 0;
             summary[type] += result.length;
           }
           break;
@@ -169,9 +167,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           if (typeof result === "object" && Object.keys(result).length > 0) {
             out[type][fileName] = result as Record<string, Item[]>;
-            if (summary[type] === undefined) {
-              summary[type] = 0;
-            }
+            summary[type] ??= 0;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             summary[type] += Object.keys(result).length;
           }

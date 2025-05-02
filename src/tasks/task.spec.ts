@@ -12,22 +12,16 @@ describe("task", () => {
     });
 
     it("resolves to the resolved type of the task function", () => {
-      expectTypeOf(timeTask("name", () => undefined)).resolves.toMatchTypeOf<undefined>();
-      // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-      expectTypeOf(timeTask("name", () => undefined)).resolves.toMatchTypeOf<void>();
+      expectTypeOf(timeTask("name", () => undefined)).resolves.toEqualTypeOf<undefined>();
       expectTypeOf(
         timeTask("name", () => Promise.resolve(undefined)),
-      ).resolves.toMatchTypeOf<undefined>();
-      expectTypeOf(
-        timeTask("name", () => Promise.resolve(undefined)),
-        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-      ).resolves.toMatchTypeOf<void>();
-      expectTypeOf(timeTask("name", () => null)).resolves.toMatchTypeOf<null>();
-      expectTypeOf(timeTask("name", () => Promise.resolve(null))).resolves.toMatchTypeOf<null>();
-      expectTypeOf(timeTask("name", () => "")).resolves.toMatchTypeOf<string>();
-      expectTypeOf(timeTask("name", () => Promise.resolve(""))).resolves.toMatchTypeOf<string>();
-      expectTypeOf(timeTask("name", () => 0)).resolves.toMatchTypeOf<number>();
-      expectTypeOf(timeTask("name", () => Promise.resolve(0))).resolves.toMatchTypeOf<number>();
+      ).resolves.toEqualTypeOf<undefined>();
+      expectTypeOf(timeTask("name", () => null)).resolves.toEqualTypeOf<null>();
+      expectTypeOf(timeTask("name", () => Promise.resolve(null))).resolves.toEqualTypeOf<null>();
+      expectTypeOf(timeTask("name", () => "")).resolves.toEqualTypeOf<string>();
+      expectTypeOf(timeTask("name", () => Promise.resolve(""))).resolves.toEqualTypeOf<string>();
+      expectTypeOf(timeTask("name", () => 0)).resolves.toEqualTypeOf<number>();
+      expectTypeOf(timeTask("name", () => Promise.resolve(0))).resolves.toEqualTypeOf<number>();
     });
 
     it("should output the task name", async () => {
