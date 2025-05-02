@@ -34,8 +34,6 @@
     "markdown-table": "^3.0.4"
   },
   "devDependencies": {
-    "@eslint/compat": "^1.2.9",
-    "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.25.1",
     "@types/node": "^22.15.3",
     "@vitest/coverage-v8": "^3.1.2",
@@ -44,8 +42,9 @@
     "esbuild": "^0.25.3",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-github": "^5.1.8",
+    "eslint-import-resolver-typescript": "^4.3.4",
     "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-import-x": "^4.11.0",
     "knip": "^5.52.0",
     "prettier": "3.5.3",
     "typescript": "^5.8.3",
@@ -55,7 +54,8 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "unrs-resolver"
     ]
   }
 }

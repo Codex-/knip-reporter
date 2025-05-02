@@ -1,36 +1,14 @@
 // @ts-check
 
-import { fixupPluginRules } from "@eslint/compat";
 import jsEslint from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
 import eslintConfigPrettier from "eslint-config-prettier";
-import tsEslint from "typescript-eslint";
-
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-  recommendedConfig: jsEslint.configs.recommended,
-  allConfig: jsEslint.configs.all,
-});
-
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/**
- * @param {string} name the pugin name
- * @param {string} alias the plugin alias
- * @returns {import("eslint").ESLint.Plugin}
- */
-function legacyPlugin(name, alias = name) {
-  const plugin = compat.plugins(name)[0]?.plugins?.[alias];
-
-  if (!plugin) {
-    throw new Error(`Unable to resolve plugin ${name} and/or alias ${alias}`);
-  }
-
-  return fixupPluginRules(plugin);
-}
-/* eslint-enable @typescript-eslint/explicit-function-return-type */
+import * as eslintPluginImportX from "eslint-plugin-import-x";
+import * as tsEslint from "typescript-eslint";
 
 export default tsEslint.config(
   jsEslint.configs.recommended,
+  eslintPluginImportX.flatConfigs.recommended,
+  eslintPluginImportX.flatConfigs.typescript,
   ...tsEslint.configs.strictTypeChecked,
   ...tsEslint.configs.stylisticTypeChecked,
   {
@@ -47,10 +25,6 @@ export default tsEslint.config(
     ignores: ["coverage", "dist", "esbuild.config.mjs", "knip.ts", "vitest.config.ts"],
   },
   {
-    plugins: {
-      github: legacyPlugin("eslint-plugin-github", "github"), // pending https://github.com/github/eslint-plugin-github/issues/513
-      import: legacyPlugin("eslint-plugin-import", "import"),
-    },
     rules: {
       "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
       "@typescript-eslint/await-thenable": "warn",
@@ -66,11 +40,7 @@ export default tsEslint.config(
           allowNumber: true,
         },
       ],
-      "github/array-foreach": "error",
-      "github/no-implicit-buggy-globals": "error",
-      "github/no-then": "error",
-      "github/no-dynamic-script-tag": "error",
-      "import/no-extraneous-dependencies": [
+      "import-x/no-extraneous-dependencies": [
         "error",
         {
           devDependencies: true,
@@ -78,8 +48,15 @@ export default tsEslint.config(
           peerDependencies: true,
         },
       ],
-      "import/order": "warn",
-      "no-console": ["warn"],
+      "import-x/order": [
+        "warn",
+        {
+          "newlines-between": "always",
+          alphabetize: { order: "asc" },
+          groups: ["builtin", "external", ["parent", "sibling"], "index"],
+        },
+      ],
+      "no-console": "warn",
     },
   },
   {
