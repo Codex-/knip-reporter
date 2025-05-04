@@ -19,7 +19,8 @@
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
-    }
+    },
+    { "matchDepNames": ["knip"], "groupName": "update knip", "automerge": false }
   ],
   "vulnerabilityAlerts": {
     "labels": ["security"]
