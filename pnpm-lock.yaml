@@ -15,8 +15,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.1
       '@antfu/ni':
-        specifier: ^24.3.0
-        version: 24.4.0
+        specifier: ^25.0.0
+        version: 25.0.0
       markdown-table:
         specifier: ^3.0.4
         version: 3.0.4
@@ -91,8 +91,8 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@antfu/ni@24.4.0':
-    resolution: {integrity: sha512-ZjriRbGyWGSrBE1RY2qBIXyilejMWLDWh2Go2dqFottyiuOze36+BpPch2z2WnGEgEbzTBVPetMmQvt0xt+iww==}
+  '@antfu/ni@25.0.0':
+    resolution: {integrity: sha512-9q/yCljni37pkMr4sPrI3G4jqdIk074+iukc5aFJl7kmDCCsiJrbZ6zKxnES1Gwg+i9RcDZwvktl23puGslmvA==}
     hasBin: true
 
   '@babel/helper-string-parser@7.27.1':
@@ -1976,7 +1976,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.10
       '@jridgewell/trace-mapping': 0.3.27
 
-  '@antfu/ni@24.4.0':
+  '@antfu/ni@25.0.0':
     dependencies:
       ansis: 4.1.0
       fzf: 0.5.2
