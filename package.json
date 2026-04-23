@@ -46,7 +46,7 @@
     "eslint-plugin-import-x": "^4.11.0",
     "knip": "^5.52.0",
     "prettier": "3.8.3",
-    "typescript": "^5.8.3",
+    "typescript": "^6.0.0",
     "typescript-eslint": "^8.31.1",
     "vitest": "^3.1.2",
     "yaml": "^2.7.1"
