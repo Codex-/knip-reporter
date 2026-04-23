@@ -15,8 +15,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.1
       '@antfu/ni':
-        specifier: ^27.0.0
-        version: 27.0.1
+        specifier: ^30.0.0
+        version: 30.1.0
       markdown-table:
         specifier: ^3.0.4
         version: 3.0.4
@@ -91,9 +91,9 @@ packages:
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
 
-  '@antfu/ni@27.0.1':
-    resolution: {integrity: sha512-I6SOlwJ0MN73ECYcr7VJHpqSseyd7bpshx6JAaD0zNowS4kSWzFsqg8ikQT7DnCLiD4AZ+FaQJQ8WAk0Qi89Vw==}
-    engines: {node: '>=20'}
+  '@antfu/ni@30.1.0':
+    resolution: {integrity: sha512-3VuAbPjgY52rQNn4wABaXMhBU2Oq91uy6L8nX49eJ35OLI68CyckGU+HZxcaHix4ymuGM2nFL1D6sLpgODK5xw==}
+    engines: {node: '>=20.19.0'}
     hasBin: true
 
   '@babel/helper-string-parser@7.27.1':
@@ -2253,9 +2253,8 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@antfu/ni@27.0.1':
+  '@antfu/ni@30.1.0':
     dependencies:
-      ansis: 4.2.0
       fzf: 0.5.2
       package-manager-detector: 1.6.0
       tinyexec: 1.1.1
