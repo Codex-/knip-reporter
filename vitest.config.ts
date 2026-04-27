@@ -6,7 +6,12 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "lcov"],
       include: ["src/**/*.ts"],
-      all: true, // Can be removed with vitest v1
+      exclude: [
+        "src/**/*.spec.*",
+        "src/**/__fixtures__/**",
+        "src/test-utils/**/*.ts",
+        "src/reset.d.ts",
+      ],
     },
   },
 });
