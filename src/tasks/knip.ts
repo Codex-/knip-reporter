@@ -117,8 +117,8 @@ interface UnknownIssue {
 
 export function parseJsonReport(rawJson: string): ParsedReport {
   // Default JSON reporter results in a collection with a single object
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { files, issues }: { files: string[]; issues: UnknownIssue[] } = JSON.parse(rawJson) ?? {};
+  const parsed = JSON.parse(rawJson) as { files?: string[]; issues?: UnknownIssue[] } | null;
+  const { files = [], issues = [] } = parsed ?? {};
   const out: ParsedReport = {
     files: files.filter((file) => !!file),
     dependencies: {},
@@ -157,7 +157,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
         case "types":
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
-            out[type][fileName] = result;
+            out[type][fileName] = result as ParsedReport[typeof type][string];
             summary[type] ??= 0;
             summary[type] += result.length;
           }
