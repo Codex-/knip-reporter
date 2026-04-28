@@ -293,8 +293,11 @@ export function buildArraySectionWithAnnotations(
       // Handle the duplicates case
       if (Array.isArray(item)) {
         for (let i = 0; i < item.length; i++) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const duplicate = item[i]!;
+          const duplicate = item[i];
+          if (!duplicate) {
+            continue;
+          }
+
           const otherDuplicates = [...item.slice(0, i), ...item.slice(i + 1, item.length)].map(
             (dupe) => dupe.name,
           );
@@ -417,12 +420,10 @@ export function processSectionToMessages(
   };
 
   const sectionProcessingMs = Date.now();
-  let output = [
-    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions),
-  ];
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const originalOutputLength = output[0]!.length;
-  if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+  const originalOutput =
+    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions);
+  let output = [originalOutput];
+  if (originalOutput.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     // Output doesn't violate the limit, simply return and move on
     return output;
   }
@@ -432,7 +433,7 @@ export function processSectionToMessages(
 
   // We round this number up otherwise the splitLength will result in exactly 65535-100
   // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
-  const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
+  const splitFactor = Math.ceil(originalOutput.length / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
   const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
   const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
