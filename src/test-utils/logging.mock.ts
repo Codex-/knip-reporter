@@ -32,7 +32,9 @@ export function mockLoggingFunctions(): MockedLoggingFunctions {
     coreWarningLogMock,
     coreErrorLogMock,
   ]);
-  const assertOnlyCalled = (...coreLogMocks: Array<MockInstance<(message: string) => void>>): void => {
+  const assertOnlyCalled = (
+    ...coreLogMocks: Array<MockInstance<(message: string) => void>>
+  ): void => {
     assertOnlyCalledInner(coreLogMockSet, ...coreLogMocks);
   };
 
@@ -74,9 +76,7 @@ function assertOnlyCalledInner(
   }
 }
 
-function assertNoneCalledInner(
-  coreLogMockSet: Set<MockInstance<(message: string) => void>>,
-): void {
+function assertNoneCalledInner(coreLogMockSet: Set<MockInstance<(message: string) => void>>): void {
   for (const logMock of coreLogMockSet) {
     expect(logMock).not.toHaveBeenCalled();
   }

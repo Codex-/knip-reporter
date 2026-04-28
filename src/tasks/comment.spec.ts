@@ -10,8 +10,13 @@ vi.mock("@actions/core");
 vi.mock("../api.ts");
 
 describe("comment", () => {
-  const { coreDebugLogMock, coreInfoLogMock, coreWarningLogMock, assertOnlyCalled, assertNoneCalled } =
-    mockLoggingFunctions();
+  const {
+    coreDebugLogMock,
+    coreInfoLogMock,
+    coreWarningLogMock,
+    assertOnlyCalled,
+    assertNoneCalled,
+  } = mockLoggingFunctions();
 
   afterAll(() => {
     vi.restoreAllMocks();

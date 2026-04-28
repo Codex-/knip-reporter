@@ -1,7 +1,16 @@
 import * as cp from "node:child_process";
 
 import * as ni from "@antfu/ni";
-import { afterAll, afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockInstance,
+} from "vitest";
 
 import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
