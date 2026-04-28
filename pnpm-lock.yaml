@@ -9,71 +9,71 @@ importers:
   .:
     dependencies:
       '@actions/core':
-        specifier: ^3.0.1
+        specifier: 3.0.1
         version: 3.0.1
       '@actions/github':
-        specifier: ^9.1.1
+        specifier: 9.1.1
         version: 9.1.1
       '@antfu/ni':
-        specifier: ^30.1.0
+        specifier: 30.1.0
         version: 30.1.0
       markdown-table:
-        specifier: ^3.0.4
+        specifier: 3.0.4
         version: 3.0.4
     devDependencies:
       '@eslint/js':
-        specifier: ^10.0.1
+        specifier: 10.0.1
         version: 10.0.1(eslint@10.2.1(jiti@2.6.1))
       '@opentf/std':
-        specifier: ^0.13.0
+        specifier: 0.13.0
         version: 0.13.0
       '@total-typescript/ts-reset':
-        specifier: ^0.6.1
+        specifier: 0.6.1
         version: 0.6.1
       '@types/node':
-        specifier: ^20.17.16
+        specifier: 20.19.39
         version: 20.19.39
       '@vitest/coverage-v8':
         specifier: 4.1.5
         version: 4.1.5(vitest@4.1.5)
       chalk:
-        specifier: ^5.6.2
+        specifier: 5.6.2
         version: 5.6.2
       changelogithub:
-        specifier: ^14.0.0
+        specifier: 14.0.0
         version: 14.0.0(magicast@0.3.5)
       esbuild:
-        specifier: ^0.28.0
+        specifier: 0.28.0
         version: 0.28.0
       eslint:
-        specifier: ^10.2.1
+        specifier: 10.2.1
         version: 10.2.1(jiti@2.6.1)
       eslint-config-prettier:
-        specifier: ^10.1.8
+        specifier: 10.1.8
         version: 10.1.8(eslint@10.2.1(jiti@2.6.1))
       eslint-import-resolver-typescript:
-        specifier: ^4.4.4
+        specifier: 4.4.4
         version: 4.4.4(eslint-plugin-import-x@4.16.2(@typescript-eslint/utils@8.59.1(eslint@10.2.1(jiti@2.6.1))(typescript@6.0.3))(eslint@10.2.1(jiti@2.6.1)))(eslint@10.2.1(jiti@2.6.1))
       eslint-plugin-import-x:
-        specifier: ^4.16.2
+        specifier: 4.16.2
         version: 4.16.2(@typescript-eslint/utils@8.59.1(eslint@10.2.1(jiti@2.6.1))(typescript@6.0.3))(eslint@10.2.1(jiti@2.6.1))
       knip:
-        specifier: ^5.52.0
+        specifier: 5.88.1
         version: 5.88.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@types/node@20.19.39)(typescript@6.0.3)
       prettier:
         specifier: 3.8.3
         version: 3.8.3
       typescript:
-        specifier: ^6.0.3
+        specifier: 6.0.3
         version: 6.0.3
       typescript-eslint:
-        specifier: ^8.59.1
+        specifier: 8.59.1
         version: 8.59.1(eslint@10.2.1(jiti@2.6.1))(typescript@6.0.3)
       vitest:
         specifier: 4.1.5
         version: 4.1.5(@types/node@20.19.39)(@vitest/coverage-v8@4.1.5)(vite@8.0.10(@types/node@20.19.39)(esbuild@0.28.0)(jiti@2.6.1)(yaml@2.8.3))
       yaml:
-        specifier: ^2.8.3
+        specifier: 2.8.3
         version: 2.8.3
 
 packages:
