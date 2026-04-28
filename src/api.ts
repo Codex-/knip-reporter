@@ -15,8 +15,6 @@ export function init(cfg?: ActionConfig): void {
   octokit = github.getOctokit(config.token);
 }
 
-type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
-
 type CreateCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["createComment"]>>;
 export async function createComment(
   pullRequestNumber: number,
