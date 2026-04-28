@@ -170,17 +170,15 @@ describe("API", () => {
       expect(coreDebugLogMock).toHaveBeenCalledTimes(2);
     });
 
-    it("should throw if a non-201 status is returned", async () => {
-      const errorStatus = 401;
-      vi.spyOn(mockOctokit.rest.issues, "createComment").mockResolvedValue({
-        data: undefined,
-        status: errorStatus,
-      });
+    it("should wrap octokit failures with the underlying cause", async () => {
+      const cause = new Error("Bad credentials");
+      vi.spyOn(mockOctokit.rest.issues, "createComment").mockRejectedValue(cause);
 
       // Behaviour
-      await expect(createComment(123456, "")).rejects.toThrow(
-        `Failed to create comment, expected 201 but received ${errorStatus}`,
-      );
+      await expect(createComment(123456, "")).rejects.toMatchObject({
+        message: "Failed to create comment",
+        cause,
+      });
 
       // Logging
       assertOnlyCalled(coreDebugLogMock);
@@ -293,19 +291,17 @@ describe("API", () => {
       );
     });
 
-    it("should throw if a non-201 status is returned", async () => {
+    it("should wrap octokit failures with the underlying cause", async () => {
       listCommentsSpy.mockRestore();
 
-      const errorStatus = 401;
-      vi.spyOn(mockOctokit.rest.issues, "listComments").mockResolvedValue({
-        data: undefined,
-        status: errorStatus,
-      });
+      const cause = new Error("Bad credentials");
+      vi.spyOn(mockOctokit.rest.issues, "listComments").mockRejectedValue(cause);
 
       // Behaviour
-      await expect(listCommentIds("knip", 123456)).rejects.toThrow(
-        `Failed to find comment ID, expected 200 but received ${errorStatus}`,
-      );
+      await expect(listCommentIds("knip", 123456)).rejects.toMatchObject({
+        message: "Failed to find comment IDs",
+        cause,
+      });
 
       // Logging
       assertNoneCalled();
@@ -366,17 +362,15 @@ describe("API", () => {
       assertNoneCalled();
     });
 
-    it("should throw if a non-200 status is returned", async () => {
-      const errorStatus = 401;
-      vi.spyOn(mockOctokit.rest.issues, "updateComment").mockResolvedValue({
-        data: undefined,
-        status: errorStatus,
-      });
+    it("should wrap octokit failures with the underlying cause", async () => {
+      const cause = new Error("Bad credentials");
+      vi.spyOn(mockOctokit.rest.issues, "updateComment").mockRejectedValue(cause);
 
       // Behaviour
-      await expect(updateComment(123456, "")).rejects.toThrow(
-        `Failed to update comment, expected 200 but received ${errorStatus}`,
-      );
+      await expect(updateComment(123456, "")).rejects.toMatchObject({
+        message: "Failed to update comment",
+        cause,
+      });
 
       // Logging
       assertNoneCalled();
@@ -421,17 +415,15 @@ describe("API", () => {
       assertNoneCalled();
     });
 
-    it("should throw if a non-204 status is returned", async () => {
-      const errorStatus = 401;
-      vi.spyOn(mockOctokit.rest.issues, "deleteComment").mockResolvedValue({
-        data: undefined,
-        status: errorStatus,
-      });
+    it("should wrap octokit failures with the underlying cause", async () => {
+      const cause = new Error("Bad credentials");
+      vi.spyOn(mockOctokit.rest.issues, "deleteComment").mockRejectedValue(cause);
 
       // Behaviour
-      await expect(deleteComment(123456)).rejects.toThrow(
-        `Failed to delete comment, expected 204 but received ${errorStatus}`,
-      );
+      await expect(deleteComment(123456)).rejects.toMatchObject({
+        message: "Failed to delete comment",
+        cause,
+      });
 
       // Logging
       assertNoneCalled();
@@ -478,17 +470,15 @@ describe("API", () => {
       );
     });
 
-    it("should throw if a non-201 status is returned", async () => {
-      const errorStatus = 401;
-      vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
-        data: undefined,
-        status: errorStatus,
-      });
+    it("should wrap octokit failures with the underlying cause", async () => {
+      const cause = new Error("Bad credentials");
+      vi.spyOn(mockOctokit.rest.checks, "create").mockRejectedValue(cause);
 
       // Behaviour
-      await expect(createCheck("knip-reporter", "Knip reporter analysis")).rejects.toThrow(
-        `Failed to create check, expected 201 but received ${errorStatus}`,
-      );
+      await expect(createCheck("knip-reporter", "Knip reporter analysis")).rejects.toMatchObject({
+        message: "Failed to create check",
+        cause,
+      });
 
       // Logging
       assertNoneCalled();
@@ -580,17 +570,15 @@ describe("API", () => {
       assertNoneCalled();
     });
 
-    it("should throw if a non-200 status is returned", async () => {
-      const errorStatus = 401;
-      vi.spyOn(mockOctokit.rest.checks, "update").mockResolvedValue({
-        data: undefined,
-        status: errorStatus,
-      });
+    it("should wrap octokit failures with the underlying cause", async () => {
+      const cause = new Error("Bad credentials");
+      vi.spyOn(mockOctokit.rest.checks, "update").mockRejectedValue(cause);
 
       // Behaviour
-      await expect(updateCheck(123, "completed")).rejects.toThrow(
-        `Failed to update check, expected 200 but received ${errorStatus}`,
-      );
+      await expect(updateCheck(123, "completed")).rejects.toMatchObject({
+        message: "Failed to update check",
+        cause,
+      });
 
       // Logging
       assertNoneCalled();

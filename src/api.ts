@@ -25,19 +25,16 @@ export async function createComment(
   );
 
   // https://docs.github.com/en/rest/issues/comments#create-an-issue-comment
-  const response = await octokit.rest.issues.createComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    issue_number: pullRequestNumber,
-    body: body,
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (response.status !== 201) {
-    throw new Error(`Failed to create comment, expected 201 but received ${response.status}`);
+  try {
+    return await octokit.rest.issues.createComment({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      issue_number: pullRequestNumber,
+      body: body,
+    });
+  } catch (error) {
+    throw new Error("Failed to create comment", { cause: error });
   }
-
-  return response;
 }
 
 export async function listCommentIds(
@@ -54,21 +51,20 @@ export async function listCommentIds(
   const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
 
   const messageIds: number[] = [];
-  for await (const { data, status } of restIter) {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (status !== 200) {
-      throw new Error(`Failed to find comment ID, expected 200 but received ${status}`);
-    }
+  try {
+    for await (const { data } of restIter) {
+      for (const { id, body } of data) {
+        if (!body) {
+          continue;
+        }
 
-    for (const { id, body } of data) {
-      if (!body) {
-        continue;
-      }
-
-      if (body.includes(cfgCommentId)) {
-        messageIds.push(id);
+        if (body.includes(cfgCommentId)) {
+          messageIds.push(id);
+        }
       }
     }
+  } catch (error) {
+    throw new Error("Failed to find comment IDs", { cause: error });
   }
 
   if (messageIds.length > 0) {
@@ -86,36 +82,30 @@ export async function updateComment(
   body: string,
 ): Promise<UpdateCommentResponse> {
   // https://docs.github.com/en/rest/issues/comments#update-an-issue-comment
-  const response = await octokit.rest.issues.updateComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    comment_id: commentId,
-    body: body,
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (response.status !== 200) {
-    throw new Error(`Failed to update comment, expected 200 but received ${response.status}`);
+  try {
+    return await octokit.rest.issues.updateComment({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      comment_id: commentId,
+      body: body,
+    });
+  } catch (error) {
+    throw new Error("Failed to update comment", { cause: error });
   }
-
-  return response;
 }
 
 type DeleteCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["deleteComment"]>>;
 export async function deleteComment(commentId: number): Promise<DeleteCommentResponse> {
   // https://docs.github.com/en/rest/issues/comments#delete-an-issue-comment
-  const response = await octokit.rest.issues.deleteComment({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    comment_id: commentId,
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (response.status !== 204) {
-    throw new Error(`Failed to delete comment, expected 204 but received ${response.status}`);
+  try {
+    return await octokit.rest.issues.deleteComment({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      comment_id: commentId,
+    });
+  } catch (error) {
+    throw new Error("Failed to delete comment", { cause: error });
   }
-
-  return response;
 }
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
@@ -128,24 +118,21 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
   const headSha = prSha ?? github.context.sha;
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
-  const response = await octokit.rest.checks.create({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    name: name,
-    head_sha: headSha,
-    status: "in_progress",
-    output: {
-      title: title,
-      summary: "",
-    },
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (response.status !== 201) {
-    throw new Error(`Failed to create check, expected 201 but received ${response.status}`);
+  try {
+    return await octokit.rest.checks.create({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      name: name,
+      head_sha: headSha,
+      status: "in_progress",
+      output: {
+        title: title,
+        summary: "",
+      },
+    });
+  } catch (error) {
+    throw new Error("Failed to create check", { cause: error });
   }
-
-  return response;
 }
 
 type CheckStatus = NonNullable<Parameters<Octokit["rest"]["checks"]["create"]>[0]>["status"];
@@ -161,19 +148,16 @@ export async function updateCheck(
   conclusion?: CheckConclusion,
 ): Promise<UpdateCheckResponse> {
   // https://docs.github.com/en/rest/checks/runs#update-a-check-run
-  const response = await octokit.rest.checks.update({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    check_run_id: checkRunId,
-    status: status,
-    conclusion: conclusion,
-    output: output,
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (response.status !== 200) {
-    throw new Error(`Failed to update check, expected 200 but received ${response.status}`);
+  try {
+    return await octokit.rest.checks.update({
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      check_run_id: checkRunId,
+      status: status,
+      conclusion: conclusion,
+      output: output,
+    });
+  } catch (error) {
+    throw new Error("Failed to update check", { cause: error });
   }
-
-  return response;
 }
