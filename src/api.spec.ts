@@ -97,6 +97,13 @@ describe("API", () => {
     github.context.payload.pull_request ??= { head: {} } as any;
     github.context.payload.pull_request!.head.sha = "12345678";
     github.context.payload.pull_request!.html_url = "https://github.com/a/b/pull/1";
+
+    // `repo` has a getter, so standard assignment syntax fails
+    Object.defineProperty(github.context, "repo", {
+      value: { owner: "a", repo: "b" },
+      configurable: true,
+      writable: true,
+    });
   });
 
   afterEach(() => {
