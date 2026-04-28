@@ -75,14 +75,9 @@ export async function main(): Promise<void> {
 
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error) {
-    if (error instanceof Error) {
-      core.error(`🧨 Failed: ${error.message}`);
-      core.error(`📚 Stack: ${error.stack ?? ""}`);
-      core.setFailed(error);
-      return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    core.setFailed(`🧨 Failed: ${error}`);
+    const err = error instanceof Error ? error : new Error(String(error));
+    core.error(`🧨 Failed: ${err.message}`);
+    core.error(`📚 Stack: ${err.stack ?? ""}`);
+    core.setFailed(err);
   }
 }
