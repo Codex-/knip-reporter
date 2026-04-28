@@ -8,7 +8,7 @@ import { analyzeMetafile, build } from "esbuild";
     console.info(chalk.bold(`🚀 ${chalk.blueBright("knip-reporter")} Build\n`));
 
     const result = await build({
-      entryPoints: ["./src/main.ts"],
+      entryPoints: ["./src/index.ts"],
       outfile: "dist/index.mjs",
       metafile: true,
       bundle: true,

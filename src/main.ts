@@ -13,7 +13,7 @@ import { runCommentTask } from "./tasks/comment.ts";
 import { runKnipTasks } from "./tasks/knip.ts";
 import { timeTask } from "./tasks/task.ts";
 
-async function run(): Promise<void> {
+export async function main(): Promise<void> {
   try {
     const config = getConfig();
     const actionMs = Date.now();
@@ -82,5 +82,3 @@ async function run(): Promise<void> {
     core.setFailed(`🧨 Failed: ${error}`);
   }
 }
-
-((): Promise<void> => run())();
