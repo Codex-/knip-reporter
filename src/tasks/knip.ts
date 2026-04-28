@@ -105,9 +105,9 @@ interface ParsedReport {
   enumMembers: Record<string, Record<string, Item[]>>;
 
   /**
-   * Unused exported class members `classMembers`
+   * Unused namespace members (class methods, TS namespaces) `namespaceMembers`
    */
-  classMembers: Record<string, Record<string, Item[]>>;
+  namespaceMembers: Record<string, Record<string, Item[]>>;
 }
 type ParsedReportKey = keyof ParsedReport;
 
@@ -116,11 +116,13 @@ interface UnknownIssue {
 }
 
 export function parseJsonReport(rawJson: string): ParsedReport {
-  // Default JSON reporter results in a collection with a single object
-  const parsed = JSON.parse(rawJson) as { files?: string[]; issues?: UnknownIssue[] } | null;
-  const { files = [], issues = [] } = parsed ?? {};
+  // Default JSON reporter no longer has a top-level `files` key.
+  // Unused files now appear as `Row.files: Item[]` per row, and enum/namespace
+  // members are flat `Item[]` with the enum/namespace name in `Item.namespace`.
+  const parsed = JSON.parse(rawJson) as { issues?: UnknownIssue[] } | null;
+  const { issues = [] } = parsed ?? {};
   const out: ParsedReport = {
-    files: files.filter((file) => !!file),
+    files: [],
     dependencies: {},
     devDependencies: {},
     optionalPeerDependencies: {},
@@ -131,12 +133,9 @@ export function parseJsonReport(rawJson: string): ParsedReport {
     types: {},
     duplicates: {},
     enumMembers: {},
-    classMembers: {},
+    namespaceMembers: {},
   };
   const summary: Partial<Record<ParsedReportKey, number>> = {};
-  if (out.files.length > 0) {
-    summary.files = out.files.length;
-  }
 
   for (const issue of issues) {
     const fileName: string = issue.file;
@@ -147,6 +146,15 @@ export function parseJsonReport(rawJson: string): ParsedReport {
       }
 
       switch (type) {
+        case "files":
+          if (Array.isArray(result) && result.length > 0) {
+            for (const item of result as Array<{ name: string }>) {
+              if (item.name) out.files.push(item.name);
+            }
+            summary.files ??= 0;
+            summary.files += result.length;
+          }
+          break;
         case "dependencies":
         case "devDependencies":
         case "optionalPeerDependencies":
@@ -163,13 +171,17 @@ export function parseJsonReport(rawJson: string): ParsedReport {
           }
           break;
         case "enumMembers":
-        case "classMembers":
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          if (typeof result === "object" && Object.keys(result).length > 0) {
-            out[type][fileName] = result as Record<string, Item[]>;
+        case "namespaceMembers":
+          if (Array.isArray(result) && result.length > 0) {
+            const grouped: Record<string, Item[]> = {};
+            for (const item of result as Array<Item & { namespace?: string }>) {
+              const ns = item.namespace ?? "";
+              grouped[ns] ??= [];
+              grouped[ns].push(item);
+            }
+            out[type][fileName] = grouped;
             summary[type] ??= 0;
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            summary[type] += Object.keys(result).length;
+            summary[type] += Object.keys(grouped).length;
           }
       }
     }
@@ -243,8 +255,8 @@ export function buildArraySection(
 
 function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
   switch (type) {
-    case "classMembers":
-      return "class";
+    case "namespaceMembers":
+      return "namespace";
     case "enumMembers":
       return "enum";
     case "exports":
@@ -352,7 +364,7 @@ export function buildMapSection(
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
-  const resultMetaType = name === "classMembers" ? "class" : "enum";
+  const resultMetaType = name === "namespaceMembers" ? "namespace" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
   const metaType = getMetaType(name);
   const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
@@ -498,7 +510,7 @@ export function buildMarkdownSections(
         length = Object.keys(value).length;
         break;
       case "enumMembers":
-      case "classMembers":
+      case "namespaceMembers":
         buildWithAnnotations = (): ReturnType<typeof buildMapSection> =>
           buildMapSection(
             key,

@@ -1,10 +1,11 @@
 export const invalidReportJson = {
-  files: [undefined, null],
+  // No top-level `files` in v6 — schema now uses `{ issues: Row[] }`.
   issues: [
     // JSON stringification of undefined values results in the
     // keys associated with them being removed from the output
     {
       file: "file1.ts",
+      files: undefined,
       dependencies: undefined,
       devDependencies: undefined,
       optionalPeerDependencies: undefined,
@@ -14,12 +15,13 @@ export const invalidReportJson = {
       exports: undefined,
       types: undefined,
       enumMembers: undefined,
-      classMembers: undefined,
+      namespaceMembers: undefined,
       duplicates: undefined,
     },
     // `null` is a valid JSON value
     {
       file: "file2.ts",
+      files: null,
       dependencies: null,
       devDependencies: null,
       optionalPeerDependencies: null,
@@ -29,15 +31,18 @@ export const invalidReportJson = {
       exports: null,
       types: null,
       enumMembers: null,
-      classMembers: null,
+      namespaceMembers: null,
       duplicates: null,
     },
   ],
 };
 
 export const reportJson = {
-  files: ["PolarisGalaxy.ts", "Savali.ts", "PocketDimension.tsx"],
   issues: [
+    // unused files (v6: per-row `files: Item[]`, no top-level `files`)
+    { file: "PolarisGalaxy.ts", files: [{ name: "PolarisGalaxy.ts" }] },
+    { file: "Savali.ts", files: [{ name: "Savali.ts" }] },
+    { file: "PocketDimension.tsx", files: [{ name: "PocketDimension.tsx" }] },
     // dependencies
     {
       file: "packages/a/package.json",
@@ -49,8 +54,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // devDependencies
@@ -64,8 +69,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // optionalPeerDependencies
@@ -79,8 +84,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // dependencies, devDependencies, and optionalPeerDependencies
@@ -94,8 +99,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // unlisted
@@ -109,8 +114,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // binaries
@@ -124,8 +129,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // unresolved
@@ -136,18 +141,11 @@ export const reportJson = {
       optionalPeerDependencies: [],
       unlisted: [],
       binaries: [],
-      unresolved: [
-        {
-          name: "packages/a/src/setupTests.ts",
-        },
-        {
-          name: "packages/a/../b/src",
-        },
-      ],
+      unresolved: [{ name: "packages/a/src/setupTests.ts" }, { name: "packages/a/../b/src" }],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // exports
@@ -160,22 +158,12 @@ export const reportJson = {
       binaries: [],
       unresolved: [],
       exports: [
-        {
-          name: "specialFunc",
-          line: 48,
-          col: 14,
-          pos: 1587,
-        },
-        {
-          name: "uselessFunc",
-          line: 50,
-          col: 14,
-          pos: 1686,
-        },
+        { name: "specialFunc", line: 48, col: 14, pos: 1587 },
+        { name: "uselessFunc", line: 50, col: 14, pos: 1686 },
       ],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     {
@@ -188,8 +176,8 @@ export const reportJson = {
       unresolved: [],
       exports: [{ name: "sheepinator", line: 83, col: 14, pos: 3858 }],
       types: [{ name: "cowinator", line: 75, col: 13, pos: 3686 }],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     // types
@@ -206,8 +194,8 @@ export const reportJson = {
         { name: "SpecialAgent", line: 7, col: 13, pos: 310 },
         { name: "Zoni", line: 11, col: 13, pos: 407 },
       ],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
     {
@@ -223,11 +211,11 @@ export const reportJson = {
         { name: "Lombax", line: 7, col: 13, pos: 310 },
         { name: "Homeworld", line: 11, col: 13, pos: 407 },
       ],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [],
     },
-    // enumMembers
+    // enumMembers (v6: flat Item[] with `namespace`)
     {
       file: "DrNefarious.ts",
       dependencies: [],
@@ -238,19 +226,17 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {
-        Homeworld: [
-          { name: "Magmos", line: 37, col: 5, pos: 1273 },
-          { name: "Aquatos", line: 38, col: 5, pos: 1300 },
-          { name: "Leviathan", line: 39, col: 5, pos: 1317 },
-          { name: "TombliOutpost", line: 40, col: 5, pos: 1317 },
-          { name: "Zanifar ", line: 41, col: 5, pos: 1317 },
-          { name: "NefariousSpaceStation ", line: 42, col: 5, pos: 1317 },
-          { name: "NefariousCity", line: 43, col: 5, pos: 1317 },
-          { name: "CorsonV", line: 44, col: 5, pos: 1317 },
-        ],
-      },
-      classMembers: {},
+      enumMembers: [
+        { namespace: "Homeworld", name: "Magmos", line: 37, col: 5, pos: 1273 },
+        { namespace: "Homeworld", name: "Aquatos", line: 38, col: 5, pos: 1300 },
+        { namespace: "Homeworld", name: "Leviathan", line: 39, col: 5, pos: 1317 },
+        { namespace: "Homeworld", name: "TombliOutpost", line: 40, col: 5, pos: 1317 },
+        { namespace: "Homeworld", name: "Zanifar ", line: 41, col: 5, pos: 1317 },
+        { namespace: "Homeworld", name: "NefariousSpaceStation ", line: 42, col: 5, pos: 1317 },
+        { namespace: "Homeworld", name: "NefariousCity", line: 43, col: 5, pos: 1317 },
+        { namespace: "Homeworld", name: "CorsonV", line: 44, col: 5, pos: 1317 },
+      ],
+      namespaceMembers: [],
       duplicates: [],
     },
     {
@@ -263,20 +249,16 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {
-        Residence: [
-          { name: "Viceron", line: 37, col: 5, pos: 1273 },
-          { name: "GreatClock", line: 38, col: 5, pos: 1300 },
-        ],
-        Membership: [
-          { name: "ZordoomPrison", line: 37, col: 5, pos: 1273 },
-          { name: "GreatClockStaff", line: 38, col: 5, pos: 1300 },
-        ],
-      },
-      classMembers: {},
+      enumMembers: [
+        { namespace: "Residence", name: "Viceron", line: 37, col: 5, pos: 1273 },
+        { namespace: "Residence", name: "GreatClock", line: 38, col: 5, pos: 1300 },
+        { namespace: "Membership", name: "ZordoomPrison", line: 37, col: 5, pos: 1273 },
+        { namespace: "Membership", name: "GreatClockStaff", line: 38, col: 5, pos: 1300 },
+      ],
+      namespaceMembers: [],
       duplicates: [],
     },
-    // classMembers
+    // namespaceMembers (v6: flat Item[] with `namespace`; was classMembers in v5)
     {
       file: "Rivet.ts",
       dependencies: [],
@@ -287,16 +269,14 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {
-        Rivet: [
-          { name: "fly", line: 327, col: 9, pos: 12268 },
-          { name: "swim", line: 353, col: 3, pos: 12977 },
-          { name: "explode", line: 357, col: 3, pos: 13056 },
-          { name: "mutate", line: 381, col: 3, pos: 13810 },
-          { name: "refineGelatonium ", line: 388, col: 3, pos: 13987 },
-        ],
-      },
+      enumMembers: [],
+      namespaceMembers: [
+        { namespace: "Rivet", name: "fly", line: 327, col: 9, pos: 12268 },
+        { namespace: "Rivet", name: "swim", line: 353, col: 3, pos: 12977 },
+        { namespace: "Rivet", name: "explode", line: 357, col: 3, pos: 13056 },
+        { namespace: "Rivet", name: "mutate", line: 381, col: 3, pos: 13810 },
+        { namespace: "Rivet", name: "refineGelatonium ", line: 388, col: 3, pos: 13987 },
+      ],
       duplicates: [],
     },
     {
@@ -309,11 +289,11 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {
-        SaneQwark: [{ name: "rescue", line: 327, col: 9, pos: 12268 }],
-        InsaneQwark: [{ name: "destroy", line: 327, col: 9, pos: 12268 }],
-      },
+      enumMembers: [],
+      namespaceMembers: [
+        { namespace: "SaneQwark", name: "rescue", line: 327, col: 9, pos: 12268 },
+        { namespace: "InsaneQwark", name: "destroy", line: 327, col: 9, pos: 12268 },
+      ],
       duplicates: [],
     },
     // duplicates
@@ -327,8 +307,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [
         [
           { name: "Ratchet", line: 8, col: 15, pos: 358 },
@@ -346,8 +326,8 @@ export const reportJson = {
       unresolved: [],
       exports: [],
       types: [],
-      enumMembers: {},
-      classMembers: {},
+      enumMembers: [],
+      namespaceMembers: [],
       duplicates: [
         [
           { name: "Kit", line: 8, col: 15, pos: 358 },

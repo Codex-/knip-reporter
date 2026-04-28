@@ -298,158 +298,6 @@ exports[`knip > buildFilesSection > should return markdown for a collection of f
 \`Ratchet.ts\`, \`Clank.ts\`"
 `;
 
-exports[`knip > buildMapSection > should transform a classMembers map section to annotations 1`] = `
-{
-  "annotations": [
-    {
-      "identifier": "destroy",
-      "path": "Qwark.ts",
-      "start_column": 9,
-      "start_line": 327,
-      "type": "class",
-    },
-    {
-      "identifier": "rescue",
-      "path": "Qwark.ts",
-      "start_column": 9,
-      "start_line": 327,
-      "type": "class",
-    },
-    {
-      "identifier": "fly",
-      "path": "Rivet.ts",
-      "start_column": 9,
-      "start_line": 327,
-      "type": "class",
-    },
-    {
-      "identifier": "swim",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 353,
-      "type": "class",
-    },
-    {
-      "identifier": "explode",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 357,
-      "type": "class",
-    },
-    {
-      "identifier": "mutate",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 381,
-      "type": "class",
-    },
-    {
-      "identifier": "refineGelatonium ",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 388,
-      "type": "class",
-    },
-  ],
-  "sections": [],
-}
-`;
-
-exports[`knip > buildMapSection > should transform a classMembers map section to markdown 1`] = `
-{
-  "annotations": [],
-  "sections": [
-    "### Unused Class Members (7)
-
-|Filename|Class|Member|
-|-|-|-|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
-  ],
-}
-`;
-
-exports[`knip > buildMapSection > should transform a classMembers map section to markdown and annotations 1`] = `
-{
-  "annotations": [
-    {
-      "identifier": "destroy",
-      "path": "Qwark.ts",
-      "start_column": 9,
-      "start_line": 327,
-      "type": "class",
-    },
-    {
-      "identifier": "rescue",
-      "path": "Qwark.ts",
-      "start_column": 9,
-      "start_line": 327,
-      "type": "class",
-    },
-    {
-      "identifier": "fly",
-      "path": "Rivet.ts",
-      "start_column": 9,
-      "start_line": 327,
-      "type": "class",
-    },
-    {
-      "identifier": "swim",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 353,
-      "type": "class",
-    },
-    {
-      "identifier": "explode",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 357,
-      "type": "class",
-    },
-    {
-      "identifier": "mutate",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 381,
-      "type": "class",
-    },
-    {
-      "identifier": "refineGelatonium ",
-      "path": "Rivet.ts",
-      "start_column": 3,
-      "start_line": 388,
-      "type": "class",
-    },
-  ],
-  "sections": [
-    "### Unused Class Members (7)
-
-|Filename|Class|Member|
-|-|-|-|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
-  ],
-}
-`;
-
-exports[`knip > buildMapSection > should transform a classMembers map section to markdown if verbose and annotations are disabled 1`] = `
-{
-  "annotations": [],
-  "sections": [
-    "### Unused Class Members (7)
-
-|Filename|Class|Member|
-|-|-|-|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
-  ],
-}
-`;
-
 exports[`knip > buildMapSection > should transform a enumMembers map section to annotations 1`] = `
 {
   "annotations": [
@@ -672,6 +520,158 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
 }
 `;
 
+exports[`knip > buildMapSection > should transform a namespaceMembers map section to annotations 1`] = `
+{
+  "annotations": [
+    {
+      "identifier": "destroy",
+      "path": "Qwark.ts",
+      "start_column": 9,
+      "start_line": 327,
+      "type": "namespace",
+    },
+    {
+      "identifier": "rescue",
+      "path": "Qwark.ts",
+      "start_column": 9,
+      "start_line": 327,
+      "type": "namespace",
+    },
+    {
+      "identifier": "fly",
+      "path": "Rivet.ts",
+      "start_column": 9,
+      "start_line": 327,
+      "type": "namespace",
+    },
+    {
+      "identifier": "swim",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 353,
+      "type": "namespace",
+    },
+    {
+      "identifier": "explode",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 357,
+      "type": "namespace",
+    },
+    {
+      "identifier": "mutate",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 381,
+      "type": "namespace",
+    },
+    {
+      "identifier": "refineGelatonium ",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 388,
+      "type": "namespace",
+    },
+  ],
+  "sections": [],
+}
+`;
+
+exports[`knip > buildMapSection > should transform a namespaceMembers map section to markdown 1`] = `
+{
+  "annotations": [],
+  "sections": [
+    "### Unused Namespace Members (7)
+
+|Filename|Namespace|Member|
+|-|-|-|
+|Qwark.ts|InsaneQwark|\`destroy\`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
+  ],
+}
+`;
+
+exports[`knip > buildMapSection > should transform a namespaceMembers map section to markdown and annotations 1`] = `
+{
+  "annotations": [
+    {
+      "identifier": "destroy",
+      "path": "Qwark.ts",
+      "start_column": 9,
+      "start_line": 327,
+      "type": "namespace",
+    },
+    {
+      "identifier": "rescue",
+      "path": "Qwark.ts",
+      "start_column": 9,
+      "start_line": 327,
+      "type": "namespace",
+    },
+    {
+      "identifier": "fly",
+      "path": "Rivet.ts",
+      "start_column": 9,
+      "start_line": 327,
+      "type": "namespace",
+    },
+    {
+      "identifier": "swim",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 353,
+      "type": "namespace",
+    },
+    {
+      "identifier": "explode",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 357,
+      "type": "namespace",
+    },
+    {
+      "identifier": "mutate",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 381,
+      "type": "namespace",
+    },
+    {
+      "identifier": "refineGelatonium ",
+      "path": "Rivet.ts",
+      "start_column": 3,
+      "start_line": 388,
+      "type": "namespace",
+    },
+  ],
+  "sections": [
+    "### Unused Namespace Members (7)
+
+|Filename|Namespace|Member|
+|-|-|-|
+|Qwark.ts|InsaneQwark|\`destroy\`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
+  ],
+}
+`;
+
+exports[`knip > buildMapSection > should transform a namespaceMembers map section to markdown if verbose and annotations are disabled 1`] = `
+{
+  "annotations": [],
+  "sections": [
+    "### Unused Namespace Members (7)
+
+|Filename|Namespace|Member|
+|-|-|-|
+|Qwark.ts|InsaneQwark|\`destroy\`|
+|Qwark.ts|SaneQwark|\`rescue\`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|",
+  ],
+}
+`;
+
 exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 [
   "### Unused files (3)
@@ -737,9 +737,9 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
-  "### Unused Class Members (7)
+  "### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -989,49 +989,49 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 2`] = `
     "path": "Rivet.ts",
     "start_column": 9,
     "start_line": 327,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "swim",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 353,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "explode",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 357,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "mutate",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 381,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "refineGelatonium ",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 388,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "rescue",
     "path": "Qwark.ts",
     "start_column": 9,
     "start_line": 327,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "destroy",
     "path": "Qwark.ts",
     "start_column": 9,
     "start_line": 327,
-    "type": "class",
+    "type": "namespace",
   },
 ]
 `;
@@ -1101,9 +1101,9 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
-  "### Unused Class Members (7)
+  "### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1311,49 +1311,49 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
     "path": "Rivet.ts",
     "start_column": 9,
     "start_line": 327,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "swim",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 353,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "explode",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 357,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "mutate",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 381,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "refineGelatonium ",
     "path": "Rivet.ts",
     "start_column": 3,
     "start_line": 388,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "rescue",
     "path": "Qwark.ts",
     "start_column": 9,
     "start_line": 327,
-    "type": "class",
+    "type": "namespace",
   },
   {
     "identifier": "destroy",
     "path": "Qwark.ts",
     "start_column": 9,
     "start_line": 327,
-    "type": "class",
+    "type": "namespace",
   },
 ]
 `;
@@ -1361,13 +1361,13 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 exports[`knip > parseJsonReport > should not attempt to handle an undefined or null key 1`] = `
 {
   "binaries": {},
-  "classMembers": {},
   "dependencies": {},
   "devDependencies": {},
   "duplicates": {},
   "enumMembers": {},
   "exports": {},
   "files": [],
+  "namespaceMembers": {},
   "optionalPeerDependencies": {},
   "types": {},
   "unlisted": {},
@@ -1383,60 +1383,6 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
         "name": "apollo",
       },
     ],
-  },
-  "classMembers": {
-    "Qwark.ts": {
-      "InsaneQwark": [
-        {
-          "col": 9,
-          "line": 327,
-          "name": "destroy",
-          "pos": 12268,
-        },
-      ],
-      "SaneQwark": [
-        {
-          "col": 9,
-          "line": 327,
-          "name": "rescue",
-          "pos": 12268,
-        },
-      ],
-    },
-    "Rivet.ts": {
-      "Rivet": [
-        {
-          "col": 9,
-          "line": 327,
-          "name": "fly",
-          "pos": 12268,
-        },
-        {
-          "col": 3,
-          "line": 353,
-          "name": "swim",
-          "pos": 12977,
-        },
-        {
-          "col": 3,
-          "line": 357,
-          "name": "explode",
-          "pos": 13056,
-        },
-        {
-          "col": 3,
-          "line": 381,
-          "name": "mutate",
-          "pos": 13810,
-        },
-        {
-          "col": 3,
-          "line": 388,
-          "name": "refineGelatonium ",
-          "pos": 13987,
-        },
-      ],
-    },
   },
   "dependencies": {
     "packages/a/package.json": [
@@ -1523,48 +1469,56 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
           "col": 5,
           "line": 37,
           "name": "Magmos",
+          "namespace": "Homeworld",
           "pos": 1273,
         },
         {
           "col": 5,
           "line": 38,
           "name": "Aquatos",
+          "namespace": "Homeworld",
           "pos": 1300,
         },
         {
           "col": 5,
           "line": 39,
           "name": "Leviathan",
+          "namespace": "Homeworld",
           "pos": 1317,
         },
         {
           "col": 5,
           "line": 40,
           "name": "TombliOutpost",
+          "namespace": "Homeworld",
           "pos": 1317,
         },
         {
           "col": 5,
           "line": 41,
           "name": "Zanifar ",
+          "namespace": "Homeworld",
           "pos": 1317,
         },
         {
           "col": 5,
           "line": 42,
           "name": "NefariousSpaceStation ",
+          "namespace": "Homeworld",
           "pos": 1317,
         },
         {
           "col": 5,
           "line": 43,
           "name": "NefariousCity",
+          "namespace": "Homeworld",
           "pos": 1317,
         },
         {
           "col": 5,
           "line": 44,
           "name": "CorsonV",
+          "namespace": "Homeworld",
           "pos": 1317,
         },
       ],
@@ -1575,12 +1529,14 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
           "col": 5,
           "line": 37,
           "name": "ZordoomPrison",
+          "namespace": "Membership",
           "pos": 1273,
         },
         {
           "col": 5,
           "line": 38,
           "name": "GreatClockStaff",
+          "namespace": "Membership",
           "pos": 1300,
         },
       ],
@@ -1589,12 +1545,14 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
           "col": 5,
           "line": 37,
           "name": "Viceron",
+          "namespace": "Residence",
           "pos": 1273,
         },
         {
           "col": 5,
           "line": 38,
           "name": "GreatClock",
+          "namespace": "Residence",
           "pos": 1300,
         },
       ],
@@ -1629,6 +1587,67 @@ exports[`knip > parseJsonReport > should parse the knip output 1`] = `
     "Savali.ts",
     "PocketDimension.tsx",
   ],
+  "namespaceMembers": {
+    "Qwark.ts": {
+      "InsaneQwark": [
+        {
+          "col": 9,
+          "line": 327,
+          "name": "destroy",
+          "namespace": "InsaneQwark",
+          "pos": 12268,
+        },
+      ],
+      "SaneQwark": [
+        {
+          "col": 9,
+          "line": 327,
+          "name": "rescue",
+          "namespace": "SaneQwark",
+          "pos": 12268,
+        },
+      ],
+    },
+    "Rivet.ts": {
+      "Rivet": [
+        {
+          "col": 9,
+          "line": 327,
+          "name": "fly",
+          "namespace": "Rivet",
+          "pos": 12268,
+        },
+        {
+          "col": 3,
+          "line": 353,
+          "name": "swim",
+          "namespace": "Rivet",
+          "pos": 12977,
+        },
+        {
+          "col": 3,
+          "line": 357,
+          "name": "explode",
+          "namespace": "Rivet",
+          "pos": 13056,
+        },
+        {
+          "col": 3,
+          "line": 381,
+          "name": "mutate",
+          "namespace": "Rivet",
+          "pos": 13810,
+        },
+        {
+          "col": 3,
+          "line": 388,
+          "name": "refineGelatonium ",
+          "namespace": "Rivet",
+          "pos": 13987,
+        },
+      ],
+    },
+  },
   "optionalPeerDependencies": {
     "packages/c/package.json": [
       {

@@ -559,7 +559,7 @@ describe("knip", () => {
         ],
       },
     };
-    const classMembers = {
+    const namespaceMembers = {
       "Qwark.ts": {
         InsaneQwark: [
           {
@@ -634,23 +634,23 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown", () => {
-      const section = buildMapSection("classMembers", classMembers, false, true);
+    it("should transform a namespaceMembers map section to markdown", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, true);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown if verbose and annotations are disabled", () => {
-      const section = buildMapSection("classMembers", classMembers, false, false);
+    it("should transform a namespaceMembers map section to markdown if verbose and annotations are disabled", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, false);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to annotations", () => {
-      const section = buildMapSection("classMembers", classMembers, true, false);
+    it("should transform a namespaceMembers map section to annotations", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, false);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("classMembers", classMembers, true, true);
+    it("should transform a namespaceMembers map section to markdown and annotations", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, true);
       expect(section).toMatchSnapshot();
     });
   });

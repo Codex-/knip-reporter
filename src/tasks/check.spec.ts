@@ -66,7 +66,7 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
-          type: "class",
+          type: "namespace",
         },
       ];
 
@@ -133,7 +133,7 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
-          type: "class",
+          type: "namespace",
         },
       ];
 
@@ -156,7 +156,7 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
-          type: "class",
+          type: "namespace",
         },
       ];
 
@@ -179,7 +179,7 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
-          type: "class",
+          type: "namespace",
         },
         null as unknown as ItemMeta,
         undefined as unknown as ItemMeta,
@@ -235,7 +235,7 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
-          type: "class",
+          type: "namespace",
         },
         {
           path: "some/path",
@@ -251,7 +251,7 @@ describe("check", () => {
       expect(counts.exports).toStrictEqual(1);
       expect(counts.types).toStrictEqual(1);
       expect(counts.duplicates).toStrictEqual(1);
-      expect(counts.classMembers).toStrictEqual(1);
+      expect(counts.namespaceMembers).toStrictEqual(1);
       expect(counts.enumMembers).toStrictEqual(1);
 
       items.push({
@@ -259,7 +259,7 @@ describe("check", () => {
         identifier: "Var",
         start_line: 0,
         start_column: 0,
-        type: "class",
+        type: "namespace",
       });
       items.push({
         path: "some/path",
@@ -273,7 +273,7 @@ describe("check", () => {
       counts = await updateCheckAnnotations(0, items, false);
 
       expect(counts.duplicates).toStrictEqual(2);
-      expect(counts.classMembers).toStrictEqual(2);
+      expect(counts.namespaceMembers).toStrictEqual(2);
       expect(counts.enumMembers).toStrictEqual(1);
 
       items.push(
@@ -304,7 +304,7 @@ describe("check", () => {
           identifier: "Var",
           start_line: 0,
           start_column: 0,
-          type: "class",
+          type: "namespace",
         },
         {
           path: "some/path",
@@ -320,7 +320,7 @@ describe("check", () => {
       expect(counts.exports).toStrictEqual(2);
       expect(counts.types).toStrictEqual(2);
       expect(counts.duplicates).toStrictEqual(3);
-      expect(counts.classMembers).toStrictEqual(3);
+      expect(counts.namespaceMembers).toStrictEqual(3);
       expect(counts.enumMembers).toStrictEqual(2);
 
       // Logging
@@ -334,7 +334,7 @@ describe("check", () => {
         identifier: "Var",
         start_line: 0,
         start_column: 0,
-        type: "class",
+        type: "namespace",
       }));
 
       // Behaviour
@@ -356,7 +356,7 @@ describe("check", () => {
           case 2:
             return "duplicate";
           case 3:
-            return "class";
+            return "namespace";
           case 4:
             return "enum";
           default:
@@ -374,7 +374,7 @@ describe("check", () => {
         switch (type) {
           case "type":
           case "export":
-          case "class":
+          case "namespace":
           case "enum":
             return {
               ...meta,
@@ -415,7 +415,7 @@ describe("check", () => {
         identifier: `Var${i}`,
         start_line: 0,
         start_column: 0,
-        type: i % 2 ? "class" : "enum",
+        type: i % 2 ? "namespace" : "enum",
       }));
 
       // Behaviour
@@ -436,7 +436,7 @@ describe("check", () => {
         identifier: `Var${i}`,
         start_line: 0,
         start_column: 0,
-        type: i % 2 ? "class" : "enum",
+        type: i % 2 ? "namespace" : "enum",
       }));
 
       // Behaviour
@@ -484,7 +484,7 @@ describe("check", () => {
       const count = new AnnotationsCount();
       count.exports = 100;
       count.types = 200;
-      count.classMembers = 300;
+      count.namespaceMembers = 300;
       count.enumMembers = 400;
 
       // Behaviour
@@ -492,7 +492,7 @@ describe("check", () => {
       const summary = updateCheckSpy.mock.lastCall?.[2]?.summary;
       expect(summary).toMatch(/\|Exports\|100\|/);
       expect(summary).toMatch(/\|Types\|200\|/);
-      expect(summary).toMatch(/\|Class Members\|300\|/);
+      expect(summary).toMatch(/\|Namespace Members\|300\|/);
       expect(summary).toMatch(/\|Enum Members\|400\|/);
 
       // Logging
@@ -506,7 +506,7 @@ describe("check", () => {
       count.exports = 123;
       count.types = 456;
       count.duplicates = 789;
-      count.classMembers = 101112;
+      count.namespaceMembers = 101112;
       count.enumMembers = 131415;
 
       // Behaviour
@@ -515,7 +515,7 @@ describe("check", () => {
       count.exports = 131415;
       count.types = 161718;
       count.duplicates = 192021;
-      count.classMembers = 222324;
+      count.namespaceMembers = 222324;
       count.enumMembers = 252627;
       expect(summaryMarkdownTable(count)).toMatchSnapshot();
 

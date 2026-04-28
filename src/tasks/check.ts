@@ -22,7 +22,7 @@ export class AnnotationsCount {
   public types = 0;
   public duplicates = 0;
   public enumMembers = 0;
-  public classMembers = 0;
+  public namespaceMembers = 0;
 
   public increaseCount(type: ItemMeta["type"]): void {
     switch (type) {
@@ -35,8 +35,8 @@ export class AnnotationsCount {
       case "duplicate":
         this.duplicates++;
         break;
-      case "class":
-        this.classMembers++;
+      case "namespace":
+        this.namespaceMembers++;
         break;
       case "enum":
         this.enumMembers++;
@@ -90,11 +90,13 @@ export async function updateCheckAnnotations(
       switch (meta.type) {
         case "type":
         case "export":
-        case "class":
+        case "namespace":
         case "enum":
           {
             const typeMessage =
-              meta.type === "class" || meta.type === "enum" ? `${meta.type} member` : meta.type;
+              meta.type === "namespace" || meta.type === "enum"
+                ? `${meta.type} member`
+                : meta.type;
             annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
           }
           break;
@@ -155,7 +157,7 @@ export async function resolveCheck(
 export function summaryMarkdownTable({
   exports,
   types,
-  classMembers,
+  namespaceMembers,
   enumMembers,
   duplicates,
 }: AnnotationsCount): string {
@@ -169,7 +171,7 @@ export function summaryMarkdownTable({
       ["Exports", `${exports}`],
       ["Types", `${types}`],
       ["Duplicates", `${duplicates}`],
-      ["Class Members", `${classMembers}`],
+      ["Namespace Members", `${namespaceMembers}`],
       ["Enum Members", `${enumMembers}`],
     ],
     markdownTableOptions,
