@@ -94,9 +94,7 @@ export async function updateCheckAnnotations(
         case "enum":
           {
             const typeMessage =
-              meta.type === "namespace" || meta.type === "enum"
-                ? `${meta.type} member`
-                : meta.type;
+              meta.type === "namespace" || meta.type === "enum" ? `${meta.type} member` : meta.type;
             annotation.message = `'${meta.identifier}' is an unused ${typeMessage}`;
           }
           break;
