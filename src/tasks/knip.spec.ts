@@ -79,7 +79,7 @@ describe("knip", () => {
     it("should throw if a command could not be generated", async () => {
       niGetCliCommandMock = vi.spyOn(ni, "getCliCommand").mockResolvedValue(undefined);
 
-      await expect(buildRunKnipCommand("knip")).rejects.toThrowError(
+      await expect(buildRunKnipCommand("knip")).rejects.toThrow(
         "Unable to generate command for package manager",
       );
     });
@@ -222,7 +222,7 @@ describe("knip", () => {
     });
 
     it("should throw if an unknown section name is provided", () => {
-      expect(() => buildSectionName("sheepinator")).toThrowError("Unknown name: sheepinator");
+      expect(() => buildSectionName("sheepinator")).toThrow("Unknown name: sheepinator");
     });
   });
 
@@ -783,7 +783,7 @@ src/x.ts
  ELIFECYCLE  Command failed with exit code 2.
 `;
       /* eslint-enable no-irregular-whitespace */
-      expect(() => getJsonFromOutput(cliOutput)).toThrowError("Unable to find JSON blob");
+      expect(() => getJsonFromOutput(cliOutput)).toThrow("Unable to find JSON blob");
     });
   });
 });
