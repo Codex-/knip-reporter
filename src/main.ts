@@ -60,12 +60,19 @@ export async function main(): Promise<void> {
     }
 
     if (config.annotations) {
-      if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await resolveCheck(checkId!, "failure", counts);
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await resolveCheck(checkId!, "success", counts);
+      // Handle errors here so teardown failures don't leak to the catch
+      // and end up overriding `setFailed` with the wrong message.
+      try {
+        if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          await resolveCheck(checkId!, "failure", counts);
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          await resolveCheck(checkId!, "success", counts);
+        }
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : String(error);
+        core.warning(`Unable to resolve check: ${detail}`);
       }
     }
 
