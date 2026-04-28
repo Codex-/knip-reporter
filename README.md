@@ -21,7 +21,6 @@ on:
 # not providing own permissive token
 permissions:
   checks: write
-  issues: write
   pull-requests: write
 
 steps:
