@@ -1,5 +1,4 @@
 import * as core from "@actions/core";
-import { symDiff } from "@opentf/std";
 import { type MockInstance, vi, expect } from "vitest";
 
 // Consuming test suites must first call:
@@ -64,10 +63,7 @@ function assertOnlyCalledInner(
     throw new Error("assertOnlyCalled must be called with at least one mock to assert");
   }
 
-  // Once Node 22 is LTS, this can be:
-  // const diff = coreLogMockSet.symmetricDifference(new Set(coreLogMocks));
-
-  const notCalled = symDiff([[...coreLogMockSet], coreLogMocks]);
+  const notCalled = coreLogMockSet.symmetricDifference(new Set(coreLogMocks));
   for (const logMock of notCalled) {
     expect(logMock).not.toHaveBeenCalled();
   }
