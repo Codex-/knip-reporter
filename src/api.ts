@@ -120,14 +120,12 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
 export async function createCheck(name: string, title: string): Promise<CreateCheckResponse> {
-  let headSha: string = github.context.sha;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  if (github.context.payload.pull_request?.head?.sha === undefined) {
+  const prSha = (github.context.payload.pull_request as { head?: { sha?: string } } | undefined)
+    ?.head?.sha;
+  if (prSha === undefined) {
     core.warning("Unable to find correct head_sha from payload, using base context sha");
-  } else {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    headSha = github.context.payload.pull_request.head.sha as string;
   }
+  const headSha = prSha ?? github.context.sha;
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
   const response = await octokit.rest.checks.create({
