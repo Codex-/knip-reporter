@@ -171,7 +171,7 @@ describe("comment", () => {
       const files: string[] = [];
       let currentLength = 0;
       const toAdd = ["Ratchet.ts", "Clank.ts"];
-      const toAddLength = toAdd.reduce((acc: number, curr: string) => (acc += curr.length), 0);
+      const toAddLength = toAdd.reduce((acc: number, curr: string) => acc + curr.length, 0);
       while (currentLength < api.GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
         files.push(...toAdd);
         currentLength += toAddLength;
