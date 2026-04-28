@@ -10,7 +10,7 @@ export default defineConfig({
         "src/**/*.spec.*",
         "src/**/__fixtures__/**",
         "src/test-utils/**/*.ts",
-        "src/reset.d.ts",
+        "src/**/*.d.ts",
       ],
     },
   },
