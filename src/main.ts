@@ -29,7 +29,7 @@ export async function main(): Promise<void> {
 
     init(config);
 
-    let checkId: number;
+    let checkId: number | undefined;
     if (config.annotations) {
       checkId = await timeTask("Create check ID", () =>
         createCheckId("knip-reporter-annotations-check", "Knip reporter analysis"),
@@ -50,26 +50,23 @@ export async function main(): Promise<void> {
     );
 
     let counts = new AnnotationsCount();
-    if (config.annotations) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      counts = await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
+    if (checkId !== undefined) {
+      counts = await updateCheckAnnotations(checkId, knipAnnotations, config.ignoreResults);
     }
 
     if (!config.ignoreResults && knipSections.length > 0) {
       core.setFailed("knip has resulted in findings, please see the report for more details");
     }
 
-    if (config.annotations) {
+    if (checkId !== undefined) {
       // Handle errors here so teardown failures don't leak to the catch
       // and end up overriding `setFailed` with the wrong message.
       try {
-        if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          await resolveCheck(checkId!, "failure", counts);
-        } else {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          await resolveCheck(checkId!, "success", counts);
-        }
+        const conclusion =
+          !config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)
+            ? "failure"
+            : "success";
+        await resolveCheck(checkId, conclusion, counts);
       } catch (error) {
         const detail = error instanceof Error ? error.message : String(error);
         core.warning(`Unable to resolve check: ${detail}`);
