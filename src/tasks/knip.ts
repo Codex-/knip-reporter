@@ -206,7 +206,7 @@ export function buildSectionName(name: string): string {
     case "duplicates":
       return "Duplicates";
     default:
-      throw new Error(`Unknown name: ${name}`);
+      throw new TypeError(`Unknown name: ${name}`);
   }
 }
 
@@ -254,7 +254,7 @@ function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
     case "duplicates":
       return "duplicate";
     default:
-      throw new Error(`Unhandled meta type: ${type}`);
+      throw new TypeError(`Unhandled meta type: ${type}`);
   }
 }
 

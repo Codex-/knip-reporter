@@ -22,7 +22,7 @@ async function run(): Promise<void> {
     core.info(configToStr(config));
 
     if (github.context.payload.pull_request === undefined) {
-      throw new Error(
+      throw new TypeError(
         `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
       );
     }
