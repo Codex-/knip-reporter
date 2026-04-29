@@ -25,7 +25,7 @@ permissions:
 
 steps:
   - name: Post the knip results
-    uses: codex-/knip-reporter@v2
+    uses: codex-/knip-reporter@v3
 ```
 
 ## Config
