@@ -78,9 +78,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -160,9 +160,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -242,9 +242,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -324,9 +324,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -406,9 +406,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -488,9 +488,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -570,9 +570,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -652,9 +652,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -734,9 +734,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -816,9 +816,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -898,9 +898,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -980,9 +980,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1062,9 +1062,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1144,9 +1144,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1226,9 +1226,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1308,9 +1308,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1390,9 +1390,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1472,9 +1472,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1554,9 +1554,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1636,9 +1636,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1718,9 +1718,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1800,9 +1800,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1882,9 +1882,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -1964,9 +1964,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2046,9 +2046,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2128,9 +2128,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2210,9 +2210,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2292,9 +2292,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2374,9 +2374,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2456,9 +2456,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2538,9 +2538,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2620,9 +2620,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2702,26 +2702,26 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-
-### Unused files (3)
-
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
-
-### Unused dependencies (3)
-
-|Filename|dependencies|
-|-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|",
+|Qwark.ts|InsaneQwark|\`destroy\`|",
   "<!-- hello-1 -->
 
+### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
+
+### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|
+
 ### Unused devDependencies (5)
 
 |Filename|devDependencies|
@@ -2785,9 +2785,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2867,9 +2867,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -2949,9 +2949,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3031,9 +3031,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3113,9 +3113,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3195,9 +3195,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3277,9 +3277,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3359,9 +3359,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3441,9 +3441,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3523,9 +3523,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3605,9 +3605,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3687,9 +3687,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3769,9 +3769,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3851,9 +3851,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -3933,9 +3933,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4015,9 +4015,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4097,9 +4097,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4179,9 +4179,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4261,9 +4261,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4343,9 +4343,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4425,9 +4425,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4507,9 +4507,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4589,9 +4589,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4671,9 +4671,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4753,9 +4753,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4835,9 +4835,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4917,9 +4917,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -4999,9 +4999,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5081,9 +5081,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5163,9 +5163,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5245,9 +5245,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5327,9 +5327,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5409,34 +5409,34 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-
-### Unused files (3)
-
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
-
-### Unused dependencies (3)
-
-|Filename|dependencies|
-|-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|
-
-### Unused devDependencies (5)
-
-|Filename|devDependencies|
-|-|-|
-|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/d/package.json|\`dotenv\`|",
+|Qwark.ts|InsaneQwark|\`destroy\`|",
   "<!-- hello-2 -->
 
+### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
+
+### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|
+
+### Unused devDependencies (5)
+
+|Filename|devDependencies|
+|-|-|
+|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/d/package.json|\`dotenv\`|
+
 ### Unused optionalPeerDependencies (2)
 
 |Filename|optionalPeerDependencies|
@@ -5492,9 +5492,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5574,9 +5574,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5656,9 +5656,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5738,9 +5738,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5820,9 +5820,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5902,9 +5902,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -5984,9 +5984,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6066,9 +6066,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6148,9 +6148,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6230,9 +6230,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6312,9 +6312,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6394,9 +6394,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6476,9 +6476,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6558,9 +6558,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6640,9 +6640,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6722,9 +6722,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6804,9 +6804,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6886,9 +6886,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -6968,9 +6968,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7050,9 +7050,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7132,9 +7132,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7214,9 +7214,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7296,9 +7296,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7378,9 +7378,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7460,9 +7460,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7542,9 +7542,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7624,9 +7624,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7706,9 +7706,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7788,9 +7788,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7870,9 +7870,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -7952,9 +7952,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -8034,9 +8034,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
@@ -8116,41 +8116,41 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-
-### Unused files (3)
-
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
-
-### Unused dependencies (3)
-
-|Filename|dependencies|
-|-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|
-
-### Unused devDependencies (5)
-
-|Filename|devDependencies|
-|-|-|
-|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/d/package.json|\`dotenv\`|
-
-### Unused optionalPeerDependencies (2)
-
-|Filename|optionalPeerDependencies|
-|-|-|
-|packages/c/package.json|\`dotenv\`|
-|packages/d/package.json|\`@mui/material\`|",
+|Qwark.ts|InsaneQwark|\`destroy\`|",
   "<!-- hello-3 -->
 
+### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
+
+### Unused dependencies (3)
+
+|Filename|dependencies|
+|-|-|
+|packages/a/package.json|\`react\`<br/>\`react-dom\`|
+|packages/d/package.json|\`react\`|
+
+### Unused devDependencies (5)
+
+|Filename|devDependencies|
+|-|-|
+|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|packages/d/package.json|\`dotenv\`|
+
+### Unused optionalPeerDependencies (2)
+
+|Filename|optionalPeerDependencies|
+|-|-|
+|packages/c/package.json|\`dotenv\`|
+|packages/d/package.json|\`@mui/material\`|
+
 ### Unlisted dependencies (2)
 
 |Filename|unlisted|
@@ -8199,9 +8199,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
-### Unused Class Members (7)
+### Unused Namespace Members (7)
 
-|Filename|Class|Member|
+|Filename|Namespace|Member|
 |-|-|-|
 |Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
 |Qwark.ts|SaneQwark|\`rescue\`|

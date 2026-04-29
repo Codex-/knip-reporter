@@ -105,9 +105,9 @@ interface ParsedReport {
   enumMembers: Record<string, Record<string, Item[]>>;
 
   /**
-   * Unused exported class members `classMembers`
+   * Unused namespace members (class methods, TS namespaces) `namespaceMembers`
    */
-  classMembers: Record<string, Record<string, Item[]>>;
+  namespaceMembers: Record<string, Record<string, Item[]>>;
 }
 type ParsedReportKey = keyof ParsedReport;
 
@@ -116,11 +116,13 @@ interface UnknownIssue {
 }
 
 export function parseJsonReport(rawJson: string): ParsedReport {
-  // Default JSON reporter results in a collection with a single object
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { files, issues }: { files: string[]; issues: UnknownIssue[] } = JSON.parse(rawJson) ?? {};
+  // Default JSON reporter no longer has a top-level `files` key.
+  // Unused files now appear as `Row.files: Item[]` per row, and enum/namespace
+  // members are flat `Item[]` with the enum/namespace name in `Item.namespace`.
+  const parsed = JSON.parse(rawJson) as { issues?: UnknownIssue[] } | null;
+  const { issues = [] } = parsed ?? {};
   const out: ParsedReport = {
-    files: files.filter((file) => !!file),
+    files: [],
     dependencies: {},
     devDependencies: {},
     optionalPeerDependencies: {},
@@ -131,12 +133,9 @@ export function parseJsonReport(rawJson: string): ParsedReport {
     types: {},
     duplicates: {},
     enumMembers: {},
-    classMembers: {},
+    namespaceMembers: {},
   };
   const summary: Partial<Record<ParsedReportKey, number>> = {};
-  if (out.files.length > 0) {
-    summary.files = out.files.length;
-  }
 
   for (const issue of issues) {
     const fileName: string = issue.file;
@@ -147,6 +146,15 @@ export function parseJsonReport(rawJson: string): ParsedReport {
       }
 
       switch (type) {
+        case "files":
+          if (Array.isArray(result) && result.length > 0) {
+            for (const item of result as Array<{ name: string }>) {
+              if (item.name) out.files.push(item.name);
+            }
+            summary.files ??= 0;
+            summary.files += result.length;
+          }
+          break;
         case "dependencies":
         case "devDependencies":
         case "optionalPeerDependencies":
@@ -157,19 +165,23 @@ export function parseJsonReport(rawJson: string): ParsedReport {
         case "types":
         case "duplicates":
           if (Array.isArray(result) && result.length > 0) {
-            out[type][fileName] = result;
+            out[type][fileName] = result as ParsedReport[typeof type][string];
             summary[type] ??= 0;
             summary[type] += result.length;
           }
           break;
         case "enumMembers":
-        case "classMembers":
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          if (typeof result === "object" && Object.keys(result).length > 0) {
-            out[type][fileName] = result as Record<string, Item[]>;
+        case "namespaceMembers":
+          if (Array.isArray(result) && result.length > 0) {
+            const grouped: Record<string, Item[]> = {};
+            for (const item of result as Array<Item & { namespace?: string }>) {
+              const ns = item.namespace ?? "";
+              grouped[ns] ??= [];
+              grouped[ns].push(item);
+            }
+            out[type][fileName] = grouped;
             summary[type] ??= 0;
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            summary[type] += Object.keys(result).length;
+            summary[type] += Object.keys(grouped).length;
           }
       }
     }
@@ -206,7 +218,7 @@ export function buildSectionName(name: string): string {
     case "duplicates":
       return "Duplicates";
     default:
-      throw new Error(`Unknown name: ${name}`);
+      throw new TypeError(`Unknown name: ${name}`);
   }
 }
 
@@ -243,8 +255,8 @@ export function buildArraySection(
 
 function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
   switch (type) {
-    case "classMembers":
-      return "class";
+    case "namespaceMembers":
+      return "namespace";
     case "enumMembers":
       return "enum";
     case "exports":
@@ -254,7 +266,7 @@ function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
     case "duplicates":
       return "duplicate";
     default:
-      throw new Error(`Unhandled meta type: ${type}`);
+      throw new TypeError(`Unhandled meta type: ${type}`);
   }
 }
 
@@ -281,8 +293,11 @@ export function buildArraySectionWithAnnotations(
       // Handle the duplicates case
       if (Array.isArray(item)) {
         for (let i = 0; i < item.length; i++) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          const duplicate = item[i]!;
+          const duplicate = item[i];
+          if (!duplicate) {
+            continue;
+          }
+
           const otherDuplicates = [...item.slice(0, i), ...item.slice(i + 1, item.length)].map(
             (dupe) => dupe.name,
           );
@@ -352,7 +367,7 @@ export function buildMapSection(
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
-  const resultMetaType = name === "classMembers" ? "class" : "enum";
+  const resultMetaType = name === "namespaceMembers" ? "namespace" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
   const metaType = getMetaType(name);
   const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
@@ -405,12 +420,10 @@ export function processSectionToMessages(
   };
 
   const sectionProcessingMs = Date.now();
-  let output = [
-    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions),
-  ];
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const originalOutputLength = output[0]!.length;
-  if (originalOutputLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+  const originalOutput =
+    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions);
+  let output = [originalOutput];
+  if (originalOutput.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     // Output doesn't violate the limit, simply return and move on
     return output;
   }
@@ -420,7 +433,7 @@ export function processSectionToMessages(
 
   // We round this number up otherwise the splitLength will result in exactly 65535-100
   // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
-  const splitFactor = Math.ceil(originalOutputLength / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
+  const splitFactor = Math.ceil(originalOutput.length / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
   const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
   const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
@@ -498,7 +511,7 @@ export function buildMarkdownSections(
         length = Object.keys(value).length;
         break;
       case "enumMembers":
-      case "classMembers":
+      case "namespaceMembers":
         buildWithAnnotations = (): ReturnType<typeof buildMapSection> =>
           buildMapSection(
             key,

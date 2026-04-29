@@ -1,16 +1,26 @@
-import * as core from "@actions/core";
-import { afterEach, describe, expect, expectTypeOf, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from "vitest";
 
 import { timeTask } from "./task.ts";
+import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 
 vi.mock("@actions/core");
 
 describe("task", () => {
-  describe("timeTask", () => {
-    afterEach(() => {
-      vi.restoreAllMocks();
-    });
+  const { coreInfoLogMock, assertOnlyCalled } = mockLoggingFunctions();
 
+  afterAll(() => {
+    vi.restoreAllMocks();
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  describe("timeTask", () => {
     it("resolves to the resolved type of the task function", () => {
       expectTypeOf(timeTask("name", () => undefined)).resolves.toEqualTypeOf<undefined>();
       expectTypeOf(
@@ -25,20 +35,22 @@ describe("task", () => {
     });
 
     it("should output the task name", async () => {
-      const coreInfoSpy = vi.spyOn(core, "info").mockImplementation(() => undefined);
       await timeTask("Test Name", () => Promise.resolve(undefined));
 
-      expect(coreInfoSpy).toHaveBeenCalledTimes(2);
-      for (const [param] of coreInfoSpy.mock.calls) {
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+      for (const [param] of coreInfoLogMock.mock.calls) {
         expect(param).toContain("Test Name");
       }
     });
 
     it("should output the time taken", async () => {
-      const coreInfoSpy = vi.spyOn(core, "info").mockImplementation(() => undefined);
       await timeTask("Test Name", () => Promise.resolve(undefined));
 
-      expect(coreInfoSpy.mock.lastCall![0]).toMatch(/\(\d+ms\)/);
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock.mock.lastCall![0]).toMatch(/\(\d+ms\)/);
     });
 
     it("should return the value returned by the provided function", async () => {

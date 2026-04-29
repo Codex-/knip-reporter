@@ -2,17 +2,18 @@ name: Pull Request
 on:
   pull_request:
 
-permissions:
-  checks: write
-  issues: write
-  pull-requests: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: jdx/mise-action@v4
       - run: pnpm i
       - name: Knip Reporter

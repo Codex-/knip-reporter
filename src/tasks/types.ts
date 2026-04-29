@@ -7,7 +7,7 @@ interface ItemMetaBase {
   identifier: string;
   start_line: number;
   start_column: number;
-  type: "export" | "type" | "class" | "enum";
+  type: "export" | "type" | "namespace" | "enum";
 }
 
 type ItemMetaDuplicate = Omit<ItemMetaBase, "type"> & {

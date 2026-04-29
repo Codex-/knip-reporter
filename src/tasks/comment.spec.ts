@@ -1,7 +1,7 @@
-import * as core from "@actions/core";
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as api from "../api.ts";
+import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 import { reportJson } from "./__fixtures__/knip.fixture.ts";
 import { buildComments, createOrUpdateComments, deleteComments } from "./comment.ts";
 import { buildFilesSection, buildMarkdownSections, parseJsonReport } from "./knip.ts";
@@ -10,19 +10,44 @@ vi.mock("@actions/core");
 vi.mock("../api.ts");
 
 describe("comment", () => {
+  const {
+    coreDebugLogMock,
+    coreInfoLogMock,
+    coreWarningLogMock,
+    assertOnlyCalled,
+    assertNoneCalled,
+  } = mockLoggingFunctions();
+
+  afterAll(() => {
+    vi.restoreAllMocks();
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   describe("createOrUpdateComments", () => {
     it("should create comments", async () => {
       const createCommentSpy = vi.spyOn(api, "createComment").mockImplementation((() => ({
         data: { id: 0 },
       })) as unknown as typeof api.createComment);
       const comments = ["test1", "test2", "test3"];
-      const toDelete = await createOrUpdateComments(0, comments);
 
+      // Behaviour
+      const toDelete = await createOrUpdateComments(0, comments);
       expect(createCommentSpy).toHaveBeenCalledTimes(comments.length);
       for (let i = 0; i < comments.length; i++) {
         expect(createCommentSpy.mock.calls[i]?.[1]).toStrictEqual(comments[i]);
       }
       expect(toDelete).toHaveLength(0);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledTimes(comments.length);
     });
 
     it("should update comments", async () => {
@@ -32,8 +57,9 @@ describe("comment", () => {
       const updateCommentSpy = vi.spyOn(api, "updateComment");
       const ids = [0, 1, 2];
       const comments = ["test1", "test2", "test3"];
-      const toDelete = await createOrUpdateComments(0, comments, ids);
 
+      // Behaviour
+      const toDelete = await createOrUpdateComments(0, comments, ids);
       expect(createCommentSpy).not.toHaveBeenCalled();
       expect(updateCommentSpy).toHaveBeenCalledTimes(ids.length);
       for (let i = 0; i < ids.length; i++) {
@@ -41,6 +67,10 @@ describe("comment", () => {
         expect(updateCommentSpy.mock.calls[i]?.[1]).toStrictEqual(comments[i]);
       }
       expect(toDelete).toHaveLength(0);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledTimes(ids.length);
     });
 
     it("should update if possible or create", async () => {
@@ -50,8 +80,9 @@ describe("comment", () => {
       const updateCommentSpy = vi.spyOn(api, "updateComment");
       const ids = [0, 1];
       const comments = ["test1", "test2", "test3"];
-      const toDelete = await createOrUpdateComments(0, comments, ids);
 
+      // Behaviour
+      const toDelete = await createOrUpdateComments(0, comments, ids);
       expect(createCommentSpy).toHaveBeenCalledOnce();
       expect(updateCommentSpy).toHaveBeenCalledTimes(2);
 
@@ -64,6 +95,10 @@ describe("comment", () => {
       expect(createCommentSpy.mock.calls[0]?.[1]).toStrictEqual(comments[2]);
 
       expect(toDelete).toHaveLength(0);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledTimes(comments.length);
     });
 
     it("should return extraneous IDs to be delete", async () => {
@@ -73,39 +108,50 @@ describe("comment", () => {
       const updateCommentSpy = vi.spyOn(api, "updateComment");
       const ids = [0, 1, 2, 3, 4];
       const comments = ["test1"];
-      const toDelete = await createOrUpdateComments(0, comments, ids);
 
+      // Behaviour
+      const toDelete = await createOrUpdateComments(0, comments, ids);
       expect(createCommentSpy).not.toHaveBeenCalled();
       expect(updateCommentSpy).toHaveBeenCalledOnce();
       expect(toDelete).toHaveLength(ids.length - comments.length);
       expect(toDelete).toStrictEqual([1, 2, 3, 4]);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"[createOrUpdateComments]: extraneous comments to delete: [1, 2, 3, 4]"`,
+      );
     });
   });
 
   describe("deleteComments", () => {
     it("should delete provided comment IDs", async () => {
-      const coreInfoSpy = vi.spyOn(core, "info").mockImplementation(() => undefined);
       const deleteCommentSpy = vi.spyOn(api, "deleteComment");
       const ids = [0, 1, 2, 3, 4];
 
+      // Behaviour
       await deleteComments(ids);
-
       expect(deleteCommentSpy).toHaveBeenCalledTimes(ids.length);
       for (let i = 0; i < ids.length; i++) {
         expect(deleteCommentSpy.mock.calls[i]?.[0]).toStrictEqual(ids[i]);
         // * 2 because we want the first call of each call to the logger
-        expect(coreInfoSpy.mock.calls[i * 2]?.[0]).toContain(`Delete comment ${ids[i]}`);
+        expect(coreInfoLogMock.mock.calls[i * 2]?.[0]).toContain(`Delete comment ${ids[i]}`);
       }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(ids.length * 2);
     });
 
     it("should not make any api calls if an empty array is provided", async () => {
-      const coreInfoSpy = vi.spyOn(core, "info").mockImplementation(() => undefined);
       const deleteCommentSpy = vi.spyOn(api, "deleteComment");
 
+      // Behaviour
       await deleteComments([]);
-
-      expect(coreInfoSpy).not.toHaveBeenCalled();
       expect(deleteCommentSpy).not.toHaveBeenCalled();
+
+      // Logging
+      assertNoneCalled();
     });
   });
 
@@ -125,7 +171,7 @@ describe("comment", () => {
       const files: string[] = [];
       let currentLength = 0;
       const toAdd = ["Ratchet.ts", "Clank.ts"];
-      const toAddLength = toAdd.reduce((acc: number, curr: string) => (acc += curr.length), 0);
+      const toAddLength = toAdd.reduce((acc: number, curr: string) => acc + curr.length, 0);
       while (currentLength < api.GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
         files.push(...toAdd);
         currentLength += toAddLength;
@@ -134,54 +180,65 @@ describe("comment", () => {
     })();
 
     it("should inject a provided comment ID", () => {
+      // Behaviour
       let comments = buildComments("hello", shortSections);
-
       expect(comments).toHaveLength(1);
       expect(comments[0]).toContain("<!-- hello-0 -->");
 
       comments = buildComments("goodbye", shortSections);
-
       expect(comments).toHaveLength(1);
       expect(comments[0]).toContain("<!-- goodbye-0 -->");
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
 
     it("should increase the number on the injected comment for each comment generated", () => {
+      // Behaviour
       const comments = buildComments("hello", manyShortSections);
-
       expect(comments).toHaveLength(4);
       expect(comments[0]).toContain("<!-- hello-0 -->");
       expect(comments[1]).toContain("<!-- hello-1 -->");
       expect(comments[2]).toContain("<!-- hello-2 -->");
       expect(comments[3]).toContain("<!-- hello-3 -->");
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
 
     it("should output multiple comments if all sections exceed the max character limit", () => {
+      // Behaviour
       const comments = buildComments("hello", manyShortSections);
-
       expect(comments).toHaveLength(4);
       expect(comments).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
 
     it("should output a long section", () => {
-      const coreWarningSpy = vi.spyOn(core, "warning");
+      // Behaviour
       const comments = buildComments("hello", longSection);
-
       expect(comments).toHaveLength(0);
-      expect(coreWarningSpy).toHaveBeenCalledTimes(3);
-      expect(coreWarningSpy.mock.calls[0]?.[0]).toContain("Unused files");
-      expect(coreWarningSpy.mock.calls[0]?.[0]).toContain(longSection[0]?.length);
-      expect(coreWarningSpy.mock.calls[1]?.[0]).toContain(
-        "Skipping this section, please see output below:",
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
+      expect(coreWarningLogMock).toHaveBeenCalledTimes(3);
+      expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain("Unused files");
+      expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(longSection[0]?.length);
+      expect(coreWarningLogMock.mock.calls[1]?.[0]).toMatchInlineSnapshot(
+        `"Skipping this section, please see output below:"`,
       );
-      expect(coreWarningSpy.mock.calls[2]?.[0]).toStrictEqual(longSection[0]);
+      expect(coreWarningLogMock.mock.calls[2]?.[0]).toStrictEqual(longSection[0]);
     });
 
     it("should not output a warning for a regular section", () => {
-      const coreWarningSpy = vi.spyOn(core, "warning");
+      // Behaviour
       const comments = buildComments("hello", shortSections);
-
       expect(comments).toHaveLength(1);
-      expect(coreWarningSpy).not.toHaveBeenCalled();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
   });
 });

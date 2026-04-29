@@ -13,7 +13,7 @@ import { runCommentTask } from "./tasks/comment.ts";
 import { runKnipTasks } from "./tasks/knip.ts";
 import { timeTask } from "./tasks/task.ts";
 
-async function run(): Promise<void> {
+export async function main(): Promise<void> {
   try {
     const config = getConfig();
     const actionMs = Date.now();
@@ -22,14 +22,14 @@ async function run(): Promise<void> {
     core.info(configToStr(config));
 
     if (github.context.payload.pull_request === undefined) {
-      throw new Error(
+      throw new TypeError(
         `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
       );
     }
 
     init(config);
 
-    let checkId: number;
+    let checkId: number | undefined;
     if (config.annotations) {
       checkId = await timeTask("Create check ID", () =>
         createCheckId("knip-reporter-annotations-check", "Knip reporter analysis"),
@@ -50,37 +50,34 @@ async function run(): Promise<void> {
     );
 
     let counts = new AnnotationsCount();
-    if (config.annotations) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      counts = await updateCheckAnnotations(checkId!, knipAnnotations, config.ignoreResults);
+    if (checkId !== undefined) {
+      counts = await updateCheckAnnotations(checkId, knipAnnotations, config.ignoreResults);
     }
 
     if (!config.ignoreResults && knipSections.length > 0) {
       core.setFailed("knip has resulted in findings, please see the report for more details");
     }
 
-    if (config.annotations) {
-      if (!config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await resolveCheck(checkId!, "failure", counts);
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await resolveCheck(checkId!, "success", counts);
+    if (checkId !== undefined) {
+      // Handle errors here so teardown failures don't leak to the catch
+      // and end up overriding `setFailed` with the wrong message.
+      try {
+        const conclusion =
+          !config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)
+            ? "failure"
+            : "success";
+        await resolveCheck(checkId, conclusion, counts);
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : String(error);
+        core.warning(`Unable to resolve check: ${detail}`);
       }
     }
 
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error) {
-    if (error instanceof Error) {
-      core.error(`🧨 Failed: ${error.message}`);
-      core.error(`📚 Stack: ${error.stack ?? ""}`);
-      core.setFailed(error);
-      return;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    core.setFailed(`🧨 Failed: ${error}`);
+    const err = error instanceof Error ? error : new Error(String(error));
+    core.error(`🧨 Failed: ${err.message}`);
+    core.error(`📚 Stack: ${err.stack ?? ""}`);
+    core.setFailed(err);
   }
 }
-
-((): Promise<void> => run())();

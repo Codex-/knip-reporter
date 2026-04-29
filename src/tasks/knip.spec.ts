@@ -1,9 +1,18 @@
 import * as cp from "node:child_process";
 
-import * as core from "@actions/core";
 import * as ni from "@antfu/ni";
-import { afterAll, afterEach, describe, expect, it, vi, type MockInstance } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+  type MockInstance,
+} from "vitest";
 
+import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import {
   buildArraySection,
@@ -33,8 +42,19 @@ vi.mock("@antfu/ni", async () => {
 });
 
 describe("knip", () => {
+  const { coreDebugLogMock, coreInfoLogMock, coreWarningLogMock, assertOnlyCalled } =
+    mockLoggingFunctions();
+
   afterAll(() => {
     vi.restoreAllMocks();
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   describe("buildRunKnipCommand", () => {
@@ -42,29 +62,38 @@ describe("knip", () => {
 
     afterEach(() => {
       niGetCliCommandMock?.mockRestore();
+      niGetCliCommandMock = undefined;
     });
 
     it("should build a command with extended JSON reporter", async () => {
+      // Behaviour
       const cmd = await buildRunKnipCommand("knip");
-
       expect(cmd).toMatch("knip");
       expect(cmd).toMatch("--reporter json");
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
     });
 
     it("should throw if a command could not be generated", async () => {
       niGetCliCommandMock = vi.spyOn(ni, "getCliCommand").mockResolvedValue(undefined);
 
-      await expect(buildRunKnipCommand("knip")).rejects.toThrowError(
+      await expect(buildRunKnipCommand("knip")).rejects.toThrow(
         "Unable to generate command for package manager",
       );
     });
 
     it("should build a command with working directory specific", async () => {
+      // Behaviour
       const cmd = await buildRunKnipCommand("knip", "./working/directory");
-
       expect(cmd).toMatch("knip");
       expect(cmd).toMatch("--reporter json");
       expect(cmd).toMatch("--directory ./working/directory");
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
     });
   });
 
@@ -77,6 +106,7 @@ describe("knip", () => {
       ) => {
         func(undefined, "resolved promise", "");
       }) as any);
+
       const results = await run("test cmd");
 
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
@@ -84,7 +114,6 @@ describe("knip", () => {
     });
 
     it("emits a warning log if stderr isn't empty", async () => {
-      const warnSpy = vi.spyOn(core, "warning");
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
@@ -93,14 +122,20 @@ describe("knip", () => {
         func(undefined, "", "stderr output");
       }) as any);
 
+      // Behaviour
       await run("test cmd");
-
-      expect(warnSpy.mock.lastCall?.[0]).toStrictEqual("knip stderr:\nstderr output");
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
+
+      // Logging
+      assertOnlyCalled(coreWarningLogMock);
+      expect(coreWarningLogMock).toHaveBeenCalledOnce();
+      expect(coreWarningLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(`
+        "knip stderr:
+        stderr output"
+      `);
     });
 
     it("emits a warning log if stderr without preventing stdout from being returned", async () => {
-      const warnSpy = vi.spyOn(core, "warning");
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
@@ -109,23 +144,40 @@ describe("knip", () => {
         func(undefined, "stdout output", "stderr output");
       }) as any);
 
+      // Behaviour
       const result = await run("test cmd");
-
-      expect(warnSpy.mock.lastCall?.[0]).toStrictEqual("knip stderr:\nstderr output");
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
       expect(result).toStrictEqual("stdout output");
+
+      // Logging
+      assertOnlyCalled(coreWarningLogMock);
+      expect(coreWarningLogMock).toHaveBeenCalledOnce();
+      expect(coreWarningLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(`
+        "knip stderr:
+        stderr output"
+      `);
     });
   });
 
   describe("parseJsonReport", () => {
     it("should parse the knip output", () => {
+      // Behaviour
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
       expect(parsedReport).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
     });
 
     it("should not attempt to handle an undefined or null key", () => {
+      // Behaviour
       const parsedReport = parseJsonReport(JSON.stringify(invalidReportJson));
       expect(parsedReport).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
     });
   });
 
@@ -170,7 +222,7 @@ describe("knip", () => {
     });
 
     it("should throw if an unknown section name is provided", () => {
-      expect(() => buildSectionName("sheepinator")).toThrowError("Unknown name: sheepinator");
+      expect(() => buildSectionName("sheepinator")).toThrow("Unknown name: sheepinator");
     });
   });
 
@@ -507,7 +559,7 @@ describe("knip", () => {
         ],
       },
     };
-    const classMembers = {
+    const namespaceMembers = {
       "Qwark.ts": {
         InsaneQwark: [
           {
@@ -582,23 +634,23 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown", () => {
-      const section = buildMapSection("classMembers", classMembers, false, true);
+    it("should transform a namespaceMembers map section to markdown", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, true);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown if verbose and annotations are disabled", () => {
-      const section = buildMapSection("classMembers", classMembers, false, false);
+    it("should transform a namespaceMembers map section to markdown if verbose and annotations are disabled", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, false);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to annotations", () => {
-      const section = buildMapSection("classMembers", classMembers, true, false);
+    it("should transform a namespaceMembers map section to annotations", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, false);
       expect(section).toMatchSnapshot();
     });
 
-    it("should transform a classMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("classMembers", classMembers, true, true);
+    it("should transform a namespaceMembers map section to markdown and annotations", () => {
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, true);
       expect(section).toMatchSnapshot();
     });
   });
@@ -606,20 +658,25 @@ describe("knip", () => {
   describe("buildMarkdownSections", () => {
     it("outputs only sections", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
-      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true);
 
+      // Behaviour
+      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true);
       expect(sections).toHaveLength(12);
       expect(annotations).toHaveLength(0);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
       }
       expect(sections).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
 
     it("outputs verbose sections and annotations", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
-      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true);
 
+      // Behaviour
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true);
       expect(sections).toHaveLength(12);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
@@ -631,12 +688,16 @@ describe("knip", () => {
         expect(annotation).toBeTypeOf("object");
       }
       expect(annotations).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
 
     it("outputs sections and annotations", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
-      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
 
+      // Behaviour
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
       expect(sections).toHaveLength(7);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
@@ -648,6 +709,9 @@ describe("knip", () => {
         expect(annotation).toBeTypeOf("object");
       }
       expect(annotations).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
     });
   });
 
@@ -669,8 +733,19 @@ describe("knip", () => {
         body.push(...src);
       }
 
+      // Behaviour
       const messages = processSectionToMessages(sectionHeader, tableHeader, body);
       expect(messages).toMatchSnapshot();
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+      expect(coreInfoLogMock.mock.calls[0]?.[0]).toMatchInlineSnapshot(
+        `"    - Splitting section ### Unused Enum Members (12)"`,
+      );
+      expect(coreInfoLogMock.mock.calls[1]?.[0]).toMatch(
+        /^ {4}✔ Splitting section ### Unused Enum Members \(12\) \(\d+ms\)$/,
+      );
     });
   });
 
@@ -690,7 +765,6 @@ ${JSON.stringify(reportJson)}
 `;
       /* eslint-enable no-irregular-whitespace */
       const jsonStr = getJsonFromOutput(cliOutput);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       expect(() => JSON.parse(jsonStr)).not.toThrow();
       const jsonObj = JSON.parse(jsonStr);
       expect(jsonObj).toBeTypeOf("object");
@@ -709,7 +783,7 @@ src/x.ts
  ELIFECYCLE  Command failed with exit code 2.
 `;
       /* eslint-enable no-irregular-whitespace */
-      expect(() => getJsonFromOutput(cliOutput)).toThrowError("Unable to find JSON blob");
+      expect(() => getJsonFromOutput(cliOutput)).toThrow("Unable to find JSON blob");
     });
   });
 });
