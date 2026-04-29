@@ -30,6 +30,6 @@ jobs:
             git diff
             exit 1
           fi
-      - run: npx changelogithub
+      - run: pnpm exec changelogithub
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
