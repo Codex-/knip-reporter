@@ -33,7 +33,7 @@ inputs:
     description: Directory in which to run the knip action.
     default: "."
     required: false
-  output_json_file:
+  json_report_path:
     description: |
       Optional file path containing the results from a knip run.
       If provided, the action will read from this file instead of running knip itself.

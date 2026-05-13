@@ -806,7 +806,7 @@ src/x.ts
       vi.spyOn(fs, "stat").mockRejectedValueOnce(new Error("File not found"));
 
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided outputJsonFile does not exist: ${filePath}`,
+        `Provided jsonReportPath does not exist: ${filePath}`,
       );
     });
 
@@ -817,7 +817,7 @@ src/x.ts
       vi.spyOn(fs, "readFile").mockResolvedValueOnce("");
 
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided outputJsonFile is empty: ${filePath}`,
+        `Provided jsonReportPath is empty: ${filePath}`,
       );
     });
 
@@ -828,7 +828,7 @@ src/x.ts
       vi.spyOn(fs, "readFile").mockResolvedValueOnce("This is not JSON");
 
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided outputJsonFile contains invalid JSON: ${filePath}`,
+        `Provided jsonReportPath contains invalid JSON: ${filePath}`,
       );
     });
   });

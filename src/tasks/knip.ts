@@ -562,19 +562,19 @@ export async function getJsonFromInputFile(filePath: string): Promise<string> {
   try {
     await fs.stat(filePath);
   } catch {
-    throw new Error(`Provided outputJsonFile does not exist: ${filePath}`);
+    throw new Error(`Provided jsonReportPath does not exist: ${filePath}`);
   }
 
   const content = await fs.readFile(filePath, "utf-8");
 
   if (!content) {
-    throw new Error(`Provided outputJsonFile is empty: ${filePath}`);
+    throw new Error(`Provided jsonReportPath is empty: ${filePath}`);
   }
 
   try {
     JSON.parse(content);
   } catch {
-    throw new Error(`Provided outputJsonFile contains invalid JSON: ${filePath}`);
+    throw new Error(`Provided jsonReportPath contains invalid JSON: ${filePath}`);
   }
 
   return content;
@@ -592,7 +592,7 @@ async function getOutput(buildScriptName: string, cwd?: string): Promise<string>
 
 export async function runKnipTasks(
   buildScriptName: string,
-  outputJsonFile: string | undefined,
+  jsonReportPath: string | undefined,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
   cwd?: string,
@@ -600,8 +600,8 @@ export async function runKnipTasks(
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
-  const output = outputJsonFile
-    ? await timeTask("Get knip report from file", () => getJsonFromInputFile(outputJsonFile))
+  const output = jsonReportPath
+    ? await timeTask("Get knip report from file", () => getJsonFromInputFile(jsonReportPath))
     : await timeTask("Run knip", () => getOutput(buildScriptName, cwd));
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),

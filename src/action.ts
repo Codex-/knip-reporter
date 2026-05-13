@@ -44,7 +44,7 @@ export interface ActionConfig {
    *
    * If provided, the action will use this instead of running Knip.
    */
-  outputJsonFile?: string;
+  jsonReportPath?: string;
 }
 
 export function getConfig(): ActionConfig {
@@ -56,7 +56,7 @@ export function getConfig(): ActionConfig {
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
     workingDirectory: core.getInput("working_directory", { required: false }) || undefined,
-    outputJsonFile: core.getInput("output_json_file", { required: false }) || undefined,
+    jsonReportPath: core.getInput("json_report_path", { required: false }) || undefined,
   };
 }
 
@@ -69,6 +69,6 @@ export function configToStr(cfg: ActionConfig): string {
     verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
     workingDirectory: ${cfg.workingDirectory}
-    outputJsonFile: ${cfg.outputJsonFile}
+    jsonReportPath: ${cfg.jsonReportPath}
 `;
 }
