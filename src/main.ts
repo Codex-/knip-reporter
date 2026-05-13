@@ -18,6 +18,10 @@ export async function main(): Promise<void> {
     const config = getConfig();
     const actionMs = Date.now();
 
+    if (config.outputJsonFile && config.commandScriptName !== "knip") {
+      core.warning("command_script_name config will be ignored when output_json_file is provided");
+    }
+
     core.info("- knip-reporter action");
     core.info(configToStr(config));
 
