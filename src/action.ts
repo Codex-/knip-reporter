@@ -38,6 +38,13 @@ export interface ActionConfig {
    * Directory in which to run the knip action.
    */
   workingDirectory?: string;
+
+  /**
+   * Path to a file that contains the JSON output of a Knip run.
+   *
+   * If provided, the action will use this instead of running Knip.
+   */
+  outputJsonFile?: string;
 }
 
 export function getConfig(): ActionConfig {
@@ -49,6 +56,7 @@ export function getConfig(): ActionConfig {
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
     workingDirectory: core.getInput("working_directory", { required: false }) || undefined,
+    outputJsonFile: core.getInput("output_json_file", { required: false }) || undefined,
   };
 }
 
@@ -61,5 +69,6 @@ export function configToStr(cfg: ActionConfig): string {
     verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
     workingDirectory: ${cfg.workingDirectory}
+    outputJsonFile: ${cfg.outputJsonFile}
 `;
 }

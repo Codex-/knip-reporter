@@ -38,6 +38,7 @@ export async function main(): Promise<void> {
 
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config.commandScriptName,
+      config.outputJsonFile,
       config.annotations,
       config.verbose,
       config.workingDirectory,

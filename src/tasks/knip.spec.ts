@@ -1,4 +1,6 @@
 import * as cp from "node:child_process";
+import type { Stats } from "node:fs";
+import fs from "node:fs/promises";
 
 import * as ni from "@antfu/ni";
 import {
@@ -22,6 +24,7 @@ import {
   buildMarkdownSections,
   buildRunKnipCommand,
   buildSectionName,
+  getJsonFromInputFile,
   getJsonFromOutput,
   parseJsonReport,
   processSectionToMessages,
@@ -784,6 +787,49 @@ src/x.ts
 `;
       /* eslint-enable no-irregular-whitespace */
       expect(() => getJsonFromOutput(cliOutput)).toThrow("Unable to find JSON blob");
+    });
+  });
+
+  describe("getJsonFromInputFile", () => {
+    it("should read the report json from the provided file path", async () => {
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce(JSON.stringify(reportJson));
+
+      const jsonStr = await getJsonFromInputFile("knip-report.json");
+
+      expect(() => JSON.parse(jsonStr)).not.toThrow();
+    });
+
+    it("should throw an error if the file does not exist", async () => {
+      const filePath = "non-existent-file.json";
+
+      vi.spyOn(fs, "stat").mockRejectedValueOnce(new Error("File not found"));
+
+      await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
+        `Provided outputJsonFile does not exist: ${filePath}`,
+      );
+    });
+
+    it("should throw an error if the file is empty", async () => {
+      const filePath = "empty-file.json";
+
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce("");
+
+      await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
+        `Provided outputJsonFile is empty: ${filePath}`,
+      );
+    });
+
+    it("should throw an error if the file contains invalid JSON", async () => {
+      const filePath = "invalid-json-file.json";
+
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce("This is not JSON");
+
+      await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
+        `Provided outputJsonFile contains invalid JSON: ${filePath}`,
+      );
     });
   });
 });

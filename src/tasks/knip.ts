@@ -1,4 +1,5 @@
 import { exec } from "node:child_process";
+import fs from "node:fs/promises";
 
 import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
@@ -557,8 +558,31 @@ export function getJsonFromOutput(output: string): string {
   throw new Error("Unable to find JSON blob");
 }
 
+export async function getJsonFromInputFile(filePath: string): Promise<string> {
+  try {
+    await fs.stat(filePath);
+  } catch {
+    throw new Error(`Provided outputJsonFile does not exist: ${filePath}`);
+  }
+
+  const content = await fs.readFile(filePath, "utf-8");
+
+  if (!content) {
+    throw new Error(`Provided outputJsonFile is empty: ${filePath}`);
+  }
+
+  try {
+    JSON.parse(content);
+  } catch {
+    throw new Error(`Provided outputJsonFile contains invalid JSON: ${filePath}`);
+  }
+
+  return content;
+}
+
 export async function runKnipTasks(
   buildScriptName: string,
+  outputJsonFile: string | undefined,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
   cwd?: string,
@@ -567,7 +591,13 @@ export async function runKnipTasks(
   core.info("- Running Knip tasks");
 
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
-  const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
+  const output = await timeTask("Get knip report", async () => {
+    if (outputJsonFile) {
+      return getJsonFromInputFile(outputJsonFile);
+    }
+
+    return getJsonFromOutput(await run(cmd));
+  });
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),
   );
