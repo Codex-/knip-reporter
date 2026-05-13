@@ -1075,14 +1075,14 @@ var require_util = __commonJS({
         }
         const port = url.port != null ? url.port : url.protocol === "https:" ? 443 : 80;
         let origin = url.origin != null ? url.origin : `${url.protocol || ""}//${url.hostname || ""}:${port}`;
-        let path3 = url.path != null ? url.path : `${url.pathname || ""}${url.search || ""}`;
+        let path4 = url.path != null ? url.path : `${url.pathname || ""}${url.search || ""}`;
         if (origin[origin.length - 1] === "/") {
           origin = origin.slice(0, origin.length - 1);
         }
-        if (path3 && path3[0] !== "/") {
-          path3 = `/${path3}`;
+        if (path4 && path4[0] !== "/") {
+          path4 = `/${path4}`;
         }
-        return new URL(`${origin}${path3}`);
+        return new URL(`${origin}${path4}`);
       }
       if (!isHttpOrHttpsPrefixed(url.origin || url.protocol)) {
         throw new InvalidArgumentError("Invalid URL protocol: the URL must start with `http:` or `https:`.");
@@ -1533,39 +1533,39 @@ var require_diagnostics = __commonJS({
       });
       diagnosticsChannel.channel("undici:client:sendHeaders").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin }
+          request: { method, path: path4, origin }
         } = evt;
-        debuglog("sending request to %s %s/%s", method, origin, path3);
+        debuglog("sending request to %s %s/%s", method, origin, path4);
       });
       diagnosticsChannel.channel("undici:request:headers").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin },
+          request: { method, path: path4, origin },
           response: { statusCode }
         } = evt;
         debuglog(
           "received response to %s %s/%s - HTTP %d",
           method,
           origin,
-          path3,
+          path4,
           statusCode
         );
       });
       diagnosticsChannel.channel("undici:request:trailers").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin }
+          request: { method, path: path4, origin }
         } = evt;
-        debuglog("trailers received from %s %s/%s", method, origin, path3);
+        debuglog("trailers received from %s %s/%s", method, origin, path4);
       });
       diagnosticsChannel.channel("undici:request:error").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin },
+          request: { method, path: path4, origin },
           error: error2
         } = evt;
         debuglog(
           "request to %s %s/%s errored - %s",
           method,
           origin,
-          path3,
+          path4,
           error2.message
         );
       });
@@ -1614,9 +1614,9 @@ var require_diagnostics = __commonJS({
         });
         diagnosticsChannel.channel("undici:client:sendHeaders").subscribe((evt) => {
           const {
-            request: { method, path: path3, origin }
+            request: { method, path: path4, origin }
           } = evt;
-          debuglog("sending request to %s %s/%s", method, origin, path3);
+          debuglog("sending request to %s %s/%s", method, origin, path4);
         });
       }
       diagnosticsChannel.channel("undici:websocket:open").subscribe((evt) => {
@@ -1679,7 +1679,7 @@ var require_request = __commonJS({
     var kHandler = /* @__PURE__ */ Symbol("handler");
     var Request = class {
       constructor(origin, {
-        path: path3,
+        path: path4,
         method,
         body,
         headers,
@@ -1694,11 +1694,11 @@ var require_request = __commonJS({
         expectContinue,
         servername
       }, handler2) {
-        if (typeof path3 !== "string") {
+        if (typeof path4 !== "string") {
           throw new InvalidArgumentError("path must be a string");
-        } else if (path3[0] !== "/" && !(path3.startsWith("http://") || path3.startsWith("https://")) && method !== "CONNECT") {
+        } else if (path4[0] !== "/" && !(path4.startsWith("http://") || path4.startsWith("https://")) && method !== "CONNECT") {
           throw new InvalidArgumentError("path must be an absolute URL or start with a slash");
-        } else if (invalidPathRegex.test(path3)) {
+        } else if (invalidPathRegex.test(path4)) {
           throw new InvalidArgumentError("invalid request path");
         }
         if (typeof method !== "string") {
@@ -1764,7 +1764,7 @@ var require_request = __commonJS({
         this.completed = false;
         this.aborted = false;
         this.upgrade = upgrade || null;
-        this.path = query ? buildURL(path3, query) : path3;
+        this.path = query ? buildURL(path4, query) : path4;
         this.origin = origin;
         this.idempotent = idempotent == null ? method === "HEAD" || method === "GET" : idempotent;
         this.blocking = blocking == null ? false : blocking;
@@ -6290,7 +6290,7 @@ var require_client_h1 = __commonJS({
       return method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && method !== "TRACE" && method !== "CONNECT";
     }
     function writeH1(client, request2) {
-      const { method, path: path3, host, upgrade, blocking, reset } = request2;
+      const { method, path: path4, host, upgrade, blocking, reset } = request2;
       let { body, headers, contentLength } = request2;
       const expectsPayload = method === "PUT" || method === "POST" || method === "PATCH" || method === "QUERY" || method === "PROPFIND" || method === "PROPPATCH";
       if (util.isFormDataLike(body)) {
@@ -6356,7 +6356,7 @@ var require_client_h1 = __commonJS({
       if (blocking) {
         socket[kBlocking] = true;
       }
-      let header = `${method} ${path3} HTTP/1.1\r
+      let header = `${method} ${path4} HTTP/1.1\r
 `;
       if (typeof host === "string") {
         header += `host: ${host}\r
@@ -6882,7 +6882,7 @@ var require_client_h2 = __commonJS({
     }
     function writeH2(client, request2) {
       const session = client[kHTTP2Session];
-      const { method, path: path3, host, upgrade, expectContinue, signal, headers: reqHeaders } = request2;
+      const { method, path: path4, host, upgrade, expectContinue, signal, headers: reqHeaders } = request2;
       let { body } = request2;
       if (upgrade) {
         util.errorRequest(client, request2, new Error("Upgrade not supported for H2"));
@@ -6949,7 +6949,7 @@ var require_client_h2 = __commonJS({
         });
         return true;
       }
-      headers[HTTP2_HEADER_PATH] = path3;
+      headers[HTTP2_HEADER_PATH] = path4;
       headers[HTTP2_HEADER_SCHEME] = "https";
       const expectsPayload = method === "PUT" || method === "POST" || method === "PATCH";
       if (body && typeof body.read === "function") {
@@ -7302,9 +7302,9 @@ var require_redirect_handler = __commonJS({
           return this.handler.onHeaders(statusCode, headers, resume, statusText);
         }
         const { origin, pathname, search } = util.parseURL(new URL(this.location, this.opts.origin && new URL(this.opts.path, this.opts.origin)));
-        const path3 = search ? `${pathname}${search}` : pathname;
+        const path4 = search ? `${pathname}${search}` : pathname;
         this.opts.headers = cleanRequestHeaders(this.opts.headers, statusCode === 303, this.opts.origin !== origin);
-        this.opts.path = path3;
+        this.opts.path = path4;
         this.opts.origin = origin;
         this.opts.maxRedirections = 0;
         this.opts.query = null;
@@ -8539,10 +8539,10 @@ var require_proxy_agent = __commonJS({
         };
         const {
           origin,
-          path: path3 = "/",
+          path: path4 = "/",
           headers = {}
         } = opts;
-        opts.path = origin + path3;
+        opts.path = origin + path4;
         if (!("host" in headers) && !("Host" in headers)) {
           const { host } = new URL2(origin);
           headers.host = host;
@@ -10463,20 +10463,20 @@ var require_mock_utils = __commonJS({
       }
       return true;
     }
-    function safeUrl(path3) {
-      if (typeof path3 !== "string") {
-        return path3;
+    function safeUrl(path4) {
+      if (typeof path4 !== "string") {
+        return path4;
       }
-      const pathSegments = path3.split("?");
+      const pathSegments = path4.split("?");
       if (pathSegments.length !== 2) {
-        return path3;
+        return path4;
       }
       const qp = new URLSearchParams(pathSegments.pop());
       qp.sort();
       return [...pathSegments, qp.toString()].join("?");
     }
-    function matchKey(mockDispatch2, { path: path3, method, body, headers }) {
-      const pathMatch = matchValue(mockDispatch2.path, path3);
+    function matchKey(mockDispatch2, { path: path4, method, body, headers }) {
+      const pathMatch = matchValue(mockDispatch2.path, path4);
       const methodMatch = matchValue(mockDispatch2.method, method);
       const bodyMatch = typeof mockDispatch2.body !== "undefined" ? matchValue(mockDispatch2.body, body) : true;
       const headersMatch = matchHeaders(mockDispatch2, headers);
@@ -10498,7 +10498,7 @@ var require_mock_utils = __commonJS({
     function getMockDispatch(mockDispatches, key) {
       const basePath = key.query ? buildURL(key.path, key.query) : key.path;
       const resolvedPath = typeof basePath === "string" ? safeUrl(basePath) : basePath;
-      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path3 }) => matchValue(safeUrl(path3), resolvedPath));
+      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path4 }) => matchValue(safeUrl(path4), resolvedPath));
       if (matchedMockDispatches.length === 0) {
         throw new MockNotMatchedError(`Mock dispatch not matched for path '${resolvedPath}'`);
       }
@@ -10536,9 +10536,9 @@ var require_mock_utils = __commonJS({
       }
     }
     function buildKey(opts) {
-      const { path: path3, method, body, headers, query } = opts;
+      const { path: path4, method, body, headers, query } = opts;
       return {
-        path: path3,
+        path: path4,
         method,
         body,
         headers,
@@ -11001,10 +11001,10 @@ var require_pending_interceptors_formatter = __commonJS({
       }
       format(pendingInterceptors) {
         const withPrettyHeaders = pendingInterceptors.map(
-          ({ method, path: path3, data: { statusCode }, persist, times, timesInvoked, origin }) => ({
+          ({ method, path: path4, data: { statusCode }, persist, times, timesInvoked, origin }) => ({
             Method: method,
             Origin: origin,
-            Path: path3,
+            Path: path4,
             "Status code": statusCode,
             Persistent: persist ? PERSISTENT : NOT_PERSISTENT,
             Invocations: timesInvoked,
@@ -15885,9 +15885,9 @@ var require_util6 = __commonJS({
         }
       }
     }
-    function validateCookiePath(path3) {
-      for (let i2 = 0; i2 < path3.length; ++i2) {
-        const code = path3.charCodeAt(i2);
+    function validateCookiePath(path4) {
+      for (let i2 = 0; i2 < path4.length; ++i2) {
+        const code = path4.charCodeAt(i2);
         if (code < 32 || // exclude CTLs (0-31)
         code === 127 || // DEL
         code === 59) {
@@ -18564,11 +18564,11 @@ var require_undici = __commonJS({
           if (typeof opts.path !== "string") {
             throw new InvalidArgumentError("invalid opts.path");
           }
-          let path3 = opts.path;
+          let path4 = opts.path;
           if (!opts.path.startsWith("/")) {
-            path3 = `/${path3}`;
+            path4 = `/${path4}`;
           }
-          url = new URL(util.parseOrigin(url).origin + path3);
+          url = new URL(util.parseOrigin(url).origin + path4);
         } else {
           if (!opts) {
             opts = typeof url === "object" ? url : {};
@@ -19994,8 +19994,8 @@ var Context = class {
       if (existsSync(process.env.GITHUB_EVENT_PATH)) {
         this.payload = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
       } else {
-        const path3 = process.env.GITHUB_EVENT_PATH;
-        process.stdout.write(`GITHUB_EVENT_PATH ${path3} does not exist${EOL4}`);
+        const path4 = process.env.GITHUB_EVENT_PATH;
+        process.stdout.write(`GITHUB_EVENT_PATH ${path4} does not exist${EOL4}`);
       }
     }
     this.eventName = process.env.GITHUB_EVENT_NAME;
@@ -23726,6 +23726,7 @@ function getOctokit(token, options, ...additionalPlugins) {
 }
 
 // src/action.ts
+import path from "node:path";
 function getConfig() {
   return {
     token: getInput("token", { required: true }),
@@ -23735,7 +23736,13 @@ function getConfig() {
     verbose: getBooleanInput("verbose", { required: false }),
     ignoreResults: getBooleanInput("ignore_results", { required: false }),
     workingDirectory: getInput("working_directory", { required: false }) || void 0,
-    jsonReportPath: getInput("json_report_path", { required: false }) || void 0
+    get jsonReportPath() {
+      const input = getInput("json_report_path", { required: false });
+      if (!input) {
+        return void 0;
+      }
+      return path.resolve(input);
+    }
   };
 }
 function configToStr(cfg) {
@@ -24294,7 +24301,7 @@ var __require2 = /* @__PURE__ */ createRequire(import.meta.url);
 
 // node_modules/.pnpm/@antfu+ni@30.1.0/node_modules/@antfu/ni/dist/src-Dc2SIy_D.mjs
 import fs3, { existsSync as existsSync2, promises as promises3 } from "node:fs";
-import path2, { dirname, join, resolve } from "node:path";
+import path3, { dirname, join, resolve } from "node:path";
 import process$1 from "node:process";
 
 // node_modules/.pnpm/package-manager-detector@1.6.0/node_modules/package-manager-detector/dist/commands.mjs
@@ -24490,7 +24497,7 @@ var INSTALL_PAGE = {
 
 // node_modules/.pnpm/package-manager-detector@1.6.0/node_modules/package-manager-detector/dist/detect.mjs
 import fs2 from "node:fs/promises";
-import path from "node:path";
+import path2 from "node:path";
 import process2 from "node:process";
 async function pathExists(path22, type) {
   try {
@@ -24501,11 +24508,11 @@ async function pathExists(path22, type) {
   }
 }
 function* lookup(cwd = process2.cwd()) {
-  let directory = path.resolve(cwd);
-  const { root } = path.parse(directory);
+  let directory = path2.resolve(cwd);
+  const { root } = path2.parse(directory);
   while (directory && directory !== root) {
     yield directory;
-    directory = path.dirname(directory);
+    directory = path2.dirname(directory);
   }
 }
 async function parsePackageJson(filepath, options) {
@@ -24520,7 +24527,7 @@ async function detect(options = {}) {
   } = options;
   let stopDir;
   if (typeof options.stopDir === "string") {
-    const resolved = path.resolve(options.stopDir);
+    const resolved = path2.resolve(options.stopDir);
     stopDir = (dir) => dir === resolved;
   } else {
     stopDir = options.stopDir;
@@ -24530,9 +24537,9 @@ async function detect(options = {}) {
       switch (strategy) {
         case "lockfile": {
           for (const lock of Object.keys(LOCKS)) {
-            if (await pathExists(path.join(directory, lock), "file")) {
+            if (await pathExists(path2.join(directory, lock), "file")) {
               const name = LOCKS[lock];
-              const result = await parsePackageJson(path.join(directory, "package.json"), options);
+              const result = await parsePackageJson(path2.join(directory, "package.json"), options);
               if (result)
                 return result;
               else
@@ -24543,7 +24550,7 @@ async function detect(options = {}) {
         }
         case "packageManager-field":
         case "devEngines-field": {
-          const result = await parsePackageJson(path.join(directory, "package.json"), options);
+          const result = await parsePackageJson(path2.join(directory, "package.json"), options);
           if (result)
             return result;
           break;
@@ -24551,7 +24558,7 @@ async function detect(options = {}) {
         case "install-metadata": {
           for (const metadata of Object.keys(INSTALL_METADATA)) {
             const fileOrDir = metadata.endsWith("/") ? "dir" : "file";
-            if (await pathExists(path.join(directory, metadata), fileOrDir)) {
+            if (await pathExists(path2.join(directory, metadata), fileOrDir)) {
               const name = INSTALL_METADATA[metadata];
               const agent = name === "yarn" ? isMetadataYarnClassic(metadata) ? "yarn" : "yarn@berry" : name;
               return { name, agent };
@@ -27655,12 +27662,12 @@ async function openTemp() {
     else return void 0;
   });
 }
-async function writeFileSafe(path3, data = "") {
+async function writeFileSafe(path4, data = "") {
   const temp = await openTemp();
   if (temp) promises3.writeFile(temp.path, data).then(() => {
-    const directory = dirname(path3);
+    const directory = dirname(path4);
     if (!existsSync2(directory)) promises3.mkdir(directory, { recursive: true });
-    return promises3.rename(temp.path, path3).then(() => true).catch(() => false);
+    return promises3.rename(temp.path, path4).then(() => true).catch(() => false);
   }).catch(() => false).finally(temp.cleanup);
   return false;
 }
@@ -27679,7 +27686,7 @@ function formatPackageWithUrl(pkg, url, limits = 80) {
 var import_prompts = /* @__PURE__ */ __toESM2(require_prompts(), 1);
 async function detect$1({ autoInstall, programmatic, cwd } = {}) {
   const targetDir = cwd ?? process$1.cwd();
-  if (existsSync2(path2.join(targetDir, "deno.json")) || existsSync2(path2.join(targetDir, "deno.jsonc"))) return "deno";
+  if (existsSync2(path3.join(targetDir, "deno.json")) || existsSync2(path3.join(targetDir, "deno.jsonc"))) return "deno";
   const { name, agent, version: version2 } = await detect({
     cwd,
     onUnknown: (packageManager) => {
@@ -27715,7 +27722,7 @@ async function detect$1({ autoInstall, programmatic, cwd } = {}) {
 var import_ini = /* @__PURE__ */ __toESM2(require_ini(), 1);
 var customRcPath = process$1.env.NI_CONFIG_FILE;
 var home = process$1.platform === "win32" ? process$1.env.USERPROFILE : process$1.env.HOME;
-var defaultRcPath = path2.join(home || "~/", ".nirc");
+var defaultRcPath = path3.join(home || "~/", ".nirc");
 var rcPath = customRcPath || defaultRcPath;
 var defaultConfig = {
   defaultAgent: "prompt",
