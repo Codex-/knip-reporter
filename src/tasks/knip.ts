@@ -580,6 +580,16 @@ export async function getJsonFromInputFile(filePath: string): Promise<string> {
   return content;
 }
 
+async function getOutput(buildScriptName: string, cwd?: string): Promise<string> {
+  if (!buildScriptName) {
+    throw new Error("No command script name provided to run Knip, unable to proceed");
+  }
+
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
+
+  return getJsonFromOutput(await run(cmd));
+}
+
 export async function runKnipTasks(
   buildScriptName: string,
   outputJsonFile: string | undefined,
@@ -590,14 +600,9 @@ export async function runKnipTasks(
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
-  const output = await timeTask("Get knip report", async () => {
-    if (outputJsonFile) {
-      return getJsonFromInputFile(outputJsonFile);
-    }
-
-    return getJsonFromOutput(await run(cmd));
-  });
+  const output = outputJsonFile
+    ? await timeTask("Get knip report from file", () => getJsonFromInputFile(outputJsonFile))
+    : await timeTask("Run knip", () => getOutput(buildScriptName, cwd));
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),
   );
