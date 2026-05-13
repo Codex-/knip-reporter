@@ -33,7 +33,7 @@ describe("Action", () => {
       verbose: actionInputs.verbose?.default,
       ignore_results: actionInputs.ignore_results?.default,
       working_directory: actionInputs.working_directory?.default,
-      output_json_file: actionInputs.output_json_file?.default,
+      json_report_path: actionInputs.json_report_path?.default,
     };
 
     vi.spyOn(core, "getInput").mockImplementation((input: string) => {
@@ -42,7 +42,7 @@ describe("Action", () => {
         case "command_script_name":
         case "comment_id":
         case "working_directory":
-        case "output_json_file":
+        case "json_report_path":
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:
@@ -78,7 +78,7 @@ describe("Action", () => {
       );
       expect(config.ignoreResults).toStrictEqual(actionInputs.ignore_results?.default);
       expect(config.workingDirectory).toStrictEqual(actionInputs.working_directory?.default);
-      expect(config.outputJsonFile).toStrictEqual(actionInputs.output_json_file?.default);
+      expect(config.jsonReportPath).toStrictEqual(actionInputs.json_report_path?.default);
     });
 
     describe("custom values", () => {

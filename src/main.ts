@@ -18,8 +18,8 @@ export async function main(): Promise<void> {
     const config = getConfig();
     const actionMs = Date.now();
 
-    if (config.outputJsonFile && config.commandScriptName !== "knip") {
-      core.warning("command_script_name config will be ignored when output_json_file is provided");
+    if (config.jsonReportPath && config.commandScriptName !== "knip") {
+      core.warning("command_script_name config will be ignored when json_report_path is provided");
     }
 
     core.info("- knip-reporter action");
@@ -42,7 +42,7 @@ export async function main(): Promise<void> {
 
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config.commandScriptName,
-      config.outputJsonFile,
+      config.jsonReportPath,
       config.annotations,
       config.verbose,
       config.workingDirectory,
