@@ -1,4 +1,5 @@
 import * as core from "@actions/core";
+import path from "node:path";
 
 /**
  * action.yaml definition.
@@ -56,7 +57,15 @@ export function getConfig(): ActionConfig {
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
     workingDirectory: core.getInput("working_directory", { required: false }) || undefined,
-    jsonReportPath: core.getInput("json_report_path", { required: false }) || undefined,
+    get jsonReportPath(): string | undefined {
+      const input = core.getInput("json_report_path", { required: false });
+
+      if (!input) {
+        return undefined;
+      }
+
+      return path.resolve(input);
+    },
   };
 }
 
