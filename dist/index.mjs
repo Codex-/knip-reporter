@@ -23734,7 +23734,8 @@ function getConfig() {
     annotations: getBooleanInput("annotations", { required: false }),
     verbose: getBooleanInput("verbose", { required: false }),
     ignoreResults: getBooleanInput("ignore_results", { required: false }),
-    workingDirectory: getInput("working_directory", { required: false }) || void 0
+    workingDirectory: getInput("working_directory", { required: false }) || void 0,
+    jsonReportPath: getInput("json_report_path", { required: false }) || void 0
   };
 }
 function configToStr(cfg) {
@@ -23746,6 +23747,7 @@ function configToStr(cfg) {
     verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
     workingDirectory: ${cfg.workingDirectory}
+    jsonReportPath: ${cfg.jsonReportPath}
 `;
 }
 
@@ -24253,6 +24255,7 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
 
 // src/tasks/knip.ts
 import { exec } from "node:child_process";
+import fs4 from "node:fs/promises";
 
 // node_modules/.pnpm/@antfu+ni@30.1.0/node_modules/@antfu/ni/dist/chunk-CMuxRQOh.mjs
 import { createRequire } from "node:module";
@@ -28450,11 +28453,34 @@ function getJsonFromOutput(output) {
   }
   throw new Error("Unable to find JSON blob");
 }
-async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled, cwd) {
+async function getJsonFromInputFile(filePath) {
+  try {
+    await fs4.stat(filePath);
+  } catch {
+    throw new Error(`Provided jsonReportPath does not exist: ${filePath}`);
+  }
+  const content = await fs4.readFile(filePath, "utf-8");
+  if (!content) {
+    throw new Error(`Provided jsonReportPath is empty: ${filePath}`);
+  }
+  try {
+    JSON.parse(content);
+  } catch {
+    throw new Error(`Provided jsonReportPath contains invalid JSON: ${filePath}`);
+  }
+  return content;
+}
+async function getOutput(buildScriptName, cwd) {
+  if (!buildScriptName) {
+    throw new Error("No command script name provided to run Knip, unable to proceed");
+  }
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
+  return getJsonFromOutput(await run2(cmd));
+}
+async function runKnipTasks(buildScriptName, jsonReportPath, annotationsEnabled, verboseEnabled, cwd) {
   const taskMs = Date.now();
   info("- Running Knip tasks");
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
-  const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
+  const output = jsonReportPath ? await timeTask("Get knip report from file", () => getJsonFromInputFile(jsonReportPath)) : await timeTask("Run knip", () => getOutput(buildScriptName, cwd));
   const report = await timeTask(
     "Parse knip report",
     () => Promise.resolve(parseJsonReport(output))
@@ -28472,6 +28498,9 @@ async function main() {
   try {
     const config3 = getConfig();
     const actionMs = Date.now();
+    if (config3.jsonReportPath && config3.commandScriptName !== "knip") {
+      warning("command_script_name config will be ignored when json_report_path is provided");
+    }
     info("- knip-reporter action");
     info(configToStr(config3));
     if (context2.payload.pull_request === void 0) {
@@ -28489,6 +28518,7 @@ async function main() {
     }
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config3.commandScriptName,
+      config3.jsonReportPath,
       config3.annotations,
       config3.verbose,
       config3.workingDirectory
