@@ -221,12 +221,13 @@ describe("main", () => {
     expect(apiInitMock).not.toHaveBeenCalled();
     expect(runKnipTasksMock).not.toHaveBeenCalled();
     expect(coreSetFailedMock).toHaveBeenCalledOnce();
+    console.log(coreSetFailedMock.mock.lastCall?.[0]);
     expect(coreSetFailedMock.mock.lastCall?.[0]).toBeInstanceOf(TypeError);
 
     // Logging
-    assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
+    assertOnlyCalled(coreErrorLogMock);
     expect(coreErrorLogMock.mock.calls[0]?.[0]).toMatch(
-      /knip-reporter currently only supports 'pull_request' events/,
+      /Unable to determine pull request number from GitHub context/,
     );
   });
 
