@@ -79,8 +79,7 @@ describe("API", () => {
     workingDirectory: ".",
   };
 
-  const { coreDebugLogMock, coreWarningLogMock, assertOnlyCalled, assertNoneCalled } =
-    mockLoggingFunctions();
+  const { coreDebugLogMock, assertOnlyCalled, assertNoneCalled } = mockLoggingFunctions();
 
   afterAll(() => {
     vi.restoreAllMocks();
