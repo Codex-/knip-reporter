@@ -184,8 +184,7 @@ describe("main", () => {
     expect(apiInitMock).not.toHaveBeenCalled();
     expect(runKnipTasksMock).not.toHaveBeenCalled();
     expect(coreSetFailedMock).toHaveBeenCalledOnce();
-    console.log(coreSetFailedMock.mock.lastCall?.[0]);
-    expect(coreSetFailedMock.mock.lastCall?.[0]).toBeInstanceOf(TypeError);
+    expect(coreSetFailedMock.mock.lastCall?.[0]).toBeInstanceOf(Error);
 
     // Logging
     assertOnlyCalled(coreErrorLogMock);

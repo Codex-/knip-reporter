@@ -1,0 +1,294 @@
+{
+  "issues": [
+    { "file": "PolarisGalaxy.ts", "files": [{ "name": "PolarisGalaxy.ts" }] },
+    { "file": "Savali.ts", "files": [{ "name": "Savali.ts" }] },
+    { "file": "PocketDimension.tsx", "files": [{ "name": "PocketDimension.tsx" }] },
+    {
+      "file": "packages/a/package.json",
+      "dependencies": [{ "name": "react" }, { "name": "react-dom" }],
+      "devDependencies": [{ "name": "dotenv" }, { "name": "eslint-plugin-jest-dom" }],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/b/package.json",
+      "dependencies": [],
+      "devDependencies": [{ "name": "dotenv" }, { "name": "eslint-plugin-jest-dom" }],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/c/package.json",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [{ "name": "dotenv" }],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/d/package.json",
+      "dependencies": [{ "name": "react" }],
+      "devDependencies": [{ "name": "dotenv" }],
+      "optionalPeerDependencies": [{ "name": "@mui/material" }],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": ".eslintrc.cjs",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [{ "name": "@emotion/eslint-plugin" }, { "name": "eslint-plugin-jest-dom" }],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/e/package.json",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [{ "name": "apollo" }],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "jest.config.js",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [{ "name": "packages/a/src/setupTests.ts" }, { "name": "packages/a/../b/src" }],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/a/src/Utils.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [
+        { "name": "specialFunc", "line": 48, "col": 14, "pos": 1587 },
+        { "name": "uselessFunc", "line": 50, "col": 14, "pos": 1686 }
+      ],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/a/src/Weapons.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [{ "name": "sheepinator", "line": 83, "col": 14, "pos": 3858 }],
+      "types": [{ "name": "cowinator", "line": 75, "col": 13, "pos": 3686 }],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/b/Clank.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [
+        { "name": "SpecialAgent", "line": 7, "col": 13, "pos": 310 },
+        { "name": "Zoni", "line": 11, "col": 13, "pos": 407 }
+      ],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "packages/b/Ratchet.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [
+        { "name": "Lombax", "line": 7, "col": 13, "pos": 310 },
+        { "name": "Homeworld", "line": 11, "col": 13, "pos": 407 }
+      ],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "DrNefarious.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [
+        { "namespace": "Homeworld", "name": "Magmos", "line": 37, "col": 5, "pos": 1273 },
+        { "namespace": "Homeworld", "name": "Aquatos", "line": 38, "col": 5, "pos": 1300 },
+        { "namespace": "Homeworld", "name": "Leviathan", "line": 39, "col": 5, "pos": 1317 },
+        { "namespace": "Homeworld", "name": "TombliOutpost", "line": 40, "col": 5, "pos": 1317 },
+        { "namespace": "Homeworld", "name": "Zanifar ", "line": 41, "col": 5, "pos": 1317 },
+        {
+          "namespace": "Homeworld",
+          "name": "NefariousSpaceStation ",
+          "line": 42,
+          "col": 5,
+          "pos": 1317
+        },
+        { "namespace": "Homeworld", "name": "NefariousCity", "line": 43, "col": 5, "pos": 1317 },
+        { "namespace": "Homeworld", "name": "CorsonV", "line": 44, "col": 5, "pos": 1317 }
+      ],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "Sigmund.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [
+        { "namespace": "Residence", "name": "Viceron", "line": 37, "col": 5, "pos": 1273 },
+        { "namespace": "Residence", "name": "GreatClock", "line": 38, "col": 5, "pos": 1300 },
+        { "namespace": "Membership", "name": "ZordoomPrison", "line": 37, "col": 5, "pos": 1273 },
+        { "namespace": "Membership", "name": "GreatClockStaff", "line": 38, "col": 5, "pos": 1300 }
+      ],
+      "namespaceMembers": [],
+      "duplicates": []
+    },
+    {
+      "file": "Rivet.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [
+        { "namespace": "Rivet", "name": "fly", "line": 327, "col": 9, "pos": 12268 },
+        { "namespace": "Rivet", "name": "swim", "line": 353, "col": 3, "pos": 12977 },
+        { "namespace": "Rivet", "name": "explode", "line": 357, "col": 3, "pos": 13056 },
+        { "namespace": "Rivet", "name": "mutate", "line": 381, "col": 3, "pos": 13810 },
+        { "namespace": "Rivet", "name": "refineGelatonium ", "line": 388, "col": 3, "pos": 13987 }
+      ],
+      "duplicates": []
+    },
+    {
+      "file": "Qwark.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [
+        { "namespace": "SaneQwark", "name": "rescue", "line": 327, "col": 9, "pos": 12268 },
+        { "namespace": "InsaneQwark", "name": "destroy", "line": 327, "col": 9, "pos": 12268 }
+      ],
+      "duplicates": []
+    },
+    {
+      "file": "Lombax.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": [
+        [
+          { "name": "Ratchet", "line": 8, "col": 15, "pos": 358 },
+          { "name": "EvilRatchet", "line": 9, "col": 15, "pos": 358 }
+        ]
+      ]
+    },
+    {
+      "file": "WarBot.ts",
+      "dependencies": [],
+      "devDependencies": [],
+      "optionalPeerDependencies": [],
+      "unlisted": [],
+      "binaries": [],
+      "unresolved": [],
+      "exports": [],
+      "types": [],
+      "enumMembers": [],
+      "namespaceMembers": [],
+      "duplicates": [
+        [
+          { "name": "Kit", "line": 8, "col": 15, "pos": 358 },
+          { "name": "EvilKit", "line": 9, "col": 15, "pos": 358 },
+          { "name": "DefinitelyNotKit", "line": 10, "col": 15, "pos": 358 }
+        ]
+      ]
+    }
+  ]
+}
