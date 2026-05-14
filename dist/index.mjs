@@ -23927,6 +23927,7 @@ async function getPullRequestNumber() {
     return context2.payload.pull_request.number;
   }
   if (isEventType(context2, "workflow_run")) {
+    console.log(context2);
     if (context2.payload.workflow_run.pull_requests.length > 0) {
       info(
         `Found pull-request number in the action's "payload.workflow_run" context: ${context2.payload.workflow_run.pull_requests[0]?.number.toString()}`
