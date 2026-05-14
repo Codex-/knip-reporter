@@ -1,11 +1,11 @@
 import * as github from "@actions/github";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { getPullRequestSha } from "./get-pull-request-sha.ts";
+import { getCommitSha } from "./get-commit-sha.ts";
 
 vi.mock("@actions/github");
 
-describe("getPullRequestSha", () => {
+describe("getCommitSha", () => {
   afterAll(() => {
     vi.restoreAllMocks();
   });
@@ -28,7 +28,7 @@ describe("getPullRequestSha", () => {
     };
 
     // Behaviour
-    const sha = getPullRequestSha();
+    const sha = getCommitSha();
     expect(sha).toStrictEqual("pull-request-sha");
   });
 
@@ -40,7 +40,7 @@ describe("getPullRequestSha", () => {
     };
 
     // Behaviour
-    const sha = getPullRequestSha();
+    const sha = getCommitSha();
     expect(sha).toStrictEqual("workflow-pr-sha");
   });
 
@@ -52,7 +52,7 @@ describe("getPullRequestSha", () => {
     };
 
     // Behaviour
-    expect(() => getPullRequestSha()).toThrow("No pull request found in GitHub event payload");
+    expect(() => getCommitSha()).toThrow("No pull request found in GitHub event payload");
   });
 
   it("returns workflow_run head_sha when no pull request entries are present", () => {
@@ -63,7 +63,7 @@ describe("getPullRequestSha", () => {
     };
 
     // Behaviour
-    const sha = getPullRequestSha();
+    const sha = getCommitSha();
     expect(sha).toStrictEqual("workflow-head-sha");
   });
 
@@ -71,7 +71,7 @@ describe("getPullRequestSha", () => {
     github.context.eventName = "push";
 
     // Behaviour
-    const sha = getPullRequestSha();
+    const sha = getCommitSha();
     expect(sha).toStrictEqual("context-sha");
   });
 });

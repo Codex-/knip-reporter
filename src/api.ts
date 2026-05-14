@@ -2,7 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 import { type ActionConfig, getConfig } from "./action.ts";
-import { getPullRequestSha } from "./github-utils/get-pull-request-sha.ts";
+import { getCommitSha } from "./github-utils/get-commit-sha.ts";
 
 export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 
@@ -109,7 +109,7 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
 export async function createCheck(name: string, title: string): Promise<CreateCheckResponse> {
-  const headSha = getPullRequestSha();
+  const headSha = getCommitSha();
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
   try {
