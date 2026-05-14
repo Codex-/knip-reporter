@@ -28598,7 +28598,7 @@ async function main() {
     }
     info("- knip-reporter action");
     info(configToStr(config3));
-    console.log(context2);
+    info(JSON.stringify(context2));
     init(config3);
     let checkId;
     if (config3.annotations) {
