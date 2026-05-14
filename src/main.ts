@@ -15,12 +15,6 @@ import { timeTask } from "./tasks/task.ts";
 
 export async function main(): Promise<void> {
   try {
-    const pullRequestNumber = await getPullRequestNumber();
-
-    if (!pullRequestNumber) {
-      throw new Error("Unable to determine pull request number from GitHub context");
-    }
-
     const config = getConfig();
     const actionMs = Date.now();
 
@@ -48,6 +42,12 @@ export async function main(): Promise<void> {
       cwd: config.workingDirectory,
     });
     const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
+
+    const pullRequestNumber = await getPullRequestNumber();
+
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
 
     await runCommentTask(config.commentId, pullRequestNumber, knipSections);
 
