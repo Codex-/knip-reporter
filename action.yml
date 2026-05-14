@@ -33,6 +33,11 @@ inputs:
     description: Directory in which to run the knip action.
     default: "."
     required: false
+  json_report_path:
+    description: |
+      Optional file path containing the results from a knip run.
+      If provided, the action will read from this file instead of running knip itself.
+    required: false
 runs:
   using: node24
   main: dist/index.mjs

@@ -1075,14 +1075,14 @@ var require_util = __commonJS({
         }
         const port = url.port != null ? url.port : url.protocol === "https:" ? 443 : 80;
         let origin = url.origin != null ? url.origin : `${url.protocol || ""}//${url.hostname || ""}:${port}`;
-        let path3 = url.path != null ? url.path : `${url.pathname || ""}${url.search || ""}`;
+        let path4 = url.path != null ? url.path : `${url.pathname || ""}${url.search || ""}`;
         if (origin[origin.length - 1] === "/") {
           origin = origin.slice(0, origin.length - 1);
         }
-        if (path3 && path3[0] !== "/") {
-          path3 = `/${path3}`;
+        if (path4 && path4[0] !== "/") {
+          path4 = `/${path4}`;
         }
-        return new URL(`${origin}${path3}`);
+        return new URL(`${origin}${path4}`);
       }
       if (!isHttpOrHttpsPrefixed(url.origin || url.protocol)) {
         throw new InvalidArgumentError("Invalid URL protocol: the URL must start with `http:` or `https:`.");
@@ -1533,39 +1533,39 @@ var require_diagnostics = __commonJS({
       });
       diagnosticsChannel.channel("undici:client:sendHeaders").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin }
+          request: { method, path: path4, origin }
         } = evt;
-        debuglog("sending request to %s %s/%s", method, origin, path3);
+        debuglog("sending request to %s %s/%s", method, origin, path4);
       });
       diagnosticsChannel.channel("undici:request:headers").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin },
+          request: { method, path: path4, origin },
           response: { statusCode }
         } = evt;
         debuglog(
           "received response to %s %s/%s - HTTP %d",
           method,
           origin,
-          path3,
+          path4,
           statusCode
         );
       });
       diagnosticsChannel.channel("undici:request:trailers").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin }
+          request: { method, path: path4, origin }
         } = evt;
-        debuglog("trailers received from %s %s/%s", method, origin, path3);
+        debuglog("trailers received from %s %s/%s", method, origin, path4);
       });
       diagnosticsChannel.channel("undici:request:error").subscribe((evt) => {
         const {
-          request: { method, path: path3, origin },
+          request: { method, path: path4, origin },
           error: error2
         } = evt;
         debuglog(
           "request to %s %s/%s errored - %s",
           method,
           origin,
-          path3,
+          path4,
           error2.message
         );
       });
@@ -1614,9 +1614,9 @@ var require_diagnostics = __commonJS({
         });
         diagnosticsChannel.channel("undici:client:sendHeaders").subscribe((evt) => {
           const {
-            request: { method, path: path3, origin }
+            request: { method, path: path4, origin }
           } = evt;
-          debuglog("sending request to %s %s/%s", method, origin, path3);
+          debuglog("sending request to %s %s/%s", method, origin, path4);
         });
       }
       diagnosticsChannel.channel("undici:websocket:open").subscribe((evt) => {
@@ -1679,7 +1679,7 @@ var require_request = __commonJS({
     var kHandler = /* @__PURE__ */ Symbol("handler");
     var Request = class {
       constructor(origin, {
-        path: path3,
+        path: path4,
         method,
         body,
         headers,
@@ -1694,11 +1694,11 @@ var require_request = __commonJS({
         expectContinue,
         servername
       }, handler2) {
-        if (typeof path3 !== "string") {
+        if (typeof path4 !== "string") {
           throw new InvalidArgumentError("path must be a string");
-        } else if (path3[0] !== "/" && !(path3.startsWith("http://") || path3.startsWith("https://")) && method !== "CONNECT") {
+        } else if (path4[0] !== "/" && !(path4.startsWith("http://") || path4.startsWith("https://")) && method !== "CONNECT") {
           throw new InvalidArgumentError("path must be an absolute URL or start with a slash");
-        } else if (invalidPathRegex.test(path3)) {
+        } else if (invalidPathRegex.test(path4)) {
           throw new InvalidArgumentError("invalid request path");
         }
         if (typeof method !== "string") {
@@ -1764,7 +1764,7 @@ var require_request = __commonJS({
         this.completed = false;
         this.aborted = false;
         this.upgrade = upgrade || null;
-        this.path = query ? buildURL(path3, query) : path3;
+        this.path = query ? buildURL(path4, query) : path4;
         this.origin = origin;
         this.idempotent = idempotent == null ? method === "HEAD" || method === "GET" : idempotent;
         this.blocking = blocking == null ? false : blocking;
@@ -6290,7 +6290,7 @@ var require_client_h1 = __commonJS({
       return method !== "GET" && method !== "HEAD" && method !== "OPTIONS" && method !== "TRACE" && method !== "CONNECT";
     }
     function writeH1(client, request2) {
-      const { method, path: path3, host, upgrade, blocking, reset } = request2;
+      const { method, path: path4, host, upgrade, blocking, reset } = request2;
       let { body, headers, contentLength } = request2;
       const expectsPayload = method === "PUT" || method === "POST" || method === "PATCH" || method === "QUERY" || method === "PROPFIND" || method === "PROPPATCH";
       if (util.isFormDataLike(body)) {
@@ -6356,7 +6356,7 @@ var require_client_h1 = __commonJS({
       if (blocking) {
         socket[kBlocking] = true;
       }
-      let header = `${method} ${path3} HTTP/1.1\r
+      let header = `${method} ${path4} HTTP/1.1\r
 `;
       if (typeof host === "string") {
         header += `host: ${host}\r
@@ -6882,7 +6882,7 @@ var require_client_h2 = __commonJS({
     }
     function writeH2(client, request2) {
       const session = client[kHTTP2Session];
-      const { method, path: path3, host, upgrade, expectContinue, signal, headers: reqHeaders } = request2;
+      const { method, path: path4, host, upgrade, expectContinue, signal, headers: reqHeaders } = request2;
       let { body } = request2;
       if (upgrade) {
         util.errorRequest(client, request2, new Error("Upgrade not supported for H2"));
@@ -6949,7 +6949,7 @@ var require_client_h2 = __commonJS({
         });
         return true;
       }
-      headers[HTTP2_HEADER_PATH] = path3;
+      headers[HTTP2_HEADER_PATH] = path4;
       headers[HTTP2_HEADER_SCHEME] = "https";
       const expectsPayload = method === "PUT" || method === "POST" || method === "PATCH";
       if (body && typeof body.read === "function") {
@@ -7302,9 +7302,9 @@ var require_redirect_handler = __commonJS({
           return this.handler.onHeaders(statusCode, headers, resume, statusText);
         }
         const { origin, pathname, search } = util.parseURL(new URL(this.location, this.opts.origin && new URL(this.opts.path, this.opts.origin)));
-        const path3 = search ? `${pathname}${search}` : pathname;
+        const path4 = search ? `${pathname}${search}` : pathname;
         this.opts.headers = cleanRequestHeaders(this.opts.headers, statusCode === 303, this.opts.origin !== origin);
-        this.opts.path = path3;
+        this.opts.path = path4;
         this.opts.origin = origin;
         this.opts.maxRedirections = 0;
         this.opts.query = null;
@@ -8539,10 +8539,10 @@ var require_proxy_agent = __commonJS({
         };
         const {
           origin,
-          path: path3 = "/",
+          path: path4 = "/",
           headers = {}
         } = opts;
-        opts.path = origin + path3;
+        opts.path = origin + path4;
         if (!("host" in headers) && !("Host" in headers)) {
           const { host } = new URL2(origin);
           headers.host = host;
@@ -10463,20 +10463,20 @@ var require_mock_utils = __commonJS({
       }
       return true;
     }
-    function safeUrl(path3) {
-      if (typeof path3 !== "string") {
-        return path3;
+    function safeUrl(path4) {
+      if (typeof path4 !== "string") {
+        return path4;
       }
-      const pathSegments = path3.split("?");
+      const pathSegments = path4.split("?");
       if (pathSegments.length !== 2) {
-        return path3;
+        return path4;
       }
       const qp = new URLSearchParams(pathSegments.pop());
       qp.sort();
       return [...pathSegments, qp.toString()].join("?");
     }
-    function matchKey(mockDispatch2, { path: path3, method, body, headers }) {
-      const pathMatch = matchValue(mockDispatch2.path, path3);
+    function matchKey(mockDispatch2, { path: path4, method, body, headers }) {
+      const pathMatch = matchValue(mockDispatch2.path, path4);
       const methodMatch = matchValue(mockDispatch2.method, method);
       const bodyMatch = typeof mockDispatch2.body !== "undefined" ? matchValue(mockDispatch2.body, body) : true;
       const headersMatch = matchHeaders(mockDispatch2, headers);
@@ -10498,7 +10498,7 @@ var require_mock_utils = __commonJS({
     function getMockDispatch(mockDispatches, key) {
       const basePath = key.query ? buildURL(key.path, key.query) : key.path;
       const resolvedPath = typeof basePath === "string" ? safeUrl(basePath) : basePath;
-      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path3 }) => matchValue(safeUrl(path3), resolvedPath));
+      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path4 }) => matchValue(safeUrl(path4), resolvedPath));
       if (matchedMockDispatches.length === 0) {
         throw new MockNotMatchedError(`Mock dispatch not matched for path '${resolvedPath}'`);
       }
@@ -10536,9 +10536,9 @@ var require_mock_utils = __commonJS({
       }
     }
     function buildKey(opts) {
-      const { path: path3, method, body, headers, query } = opts;
+      const { path: path4, method, body, headers, query } = opts;
       return {
-        path: path3,
+        path: path4,
         method,
         body,
         headers,
@@ -11001,10 +11001,10 @@ var require_pending_interceptors_formatter = __commonJS({
       }
       format(pendingInterceptors) {
         const withPrettyHeaders = pendingInterceptors.map(
-          ({ method, path: path3, data: { statusCode }, persist, times, timesInvoked, origin }) => ({
+          ({ method, path: path4, data: { statusCode }, persist, times, timesInvoked, origin }) => ({
             Method: method,
             Origin: origin,
-            Path: path3,
+            Path: path4,
             "Status code": statusCode,
             Persistent: persist ? PERSISTENT : NOT_PERSISTENT,
             Invocations: timesInvoked,
@@ -15885,9 +15885,9 @@ var require_util6 = __commonJS({
         }
       }
     }
-    function validateCookiePath(path3) {
-      for (let i2 = 0; i2 < path3.length; ++i2) {
-        const code = path3.charCodeAt(i2);
+    function validateCookiePath(path4) {
+      for (let i2 = 0; i2 < path4.length; ++i2) {
+        const code = path4.charCodeAt(i2);
         if (code < 32 || // exclude CTLs (0-31)
         code === 127 || // DEL
         code === 59) {
@@ -18564,11 +18564,11 @@ var require_undici = __commonJS({
           if (typeof opts.path !== "string") {
             throw new InvalidArgumentError("invalid opts.path");
           }
-          let path3 = opts.path;
+          let path4 = opts.path;
           if (!opts.path.startsWith("/")) {
-            path3 = `/${path3}`;
+            path4 = `/${path4}`;
           }
-          url = new URL(util.parseOrigin(url).origin + path3);
+          url = new URL(util.parseOrigin(url).origin + path4);
         } else {
           if (!opts) {
             opts = typeof url === "object" ? url : {};
@@ -19538,6 +19538,9 @@ function issueCommand(command, properties, message) {
   const cmd = new Command(command, properties, message);
   process.stdout.write(cmd.toString() + os.EOL);
 }
+function issue(name, message = "") {
+  issueCommand(name, {}, message);
+}
 var CMD_STRING = "::";
 var Command = class {
   constructor(command, properties, message) {
@@ -19979,6 +19982,45 @@ function warning(message, properties = {}) {
 function info(message) {
   process.stdout.write(message + os3.EOL);
 }
+function startGroup(name) {
+  issue("group", name);
+}
+function endGroup() {
+  issue("endgroup");
+}
+
+// src/action.ts
+import path from "node:path";
+function getConfig() {
+  return {
+    token: getInput("token", { required: true }),
+    commandScriptName: getInput("command_script_name", { required: false }) || "knip",
+    commentId: getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
+    annotations: getBooleanInput("annotations", { required: false }),
+    verbose: getBooleanInput("verbose", { required: false }),
+    ignoreResults: getBooleanInput("ignore_results", { required: false }),
+    workingDirectory: getInput("working_directory", { required: false }) || void 0,
+    get jsonReportPath() {
+      const input = getInput("json_report_path", { required: false });
+      if (!input) {
+        return void 0;
+      }
+      return path.resolve(input);
+    }
+  };
+}
+function configToStr(cfg) {
+  return `  with config:
+    token: ###
+    command_script_name: ${cfg.commandScriptName}
+    comment_id: ${cfg.commentId}
+    annotations: ${cfg.annotations}
+    verbose: ${cfg.verbose}
+    ignoreResults: ${cfg.ignoreResults}
+    workingDirectory: ${cfg.workingDirectory}
+    jsonReportPath: ${cfg.jsonReportPath}
+`;
+}
 
 // node_modules/.pnpm/@actions+github@9.1.1/node_modules/@actions/github/lib/context.js
 import { readFileSync, existsSync } from "fs";
@@ -19994,8 +20036,8 @@ var Context = class {
       if (existsSync(process.env.GITHUB_EVENT_PATH)) {
         this.payload = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
       } else {
-        const path3 = process.env.GITHUB_EVENT_PATH;
-        process.stdout.write(`GITHUB_EVENT_PATH ${path3} does not exist${EOL4}`);
+        const path4 = process.env.GITHUB_EVENT_PATH;
+        process.stdout.write(`GITHUB_EVENT_PATH ${path4} does not exist${EOL4}`);
       }
     }
     this.eventName = process.env.GITHUB_EVENT_NAME;
@@ -23725,28 +23767,20 @@ function getOctokit(token, options, ...additionalPlugins) {
   return new GitHubWithPlugins(getOctokitOptions(token, options));
 }
 
-// src/action.ts
-function getConfig() {
-  return {
-    token: getInput("token", { required: true }),
-    commandScriptName: getInput("command_script_name", { required: false }) || "knip",
-    commentId: getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
-    annotations: getBooleanInput("annotations", { required: false }),
-    verbose: getBooleanInput("verbose", { required: false }),
-    ignoreResults: getBooleanInput("ignore_results", { required: false }),
-    workingDirectory: getInput("working_directory", { required: false }) || void 0
-  };
+// src/github-utils/is-event-type.ts
+function isEventType(context3, eventType) {
+  return context3.eventName === eventType;
 }
-function configToStr(cfg) {
-  return `  with config:
-    token: ###
-    command_script_name: ${cfg.commandScriptName}
-    comment_id: ${cfg.commentId}
-    annotations: ${cfg.annotations}
-    verbose: ${cfg.verbose}
-    ignoreResults: ${cfg.ignoreResults}
-    workingDirectory: ${cfg.workingDirectory}
-`;
+
+// src/github-utils/get-commit-sha.ts
+function getCommitSha() {
+  if (isEventType(context2, "pull_request")) {
+    return context2.payload.pull_request.head.sha;
+  }
+  if (isEventType(context2, "workflow_run")) {
+    return context2.payload.workflow_run.head_commit.id;
+  }
+  return context2.sha;
 }
 
 // src/api.ts
@@ -23758,9 +23792,7 @@ function init(cfg) {
   octokit = getOctokit(config.token);
 }
 async function createComment(pullRequestNumber, body) {
-  debug(
-    `[createComment]: Creating comment on ${context2.payload.pull_request?.html_url} (${pullRequestNumber})`
-  );
+  debug(`[createComment]: Creating comment on #${pullRequestNumber}`);
   try {
     return await octokit.rest.issues.createComment({
       owner: context2.repo.owner,
@@ -23826,11 +23858,7 @@ async function deleteComment(commentId) {
   }
 }
 async function createCheck(name, title) {
-  const prSha = context2.payload.pull_request?.head?.sha;
-  if (prSha === void 0) {
-    warning("Unable to find correct head_sha from payload, using base context sha");
-  }
-  const headSha = prSha ?? context2.sha;
+  const headSha = getCommitSha();
   try {
     return await octokit.rest.checks.create({
       owner: context2.repo.owner,
@@ -23860,6 +23888,62 @@ async function updateCheck(checkRunId, status, output, conclusion) {
   } catch (error2) {
     throw new Error("Failed to update check", { cause: error2 });
   }
+}
+async function findPullRequestNumberForCommitSha(sha) {
+  startGroup("Querying REST API for pull-requests.");
+  const pullRequestsIterator = octokit.paginate.iterator(octokit.rest.pulls.list, {
+    owner: context2.repo.owner,
+    repo: context2.repo.repo,
+    per_page: 30,
+    sort: "updated",
+    direction: "desc"
+  });
+  for await (const { data: pullRequests } of pullRequestsIterator) {
+    info(`Found ${pullRequests.length} pull-requests in this page.`);
+    for (const pullRequest of pullRequests) {
+      debug(
+        `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`
+      );
+      if (pullRequest.head.sha === sha) {
+        return pullRequest.number;
+      }
+    }
+  }
+  endGroup();
+  info(`Could not find a pull-request for commit "${sha}".`);
+  return void 0;
+}
+
+// src/github-utils/get-pull-request-number.ts
+async function getPullRequestNumber() {
+  if (isEventType(context2, "pull_request")) {
+    return context2.payload.pull_request.number;
+  }
+  if (isEventType(context2, "workflow_run")) {
+    if (context2.payload.workflow_run.pull_requests.length > 0) {
+      info(
+        `Found pull-request number in the action's "payload.workflow_run" context: ${context2.payload.workflow_run.pull_requests[0]?.number.toString()}`
+      );
+      const [pullRequest] = context2.payload.workflow_run.pull_requests;
+      if (!pullRequest) {
+        throw new Error("No pull request found in GitHub event payload");
+      }
+      return pullRequest.number;
+    }
+    const sha = context2.payload.workflow_run.head_sha;
+    info(
+      `Trying to find a pull-request with a head commit matching the SHA found in the action's "payload.workflow_run.head_sha" context (${sha}) from the GitHub API.`
+    );
+    try {
+      return await findPullRequestNumberForCommitSha(context2.payload.workflow_run.head_sha);
+    } catch (error2) {
+      warning(
+        `An error occurred while fetching pull requests from the GitHub API: ${error2.message}`
+      );
+      return void 0;
+    }
+  }
+  return void 0;
 }
 
 // node_modules/.pnpm/markdown-table@3.0.4/node_modules/markdown-table/index.js
@@ -24006,7 +24090,9 @@ function toAlignment(value) {
 // src/tasks/check.ts
 async function createCheckId(name, title) {
   debug(`[createCheckId]: Creating check, name: ${name}, title: ${title}`);
-  const id = (await createCheck(name, title)).data.id;
+  const {
+    data: { id }
+  } = await createCheck(name, title);
   debug(`[createCheckId]: Check created (${id})`);
   return id;
 }
@@ -24253,6 +24339,7 @@ async function runCommentTask(cfgCommentId, pullRequestNumber, reportSections) {
 
 // src/tasks/knip.ts
 import { exec } from "node:child_process";
+import fs4 from "node:fs/promises";
 
 // node_modules/.pnpm/@antfu+ni@30.1.0/node_modules/@antfu/ni/dist/chunk-CMuxRQOh.mjs
 import { createRequire } from "node:module";
@@ -24291,7 +24378,7 @@ var __require2 = /* @__PURE__ */ createRequire(import.meta.url);
 
 // node_modules/.pnpm/@antfu+ni@30.1.0/node_modules/@antfu/ni/dist/src-Dc2SIy_D.mjs
 import fs3, { existsSync as existsSync2, promises as promises3 } from "node:fs";
-import path2, { dirname, join, resolve } from "node:path";
+import path3, { dirname, join, resolve } from "node:path";
 import process$1 from "node:process";
 
 // node_modules/.pnpm/package-manager-detector@1.6.0/node_modules/package-manager-detector/dist/commands.mjs
@@ -24487,7 +24574,7 @@ var INSTALL_PAGE = {
 
 // node_modules/.pnpm/package-manager-detector@1.6.0/node_modules/package-manager-detector/dist/detect.mjs
 import fs2 from "node:fs/promises";
-import path from "node:path";
+import path2 from "node:path";
 import process2 from "node:process";
 async function pathExists(path22, type) {
   try {
@@ -24498,11 +24585,11 @@ async function pathExists(path22, type) {
   }
 }
 function* lookup(cwd = process2.cwd()) {
-  let directory = path.resolve(cwd);
-  const { root } = path.parse(directory);
+  let directory = path2.resolve(cwd);
+  const { root } = path2.parse(directory);
   while (directory && directory !== root) {
     yield directory;
-    directory = path.dirname(directory);
+    directory = path2.dirname(directory);
   }
 }
 async function parsePackageJson(filepath, options) {
@@ -24517,7 +24604,7 @@ async function detect(options = {}) {
   } = options;
   let stopDir;
   if (typeof options.stopDir === "string") {
-    const resolved = path.resolve(options.stopDir);
+    const resolved = path2.resolve(options.stopDir);
     stopDir = (dir) => dir === resolved;
   } else {
     stopDir = options.stopDir;
@@ -24527,9 +24614,9 @@ async function detect(options = {}) {
       switch (strategy) {
         case "lockfile": {
           for (const lock of Object.keys(LOCKS)) {
-            if (await pathExists(path.join(directory, lock), "file")) {
+            if (await pathExists(path2.join(directory, lock), "file")) {
               const name = LOCKS[lock];
-              const result = await parsePackageJson(path.join(directory, "package.json"), options);
+              const result = await parsePackageJson(path2.join(directory, "package.json"), options);
               if (result)
                 return result;
               else
@@ -24540,7 +24627,7 @@ async function detect(options = {}) {
         }
         case "packageManager-field":
         case "devEngines-field": {
-          const result = await parsePackageJson(path.join(directory, "package.json"), options);
+          const result = await parsePackageJson(path2.join(directory, "package.json"), options);
           if (result)
             return result;
           break;
@@ -24548,7 +24635,7 @@ async function detect(options = {}) {
         case "install-metadata": {
           for (const metadata of Object.keys(INSTALL_METADATA)) {
             const fileOrDir = metadata.endsWith("/") ? "dir" : "file";
-            if (await pathExists(path.join(directory, metadata), fileOrDir)) {
+            if (await pathExists(path2.join(directory, metadata), fileOrDir)) {
               const name = INSTALL_METADATA[metadata];
               const agent = name === "yarn" ? isMetadataYarnClassic(metadata) ? "yarn" : "yarn@berry" : name;
               return { name, agent };
@@ -27652,12 +27739,12 @@ async function openTemp() {
     else return void 0;
   });
 }
-async function writeFileSafe(path3, data = "") {
+async function writeFileSafe(path4, data = "") {
   const temp = await openTemp();
   if (temp) promises3.writeFile(temp.path, data).then(() => {
-    const directory = dirname(path3);
+    const directory = dirname(path4);
     if (!existsSync2(directory)) promises3.mkdir(directory, { recursive: true });
-    return promises3.rename(temp.path, path3).then(() => true).catch(() => false);
+    return promises3.rename(temp.path, path4).then(() => true).catch(() => false);
   }).catch(() => false).finally(temp.cleanup);
   return false;
 }
@@ -27676,7 +27763,7 @@ function formatPackageWithUrl(pkg, url, limits = 80) {
 var import_prompts = /* @__PURE__ */ __toESM2(require_prompts(), 1);
 async function detect$1({ autoInstall, programmatic, cwd } = {}) {
   const targetDir = cwd ?? process$1.cwd();
-  if (existsSync2(path2.join(targetDir, "deno.json")) || existsSync2(path2.join(targetDir, "deno.jsonc"))) return "deno";
+  if (existsSync2(path3.join(targetDir, "deno.json")) || existsSync2(path3.join(targetDir, "deno.jsonc"))) return "deno";
   const { name, agent, version: version2 } = await detect({
     cwd,
     onUnknown: (packageManager) => {
@@ -27712,7 +27799,7 @@ async function detect$1({ autoInstall, programmatic, cwd } = {}) {
 var import_ini = /* @__PURE__ */ __toESM2(require_ini(), 1);
 var customRcPath = process$1.env.NI_CONFIG_FILE;
 var home = process$1.platform === "win32" ? process$1.env.USERPROFILE : process$1.env.HOME;
-var defaultRcPath = path2.join(home || "~/", ".nirc");
+var defaultRcPath = path3.join(home || "~/", ".nirc");
 var rcPath = customRcPath || defaultRcPath;
 var defaultConfig = {
   defaultAgent: "prompt",
@@ -28450,11 +28537,34 @@ function getJsonFromOutput(output) {
   }
   throw new Error("Unable to find JSON blob");
 }
-async function runKnipTasks(buildScriptName, annotationsEnabled, verboseEnabled, cwd) {
+async function getJsonFromInputFile(filePath) {
+  try {
+    await fs4.stat(filePath);
+  } catch {
+    throw new Error(`Provided jsonReportPath does not exist: ${filePath}`);
+  }
+  const content = await fs4.readFile(filePath, "utf-8");
+  if (!content) {
+    throw new Error(`Provided jsonReportPath is empty: ${filePath}`);
+  }
+  try {
+    JSON.parse(content);
+  } catch {
+    throw new Error(`Provided jsonReportPath contains invalid JSON: ${filePath}`);
+  }
+  return content;
+}
+async function getOutput(buildScriptName, cwd) {
+  if (!buildScriptName) {
+    throw new Error("No command script name provided to run Knip, unable to proceed");
+  }
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
+  return getJsonFromOutput(await run2(cmd));
+}
+async function runKnipTasks(buildScriptName, jsonReportPath, annotationsEnabled, verboseEnabled, cwd) {
   const taskMs = Date.now();
   info("- Running Knip tasks");
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
-  const output = await timeTask("Run knip", async () => getJsonFromOutput(await run2(cmd)));
+  const output = jsonReportPath ? await timeTask("Get knip report from file", () => getJsonFromInputFile(jsonReportPath)) : await timeTask("Run knip", () => getOutput(buildScriptName, cwd));
   const report = await timeTask(
     "Parse knip report",
     () => Promise.resolve(parseJsonReport(output))
@@ -28472,13 +28582,11 @@ async function main() {
   try {
     const config3 = getConfig();
     const actionMs = Date.now();
+    if (config3.jsonReportPath && config3.commandScriptName !== "knip") {
+      warning("command_script_name config will be ignored when json_report_path is provided");
+    }
     info("- knip-reporter action");
     info(configToStr(config3));
-    if (context2.payload.pull_request === void 0) {
-      throw new TypeError(
-        `knip-reporter currently only supports 'pull_request' events, current event: ${context2.eventName}`
-      );
-    }
     init(config3);
     let checkId;
     if (config3.annotations) {
@@ -28489,15 +28597,16 @@ async function main() {
     }
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config3.commandScriptName,
+      config3.jsonReportPath,
       config3.annotations,
       config3.verbose,
       config3.workingDirectory
     );
-    await runCommentTask(
-      config3.commentId,
-      context2.payload.pull_request.number,
-      knipSections
-    );
+    const pullRequestNumber = await getPullRequestNumber();
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
+    await runCommentTask(config3.commentId, pullRequestNumber, knipSections);
     let counts = new AnnotationsCount();
     if (checkId !== void 0) {
       counts = await updateCheckAnnotations(checkId, knipAnnotations, config3.ignoreResults);

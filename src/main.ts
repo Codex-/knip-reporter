@@ -1,8 +1,8 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
 
 import { configToStr, getConfig } from "./action.ts";
 import { init } from "./api.ts";
+import { getPullRequestNumber } from "./github-utils/get-pull-request-number.ts";
 import {
   AnnotationsCount,
   createCheckId,
@@ -18,14 +18,12 @@ export async function main(): Promise<void> {
     const config = getConfig();
     const actionMs = Date.now();
 
+    if (config.jsonReportPath && config.commandScriptName !== "knip") {
+      core.warning("command_script_name config will be ignored when json_report_path is provided");
+    }
+
     core.info("- knip-reporter action");
     core.info(configToStr(config));
-
-    if (github.context.payload.pull_request === undefined) {
-      throw new TypeError(
-        `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
-      );
-    }
 
     init(config);
 
@@ -38,16 +36,19 @@ export async function main(): Promise<void> {
 
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
       config.commandScriptName,
+      config.jsonReportPath,
       config.annotations,
       config.verbose,
       config.workingDirectory,
     );
 
-    await runCommentTask(
-      config.commentId,
-      github.context.payload.pull_request.number,
-      knipSections,
-    );
+    const pullRequestNumber = await getPullRequestNumber();
+
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
+
+    await runCommentTask(config.commentId, pullRequestNumber, knipSections);
 
     let counts = new AnnotationsCount();
     if (checkId !== undefined) {

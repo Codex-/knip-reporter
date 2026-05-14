@@ -106,7 +106,7 @@ describe("main", () => {
     expect(apiInitMock).toHaveBeenCalledWith(expect.objectContaining({ annotations: true }));
 
     expect(createCheckIdMock).toHaveBeenCalledOnce();
-    expect(runKnipTasksMock).toHaveBeenCalledWith("knip", true, false, ".");
+    expect(runKnipTasksMock).toHaveBeenCalledWith("knip", undefined, true, false, ".");
     expect(runCommentTaskMock).toHaveBeenCalledWith("knip-report", 42, []);
     expect(updateCheckAnnotationsMock).toHaveBeenCalledWith(123, [], false);
 
@@ -168,29 +168,6 @@ describe("main", () => {
 
     // Logging
     assertOnlyCalled(coreInfoLogMock);
-  });
-
-  it("should setFailed when invoked outside a pull_request event", async () => {
-    delete github.context.payload.pull_request;
-    Object.defineProperty(github.context, "eventName", {
-      value: "push",
-      configurable: true,
-      writable: true,
-    });
-
-    // Behaviour
-    await main();
-
-    expect(apiInitMock).not.toHaveBeenCalled();
-    expect(runKnipTasksMock).not.toHaveBeenCalled();
-    expect(coreSetFailedMock).toHaveBeenCalledOnce();
-    expect(coreSetFailedMock.mock.lastCall?.[0]).toBeInstanceOf(TypeError);
-
-    // Logging
-    assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
-    expect(coreErrorLogMock.mock.calls[0]?.[0]).toMatch(
-      /knip-reporter currently only supports 'pull_request' events/,
-    );
   });
 
   it("should preserve the findings setFailed message when resolveCheck throws", async () => {
