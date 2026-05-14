@@ -23769,20 +23769,13 @@ function isEventType(context3, eventType) {
   return context3.eventName === eventType;
 }
 
-// src/github-utils/get-pull-request-sha.ts
-function getPullRequestSha() {
+// src/github-utils/get-commit-sha.ts
+function getCommitSha() {
   if (isEventType(context2, "pull_request")) {
     return context2.payload.pull_request.head.sha;
   }
   if (isEventType(context2, "workflow_run")) {
-    if (context2.payload.workflow_run.pull_requests.length > 0) {
-      const [pullRequest] = context2.payload.workflow_run.pull_requests;
-      if (!pullRequest) {
-        throw new Error("No pull request found in GitHub event payload");
-      }
-      return pullRequest.head.sha;
-    }
-    return context2.payload.workflow_run.head_sha;
+    return context2.payload.workflow_run.head_commit.id;
   }
   return context2.sha;
 }
@@ -23861,7 +23854,7 @@ async function deleteComment(commentId) {
   }
 }
 async function createCheck(name, title) {
-  const headSha = getPullRequestSha();
+  const headSha = getCommitSha();
   try {
     return await octokit.rest.checks.create({
       owner: context2.repo.owner,
@@ -28621,10 +28614,6 @@ async function runKnipTasks({
 // src/main.ts
 async function main() {
   try {
-    const pullRequestNumber = await getPullRequestNumber();
-    if (!pullRequestNumber) {
-      throw new Error("Unable to determine pull request number from GitHub context");
-    }
     const config2 = getConfig();
     const actionMs = Date.now();
     if (config2.jsonReportPath && config2.commandScriptName !== DEFAULT_KNIP_COMMAND) {
@@ -28648,6 +28637,10 @@ async function main() {
       cwd: config2.workingDirectory
     });
     const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
+    const pullRequestNumber = await getPullRequestNumber();
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
     await runCommentTask(config2.commentId, pullRequestNumber, knipSections);
     let counts = new AnnotationsCount();
     if (checkId !== void 0) {
