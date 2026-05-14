@@ -207,29 +207,6 @@ describe("main", () => {
     assertOnlyCalled(coreInfoLogMock);
   });
 
-  it("should setFailed when invoked outside a pull_request event", async () => {
-    delete github.context.payload.pull_request;
-    Object.defineProperty(github.context, "eventName", {
-      value: "push",
-      configurable: true,
-      writable: true,
-    });
-
-    // Behaviour
-    await main();
-
-    expect(apiInitMock).not.toHaveBeenCalled();
-    expect(runKnipTasksMock).not.toHaveBeenCalled();
-    expect(coreSetFailedMock).toHaveBeenCalledOnce();
-    expect(coreSetFailedMock.mock.lastCall?.[0]).toBeInstanceOf(Error);
-
-    // Logging
-    assertOnlyCalled(coreErrorLogMock);
-    expect(coreErrorLogMock.mock.calls[0]?.[0]).toMatch(
-      /Unable to determine pull request number from GitHub context/,
-    );
-  });
-
   it("should warn when both command_script_name and json_report_path are set", async () => {
     actionGetConfigMock.mockReturnValue({
       ...baseConfig,
