@@ -19538,6 +19538,9 @@ function issueCommand(command, properties, message) {
   const cmd = new Command(command, properties, message);
   process.stdout.write(cmd.toString() + os.EOL);
 }
+function issue(name, message = "") {
+  issueCommand(name, {}, message);
+}
 var CMD_STRING = "::";
 var Command = class {
   constructor(command, properties, message) {
@@ -19978,6 +19981,45 @@ function warning(message, properties = {}) {
 }
 function info(message) {
   process.stdout.write(message + os3.EOL);
+}
+function startGroup(name) {
+  issue("group", name);
+}
+function endGroup() {
+  issue("endgroup");
+}
+
+// src/action.ts
+import path from "node:path";
+function getConfig() {
+  return {
+    token: getInput("token", { required: true }),
+    commandScriptName: getInput("command_script_name", { required: false }) || "knip",
+    commentId: getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
+    annotations: getBooleanInput("annotations", { required: false }),
+    verbose: getBooleanInput("verbose", { required: false }),
+    ignoreResults: getBooleanInput("ignore_results", { required: false }),
+    workingDirectory: getInput("working_directory", { required: false }) || void 0,
+    get jsonReportPath() {
+      const input = getInput("json_report_path", { required: false });
+      if (!input) {
+        return void 0;
+      }
+      return path.resolve(input);
+    }
+  };
+}
+function configToStr(cfg) {
+  return `  with config:
+    token: ###
+    command_script_name: ${cfg.commandScriptName}
+    comment_id: ${cfg.commentId}
+    annotations: ${cfg.annotations}
+    verbose: ${cfg.verbose}
+    ignoreResults: ${cfg.ignoreResults}
+    workingDirectory: ${cfg.workingDirectory}
+    jsonReportPath: ${cfg.jsonReportPath}
+`;
 }
 
 // node_modules/.pnpm/@actions+github@9.1.1/node_modules/@actions/github/lib/context.js
@@ -23725,37 +23767,27 @@ function getOctokit(token, options, ...additionalPlugins) {
   return new GitHubWithPlugins(getOctokitOptions(token, options));
 }
 
-// src/action.ts
-import path from "node:path";
-function getConfig() {
-  return {
-    token: getInput("token", { required: true }),
-    commandScriptName: getInput("command_script_name", { required: false }) || "knip",
-    commentId: getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
-    annotations: getBooleanInput("annotations", { required: false }),
-    verbose: getBooleanInput("verbose", { required: false }),
-    ignoreResults: getBooleanInput("ignore_results", { required: false }),
-    workingDirectory: getInput("working_directory", { required: false }) || void 0,
-    get jsonReportPath() {
-      const input = getInput("json_report_path", { required: false });
-      if (!input) {
-        return void 0;
-      }
-      return path.resolve(input);
-    }
-  };
+// src/github-utils/is-event-type.ts
+function isEventType(context3, eventType) {
+  return context3.eventName === eventType;
 }
-function configToStr(cfg) {
-  return `  with config:
-    token: ###
-    command_script_name: ${cfg.commandScriptName}
-    comment_id: ${cfg.commentId}
-    annotations: ${cfg.annotations}
-    verbose: ${cfg.verbose}
-    ignoreResults: ${cfg.ignoreResults}
-    workingDirectory: ${cfg.workingDirectory}
-    jsonReportPath: ${cfg.jsonReportPath}
-`;
+
+// src/github-utils/get-pull-request-sha.ts
+function getPullRequestSha() {
+  if (isEventType(context2, "pull_request")) {
+    return context2.payload.pull_request.head.sha;
+  }
+  if (isEventType(context2, "workflow_run")) {
+    if (context2.payload.workflow_run.pull_requests.length > 0) {
+      const [pullRequest] = context2.payload.workflow_run.pull_requests;
+      if (!pullRequest) {
+        throw new Error("No pull request found in GitHub event payload");
+      }
+      return pullRequest.head.sha;
+    }
+    return context2.payload.workflow_run.head_sha;
+  }
+  return context2.sha;
 }
 
 // src/api.ts
@@ -23767,9 +23799,7 @@ function init(cfg) {
   octokit = getOctokit(config.token);
 }
 async function createComment(pullRequestNumber, body) {
-  debug(
-    `[createComment]: Creating comment on ${context2.payload.pull_request?.html_url} (${pullRequestNumber})`
-  );
+  debug(`[createComment]: Creating comment on #${pullRequestNumber}`);
   try {
     return await octokit.rest.issues.createComment({
       owner: context2.repo.owner,
@@ -23835,11 +23865,7 @@ async function deleteComment(commentId) {
   }
 }
 async function createCheck(name, title) {
-  const prSha = context2.payload.pull_request?.head?.sha;
-  if (prSha === void 0) {
-    warning("Unable to find correct head_sha from payload, using base context sha");
-  }
-  const headSha = prSha ?? context2.sha;
+  const headSha = getPullRequestSha();
   try {
     return await octokit.rest.checks.create({
       owner: context2.repo.owner,
@@ -23869,6 +23895,62 @@ async function updateCheck(checkRunId, status, output, conclusion) {
   } catch (error2) {
     throw new Error("Failed to update check", { cause: error2 });
   }
+}
+async function findPullRequestNumberForCommitSha(sha) {
+  startGroup("Querying REST API for pull-requests.");
+  const pullRequestsIterator = octokit.paginate.iterator(octokit.rest.pulls.list, {
+    owner: context2.repo.owner,
+    repo: context2.repo.repo,
+    per_page: 30,
+    sort: "updated",
+    direction: "desc"
+  });
+  for await (const { data: pullRequests } of pullRequestsIterator) {
+    info(`Found ${pullRequests.length} pull-requests in this page.`);
+    for (const pullRequest of pullRequests) {
+      debug(
+        `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`
+      );
+      if (pullRequest.head.sha === sha) {
+        return pullRequest.number;
+      }
+    }
+  }
+  endGroup();
+  info(`Could not find a pull-request for commit "${sha}".`);
+  return void 0;
+}
+
+// src/github-utils/get-pull-request-number.ts
+async function getPullRequestNumber() {
+  if (isEventType(context2, "pull_request")) {
+    return context2.payload.pull_request.number;
+  }
+  if (isEventType(context2, "workflow_run")) {
+    if (context2.payload.workflow_run.pull_requests.length > 0) {
+      info(
+        `Found pull-request number in the action's "payload.workflow_run" context: ${context2.payload.workflow_run.pull_requests[0]?.number.toString()}`
+      );
+      const [pullRequest] = context2.payload.workflow_run.pull_requests;
+      if (!pullRequest) {
+        throw new Error("No pull request found in GitHub event payload");
+      }
+      return pullRequest.number;
+    }
+    const sha = context2.payload.workflow_run.head_sha;
+    info(
+      `Trying to find a pull-request with a head commit matching the SHA found in the action's "payload.workflow_run.head_sha" context (${sha}) from the GitHub API.`
+    );
+    try {
+      return await findPullRequestNumberForCommitSha(context2.payload.workflow_run.head_sha);
+    } catch (error2) {
+      warning(
+        `An error occurred while fetching pull requests from the GitHub API: ${error2.message}`
+      );
+      return void 0;
+    }
+  }
+  return void 0;
 }
 
 // node_modules/.pnpm/markdown-table@3.0.4/node_modules/markdown-table/index.js
@@ -24015,7 +24097,9 @@ function toAlignment(value) {
 // src/tasks/check.ts
 async function createCheckId(name, title) {
   debug(`[createCheckId]: Creating check, name: ${name}, title: ${title}`);
-  const id = (await createCheck(name, title)).data.id;
+  const {
+    data: { id }
+  } = await createCheck(name, title);
   debug(`[createCheckId]: Check created (${id})`);
   return id;
 }
@@ -28503,6 +28587,10 @@ async function runKnipTasks(buildScriptName, jsonReportPath, annotationsEnabled,
 // src/main.ts
 async function main() {
   try {
+    const pullRequestNumber = await getPullRequestNumber();
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
     const config3 = getConfig();
     const actionMs = Date.now();
     if (config3.jsonReportPath && config3.commandScriptName !== "knip") {
@@ -28510,11 +28598,6 @@ async function main() {
     }
     info("- knip-reporter action");
     info(configToStr(config3));
-    if (context2.payload.pull_request === void 0) {
-      throw new TypeError(
-        `knip-reporter currently only supports 'pull_request' events, current event: ${context2.eventName}`
-      );
-    }
     init(config3);
     let checkId;
     if (config3.annotations) {
@@ -28530,11 +28613,7 @@ async function main() {
       config3.verbose,
       config3.workingDirectory
     );
-    await runCommentTask(
-      config3.commentId,
-      context2.payload.pull_request.number,
-      knipSections
-    );
+    await runCommentTask(config3.commentId, pullRequestNumber, knipSections);
     let counts = new AnnotationsCount();
     if (checkId !== void 0) {
       counts = await updateCheckAnnotations(checkId, knipAnnotations, config3.ignoreResults);
