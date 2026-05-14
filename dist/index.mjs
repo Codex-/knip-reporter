@@ -23772,23 +23772,14 @@ function isEventType(context3, eventType) {
   return context3.eventName === eventType;
 }
 
-// src/github-utils/get-pull-request-sha.ts
-function getPullRequestSha() {
+// src/github-utils/get-commit-sha.ts
+function getCommitSha() {
   if (isEventType(context2, "pull_request")) {
-    info(
-      'Pull request event detected, using pull request head SHA from "context.payload.pull_request.head.sha".'
-    );
     return context2.payload.pull_request.head.sha;
   }
   if (isEventType(context2, "workflow_run")) {
-    info(
-      'Workflow_run event detected, using head SHA from "context.payload.workflow_run.head_sha".'
-    );
-    return context2.payload.workflow_run.head_sha;
+    return context2.payload.workflow_run.head_commit.id;
   }
-  info(
-    'Neither "pull_request" nor "workflow_run" event detected, falling back to context SHA.'
-  );
   return context2.sha;
 }
 
@@ -23867,7 +23858,7 @@ async function deleteComment(commentId) {
   }
 }
 async function createCheck(name, title) {
-  const headSha = getPullRequestSha();
+  const headSha = getCommitSha();
   try {
     return await octokit.rest.checks.create({
       owner: context2.repo.owner,
@@ -28589,10 +28580,6 @@ async function runKnipTasks(buildScriptName, jsonReportPath, annotationsEnabled,
 // src/main.ts
 async function main() {
   try {
-    const pullRequestNumber = await getPullRequestNumber();
-    if (!pullRequestNumber) {
-      throw new Error("Unable to determine pull request number from GitHub context");
-    }
     const config3 = getConfig();
     const actionMs = Date.now();
     if (config3.jsonReportPath && config3.commandScriptName !== "knip") {
@@ -28615,6 +28602,10 @@ async function main() {
       config3.verbose,
       config3.workingDirectory
     );
+    const pullRequestNumber = await getPullRequestNumber();
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
     await runCommentTask(config3.commentId, pullRequestNumber, knipSections);
     let counts = new AnnotationsCount();
     if (checkId !== void 0) {
