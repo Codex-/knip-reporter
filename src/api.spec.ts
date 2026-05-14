@@ -132,7 +132,7 @@ describe("API", () => {
       assertOnlyCalled(coreDebugLogMock);
       expect(coreDebugLogMock).toHaveBeenCalledOnce();
       expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
-        `"[createComment]: Creating comment on https://github.com/a/b/pull/1 (123456)"`,
+        `"[createComment]: Creating comment on #123456"`,
       );
     });
 
@@ -452,8 +452,8 @@ describe("API", () => {
       assertNoneCalled();
     });
 
-    it("should warn if pull_request head_sha is missing", async () => {
-      vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
+    it("should pass through an undefined head_sha when pull_request head sha is missing", async () => {
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
         data: {},
         status: 201,
       });
@@ -461,13 +461,11 @@ describe("API", () => {
 
       // Behaviour
       await createCheck("knip-reporter", "Knip reporter analysis");
+      expect(restSpy).toHaveBeenCalledOnce();
+      expect(restSpy.mock.lastCall?.[0]?.head_sha).toBeUndefined();
 
       // Logging
-      assertOnlyCalled(coreWarningLogMock);
-      expect(coreWarningLogMock).toHaveBeenCalledOnce();
-      expect(coreWarningLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
-        `"Unable to find correct head_sha from payload, using base context sha"`,
-      );
+      assertNoneCalled();
     });
 
     it("should wrap octokit failures with the underlying cause", async () => {

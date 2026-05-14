@@ -1,8 +1,8 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
 
 import { configToStr, getConfig } from "./action.ts";
 import { init } from "./api.ts";
+import { getPullRequestNumber } from "./github-utils/get-pull-request-number.ts";
 import {
   AnnotationsCount,
   createCheckId,
@@ -15,6 +15,12 @@ import { timeTask } from "./tasks/task.ts";
 
 export async function main(): Promise<void> {
   try {
+    const pullRequestNumber = await getPullRequestNumber();
+
+    if (!pullRequestNumber) {
+      throw new Error("Unable to determine pull request number from GitHub context");
+    }
+
     const config = getConfig();
     const actionMs = Date.now();
 
@@ -24,12 +30,6 @@ export async function main(): Promise<void> {
 
     core.info("- knip-reporter action");
     core.info(configToStr(config));
-
-    if (github.context.payload.pull_request === undefined) {
-      throw new TypeError(
-        `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
-      );
-    }
 
     init(config);
 
@@ -48,11 +48,7 @@ export async function main(): Promise<void> {
       config.workingDirectory,
     );
 
-    await runCommentTask(
-      config.commentId,
-      github.context.payload.pull_request.number,
-      knipSections,
-    );
+    await runCommentTask(config.commentId, pullRequestNumber, knipSections);
 
     let counts = new AnnotationsCount();
     if (checkId !== undefined) {

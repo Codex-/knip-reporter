@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 import { type ActionConfig, getConfig } from "./action.ts";
+import { getPullRequestSha } from "./github-utils/get-pull-request-sha.ts";
 
 export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 
@@ -20,9 +21,7 @@ export async function createComment(
   pullRequestNumber: number,
   body: string,
 ): Promise<CreateCommentResponse> {
-  core.debug(
-    `[createComment]: Creating comment on ${github.context.payload.pull_request?.html_url} (${pullRequestNumber})`,
-  );
+  core.debug(`[createComment]: Creating comment on #${pullRequestNumber}`);
 
   // https://docs.github.com/en/rest/issues/comments#create-an-issue-comment
   try {
@@ -110,12 +109,7 @@ export async function deleteComment(commentId: number): Promise<DeleteCommentRes
 
 type CreateCheckResponse = Awaited<ReturnType<Octokit["rest"]["checks"]["create"]>>;
 export async function createCheck(name: string, title: string): Promise<CreateCheckResponse> {
-  const prSha = (github.context.payload.pull_request as { head?: { sha?: string } } | undefined)
-    ?.head?.sha;
-  if (prSha === undefined) {
-    core.warning("Unable to find correct head_sha from payload, using base context sha");
-  }
-  const headSha = prSha ?? github.context.sha;
+  const headSha = getPullRequestSha();
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
   try {
@@ -160,4 +154,36 @@ export async function updateCheck(
   } catch (error) {
     throw new Error("Failed to update check", { cause: error });
   }
+}
+
+export async function findPullRequestNumberForCommitSha(sha: string): Promise<number | undefined> {
+  core.startGroup("Querying REST API for pull-requests.");
+
+  const pullRequestsIterator = octokit.paginate.iterator(octokit.rest.pulls.list, {
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    per_page: 30,
+    sort: "updated",
+    direction: "desc",
+  });
+
+  for await (const { data: pullRequests } of pullRequestsIterator) {
+    core.info(`Found ${pullRequests.length} pull-requests in this page.`);
+
+    for (const pullRequest of pullRequests) {
+      core.debug(
+        `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`,
+      );
+
+      if (pullRequest.head.sha === sha) {
+        return pullRequest.number;
+      }
+    }
+  }
+
+  core.endGroup();
+
+  core.info(`Could not find a pull-request for commit "${sha}".`);
+
+  return undefined;
 }
