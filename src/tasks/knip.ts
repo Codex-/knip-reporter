@@ -581,10 +581,6 @@ export async function getJsonFromInputFile(filePath: string): Promise<string> {
 }
 
 async function getOutput(buildScriptName: string, cwd?: string): Promise<string> {
-  if (!buildScriptName) {
-    throw new Error("No command script name provided to run Knip, unable to proceed");
-  }
-
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
 
   return getJsonFromOutput(await run(cmd));
