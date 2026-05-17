@@ -23727,22 +23727,19 @@ function getOctokit(token, options, ...additionalPlugins) {
 
 // src/action.ts
 import path from "node:path";
+var DEFAULT_KNIP_COMMAND = "knip";
 function getConfig() {
+  const workingDirectory = getInput("working_directory", { required: false }) || void 0;
+  const jsonReportPathInput = getInput("json_report_path", { required: false });
   return {
     token: getInput("token", { required: true }),
-    commandScriptName: getInput("command_script_name", { required: false }) || "knip",
+    commandScriptName: getInput("command_script_name", { required: false }) || DEFAULT_KNIP_COMMAND,
     commentId: getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
     annotations: getBooleanInput("annotations", { required: false }),
     verbose: getBooleanInput("verbose", { required: false }),
     ignoreResults: getBooleanInput("ignore_results", { required: false }),
-    workingDirectory: getInput("working_directory", { required: false }) || void 0,
-    get jsonReportPath() {
-      const input = getInput("json_report_path", { required: false });
-      if (!input) {
-        return void 0;
-      }
-      return path.resolve(input);
-    }
+    workingDirectory,
+    jsonReportPath: jsonReportPathInput ? path.resolve(workingDirectory ?? ".", jsonReportPathInput) : void 0
   };
 }
 function configToStr(cfg) {
@@ -28463,28 +28460,31 @@ function getJsonFromOutput(output) {
 async function getJsonFromInputFile(filePath) {
   try {
     await fs4.stat(filePath);
-  } catch {
-    throw new Error(`Provided jsonReportPath does not exist: ${filePath}`);
+  } catch (err) {
+    throw new Error(`Provided 'json_report_path' does not exist: ${filePath}`, { cause: err });
   }
   const content = await fs4.readFile(filePath, "utf-8");
   if (!content) {
-    throw new Error(`Provided jsonReportPath is empty: ${filePath}`);
+    throw new Error(`Provided 'json_report_path' is empty: ${filePath}`);
   }
   try {
     JSON.parse(content);
   } catch {
-    throw new Error(`Provided jsonReportPath contains invalid JSON: ${filePath}`);
+    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`);
   }
   return content;
 }
 async function getOutput(buildScriptName, cwd) {
-  if (!buildScriptName) {
-    throw new Error("No command script name provided to run Knip, unable to proceed");
-  }
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
   return getJsonFromOutput(await run2(cmd));
 }
-async function runKnipTasks(buildScriptName, jsonReportPath, annotationsEnabled, verboseEnabled, cwd) {
+async function runKnipTasks({
+  buildScriptName,
+  jsonReportPath,
+  annotationsEnabled,
+  verboseEnabled,
+  cwd
+}) {
   const taskMs = Date.now();
   info("- Running Knip tasks");
   const output = jsonReportPath ? await timeTask("Get knip report from file", () => getJsonFromInputFile(jsonReportPath)) : await timeTask("Run knip", () => getOutput(buildScriptName, cwd));
@@ -28505,7 +28505,7 @@ async function main() {
   try {
     const config3 = getConfig();
     const actionMs = Date.now();
-    if (config3.jsonReportPath && config3.commandScriptName !== "knip") {
+    if (config3.jsonReportPath && config3.commandScriptName !== DEFAULT_KNIP_COMMAND) {
       warning("command_script_name config will be ignored when json_report_path is provided");
     }
     info("- knip-reporter action");
@@ -28523,13 +28523,13 @@ async function main() {
         () => createCheckId("knip-reporter-annotations-check", "Knip reporter analysis")
       );
     }
-    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
-      config3.commandScriptName,
-      config3.jsonReportPath,
-      config3.annotations,
-      config3.verbose,
-      config3.workingDirectory
-    );
+    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
+      buildScriptName: config3.commandScriptName,
+      jsonReportPath: config3.jsonReportPath,
+      annotationsEnabled: config3.annotations,
+      verboseEnabled: config3.verbose,
+      cwd: config3.workingDirectory
+    });
     await runCommentTask(
       config3.commentId,
       context2.payload.pull_request.number,
