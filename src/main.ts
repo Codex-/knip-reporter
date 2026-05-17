@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-import { configToStr, getConfig } from "./action.ts";
+import { configToStr, DEFAULT_KNIP_COMMAND, getConfig } from "./action.ts";
 import { init } from "./api.ts";
 import {
   AnnotationsCount,
@@ -18,7 +18,7 @@ export async function main(): Promise<void> {
     const config = getConfig();
     const actionMs = Date.now();
 
-    if (config.jsonReportPath && config.commandScriptName !== "knip") {
+    if (config.jsonReportPath && config.commandScriptName !== DEFAULT_KNIP_COMMAND) {
       core.warning("command_script_name config will be ignored when json_report_path is provided");
     }
 

@@ -1,6 +1,8 @@
 import * as core from "@actions/core";
 import path from "node:path";
 
+export const DEFAULT_KNIP_COMMAND = "knip";
+
 /**
  * action.yaml definition.
  */
@@ -54,7 +56,8 @@ export function getConfig(): ActionConfig {
 
   return {
     token: core.getInput("token", { required: true }),
-    commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
+    commandScriptName:
+      core.getInput("command_script_name", { required: false }) || DEFAULT_KNIP_COMMAND,
     commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
     annotations: core.getBooleanInput("annotations", { required: false }),
     verbose: core.getBooleanInput("verbose", { required: false }),
