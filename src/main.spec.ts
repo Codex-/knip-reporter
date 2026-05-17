@@ -199,6 +199,44 @@ describe("main", () => {
     );
   });
 
+  it("should warn when both command_script_name and json_report_path are set", async () => {
+    actionGetConfigMock.mockReturnValue({
+      ...baseConfig,
+      commandScriptName: "custom:knip",
+      jsonReportPath: "/workspace/report.json",
+    });
+
+    // Behaviour
+    await main();
+    expect(runKnipTasksMock).toHaveBeenCalledWith(
+      expect.objectContaining({ jsonReportPath: "/workspace/report.json" }),
+    );
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreWarningLogMock);
+    expect(coreWarningLogMock).toHaveBeenCalledOnce();
+    expect(coreWarningLogMock.mock.lastCall?.[0]).toMatch(
+      /command_script_name.*ignored.*json_report_path/,
+    );
+  });
+
+  it("should not warn when command_script_name is the default while json_report_path is set", async () => {
+    actionGetConfigMock.mockReturnValue({
+      ...baseConfig,
+      jsonReportPath: "/workspace/report.json",
+    });
+
+    // Behaviour
+    await main();
+    expect(runKnipTasksMock).toHaveBeenCalledWith(
+      expect.objectContaining({ jsonReportPath: "/workspace/report.json" }),
+    );
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock);
+    expect(coreWarningLogMock).not.toHaveBeenCalled();
+  });
+
   it("should preserve the findings setFailed message when resolveCheck throws", async () => {
     runKnipTasksMock.mockResolvedValue({
       sections: ["### Unused files\n\n`foo.ts`"],

@@ -176,5 +176,11 @@ describe("Action", () => {
       expect(cfgStr).not.toContain(actionInputs.token?.default);
       expect(cfgStr).not.toContain(mockEnvConfig.token);
     });
+
+    it("should include the resolved jsonReportPath when one is provided", () => {
+      mockEnvConfig.json_report_path = "report.json";
+      const cfgStr = configToStr(getConfig());
+      expect(cfgStr).toContain(resolve("report.json"));
+    });
   });
 });

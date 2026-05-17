@@ -29,6 +29,7 @@ import {
   parseJsonReport,
   processSectionToMessages,
   run,
+  runKnipTasks,
 } from "./knip.ts";
 
 vi.mock("node:child_process");
@@ -833,6 +834,44 @@ src/x.ts
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
         `Provided 'json_report_path' content contains invalid JSON: ${filePath}`,
       );
+    });
+  });
+
+  describe("runKnipTasks", () => {
+    it("should read the report from disk and skip knip when jsonReportPath is set", async () => {
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce(JSON.stringify(reportJson));
+      const execSpy = vi.spyOn(cp, "exec");
+
+      // Behaviour
+      const result = await runKnipTasks({
+        buildScriptName: "knip",
+        jsonReportPath: "report.json",
+        annotationsEnabled: false,
+        verboseEnabled: false,
+      });
+      expect(execSpy).not.toHaveBeenCalled();
+      expect(result.sections.length).toBeGreaterThan(0);
+    });
+
+    it("should execute knip when jsonReportPath is not set", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func(undefined, JSON.stringify(reportJson), "");
+      }) as any);
+
+      // Behaviour
+      const result = await runKnipTasks({
+        buildScriptName: "knip",
+        jsonReportPath: undefined,
+        annotationsEnabled: false,
+        verboseEnabled: false,
+      });
+      expect(execSpy).toHaveBeenCalledOnce();
+      expect(result.sections.length).toBeGreaterThan(0);
     });
   });
 });
