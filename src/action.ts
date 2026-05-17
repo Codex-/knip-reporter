@@ -49,6 +49,8 @@ export interface ActionConfig {
 }
 
 export function getConfig(): ActionConfig {
+  const jsonReportPathInput = core.getInput("json_report_path", { required: false });
+
   return {
     token: core.getInput("token", { required: true }),
     commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
@@ -57,15 +59,7 @@ export function getConfig(): ActionConfig {
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
     workingDirectory: core.getInput("working_directory", { required: false }) || undefined,
-    get jsonReportPath(): string | undefined {
-      const input = core.getInput("json_report_path", { required: false });
-
-      if (!input) {
-        return undefined;
-      }
-
-      return path.resolve(input);
-    },
+    jsonReportPath: jsonReportPathInput ? path.resolve(jsonReportPathInput) : undefined,
   };
 }
 
