@@ -29,8 +29,10 @@ jobs:
         if: steps.dist-check.outputs.changed == 'true'
         run: |
           pnpm run build
-          if ! git diff --quiet -- dist/; then
+          status=$(git status --porcelain --untracked-files=all -- dist/)
+          if [ -n "$status" ]; then
             echo "::error::Committed dist/ does not match the build output from src/. Run 'pnpm run build' and commit the result."
+            echo "$status"
             git --no-pager diff -- dist/
             exit 1
           fi
