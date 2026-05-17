@@ -1,5 +1,6 @@
-import * as core from "@actions/core";
 import path from "node:path";
+
+import * as core from "@actions/core";
 
 export const DEFAULT_KNIP_COMMAND = "knip";
 
