@@ -795,8 +795,8 @@ src/x.ts
       vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
       vi.spyOn(fs, "readFile").mockResolvedValueOnce(JSON.stringify(reportJson));
 
+      // Behaviour
       const jsonStr = await getJsonFromInputFile("knip-report.json");
-
       expect(() => JSON.parse(jsonStr)).not.toThrow();
     });
 
@@ -805,8 +805,9 @@ src/x.ts
 
       vi.spyOn(fs, "stat").mockRejectedValueOnce(new Error("File not found"));
 
+      // Behaviour
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided jsonReportPath does not exist: ${filePath}`,
+        `Provided 'json_report_path' does not exist: ${filePath}`,
       );
     });
 
@@ -816,8 +817,9 @@ src/x.ts
       vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
       vi.spyOn(fs, "readFile").mockResolvedValueOnce("");
 
+      // Behaviour
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided jsonReportPath is empty: ${filePath}`,
+        `Provided 'json_report_path' is empty: ${filePath}`,
       );
     });
 
@@ -827,8 +829,9 @@ src/x.ts
       vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
       vi.spyOn(fs, "readFile").mockResolvedValueOnce("This is not JSON");
 
+      // Behaviour
       await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided jsonReportPath contains invalid JSON: ${filePath}`,
+        `Provided 'json_report_path' content contains invalid JSON: ${filePath}`,
       );
     });
   });

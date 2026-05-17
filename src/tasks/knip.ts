@@ -561,20 +561,20 @@ export function getJsonFromOutput(output: string): string {
 export async function getJsonFromInputFile(filePath: string): Promise<string> {
   try {
     await fs.stat(filePath);
-  } catch {
-    throw new Error(`Provided jsonReportPath does not exist: ${filePath}`);
+  } catch (err) {
+    throw new Error(`Provided 'json_report_path' does not exist: ${filePath}`, { cause: err });
   }
 
   const content = await fs.readFile(filePath, "utf-8");
 
   if (!content) {
-    throw new Error(`Provided jsonReportPath is empty: ${filePath}`);
+    throw new Error(`Provided 'json_report_path' is empty: ${filePath}`);
   }
 
   try {
     JSON.parse(content);
   } catch {
-    throw new Error(`Provided jsonReportPath contains invalid JSON: ${filePath}`);
+    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`);
   }
 
   return content;
