@@ -32,16 +32,16 @@ steps:
 
 The following inputs are supported
 
-| Input                 | Description                                                                  | Required | Default                                |
-| --------------------- | ---------------------------------------------------------------------------- | -------- | -------------------------------------- |
-| `token`               | GitHub Personal Access Token for making API requests.                        | `false`  | `${{ github.token }}`                  |
-| `command_script_name` | The package script that runs knip.                                           | `false`  | `knip`                                 |
-| `comment_id`          | ID to use when updating the PR comment. Spaces will be replaced with dashes. | `false`  | `${{ github.workflow }}-knip-reporter` |
-| `annotations`         | Annotate the project code with the knip results.                             | `false`  | `true`                                 |
-| `verbose`             | Include annotated items in the comment report.                               | `false`  | `false`                                |
-| `ignore_results`      | Do not fail the action run if knip results are found.                        | `false`  | `false`                                |
-| `working_directory`   | Run knip in a different directory.                                           | `false`  | `.`                                    |
-| `json_report_path`    | Use a pre-existing knip report instead of running `knip`                     | `false`  | `undefined`                            |
+| Input                 | Description                                                                                                        | Required | Default                                |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- | -------------------------------------- |
+| `token`               | GitHub Personal Access Token for making API requests.                                                              | `false`  | `${{ github.token }}`                  |
+| `command_script_name` | The package script that runs knip.                                                                                 | `false`  | `knip`                                 |
+| `comment_id`          | ID to use when updating the PR comment. Spaces will be replaced with dashes.                                       | `false`  | `${{ github.workflow }}-knip-reporter` |
+| `annotations`         | Annotate the project code with the knip results.                                                                   | `false`  | `true`                                 |
+| `verbose`             | Include annotated items in the comment report.                                                                     | `false`  | `false`                                |
+| `ignore_results`      | Do not fail the action run if knip results are found.                                                              | `false`  | `false`                                |
+| `working_directory`   | Run knip in a different directory.                                                                                 | `false`  | `.`                                    |
+| `json_report_path`    | Use a pre-existing knip report instead of running `knip`. Relative paths are resolved against `working_directory`. | `false`  |                                        |
 
 ### Issues
 

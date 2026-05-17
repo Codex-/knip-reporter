@@ -144,6 +144,29 @@ describe("Action", () => {
 
         expect(config.workingDirectory).toStrictEqual("some_directory");
       });
+
+      it("should resolve jsonReportPath against process.cwd when workingDirectory is unset", () => {
+        mockEnvConfig.json_report_path = "report.json";
+        const config: ActionConfig = getConfig();
+
+        expect(config.jsonReportPath).toStrictEqual(resolve("report.json"));
+      });
+
+      it("should resolve a relative jsonReportPath against workingDirectory", () => {
+        mockEnvConfig.working_directory = "packages/app";
+        mockEnvConfig.json_report_path = "report.json";
+        const config: ActionConfig = getConfig();
+
+        expect(config.jsonReportPath).toStrictEqual(resolve("packages/app", "report.json"));
+      });
+
+      it("should keep an absolute jsonReportPath unchanged regardless of workingDirectory", () => {
+        mockEnvConfig.working_directory = "packages/app";
+        mockEnvConfig.json_report_path = "/tmp/report.json";
+        const config: ActionConfig = getConfig();
+
+        expect(config.jsonReportPath).toStrictEqual("/tmp/report.json");
+      });
     });
   });
 
