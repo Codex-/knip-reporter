@@ -40,13 +40,13 @@ export async function main(): Promise<void> {
       );
     }
 
-    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
-      config.commandScriptName,
-      config.jsonReportPath,
-      config.annotations,
-      config.verbose,
-      config.workingDirectory,
-    );
+    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
+      buildScriptName: config.commandScriptName,
+      jsonReportPath: config.jsonReportPath,
+      annotationsEnabled: config.annotations,
+      verboseEnabled: config.verbose,
+      cwd: config.workingDirectory,
+    });
 
     await runCommentTask(
       config.commentId,

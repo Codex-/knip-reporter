@@ -590,13 +590,21 @@ async function getOutput(buildScriptName: string, cwd?: string): Promise<string>
   return getJsonFromOutput(await run(cmd));
 }
 
-export async function runKnipTasks(
-  buildScriptName: string,
-  jsonReportPath: string | undefined,
-  annotationsEnabled: boolean,
-  verboseEnabled: boolean,
-  cwd?: string,
-): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
+export interface RunKnipTasksOpts {
+  buildScriptName: string;
+  jsonReportPath?: string;
+  annotationsEnabled: boolean;
+  verboseEnabled: boolean;
+  cwd?: string;
+}
+
+export async function runKnipTasks({
+  buildScriptName,
+  jsonReportPath,
+  annotationsEnabled,
+  verboseEnabled,
+  cwd,
+}: RunKnipTasksOpts): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 

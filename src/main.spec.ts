@@ -106,7 +106,13 @@ describe("main", () => {
     expect(apiInitMock).toHaveBeenCalledWith(expect.objectContaining({ annotations: true }));
 
     expect(createCheckIdMock).toHaveBeenCalledOnce();
-    expect(runKnipTasksMock).toHaveBeenCalledWith("knip", undefined, true, false, ".");
+    expect(runKnipTasksMock).toHaveBeenCalledWith({
+      buildScriptName: "knip",
+      jsonReportPath: undefined,
+      annotationsEnabled: true,
+      verboseEnabled: false,
+      cwd: ".",
+    });
     expect(runCommentTaskMock).toHaveBeenCalledWith("knip-report", 42, []);
     expect(updateCheckAnnotationsMock).toHaveBeenCalledWith(123, [], false);
 
