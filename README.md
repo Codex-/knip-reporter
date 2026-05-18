@@ -4,9 +4,13 @@
 
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/codex-/knip-reporter/ci.yml?style=flat-square)](https://github.com/Codex-/knip-reporter/actions/workflows/ci.yml) [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-knip–reporter-blue?style=flat-square&logo=github&link=https%3A%2F%2Fgithub.com%2Fmarketplace%2Factions%2Fawait-remote-run)](https://github.com/marketplace/actions/knip-reporter)
 
-This action runs [knip](https://github.com/webpro/knip), parses the results, and posts the report as comments on the related pull request.
+This action posts a [knip](https://github.com/webpro/knip) report as comments on a pull request. It can run `knip` itself, or consume an existing report.
 
 ## Usage
+
+There are two primary ways to use this action, which will depend on your requirements. This action can run `knip` itself (default), or you can use `knip` to generate the report. Once a report has been generated/provided, this action works with that report.
+
+### Generate the report
 
 The execution of `knip` requires you to have followed the general `knip` setup and have a command script present in your `package.json` file, `knip`, by default but this can be of any name. If this script name deviates from the standard `knip` setup, please provide the script name in the config.
 
@@ -26,6 +30,35 @@ permissions:
 steps:
   - name: Post the knip results
     uses: codex-/knip-reporter@v3
+```
+
+### Provide the report
+
+If you wish to avoid having this action run any commands itself, you can provide the path to an existing report for `knip-reporter` to work with.
+
+The provided report must be generated with the JSON reporter (using `--reporter json`)
+
+```yaml
+name: Pull Request
+on:
+  pull_request:
+
+# This permissions config is only required if you are
+# not providing own permissive token
+permissions:
+  checks: write
+  pull-requests: write
+
+steps:
+  - name: Generate the knip report
+    # `--silent` will stop the wrapping output from pnpm, leaving just the report
+    run: pnpm --silent knip --reporter json > knip-report.json
+    continue-on-error: true # Any reports generated with content result in a non-zero exit code
+
+  - name: Post the knip results
+    uses: codex-/knip-reporter@v3
+    with:
+      json_report_path: ./knip-report.json
 ```
 
 ## Config
