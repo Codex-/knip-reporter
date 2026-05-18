@@ -7,12 +7,11 @@ export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 
 type Octokit = ReturnType<(typeof github)["getOctokit"]>;
 
-let config: ActionConfig;
 let octokit: Octokit;
 
 export function init(cfg?: ActionConfig): void {
-  config = cfg ?? getConfig();
-  octokit = github.getOctokit(config.token);
+  const resolved = cfg ?? getConfig();
+  octokit = github.getOctokit(resolved.token);
 }
 
 type CreateCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["createComment"]>>;
