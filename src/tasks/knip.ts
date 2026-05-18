@@ -1,4 +1,5 @@
 import { exec } from "node:child_process";
+import fs from "node:fs/promises";
 
 import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
@@ -557,17 +558,55 @@ export function getJsonFromOutput(output: string): string {
   throw new Error("Unable to find JSON blob");
 }
 
-export async function runKnipTasks(
-  buildScriptName: string,
-  annotationsEnabled: boolean,
-  verboseEnabled: boolean,
-  cwd?: string,
-): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
+export async function getJsonFromInputFile(filePath: string): Promise<string> {
+  try {
+    await fs.stat(filePath);
+  } catch (err) {
+    throw new Error(`Provided 'json_report_path' does not exist: ${filePath}`, { cause: err });
+  }
+
+  const content = await fs.readFile(filePath, "utf-8");
+
+  if (!content) {
+    throw new Error(`Provided 'json_report_path' is empty: ${filePath}`);
+  }
+
+  try {
+    JSON.parse(content);
+  } catch {
+    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`);
+  }
+
+  return content;
+}
+
+async function getOutput(buildScriptName: string, cwd?: string): Promise<string> {
+  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
+
+  return getJsonFromOutput(await run(cmd));
+}
+
+export interface RunKnipTasksOpts {
+  buildScriptName: string;
+  jsonReportPath?: string;
+  annotationsEnabled: boolean;
+  verboseEnabled: boolean;
+  cwd?: string;
+}
+
+export async function runKnipTasks({
+  buildScriptName,
+  jsonReportPath,
+  annotationsEnabled,
+  verboseEnabled,
+  cwd,
+}: RunKnipTasksOpts): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
   core.info("- Running Knip tasks");
 
-  const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
-  const output = await timeTask("Run knip", async () => getJsonFromOutput(await run(cmd)));
+  const output = jsonReportPath
+    ? await timeTask("Get knip report from file", () => getJsonFromInputFile(jsonReportPath))
+    : await timeTask("Run knip", () => getOutput(buildScriptName, cwd));
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),
   );

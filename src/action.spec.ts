@@ -33,6 +33,7 @@ describe("Action", () => {
       verbose: actionInputs.verbose?.default,
       ignore_results: actionInputs.ignore_results?.default,
       working_directory: actionInputs.working_directory?.default,
+      json_report_path: actionInputs.json_report_path?.default,
     };
 
     vi.spyOn(core, "getInput").mockImplementation((input: string) => {
@@ -41,6 +42,7 @@ describe("Action", () => {
         case "command_script_name":
         case "comment_id":
         case "working_directory":
+        case "json_report_path":
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:
@@ -76,6 +78,7 @@ describe("Action", () => {
       );
       expect(config.ignoreResults).toStrictEqual(actionInputs.ignore_results?.default);
       expect(config.workingDirectory).toStrictEqual(actionInputs.working_directory?.default);
+      expect(config.jsonReportPath).toStrictEqual(actionInputs.json_report_path?.default);
     });
 
     describe("custom values", () => {
@@ -141,6 +144,29 @@ describe("Action", () => {
 
         expect(config.workingDirectory).toStrictEqual("some_directory");
       });
+
+      it("should resolve jsonReportPath against process.cwd when workingDirectory is unset", () => {
+        mockEnvConfig.json_report_path = "report.json";
+        const config: ActionConfig = getConfig();
+
+        expect(config.jsonReportPath).toStrictEqual(resolve("report.json"));
+      });
+
+      it("should resolve a relative jsonReportPath against workingDirectory", () => {
+        mockEnvConfig.working_directory = "packages/app";
+        mockEnvConfig.json_report_path = "report.json";
+        const config: ActionConfig = getConfig();
+
+        expect(config.jsonReportPath).toStrictEqual(resolve("packages/app", "report.json"));
+      });
+
+      it("should keep an absolute jsonReportPath unchanged regardless of workingDirectory", () => {
+        mockEnvConfig.working_directory = "packages/app";
+        mockEnvConfig.json_report_path = "/tmp/report.json";
+        const config: ActionConfig = getConfig();
+
+        expect(config.jsonReportPath).toStrictEqual("/tmp/report.json");
+      });
     });
   });
 
@@ -149,6 +175,12 @@ describe("Action", () => {
       const cfgStr = configToStr(getConfig());
       expect(cfgStr).not.toContain(actionInputs.token?.default);
       expect(cfgStr).not.toContain(mockEnvConfig.token);
+    });
+
+    it("should include the resolved jsonReportPath when one is provided", () => {
+      mockEnvConfig.json_report_path = "report.json";
+      const cfgStr = configToStr(getConfig());
+      expect(cfgStr).toContain(resolve("report.json"));
     });
   });
 });

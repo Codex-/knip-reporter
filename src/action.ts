@@ -1,4 +1,8 @@
+import path from "node:path";
+
 import * as core from "@actions/core";
+
+export const DEFAULT_KNIP_COMMAND = "knip";
 
 /**
  * action.yaml definition.
@@ -38,17 +42,31 @@ export interface ActionConfig {
    * Directory in which to run the knip action.
    */
   workingDirectory?: string;
+
+  /**
+   * Path to a file that contains the JSON output of a Knip run.
+   *
+   * If provided, the action will use this instead of running Knip.
+   */
+  jsonReportPath?: string;
 }
 
 export function getConfig(): ActionConfig {
+  const workingDirectory = core.getInput("working_directory", { required: false }) || undefined;
+  const jsonReportPathInput = core.getInput("json_report_path", { required: false });
+
   return {
     token: core.getInput("token", { required: true }),
-    commandScriptName: core.getInput("command_script_name", { required: false }) || "knip",
+    commandScriptName:
+      core.getInput("command_script_name", { required: false }) || DEFAULT_KNIP_COMMAND,
     commentId: core.getInput("comment_id", { required: true }).trim().replaceAll(/\s/g, "-"),
     annotations: core.getBooleanInput("annotations", { required: false }),
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
-    workingDirectory: core.getInput("working_directory", { required: false }) || undefined,
+    workingDirectory,
+    jsonReportPath: jsonReportPathInput
+      ? path.resolve(workingDirectory ?? ".", jsonReportPathInput)
+      : undefined,
   };
 }
 
@@ -61,5 +79,6 @@ export function configToStr(cfg: ActionConfig): string {
     verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
     workingDirectory: ${cfg.workingDirectory}
+    jsonReportPath: ${cfg.jsonReportPath}
 `;
 }

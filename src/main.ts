@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-import { configToStr, getConfig } from "./action.ts";
+import { configToStr, DEFAULT_KNIP_COMMAND, getConfig } from "./action.ts";
 import { init } from "./api.ts";
 import {
   AnnotationsCount,
@@ -17,6 +17,10 @@ export async function main(): Promise<void> {
   try {
     const config = getConfig();
     const actionMs = Date.now();
+
+    if (config.jsonReportPath && config.commandScriptName !== DEFAULT_KNIP_COMMAND) {
+      core.warning("command_script_name config will be ignored when json_report_path is provided");
+    }
 
     core.info("- knip-reporter action");
     core.info(configToStr(config));
@@ -36,12 +40,13 @@ export async function main(): Promise<void> {
       );
     }
 
-    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks(
-      config.commandScriptName,
-      config.annotations,
-      config.verbose,
-      config.workingDirectory,
-    );
+    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
+      buildScriptName: config.commandScriptName,
+      jsonReportPath: config.jsonReportPath,
+      annotationsEnabled: config.annotations,
+      verboseEnabled: config.verbose,
+      cwd: config.workingDirectory,
+    });
 
     await runCommentTask(
       config.commentId,
