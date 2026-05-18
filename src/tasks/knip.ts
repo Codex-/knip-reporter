@@ -436,8 +436,7 @@ export function processSectionToMessages(
   // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
   const splitFactor = Math.ceil(originalOutput.length / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
-  const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
-  const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
+  const tableBodyItemWindow = Math.ceil(tableBodySize / splitFactor);
   let tableBodySliceStart = 0;
   let tableBodySliceEnd = tableBodyItemWindow;
   while (tableBodySliceStart < tableBodySize) {

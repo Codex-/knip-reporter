@@ -53,7 +53,13 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
       }
     }
 
-    if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+    // A section under MAX is still unpostable when combined with the comment-id
+    // header + delimiter would exceed MAX in an otherwise-empty comment. Without
+    // catching that here the loop never advances on such a section.
+    const sectionUnpostable =
+      section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH ||
+      (currentCommentSections.length === 1 && newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+    if (sectionUnpostable) {
       const sectionHeader = section.split("\n")[0] ?? "";
       core.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
       core.warning(`Skipping this section, please see output below:`);

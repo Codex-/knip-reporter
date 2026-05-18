@@ -24188,7 +24188,8 @@ function buildComments(cfgCommentId, reportSections) {
         continue;
       }
     }
-    if (section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+    const sectionUnpostable = section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH || currentCommentSections.length === 1 && newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH;
+    if (sectionUnpostable) {
       const sectionHeader = section.split("\n")[0] ?? "";
       warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
       warning(`Skipping this section, please see output below:`);
@@ -28368,8 +28369,7 @@ function processSectionToMessages(sectionHeader, tableHeader, tableBody) {
   output = [];
   const splitFactor = Math.ceil(originalOutput.length / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
   const tableBodySize = tableBody.length;
-  const tableBodySplitSize = Math.ceil(tableBodySize / splitFactor);
-  const tableBodyItemWindow = Math.ceil(tableBodySize / tableBodySplitSize);
+  const tableBodyItemWindow = Math.ceil(tableBodySize / splitFactor);
   let tableBodySliceStart = 0;
   let tableBodySliceEnd = tableBodyItemWindow;
   while (tableBodySliceStart < tableBodySize) {
