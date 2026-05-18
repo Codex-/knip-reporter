@@ -835,6 +835,31 @@ src/x.ts
       /* eslint-enable no-irregular-whitespace */
       expect(() => getJsonFromOutput(cliOutput)).toThrow("Unable to find JSON blob");
     });
+
+    it("should extract a pretty-printed (multi-line) JSON report", () => {
+      const cliOutput = `
+> knip-reporter@0.0.0 knip /Users/x/dev/p/knip-reporter
+> knip "--reporter" "json"
+
+${JSON.stringify(reportJson, null, 2)}
+
+ELIFECYCLE  Command failed with exit code 3.
+`;
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+    });
+
+    it("should skip multi-line blocks that look like JSON but don't parse", () => {
+      const cliOutput = `
+{
+  this is not really json
+}
+
+${JSON.stringify(reportJson, null, 2)}
+`;
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+    });
   });
 
   describe("getJsonFromInputFile", () => {
