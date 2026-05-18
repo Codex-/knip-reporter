@@ -538,20 +538,72 @@ export function buildMarkdownSections(
 }
 
 /**
+ * Simple collection attempt of the input as a single line of JSON.
+ *
+ * This is the default output from `knip`'s JSON reporter.
+ *
+ * Assume the report is the last line that starts with `'{'` and
+ * ends with `'}'`
+ */
+function findSingleLineJson(lines: string[]): string | undefined {
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const line = lines[i];
+    if (line?.startsWith("{") && line.endsWith("}")) {
+      return line;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * More complex collection attempt of the input as JSON that spans
+ * multiple lines.
+ *
+ * Scan for a multi-line JSON object by walking backwards from the
+ * last `}` line to a balancing `{` line and verifying with JSON.parse.
+ */
+function findMultiLineJson(lines: string[]): string | undefined {
+  for (let end = lines.length - 1; end >= 0; end--) {
+    if (!lines[end]?.trimEnd().endsWith("}")) continue;
+    for (let start = end; start >= 0; start--) {
+      if (!lines[start]?.trimStart().startsWith("{")) continue;
+      const candidate = lines.slice(start, end + 1).join("\n");
+      try {
+        JSON.parse(candidate);
+        return candidate;
+      } catch {
+        // not balanced JSON, keep searching
+      }
+    }
+  }
+  return undefined;
+}
+
+/**
  * Knip in some cases can end up causing javascript on
  * config files to evaluate. This means that if the consumer
  * outputs logs or information that could be misinterpreted as the
  * report.
  *
- * For now, we naively assume that the last line of the output starting
- * with '{' and ending with '}' is the correct report.
+ * Attempts single-line collection first, falling back to multi-line
+ * traversal to find the JSON string if single-line collection fails.
  */
 export function getJsonFromOutput(output: string): string {
-  const lines = output.split(/\n/).reverse();
-  for (const line of lines) {
-    if (line.startsWith("{") && line.endsWith("}")) {
-      return line;
-    }
+  const lines = output.split(/\n/);
+
+  // If the knip output is unformatted/unmodified, it will be a
+  // single line of JSON, which makes parsing fast and simple.
+  const singleLineJsonParseResult = findSingleLineJson(lines);
+  if (singleLineJsonParseResult) {
+    return singleLineJsonParseResult;
+  }
+
+  // If the knip output has been provided, it may be autoformatted
+  // making it certainly a multiline string.
+  core.debug("Failed to collect JSON with single-line method, retrying with multi-line method");
+  const multiLineJsonParseResult = findMultiLineJson(lines);
+  if (multiLineJsonParseResult) {
+    return multiLineJsonParseResult;
   }
 
   throw new Error("Unable to find JSON blob");
