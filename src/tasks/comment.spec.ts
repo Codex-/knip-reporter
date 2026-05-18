@@ -1,10 +1,10 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import * as api from "../api.ts";
-import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 import { reportJson } from "./__fixtures__/knip.fixture.ts";
 import { buildComments, createOrUpdateComments, deleteComments } from "./comment.ts";
 import { buildFilesSection, buildMarkdownSections, parseJsonReport } from "./knip.ts";
+import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 
 vi.mock("@actions/core");
 vi.mock("../api.ts");
@@ -230,6 +230,27 @@ describe("comment", () => {
         `"Skipping this section, please see output below:"`,
       );
       expect(coreWarningLogMock.mock.calls[2]?.[0]).toStrictEqual(longSection[0]);
+    });
+
+    it("should skip a section whose length is in the borderline window above MAX - headerLen", () => {
+      // A section that is itself under MAX but, combined with the comment-id header
+      // + delimiter, exceeds MAX cannot fit in any comment.
+      // Earlier iterations of buildComments would loop forever on this case because
+      // neither the "fits" branch nor the "too long" branch advanced the section index.
+      const sectionHeader = "### Borderline";
+      const filler = "a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH - sectionHeader.length - 3);
+      const borderline = `${sectionHeader}\n\n${filler}`;
+      expect(borderline.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+
+      // Behaviour
+      const comments = buildComments("hello", [borderline]);
+      expect(comments).toHaveLength(0);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
+      expect(coreWarningLogMock).toHaveBeenCalledTimes(3);
+      expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(sectionHeader);
+      expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(`(${borderline.length})`);
     });
 
     it("should not output a warning for a regular section", () => {
