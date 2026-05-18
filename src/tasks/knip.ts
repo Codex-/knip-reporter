@@ -586,7 +586,7 @@ async function getOutput(buildScriptName: string, cwd?: string): Promise<string>
   return getJsonFromOutput(await run(cmd));
 }
 
-export interface RunKnipTasksOpts {
+interface RunKnipTasksOpts {
   buildScriptName: string;
   jsonReportPath?: string;
   annotationsEnabled: boolean;
