@@ -544,8 +544,8 @@ export function buildMarkdownSections(
  * outputs logs or information that could be misinterpreted as the
  * report.
  *
- * For now, we naively assume that the last entry of the output to begin
- * with '[' is the correct report
+ * For now, we naively assume that the last line of the output starting
+ * with '{' and ending with '}' is the correct report.
  */
 export function getJsonFromOutput(output: string): string {
   const lines = output.split(/\n/).reverse();
