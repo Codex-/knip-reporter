@@ -14,7 +14,7 @@ import {
   type MockInstance,
 } from "vitest";
 
-import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
+import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import {
   buildArraySection,
@@ -31,6 +31,7 @@ import {
   run,
   runKnipTasks,
 } from "./knip.ts";
+import { mockLoggingFunctions } from "../test-utils/logging.mock.ts";
 
 vi.mock("node:child_process");
 vi.mock("@actions/core");
@@ -46,8 +47,13 @@ vi.mock("@antfu/ni", async () => {
 });
 
 describe("knip", () => {
-  const { coreDebugLogMock, coreInfoLogMock, coreWarningLogMock, assertOnlyCalled } =
-    mockLoggingFunctions();
+  const {
+    coreDebugLogMock,
+    coreInfoLogMock,
+    coreWarningLogMock,
+    assertOnlyCalled,
+    assertNoneCalled,
+  } = mockLoggingFunctions();
 
   afterAll(() => {
     vi.restoreAllMocks();
@@ -739,6 +745,27 @@ describe("knip", () => {
 
       // Behaviour
       const messages = processSectionToMessages(sectionHeader, tableHeader, body);
+
+      // Chunk count is bounded by the number of comments required to fit the
+      // output. Earlier iterations produced ~500 chunks of 3 rows; the intended
+      // behaviour is a small number of large chunks.
+      expect(messages.length).toBeGreaterThan(1);
+      expect(messages.length).toBeLessThan(20);
+
+      // Each chunk fits in a comment and renders as a standalone section.
+      const tableHeaderLine = "|Filename|Enum|Member|";
+      let observedRows = 0;
+      for (const msg of messages) {
+        expect(msg.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+        expect(msg).toContain(sectionHeader);
+        expect(msg).toContain(tableHeaderLine);
+        observedRows += msg
+          .split("\n")
+          .filter((l) => l.startsWith("|") && l !== tableHeaderLine && !l.startsWith("|-")).length;
+      }
+      // Every input row appears exactly once across the chunks.
+      expect(observedRows).toBe(body.length);
+
       expect(messages).toMatchSnapshot();
 
       // Logging
@@ -750,6 +777,25 @@ describe("knip", () => {
       expect(coreInfoLogMock.mock.calls[1]?.[0]).toMatch(
         /^ {4}✔ Splitting section ### Unused Enum Members \(12\) \(\d+ms\)$/,
       );
+    });
+
+    it("should return a single message when the section fits in one comment", () => {
+      const sectionHeader = "### Small";
+      const tableHeader = ["File", "Item"];
+      const tableBody = [
+        ["foo.ts", "`bar`"],
+        ["baz.ts", "`qux`"],
+      ];
+
+      // Behaviour
+      const messages = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+      expect(messages).toHaveLength(1);
+      expect(messages[0]).toContain(sectionHeader);
+      expect(messages[0]).toContain("|File|Item|");
+      expect(messages[0]?.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+
+      // Logging: no splitting → no logs
+      assertNoneCalled();
     });
   });
 
