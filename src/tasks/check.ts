@@ -17,6 +17,11 @@ export const CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
 
 type Unpacked<T> = T extends Array<infer U> ? U : T;
 export type Annotation = NonNullable<Unpacked<NonNullable<CheckOutput>["annotations"]>>;
+
+function assertNever(value: never): never {
+  throw new TypeError(`Unhandled ItemMeta type: ${String(value)}`);
+}
+
 export class AnnotationsCount {
   public exports = 0;
   public types = 0;
@@ -41,6 +46,8 @@ export class AnnotationsCount {
       case "enum":
         this.enumMembers++;
         break;
+      default:
+        assertNever(type);
     }
   }
 }
