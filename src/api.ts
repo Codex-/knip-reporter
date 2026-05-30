@@ -163,31 +163,35 @@ export async function findPullRequestNumberForCommitSha(sha: string): Promise<nu
   // SHA and the action would fail to find the PR.
   // `listPullRequestsAssociatedWithCommit` gives us all of them irrespective
   // of status.
-  const pullRequestsIterator = octokit.paginate.iterator(
-    octokit.rest.repos.listPullRequestsAssociatedWithCommit,
-    {
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      commit_sha: sha,
-      per_page: 30,
-    },
-  );
+  try {
+    const pullRequestsIterator = octokit.paginate.iterator(
+      octokit.rest.repos.listPullRequestsAssociatedWithCommit,
+      {
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        commit_sha: sha,
+        per_page: 30,
+      },
+    );
 
-  for await (const { data: pullRequests } of pullRequestsIterator) {
-    core.info(`Found ${pullRequests.length} pull-requests for this commit.`);
+    for await (const { data: pullRequests } of pullRequestsIterator) {
+      core.info(`Found ${pullRequests.length} pull-requests for this commit.`);
 
-    for (const pullRequest of pullRequests) {
-      core.debug(
-        `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`,
-      );
+      for (const pullRequest of pullRequests) {
+        core.debug(
+          `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`,
+        );
 
-      if (pullRequest.head.sha === sha) {
-        return pullRequest.number;
+        if (pullRequest.head.sha === sha) {
+          return pullRequest.number;
+        }
       }
     }
+  } finally {
+    // Always close the log group, even on an early return or a thrown
+    // pagination error, so subsequent logs are not nested under it.
+    core.endGroup();
   }
-
-  core.endGroup();
 
   core.info(`Could not find a pull-request for commit "${sha}".`);
 
