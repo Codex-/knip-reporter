@@ -551,7 +551,7 @@ describe("knip", () => {
           {
             col: 5,
             line: 39,
-            name: "Leviathan ",
+            name: "Leviathan",
             pos: 1317,
           },
           {
@@ -563,13 +563,13 @@ describe("knip", () => {
           {
             col: 5,
             line: 41,
-            name: "Zanifar ",
+            name: "Zanifar",
             pos: 1317,
           },
           {
             col: 5,
             line: 42,
-            name: "NefariousSpaceStation ",
+            name: "NefariousSpaceStation",
             pos: 1317,
           },
           {
@@ -665,7 +665,7 @@ describe("knip", () => {
           {
             col: 3,
             line: 388,
-            name: "refineGelatonium ",
+            name: "refineGelatonium",
             pos: 13987,
           },
         ],
@@ -781,7 +781,7 @@ describe("knip", () => {
         [
           "DrNefarious.ts",
           "Homeworld",
-          "`Magmos`<br/>`Aquatos`<br/>`Leviathan `<br/>`TombliOutpost`<br/>`Zanifar `<br/>`NefariousSpaceStation `<br/>`NefariousCity`<br/>`CorsonV`",
+          "`Magmos`<br/>`Aquatos`<br/>`Leviathan`<br/>`TombliOutpost`<br/>`Zanifar`<br/>`NefariousSpaceStation`<br/>`NefariousCity`<br/>`CorsonV`",
         ],
         ["Sigmund.ts", "Membership", "`ZordoomPrison`<br/>`GreatClockStaff`"],
         ["Sigmund.ts", "Residence", "`Viceron`<br/>`GreatClock`"],

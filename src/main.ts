@@ -1,8 +1,8 @@
 import * as core from "@actions/core";
-import * as github from "@actions/github";
 
 import { configToStr, DEFAULT_KNIP_COMMAND, getConfig } from "./action.ts";
 import { init } from "./api.ts";
+import { getPullRequestNumber } from "./github-utils/get-pull-request-number.ts";
 import {
   AnnotationsCount,
   createCheckId,
@@ -25,12 +25,6 @@ export async function main(): Promise<void> {
     core.info("- knip-reporter action");
     core.info(configToStr(config));
 
-    if (github.context.payload.pull_request === undefined) {
-      throw new TypeError(
-        `knip-reporter currently only supports 'pull_request' events, current event: ${github.context.eventName}`,
-      );
-    }
-
     init(config);
 
     let checkId: number | undefined;
@@ -49,11 +43,15 @@ export async function main(): Promise<void> {
     });
     const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
 
-    await runCommentTask(
-      config.commentId,
-      github.context.payload.pull_request.number,
-      knipSections,
-    );
+    // Creating a comment requires an associated PR to work against.
+    // In the case where this action is triggered by a non-pr event, we skip
+    // the comment creation task.
+    const pullRequestNumber = await getPullRequestNumber();
+    if (pullRequestNumber) {
+      await runCommentTask(config.commentId, pullRequestNumber, knipSections);
+    } else {
+      core.info("No pull request associated with this event, skipping comment creation");
+    }
 
     let counts = new AnnotationsCount();
     if (checkId !== undefined) {

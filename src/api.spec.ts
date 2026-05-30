@@ -16,6 +16,7 @@ import {
   createCheck,
   createComment,
   deleteComment,
+  findPullRequestNumberForCommitSha,
   init,
   listCommentIds,
   updateCheck,
@@ -62,6 +63,11 @@ const mockOctokit = {
         throw new Error("Should be mocked");
       },
     },
+    repos: {
+      listPullRequestsAssociatedWithCommit: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+    },
   },
   paginate: {
     iterator: mockPageIterator,
@@ -79,7 +85,7 @@ describe("API", () => {
     workingDirectory: ".",
   };
 
-  const { coreDebugLogMock, coreWarningLogMock, assertOnlyCalled, assertNoneCalled } =
+  const { coreDebugLogMock, coreInfoLogMock, assertOnlyCalled, assertNoneCalled } =
     mockLoggingFunctions();
 
   afterAll(() => {
@@ -132,7 +138,7 @@ describe("API", () => {
       assertOnlyCalled(coreDebugLogMock);
       expect(coreDebugLogMock).toHaveBeenCalledOnce();
       expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
-        `"[createComment]: Creating comment on https://github.com/a/b/pull/1 (123456)"`,
+        `"[createComment]: Creating comment on #123456"`,
       );
     });
 
@@ -452,8 +458,8 @@ describe("API", () => {
       assertNoneCalled();
     });
 
-    it("should warn if pull_request head_sha is missing", async () => {
-      vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
+    it("should pass through an undefined head_sha when pull_request head sha is missing", async () => {
+      const restSpy = vi.spyOn(mockOctokit.rest.checks, "create").mockResolvedValue({
         data: {},
         status: 201,
       });
@@ -461,13 +467,11 @@ describe("API", () => {
 
       // Behaviour
       await createCheck("knip-reporter", "Knip reporter analysis");
+      expect(restSpy).toHaveBeenCalledOnce();
+      expect(restSpy.mock.lastCall?.[0]?.head_sha).toBeUndefined();
 
       // Logging
-      assertOnlyCalled(coreWarningLogMock);
-      expect(coreWarningLogMock).toHaveBeenCalledOnce();
-      expect(coreWarningLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
-        `"Unable to find correct head_sha from payload, using base context sha"`,
-      );
+      assertNoneCalled();
     });
 
     it("should wrap octokit failures with the underlying cause", async () => {
@@ -582,6 +586,122 @@ describe("API", () => {
 
       // Logging
       assertNoneCalled();
+    });
+  });
+
+  describe("findPullRequestNumberForCommitSha", () => {
+    let pagesToReturn: any[];
+
+    beforeEach(() => {
+      let call = 0;
+      vi.spyOn(mockOctokit.rest.repos, "listPullRequestsAssociatedWithCommit").mockImplementation(
+        () => {
+          const toReturn = pagesToReturn[call];
+          call++;
+
+          if (!toReturn) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return undefined as any;
+          }
+
+          return Promise.resolve({ data: toReturn, status: 200 });
+        },
+      );
+
+      vi.spyOn(mockOctokit.paginate, "iterator").mockImplementation((rest) => {
+        return (async function* () {
+          const boundRest = rest;
+          let results: any = await boundRest();
+          while (results) {
+            yield results;
+            results = await boundRest();
+          }
+        })();
+      });
+    });
+
+    it("returns the number of the pull request whose head sha matches", async () => {
+      const startGroupSpy = vi.spyOn(core, "startGroup");
+      const endGroupSpy = vi.spyOn(core, "endGroup");
+
+      pagesToReturn = [
+        [
+          { number: 1, head: { sha: "other-sha" } },
+          { number: 2, head: { sha: "target-sha" } },
+        ],
+      ];
+
+      // Behaviour
+      const pullRequestNumber = await findPullRequestNumberForCommitSha("target-sha");
+      expect(pullRequestNumber).toStrictEqual(2);
+
+      // The log group must be closed even though we return early on a match.
+      expect(startGroupSpy).toHaveBeenCalledOnce();
+      expect(endGroupSpy).toHaveBeenCalledOnce();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledOnce();
+      expect(coreInfoLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"Found 2 pull-requests for this commit."`,
+      );
+      expect(coreDebugLogMock).toHaveBeenCalledTimes(2);
+      expect(coreDebugLogMock.mock.calls[0]?.[0]).toMatchInlineSnapshot(
+        `"Comparing: 1 sha: other-sha with expected: target-sha."`,
+      );
+      expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"Comparing: 2 sha: target-sha with expected: target-sha."`,
+      );
+    });
+
+    it("finds a match across multiple pages, regardless of pull request state", async () => {
+      pagesToReturn = [
+        [{ number: 1, head: { sha: "page-one-sha" } }],
+        [{ number: 99, head: { sha: "target-sha" } }],
+      ];
+
+      // Behaviour
+      const pullRequestNumber = await findPullRequestNumberForCommitSha("target-sha");
+      expect(pullRequestNumber).toStrictEqual(99);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+      expect(coreInfoLogMock.mock.calls[0]?.[0]).toMatchInlineSnapshot(
+        `"Found 1 pull-requests for this commit."`,
+      );
+      expect(coreInfoLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"Found 1 pull-requests for this commit."`,
+      );
+      expect(coreDebugLogMock).toHaveBeenCalledTimes(2);
+      expect(coreDebugLogMock.mock.calls[0]?.[0]).toMatchInlineSnapshot(
+        `"Comparing: 1 sha: page-one-sha with expected: target-sha."`,
+      );
+      expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"Comparing: 99 sha: target-sha with expected: target-sha."`,
+      );
+    });
+
+    it("returns `undefined` when no associated pull request matches the sha", async () => {
+      pagesToReturn = [[{ number: 1, head: { sha: "some-other-sha" } }]];
+
+      // Behaviour
+      const pullRequestNumber = await findPullRequestNumberForCommitSha("target-sha");
+      expect(pullRequestNumber).toBeUndefined();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+      expect(coreInfoLogMock.mock.calls[0]?.[0]).toMatchInlineSnapshot(
+        `"Found 1 pull-requests for this commit."`,
+      );
+      expect(coreInfoLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"Could not find a pull-request for commit "target-sha"."`,
+      );
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
+      expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+        `"Comparing: 1 sha: some-other-sha with expected: target-sha."`,
+      );
     });
   });
 });
