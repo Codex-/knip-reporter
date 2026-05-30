@@ -23757,11 +23757,10 @@ function configToStr(cfg) {
 
 // src/api.ts
 var GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
-var config;
 var octokit;
 function init(cfg) {
-  config = cfg ?? getConfig();
-  octokit = getOctokit(config.token);
+  const resolved = cfg ?? getConfig();
+  octokit = getOctokit(resolved.token);
 }
 async function createComment(pullRequestNumber, body) {
   debug(
@@ -24017,6 +24016,9 @@ async function createCheckId(name, title) {
   return id;
 }
 var CHECK_ANNOTATIONS_UPDATE_LIMIT = 50;
+function assertNever(value) {
+  throw new TypeError(`Unhandled ItemMeta type: ${String(value)}`);
+}
 var AnnotationsCount = class {
   exports = 0;
   types = 0;
@@ -24040,6 +24042,8 @@ var AnnotationsCount = class {
       case "enum":
         this.enumMembers++;
         break;
+      default:
+        assertNever(type);
     }
   }
 };
@@ -24050,7 +24054,7 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
   const count = new AnnotationsCount();
   let i2 = 0;
   while (i2 < itemMeta.length) {
-    const currentEndIndex = i2 + CHECK_ANNOTATIONS_UPDATE_LIMIT < itemMeta.length ? i2 + CHECK_ANNOTATIONS_UPDATE_LIMIT : itemMeta.length;
+    const currentEndIndex = Math.min(i2 + CHECK_ANNOTATIONS_UPDATE_LIMIT, itemMeta.length);
     debug(
       `[updateCheckAnnotations]: Processing ${i2}...${currentEndIndex - 1} of ${itemMeta.length - 1}`
     );
@@ -24095,6 +24099,8 @@ async function updateCheckAnnotations(checkId, itemMeta, ignoreResults) {
           annotation.message = `'${meta.identifier}' is a duplicate` + (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
           break;
         }
+        default:
+          assertNever(meta);
       }
       annotations.push(annotation);
     }
@@ -27730,23 +27736,23 @@ var defaultConfig = {
   catalog: true,
   noLastCommand: false
 };
-var config2;
+var config;
 async function getConfig2() {
-  if (!config2) {
-    config2 = {
+  if (!config) {
+    config = {
       ...defaultConfig,
       ...fs3.existsSync(rcPath) ? import_ini.default.parse(fs3.readFileSync(rcPath, "utf-8")) : null
     };
-    if (process$1.env.NI_DEFAULT_AGENT) config2.defaultAgent = process$1.env.NI_DEFAULT_AGENT;
-    if (process$1.env.NI_GLOBAL_AGENT) config2.globalAgent = process$1.env.NI_GLOBAL_AGENT;
-    if (process$1.env.NI_RUN_AGENT === "node") config2.runAgent = process$1.env.NI_RUN_AGENT;
-    if (process$1.env.NI_USE_SFW !== void 0) config2.useSfw = process$1.env.NI_USE_SFW === "true";
-    if (process$1.env.NI_CATALOG !== void 0) config2.catalog = process$1.env.NI_CATALOG !== "false";
-    if (process$1.env.NI_NO_LAST_COMMAND !== void 0) config2.noLastCommand = process$1.env.NI_NO_LAST_COMMAND === "true";
+    if (process$1.env.NI_DEFAULT_AGENT) config.defaultAgent = process$1.env.NI_DEFAULT_AGENT;
+    if (process$1.env.NI_GLOBAL_AGENT) config.globalAgent = process$1.env.NI_GLOBAL_AGENT;
+    if (process$1.env.NI_RUN_AGENT === "node") config.runAgent = process$1.env.NI_RUN_AGENT;
+    if (process$1.env.NI_USE_SFW !== void 0) config.useSfw = process$1.env.NI_USE_SFW === "true";
+    if (process$1.env.NI_CATALOG !== void 0) config.catalog = process$1.env.NI_CATALOG !== "false";
+    if (process$1.env.NI_NO_LAST_COMMAND !== void 0) config.noLastCommand = process$1.env.NI_NO_LAST_COMMAND === "true";
     const agent = await detect$1({ programmatic: true });
-    if (agent) config2.defaultAgent = agent;
+    if (agent) config.defaultAgent = agent;
   }
-  return config2;
+  return config;
 }
 async function getDefaultAgent(programmatic) {
   const { defaultAgent } = await getConfig2();
@@ -28448,12 +28454,40 @@ function buildMarkdownSections(report, annotationsEnabled, verboseEnabled) {
   }
   return { sections: outputSections, annotations: outputAnnotations };
 }
-function getJsonFromOutput(output) {
-  const lines = output.split(/\n/).reverse();
-  for (const line of lines) {
-    if (line.startsWith("{") && line.endsWith("}")) {
+function findSingleLineJson(lines) {
+  for (let i2 = lines.length - 1; i2 >= 0; i2--) {
+    const line = lines[i2];
+    if (line?.startsWith("{") && line.endsWith("}")) {
       return line;
     }
+  }
+  return void 0;
+}
+function findMultiLineJson(lines) {
+  for (let end = lines.length - 1; end >= 0; end--) {
+    if (!lines[end]?.trimEnd().endsWith("}")) continue;
+    for (let start = end; start >= 0; start--) {
+      if (!lines[start]?.trimStart().startsWith("{")) continue;
+      const candidate = lines.slice(start, end + 1).join("\n");
+      try {
+        JSON.parse(candidate);
+        return candidate;
+      } catch {
+      }
+    }
+  }
+  return void 0;
+}
+function getJsonFromOutput(output) {
+  const lines = output.split(/\n/);
+  const singleLineJsonParseResult = findSingleLineJson(lines);
+  if (singleLineJsonParseResult) {
+    return singleLineJsonParseResult;
+  }
+  debug("Failed to collect JSON with single-line method, retrying with multi-line method");
+  const multiLineJsonParseResult = findMultiLineJson(lines);
+  if (multiLineJsonParseResult) {
+    return multiLineJsonParseResult;
   }
   throw new Error("Unable to find JSON blob");
 }
@@ -28503,48 +28537,49 @@ async function runKnipTasks({
 // src/main.ts
 async function main() {
   try {
-    const config3 = getConfig();
+    const config2 = getConfig();
     const actionMs = Date.now();
-    if (config3.jsonReportPath && config3.commandScriptName !== DEFAULT_KNIP_COMMAND) {
+    if (config2.jsonReportPath && config2.commandScriptName !== DEFAULT_KNIP_COMMAND) {
       warning("command_script_name config will be ignored when json_report_path is provided");
     }
     info("- knip-reporter action");
-    info(configToStr(config3));
+    info(configToStr(config2));
     if (context2.payload.pull_request === void 0) {
       throw new TypeError(
         `knip-reporter currently only supports 'pull_request' events, current event: ${context2.eventName}`
       );
     }
-    init(config3);
+    init(config2);
     let checkId;
-    if (config3.annotations) {
+    if (config2.annotations) {
       checkId = await timeTask(
         "Create check ID",
         () => createCheckId("knip-reporter-annotations-check", "Knip reporter analysis")
       );
     }
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
-      buildScriptName: config3.commandScriptName,
-      jsonReportPath: config3.jsonReportPath,
-      annotationsEnabled: config3.annotations,
-      verboseEnabled: config3.verbose,
-      cwd: config3.workingDirectory
+      buildScriptName: config2.commandScriptName,
+      jsonReportPath: config2.jsonReportPath,
+      annotationsEnabled: config2.annotations,
+      verboseEnabled: config2.verbose,
+      cwd: config2.workingDirectory
     });
+    const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
     await runCommentTask(
-      config3.commentId,
+      config2.commentId,
       context2.payload.pull_request.number,
       knipSections
     );
     let counts = new AnnotationsCount();
     if (checkId !== void 0) {
-      counts = await updateCheckAnnotations(checkId, knipAnnotations, config3.ignoreResults);
+      counts = await updateCheckAnnotations(checkId, knipAnnotations, config2.ignoreResults);
     }
-    if (!config3.ignoreResults && knipSections.length > 0) {
+    if (!config2.ignoreResults && hasFindings) {
       setFailed("knip has resulted in findings, please see the report for more details");
     }
     if (checkId !== void 0) {
       try {
-        const conclusion = !config3.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0) ? "failure" : "success";
+        const conclusion = !config2.ignoreResults && hasFindings ? "failure" : "success";
         await resolveCheck(checkId, conclusion, counts);
       } catch (error2) {
         const detail = error2 instanceof Error ? error2.message : String(error2);
