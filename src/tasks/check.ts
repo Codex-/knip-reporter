@@ -67,10 +67,7 @@ export async function updateCheckAnnotations(
 
   let i = 0;
   while (i < itemMeta.length) {
-    const currentEndIndex =
-      i + CHECK_ANNOTATIONS_UPDATE_LIMIT < itemMeta.length
-        ? i + CHECK_ANNOTATIONS_UPDATE_LIMIT
-        : itemMeta.length;
+    const currentEndIndex = Math.min(i + CHECK_ANNOTATIONS_UPDATE_LIMIT, itemMeta.length);
     core.debug(
       `[updateCheckAnnotations]: Processing ${i}...${currentEndIndex - 1} ` +
         `of ${itemMeta.length - 1}`,
