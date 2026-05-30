@@ -38,8 +38,7 @@ vi.mock("./tasks/knip.ts");
 vi.mock("./tasks/task.ts");
 
 describe("main", () => {
-  const { coreInfoLogMock, coreErrorLogMock, coreWarningLogMock, assertOnlyCalled } =
-    mockLoggingFunctions();
+  const { coreInfoLogMock, coreWarningLogMock, assertOnlyCalled } = mockLoggingFunctions();
 
   const baseConfig: action.ActionConfig = {
     token: "secret",
