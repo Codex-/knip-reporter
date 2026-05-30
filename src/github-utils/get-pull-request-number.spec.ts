@@ -70,7 +70,9 @@ describe("getPullRequestNumber", () => {
     );
 
     // Logging
-    assertOnlyCalled(coreInfoLogMock);
+    // The malformed entry is validated before anything is logged, so we
+    // never log a misleading "Found undefined" line.
+    assertNoneCalled();
   });
 
   it("queries the API when workflow_run has no pull request entries", async () => {
