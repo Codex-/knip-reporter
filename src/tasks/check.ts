@@ -122,6 +122,8 @@ export async function updateCheckAnnotations(
             (duplicatesStr.length === 0 ? "" : ` of ${duplicatesStr}`);
           break;
         }
+        default:
+          assertNever(meta);
       }
 
       annotations.push(annotation);
