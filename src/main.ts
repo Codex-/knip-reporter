@@ -47,6 +47,7 @@ export async function main(): Promise<void> {
       verboseEnabled: config.verbose,
       cwd: config.workingDirectory,
     });
+    const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
 
     await runCommentTask(
       config.commentId,
@@ -59,7 +60,7 @@ export async function main(): Promise<void> {
       counts = await updateCheckAnnotations(checkId, knipAnnotations, config.ignoreResults);
     }
 
-    if (!config.ignoreResults && knipSections.length > 0) {
+    if (!config.ignoreResults && hasFindings) {
       core.setFailed("knip has resulted in findings, please see the report for more details");
     }
 
@@ -67,10 +68,7 @@ export async function main(): Promise<void> {
       // Handle errors here so teardown failures don't leak to the catch
       // and end up overriding `setFailed` with the wrong message.
       try {
-        const conclusion =
-          !config.ignoreResults && (knipSections.length > 0 || knipAnnotations.length > 0)
-            ? "failure"
-            : "success";
+        const conclusion = !config.ignoreResults && hasFindings ? "failure" : "success";
         await resolveCheck(checkId, conclusion, counts);
       } catch (error) {
         const detail = error instanceof Error ? error.message : String(error);

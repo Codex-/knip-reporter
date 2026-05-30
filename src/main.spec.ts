@@ -144,6 +144,37 @@ describe("main", () => {
     assertOnlyCalled(coreInfoLogMock);
   });
 
+  it("should fail when knip reports only annotations and no sections", async () => {
+    // With annotations enabled and verbose disabled, exports/types/duplicates/
+    // members produce annotations without contributing to `sections`. The
+    // action's exit status must match the check conclusion, which already
+    // counts annotations as findings.
+    runKnipTasksMock.mockResolvedValue({
+      sections: [],
+      annotations: [
+        {
+          path: "foo.ts",
+          identifier: "unused",
+          start_line: 1,
+          start_column: 1,
+          type: "export",
+        },
+      ],
+    });
+
+    // Behaviour
+    await main();
+
+    expect(coreSetFailedMock).toHaveBeenCalledOnce();
+    expect(coreSetFailedMock).toHaveBeenCalledWith(
+      "knip has resulted in findings, please see the report for more details",
+    );
+    expect(resolveCheckMock.mock.lastCall?.[1]).toStrictEqual("failure");
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock);
+  });
+
   it("should skip check work when annotations are disabled", async () => {
     actionGetConfigMock.mockReturnValue({ ...baseConfig, annotations: false });
 
