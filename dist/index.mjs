@@ -23766,6 +23766,9 @@ function getOctokit(token, options, ...additionalPlugins) {
 
 // src/github-utils/is-event-type.ts
 function isEventType(context3, eventType) {
+  if (!context3.payload[eventType]) {
+    return false;
+  }
   return context3.eventName === eventType;
 }
 
@@ -23775,7 +23778,7 @@ function getCommitSha() {
     return context2.payload.pull_request.head.sha;
   }
   if (isEventType(context2, "workflow_run")) {
-    return context2.payload.workflow_run.head_commit.id;
+    return context2.payload.workflow_run.head_sha;
   }
   return context2.sha;
 }
@@ -23887,25 +23890,30 @@ async function updateCheck(checkRunId, status, output, conclusion) {
 }
 async function findPullRequestNumberForCommitSha(sha) {
   startGroup("Querying REST API for pull-requests.");
-  const pullRequestsIterator = octokit.paginate.iterator(octokit.rest.pulls.list, {
-    owner: context2.repo.owner,
-    repo: context2.repo.repo,
-    per_page: 30,
-    sort: "updated",
-    direction: "desc"
-  });
-  for await (const { data: pullRequests } of pullRequestsIterator) {
-    info(`Found ${pullRequests.length} pull-requests in this page.`);
-    for (const pullRequest of pullRequests) {
-      debug(
-        `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`
-      );
-      if (pullRequest.head.sha === sha) {
-        return pullRequest.number;
+  try {
+    const pullRequestsIterator = octokit.paginate.iterator(
+      octokit.rest.repos.listPullRequestsAssociatedWithCommit,
+      {
+        owner: context2.repo.owner,
+        repo: context2.repo.repo,
+        commit_sha: sha,
+        per_page: 30
+      }
+    );
+    for await (const { data: pullRequests } of pullRequestsIterator) {
+      info(`Found ${pullRequests.length} pull-requests for this commit.`);
+      for (const pullRequest of pullRequests) {
+        debug(
+          `Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`
+        );
+        if (pullRequest.head.sha === sha) {
+          return pullRequest.number;
+        }
       }
     }
+  } finally {
+    endGroup();
   }
-  endGroup();
   info(`Could not find a pull-request for commit "${sha}".`);
   return void 0;
 }
@@ -23916,22 +23924,22 @@ async function getPullRequestNumber() {
     return context2.payload.pull_request.number;
   }
   if (isEventType(context2, "workflow_run")) {
-    if (context2.payload.workflow_run.pull_requests.length > 0) {
-      info(
-        `Found pull-request number in the action's "payload.workflow_run" context: ${context2.payload.workflow_run.pull_requests[0]?.number.toString()}`
-      );
-      const [pullRequest] = context2.payload.workflow_run.pull_requests;
+    const { pull_requests: pullRequests, head_sha: sha } = context2.payload.workflow_run;
+    if (pullRequests.length > 0) {
+      const [pullRequest] = pullRequests;
       if (!pullRequest) {
         throw new Error("No pull request found in GitHub event payload");
       }
+      info(
+        `Found pull-request number in the action's "payload.workflow_run" context: ${pullRequest.number}`
+      );
       return pullRequest.number;
     }
-    const sha = context2.payload.workflow_run.head_sha;
     info(
       `Trying to find a pull-request with a head commit matching the SHA found in the action's "payload.workflow_run.head_sha" context (${sha}) from the GitHub API.`
     );
     try {
-      return await findPullRequestNumberForCommitSha(context2.payload.workflow_run.head_sha);
+      return await findPullRequestNumberForCommitSha(sha);
     } catch (error2) {
       warning(
         `An error occurred while fetching pull requests from the GitHub API: ${error2.message}`
@@ -28638,10 +28646,11 @@ async function main() {
     });
     const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
     const pullRequestNumber = await getPullRequestNumber();
-    if (!pullRequestNumber) {
-      throw new Error("Unable to determine pull request number from GitHub context");
+    if (pullRequestNumber) {
+      await runCommentTask(config2.commentId, pullRequestNumber, knipSections);
+    } else {
+      info("No pull request associated with this event, skipping comment creation");
     }
-    await runCommentTask(config2.commentId, pullRequestNumber, knipSections);
     let counts = new AnnotationsCount();
     if (checkId !== void 0) {
       counts = await updateCheckAnnotations(checkId, knipAnnotations, config2.ignoreResults);
