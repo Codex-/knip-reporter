@@ -16,6 +16,7 @@ import {
   createCheck,
   createComment,
   deleteComment,
+  findPullRequestNumberForCommitSha,
   init,
   listCommentIds,
   updateCheck,
@@ -62,6 +63,11 @@ const mockOctokit = {
         throw new Error("Should be mocked");
       },
     },
+    repos: {
+      listPullRequestsAssociatedWithCommit: (_req?: any): Promise<MockResponse> => {
+        throw new Error("Should be mocked");
+      },
+    },
   },
   paginate: {
     iterator: mockPageIterator,
@@ -79,7 +85,8 @@ describe("API", () => {
     workingDirectory: ".",
   };
 
-  const { coreDebugLogMock, assertOnlyCalled, assertNoneCalled } = mockLoggingFunctions();
+  const { coreDebugLogMock, coreInfoLogMock, assertOnlyCalled, assertNoneCalled } =
+    mockLoggingFunctions();
 
   afterAll(() => {
     vi.restoreAllMocks();
@@ -579,6 +586,76 @@ describe("API", () => {
 
       // Logging
       assertNoneCalled();
+    });
+  });
+
+  describe("findPullRequestNumberForCommitSha", () => {
+    let pagesToReturn: any[];
+
+    beforeEach(() => {
+      let call = 0;
+      vi.spyOn(mockOctokit.rest.repos, "listPullRequestsAssociatedWithCommit").mockImplementation(
+        () => {
+          const toReturn = pagesToReturn[call];
+          call++;
+
+          if (!toReturn) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return undefined as any;
+          }
+
+          return Promise.resolve({ data: toReturn, status: 200 });
+        },
+      );
+
+      vi.spyOn(mockOctokit.paginate, "iterator").mockImplementation((rest) => {
+        return (async function* () {
+          const boundRest = rest;
+          let results: any = await boundRest();
+          while (results) {
+            yield results;
+            results = await boundRest();
+          }
+        })();
+      });
+    });
+
+    it("returns the number of the pull request whose head sha matches", async () => {
+      pagesToReturn = [
+        [
+          { number: 1, head: { sha: "other-sha" } },
+          { number: 2, head: { sha: "target-sha" } },
+        ],
+      ];
+
+      // Behaviour
+      const pullRequestNumber = await findPullRequestNumberForCommitSha("target-sha");
+      expect(pullRequestNumber).toStrictEqual(2);
+    });
+
+    it("finds a match across multiple pages, regardless of pull request state", async () => {
+      pagesToReturn = [
+        [{ number: 1, head: { sha: "page-one-sha" } }],
+        [{ number: 99, head: { sha: "target-sha" } }],
+      ];
+
+      // Behaviour
+      const pullRequestNumber = await findPullRequestNumberForCommitSha("target-sha");
+      expect(pullRequestNumber).toStrictEqual(99);
+    });
+
+    it("returns `undefined` when no associated pull request matches the sha", async () => {
+      pagesToReturn = [[{ number: 1, head: { sha: "some-other-sha" } }]];
+
+      // Behaviour
+      const pullRequestNumber = await findPullRequestNumberForCommitSha("target-sha");
+      expect(pullRequestNumber).toBeUndefined();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreInfoLogMock);
+      expect(coreInfoLogMock.mock.lastCall?.[0]).toContain(
+        'Could not find a pull-request for commit "target-sha"',
+      );
     });
   });
 });

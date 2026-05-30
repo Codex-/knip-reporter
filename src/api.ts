@@ -158,16 +158,23 @@ export async function updateCheck(
 export async function findPullRequestNumberForCommitSha(sha: string): Promise<number | undefined> {
   core.startGroup("Querying REST API for pull-requests.");
 
-  const pullRequestsIterator = octokit.paginate.iterator(octokit.rest.pulls.list, {
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    per_page: 30,
-    sort: "updated",
-    direction: "desc",
-  });
+  // `pulls.list` defaults to state:"open", so a workflow_run that completed
+  // after its pull request was merged or closed would never match the head
+  // SHA and the action would fail to find the PR.
+  // `listPullRequestsAssociatedWithCommit` gives us all of them irrespective
+  // of status.
+  const pullRequestsIterator = octokit.paginate.iterator(
+    octokit.rest.repos.listPullRequestsAssociatedWithCommit,
+    {
+      owner: github.context.repo.owner,
+      repo: github.context.repo.repo,
+      commit_sha: sha,
+      per_page: 30,
+    },
+  );
 
   for await (const { data: pullRequests } of pullRequestsIterator) {
-    core.info(`Found ${pullRequests.length} pull-requests in this page.`);
+    core.info(`Found ${pullRequests.length} pull-requests for this commit.`);
 
     for (const pullRequest of pullRequests) {
       core.debug(
