@@ -8,7 +8,7 @@ export function getCommitSha(): string {
   }
 
   if (isEventType(github.context, "workflow_run")) {
-    return github.context.payload.workflow_run.head_commit.id;
+    return github.context.payload.workflow_run.head_sha;
   }
 
   return github.context.sha;

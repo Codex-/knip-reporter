@@ -32,10 +32,22 @@ describe("getCommitSha", () => {
     expect(sha).toStrictEqual("pull-request-sha");
   });
 
-  it("returns the head commit id when the event type is workflow_run", () => {
+  it("returns the `head_sha` when the event type is `workflow_run`", () => {
     github.context.eventName = "workflow_run";
     github.context.payload.workflow_run = {
-      head_commit: { id: "workflow-pr-sha" },
+      head_sha: "workflow-pr-sha",
+    };
+
+    // Behaviour
+    const sha = getCommitSha();
+    expect(sha).toStrictEqual("workflow-pr-sha");
+  });
+
+  it("returns the `head_sha` for workflow_run even when `head_commit` is null", () => {
+    github.context.eventName = "workflow_run";
+    github.context.payload.workflow_run = {
+      head_sha: "workflow-pr-sha",
+      head_commit: null,
     };
 
     // Behaviour
