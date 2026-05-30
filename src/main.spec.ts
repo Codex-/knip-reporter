@@ -189,6 +189,34 @@ describe("main", () => {
     assertOnlyCalled(coreInfoLogMock);
   });
 
+  it("should run the check but skip the comment when no pull request is associated", async () => {
+    delete github.context.payload.pull_request;
+    github.context.payload.workflow_run = { pull_requests: [], head_sha: "abc123" };
+    Object.defineProperty(github.context, "eventName", {
+      value: "workflow_run",
+      configurable: true,
+      writable: true,
+    });
+
+    // Behaviour
+    await main();
+
+    expect(createCheckIdMock).toHaveBeenCalledOnce();
+    expect(runKnipTasksMock).toHaveBeenCalledOnce();
+    expect(updateCheckAnnotationsMock).toHaveBeenCalledOnce();
+    expect(resolveCheckMock).toHaveBeenCalledOnce();
+    // The annotations check works off the commit SHA and still runs, but the
+    // comment task needs a pull request, so it is skipped without failing.
+    expect(runCommentTaskMock).not.toHaveBeenCalled();
+    expect(coreSetFailedMock).not.toHaveBeenCalled();
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock);
+    expect(coreInfoLogMock.mock.calls.map((call) => call[0])).toContain(
+      "No pull request associated with this event, skipping comment creation",
+    );
+  });
+
   it("should not setFailed when ignoreResults is true even with findings", async () => {
     actionGetConfigMock.mockReturnValue({ ...baseConfig, ignoreResults: true });
     runKnipTasksMock.mockResolvedValue({

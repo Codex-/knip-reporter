@@ -43,13 +43,15 @@ export async function main(): Promise<void> {
     });
     const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
 
+    // Creating a comment requires an associated PR to work against.
+    // In the case where this action is triggered by a non-pr event, we skip
+    // the comment creation task.
     const pullRequestNumber = await getPullRequestNumber();
-
-    if (!pullRequestNumber) {
-      throw new Error("Unable to determine pull request number from GitHub context");
+    if (pullRequestNumber) {
+      await runCommentTask(config.commentId, pullRequestNumber, knipSections);
+    } else {
+      core.info("No pull request associated with this event, skipping comment creation");
     }
-
-    await runCommentTask(config.commentId, pullRequestNumber, knipSections);
 
     let counts = new AnnotationsCount();
     if (checkId !== undefined) {
