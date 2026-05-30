@@ -189,6 +189,54 @@ describe("knip", () => {
       assertOnlyCalled(coreDebugLogMock);
       expect(coreDebugLogMock).toHaveBeenCalledOnce();
     });
+
+    it("should merge unrelated keys across issues sharing the same file", () => {
+      const input = {
+        issues: [
+          { file: "foo.ts", exports: [{ name: "a", line: 1, col: 1, pos: 1 }] },
+          { file: "foo.ts", types: [{ name: "T", line: 2, col: 1, pos: 10 }] },
+        ],
+      };
+
+      // Behaviour
+      const parsed = parseJsonReport(JSON.stringify(input));
+      expect(parsed.exports["foo.ts"]).toEqual([{ name: "a", line: 1, col: 1, pos: 1 }]);
+      expect(parsed.types["foo.ts"]).toEqual([{ name: "T", line: 2, col: 1, pos: 10 }]);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
+    });
+
+    it("should overwrite when two issues share both a file and a type (last-wins)", () => {
+      // Knip's reporter emits one row per file, so this shouldn't occur in
+      // practice. Pin the current last-wins semantics so a future change is
+      // surfaced explicitly.
+      const input = {
+        issues: [
+          { file: "foo.ts", exports: [{ name: "first", line: 1, col: 1, pos: 1 }] },
+          { file: "foo.ts", exports: [{ name: "second", line: 2, col: 1, pos: 10 }] },
+        ],
+      };
+
+      // Behaviour
+      const parsed = parseJsonReport(JSON.stringify(input));
+      expect(parsed.exports["foo.ts"]).toEqual([{ name: "second", line: 2, col: 1, pos: 10 }]);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
+    });
+
+    it("should return an empty report when the root JSON is not an object", () => {
+      for (const raw of ["[]", "null", '"a string"', "42"]) {
+        const parsed = parseJsonReport(raw);
+        expect(parsed.files, raw).toEqual([]);
+        expect(parsed.exports, raw).toEqual({});
+        expect(parsed.dependencies, raw).toEqual({});
+        expect(parsed.duplicates, raw).toEqual({});
+      }
+    });
   });
 
   describe("buildFilesSection", () => {
@@ -834,6 +882,31 @@ src/x.ts
 `;
       /* eslint-enable no-irregular-whitespace */
       expect(() => getJsonFromOutput(cliOutput)).toThrow("Unable to find JSON blob");
+    });
+
+    it("should extract a pretty-printed (multi-line) JSON report", () => {
+      const cliOutput = `
+> knip-reporter@0.0.0 knip /Users/x/dev/p/knip-reporter
+> knip "--reporter" "json"
+
+${JSON.stringify(reportJson, null, 2)}
+
+ELIFECYCLE  Command failed with exit code 3.
+`;
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+    });
+
+    it("should skip multi-line blocks that look like JSON but don't parse", () => {
+      const cliOutput = `
+{
+  this is not really json
+}
+
+${JSON.stringify(reportJson, null, 2)}
+`;
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
     });
   });
 
