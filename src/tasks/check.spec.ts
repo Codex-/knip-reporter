@@ -454,6 +454,17 @@ describe("check", () => {
     });
   });
 
+  describe("AnnotationsCount.increaseCount", () => {
+    it("should throw on an unknown ItemMeta type", () => {
+      // If a new `ItemMeta` type is added without updating `increaseCount`
+      // we'll throw an error to catch and support these
+      const count = new AnnotationsCount();
+      expect(() => {
+        count.increaseCount("not-a-real-type" as ItemMeta["type"]);
+      }).toThrow(/Unhandled ItemMeta type: not-a-real-type/);
+    });
+  });
+
   describe("resolveCheck", () => {
     it("should resolve a check with the provided conclusion", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
