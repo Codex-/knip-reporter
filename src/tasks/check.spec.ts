@@ -254,21 +254,23 @@ describe("check", () => {
       expect(counts.namespaceMembers).toStrictEqual(1);
       expect(counts.enumMembers).toStrictEqual(1);
 
-      items.push({
-        path: "some/path",
-        identifier: "Var",
-        start_line: 0,
-        start_column: 0,
-        type: "namespace",
-      });
-      items.push({
-        path: "some/path",
-        identifier: "Var",
-        start_line: 0,
-        start_column: 0,
-        type: "duplicate",
-        duplicateIdentifiers: ["Var2", "Var3"],
-      });
+      items.push(
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "namespace",
+        },
+        {
+          path: "some/path",
+          identifier: "Var",
+          start_line: 0,
+          start_column: 0,
+          type: "duplicate",
+          duplicateIdentifiers: ["Var2", "Var3"],
+        },
+      );
 
       counts = await updateCheckAnnotations(0, items, false);
 
@@ -329,7 +331,7 @@ describe("check", () => {
 
     it("should only make one request with 50 annotations or less", async () => {
       const updateCheckSpy = vi.spyOn(api, "updateCheck");
-      const items: ItemMeta[] = [...Array(50).keys()].map(() => ({
+      const items: ItemMeta[] = [...new Array(50).keys()].map(() => ({
         path: "some/path",
         identifier: "Var",
         start_line: 0,
@@ -360,10 +362,10 @@ describe("check", () => {
           case 4:
             return "enum";
           default:
-            throw new Error();
+            throw new Error("unhandled");
         }
       };
-      const items: ItemMeta[] = [...Array(150).keys()].map((i) => {
+      const items: ItemMeta[] = [...new Array(150).keys()].map((i) => {
         const type = iToType(i);
         const meta: Omit<ItemMeta, "type"> = {
           path: "some/path",
@@ -409,8 +411,8 @@ describe("check", () => {
         output: Parameters<typeof api.updateCheck>["2"],
       ) => {
         pushedAnnotations.push(...(output?.annotations ?? []));
-      }) as unknown as typeof api.updateCheck);
-      const items: ItemMeta[] = [...Array(150).keys()].map((i) => ({
+      }) as typeof api.updateCheck);
+      const items: ItemMeta[] = [...new Array(150).keys()].map((i) => ({
         path: "some/path",
         identifier: `Var${i}`,
         start_line: 0,
@@ -431,7 +433,7 @@ describe("check", () => {
 
     it("should accurately report the count to the debug logger", async () => {
       vi.spyOn(api, "updateCheck");
-      const items: ItemMeta[] = [...Array(130).keys()].map((i) => ({
+      const items: ItemMeta[] = [...new Array(130).keys()].map((i) => ({
         path: "some/path",
         identifier: `Var${i}`,
         start_line: 0,
