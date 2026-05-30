@@ -256,7 +256,7 @@ describe("knip", () => {
     it("should wrap each file with backticks to render as code", () => {
       const files = ["Ratchet.ts", "Clank.ts", "DrNefarious.ts"];
       const filesSection = buildFilesSection(files).split("\n");
-      const filesLine = filesSection[filesSection.length - 1]?.split(", ") ?? [];
+      const filesLine = filesSection.at(-1)?.split(", ") ?? [];
 
       for (let i = 0; i < files.length; i++) {
         expect(filesLine[i]).toStrictEqual(`\`${files[i]}\``);
