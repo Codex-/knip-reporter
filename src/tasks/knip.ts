@@ -410,50 +410,71 @@ export function buildMapSection(
   return { sections: [], annotations: annotations };
 }
 
+function chunkRows<Row>(rows: Row[], chunkCount: number): Row[][] {
+  const window = Math.ceil(rows.length / chunkCount);
+  const chunks: Row[][] = [];
+  for (let start = 0; start < rows.length; start += window) {
+    chunks.push(rows.slice(start, start + window));
+  }
+  return chunks;
+}
+
+/**
+ * Split a section's rows across as many messages as needed to keep each one
+ * under the comment length limit.
+ *
+ * `render` must return the complete message for a slice of rows so that the
+ * header and any surrounding markup count toward the limit. A single row that
+ * cannot fit on its own is still returned oversized, leaving the caller to
+ * report it.
+ */
+function splitRowsToMessages<Row>(
+  sectionHeader: string,
+  rows: Row[],
+  render: (rows: Row[]) => string,
+): string[] {
+  let messages = [render(rows)];
+  if ((messages[0]?.length ?? 0) < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+    // Output doesn't violate the limit, simply return and move on
+    return messages;
+  }
+
+  const sectionProcessingMs = Date.now();
+  core.info(`    - Splitting section ${sectionHeader}`);
+
+  // Per-message overhead is only known once rendered, so grow the split factor
+  // until every message fits rather than predicting the row count up front.
+  const start = Math.max(
+    2,
+    Math.ceil((messages[0]?.length ?? 0) / GITHUB_COMMENT_MAX_COMMENT_LENGTH),
+  );
+  for (let splitFactor = start; splitFactor <= rows.length; splitFactor++) {
+    messages = chunkRows(rows, splitFactor).map(render);
+    if (messages.every((message) => message.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH)) {
+      break;
+    }
+  }
+
+  core.info(`    ✔ Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
+  return messages;
+}
+
+const MARKDOWN_TABLE_OPTIONS: MarkdownTableOptions = {
+  alignDelimiters: false,
+  padding: false,
+};
+
 export function processSectionToMessages(
   sectionHeader: string,
   tableHeader: string[],
   tableBody: string[][],
 ): string[] {
-  const markdownTableOptions: MarkdownTableOptions = {
-    alignDelimiters: false,
-    padding: false,
-  };
-
-  const sectionProcessingMs = Date.now();
-  const originalOutput =
-    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions);
-  let output = [originalOutput];
-  if (originalOutput.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-    // Output doesn't violate the limit, simply return and move on
-    return output;
-  }
-
-  core.info(`    - Splitting section ${sectionHeader}`);
-  output = [];
-
-  // We round this number up otherwise the splitLength will result in exactly 65535-100
-  // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
-  const splitFactor = Math.ceil(originalOutput.length / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
-  const tableBodySize = tableBody.length;
-  const tableBodyItemWindow = Math.ceil(tableBodySize / splitFactor);
-  let tableBodySliceStart = 0;
-  let tableBodySliceEnd = tableBodyItemWindow;
-  while (tableBodySliceStart < tableBodySize) {
-    const slicedBodyItems = tableBody.slice(tableBodySliceStart, tableBodySliceEnd);
-    if (slicedBodyItems.length === 0) {
-      break;
-    }
-    const markdown = markdownTable([tableHeader, ...slicedBodyItems], markdownTableOptions);
-    const newSection = sectionHeader + "\n\n" + markdown;
-    output.push(newSection);
-
-    tableBodySliceStart = tableBodySliceEnd;
-    tableBodySliceEnd += tableBodyItemWindow;
-  }
-
-  core.info(`    ✔ Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
-  return output;
+  return splitRowsToMessages(
+    sectionHeader,
+    tableBody,
+    (rows) =>
+      sectionHeader + "\n\n" + markdownTable([tableHeader, ...rows], MARKDOWN_TABLE_OPTIONS),
+  );
 }
 
 export function buildMarkdownSections(

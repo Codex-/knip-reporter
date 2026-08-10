@@ -827,6 +827,29 @@ describe("knip", () => {
       );
     });
 
+    it("should split a section that only just exceeds the limit", () => {
+      const sectionHeader = "### Just Over";
+      const tableHeader = ["Filename", "Item"];
+      const row = ["DrNefarious.ts", "`Magmos`"];
+      const tableBody: string[][] = [];
+      let renderedLength = 0;
+      while (renderedLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH + 50) {
+        tableBody.push(row);
+        renderedLength += row.join("|").length + 3;
+      }
+
+      // Behaviour
+      const messages = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+      expect(messages).toHaveLength(2);
+      for (const message of messages) {
+        expect(message.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+    });
+
     it("should return a single message when the section fits in one comment", () => {
       const sectionHeader = "### Small";
       const tableHeader = ["File", "Item"];
