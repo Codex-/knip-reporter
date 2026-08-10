@@ -74,7 +74,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -82,7 +82,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -156,7 +156,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -164,7 +164,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -238,7 +238,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -246,7 +246,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -320,7 +320,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -328,7 +328,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -402,7 +402,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -410,7 +410,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -484,7 +484,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -492,7 +492,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -566,7 +566,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -574,7 +574,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -648,7 +648,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -656,7 +656,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -730,7 +730,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -738,7 +738,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -812,7 +812,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -820,7 +820,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -894,7 +894,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -902,7 +902,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -976,7 +976,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -984,7 +984,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1058,7 +1058,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1066,7 +1066,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1140,7 +1140,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1148,7 +1148,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1222,7 +1222,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1230,7 +1230,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1304,7 +1304,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1312,7 +1312,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1386,7 +1386,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1394,7 +1394,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1468,7 +1468,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1476,7 +1476,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1550,7 +1550,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1558,7 +1558,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1632,7 +1632,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1640,7 +1640,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1714,7 +1714,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1722,7 +1722,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1796,7 +1796,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1804,7 +1804,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1878,7 +1878,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1886,7 +1886,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -1960,7 +1960,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -1968,7 +1968,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2042,7 +2042,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2050,7 +2050,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2124,7 +2124,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2132,7 +2132,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2206,7 +2206,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2214,7 +2214,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2288,7 +2288,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2296,7 +2296,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2370,7 +2370,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2378,7 +2378,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2452,7 +2452,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2460,7 +2460,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2534,7 +2534,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2542,7 +2542,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2616,7 +2616,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2624,7 +2624,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2698,7 +2698,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2706,15 +2706,15 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|",
+|Qwark.ts|InsaneQwark|\`destroy\`|
+
+### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
   "<!-- hello-1 -->
 
-### Unused files (3)
-
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
-
 ### Unused dependencies (3)
 
 |Filename|dependencies|
@@ -2781,7 +2781,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2789,7 +2789,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2863,7 +2863,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2871,7 +2871,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -2945,7 +2945,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -2953,7 +2953,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3027,7 +3027,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3035,7 +3035,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3109,7 +3109,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3117,7 +3117,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3191,7 +3191,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3199,7 +3199,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3273,7 +3273,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3281,7 +3281,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3355,7 +3355,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3363,7 +3363,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3437,7 +3437,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3445,7 +3445,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3519,7 +3519,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3527,7 +3527,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3601,7 +3601,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3609,7 +3609,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3683,7 +3683,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3691,7 +3691,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3765,7 +3765,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3773,7 +3773,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3847,7 +3847,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3855,7 +3855,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -3929,7 +3929,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -3937,7 +3937,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4011,7 +4011,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4019,7 +4019,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4093,7 +4093,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4101,7 +4101,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4175,7 +4175,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4183,7 +4183,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4257,7 +4257,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4265,7 +4265,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4339,7 +4339,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4347,7 +4347,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4421,7 +4421,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4429,7 +4429,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4503,7 +4503,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4511,7 +4511,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4585,7 +4585,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4593,7 +4593,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4667,7 +4667,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4675,7 +4675,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4749,7 +4749,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4757,7 +4757,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4831,7 +4831,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4839,7 +4839,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4913,7 +4913,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -4921,7 +4921,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -4995,7 +4995,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5003,7 +5003,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5077,7 +5077,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5085,7 +5085,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5159,7 +5159,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5167,7 +5167,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5241,7 +5241,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5249,7 +5249,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5323,7 +5323,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5331,7 +5331,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5405,7 +5405,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5413,15 +5413,15 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|",
+|Qwark.ts|InsaneQwark|\`destroy\`|
+
+### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
   "<!-- hello-2 -->
 
-### Unused files (3)
-
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
-
 ### Unused dependencies (3)
 
 |Filename|dependencies|
@@ -5488,7 +5488,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5496,7 +5496,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5570,7 +5570,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5578,7 +5578,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5652,7 +5652,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5660,7 +5660,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5734,7 +5734,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5742,7 +5742,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5816,7 +5816,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5824,7 +5824,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5898,7 +5898,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5906,7 +5906,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -5980,7 +5980,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -5988,7 +5988,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6062,7 +6062,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6070,7 +6070,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6144,7 +6144,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6152,7 +6152,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6226,7 +6226,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6234,7 +6234,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6308,7 +6308,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6316,7 +6316,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6390,7 +6390,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6398,7 +6398,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6472,7 +6472,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6480,7 +6480,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6554,7 +6554,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6562,7 +6562,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6636,7 +6636,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6644,7 +6644,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6718,7 +6718,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6726,7 +6726,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6800,7 +6800,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6808,7 +6808,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6882,7 +6882,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6890,7 +6890,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -6964,7 +6964,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -6972,7 +6972,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7046,7 +7046,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7054,7 +7054,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7128,7 +7128,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7136,7 +7136,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7210,7 +7210,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7218,7 +7218,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7292,7 +7292,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7300,7 +7300,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7374,7 +7374,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7382,7 +7382,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7456,7 +7456,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7464,7 +7464,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7538,7 +7538,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7546,7 +7546,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7620,7 +7620,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7628,7 +7628,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7702,7 +7702,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7710,7 +7710,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7784,7 +7784,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7792,7 +7792,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7866,7 +7866,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7874,7 +7874,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -7948,7 +7948,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -7956,7 +7956,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -8030,7 +8030,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -8038,7 +8038,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|
 
@@ -8112,7 +8112,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -8120,15 +8120,15 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|",
+|Qwark.ts|InsaneQwark|\`destroy\`|
+
+### Unused files (3)
+
+\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
   "<!-- hello-3 -->
 
-### Unused files (3)
-
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`
-
 ### Unused dependencies (3)
 
 |Filename|dependencies|
@@ -8195,7 +8195,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar \`<br/>\`NefariousSpaceStation \`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
@@ -8203,7 +8203,7 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium \`|
+|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
 |Qwark.ts|SaneQwark|\`rescue\`|
 |Qwark.ts|InsaneQwark|\`destroy\`|",
 ]

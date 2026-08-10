@@ -61,6 +61,17 @@ steps:
       json_report_path: ./knip-report.json
 ```
 
+### Permissions
+
+| Permission             | Used for                                    | If missing              |
+| ---------------------- | ------------------------------------------- | ----------------------- |
+| `checks: write`        | The check run carrying the knip annotations | Annotations are skipped |
+| `pull-requests: write` | Creating and updating the report comment    | The comment is skipped  |
+
+A missing permission drops that part of the report instead of failing the run, and findings still fail the run unless `ignore_results` is set, so a skipped comment cannot hide a bad report.
+
+A `pull_request` run triggered from a fork receives a read-only token by default, so both the check and the comment are skipped. To report on fork pull requests, generate the report in the `pull_request` workflow, upload it as an artifact, then run `knip-reporter` from a `workflow_run` workflow with `json_report_path`. Download the report there rather than checking out the pull request, so the fork's code never runs with a write-scoped token.
+
 ## Config
 
 The following inputs are supported

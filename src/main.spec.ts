@@ -38,7 +38,7 @@ vi.mock("./tasks/knip.ts");
 vi.mock("./tasks/task.ts");
 
 describe("main", () => {
-  const { coreInfoLogMock, coreErrorLogMock, coreWarningLogMock, assertOnlyCalled } =
+  const { coreInfoLogMock, coreWarningLogMock, coreErrorLogMock, assertOnlyCalled } =
     mockLoggingFunctions();
 
   const baseConfig: action.ActionConfig = {
@@ -190,6 +190,108 @@ describe("main", () => {
     assertOnlyCalled(coreInfoLogMock);
   });
 
+  it("should skip annotations when the token lacks permission to create a check", async () => {
+    createCheckIdMock.mockRejectedValue(
+      new Error("Failed to create check", {
+        cause: { status: 403, message: "Resource not accessible by integration" },
+      }),
+    );
+
+    // Behaviour
+    await main();
+
+    // The check is skipped, but the run continues and does not fail.
+    expect(createCheckIdMock).toHaveBeenCalledOnce();
+    expect(runKnipTasksMock).toHaveBeenCalledOnce();
+    expect(runCommentTaskMock).toHaveBeenCalledOnce();
+    expect(updateCheckAnnotationsMock).not.toHaveBeenCalled();
+    expect(resolveCheckMock).not.toHaveBeenCalled();
+    expect(coreSetFailedMock).not.toHaveBeenCalled();
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreWarningLogMock);
+    expect(coreWarningLogMock.mock.lastCall?.[0]).toContain("lacks 'checks: write' permission");
+  });
+
+  it("should fail when check creation throws a non-permission error", async () => {
+    createCheckIdMock.mockRejectedValue(new Error("boom"));
+
+    // Behaviour
+    await main();
+
+    // A non-permission failure is unexpected and must fail the run.
+    expect(coreSetFailedMock).toHaveBeenCalledOnce();
+    expect(runCommentTaskMock).not.toHaveBeenCalled();
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
+  });
+
+  it("should skip the comment when the token lacks permission to post it", async () => {
+    runCommentTaskMock.mockRejectedValue(
+      new Error("Failed to create comment", {
+        cause: { status: 403, message: "Resource not accessible by integration" },
+      }),
+    );
+
+    // Behaviour
+    await main();
+
+    // The comment is skipped, but the annotations check still resolves.
+    expect(runCommentTaskMock).toHaveBeenCalledOnce();
+    expect(updateCheckAnnotationsMock).toHaveBeenCalledOnce();
+    expect(resolveCheckMock).toHaveBeenCalledOnce();
+    expect(coreSetFailedMock).not.toHaveBeenCalled();
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreWarningLogMock);
+    expect(coreWarningLogMock.mock.lastCall?.[0]).toContain(
+      "lacks 'pull-requests: write' permission",
+    );
+  });
+
+  it("should fail when the comment task throws a non-permission error", async () => {
+    runCommentTaskMock.mockRejectedValue(new Error("boom"));
+
+    // Behaviour
+    await main();
+
+    // A non-permission failure is unexpected and must fail the run.
+    expect(coreSetFailedMock).toHaveBeenCalledOnce();
+    expect(resolveCheckMock).not.toHaveBeenCalled();
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
+  });
+
+  it("should run the check but skip the comment when no pull request is associated", async () => {
+    delete github.context.payload.pull_request;
+    github.context.payload.workflow_run = { pull_requests: [], head_sha: "abc123" };
+    Object.defineProperty(github.context, "eventName", {
+      value: "workflow_run",
+      configurable: true,
+      writable: true,
+    });
+
+    // Behaviour
+    await main();
+
+    expect(createCheckIdMock).toHaveBeenCalledOnce();
+    expect(runKnipTasksMock).toHaveBeenCalledOnce();
+    expect(updateCheckAnnotationsMock).toHaveBeenCalledOnce();
+    expect(resolveCheckMock).toHaveBeenCalledOnce();
+    // The annotations check works off the commit SHA and still runs, but the
+    // comment task needs a pull request, so it is skipped without failing.
+    expect(runCommentTaskMock).not.toHaveBeenCalled();
+    expect(coreSetFailedMock).not.toHaveBeenCalled();
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock);
+    expect(coreInfoLogMock.mock.calls.map((call) => call[0])).toContain(
+      "No pull request associated with this event, skipping comment creation",
+    );
+  });
+
   it("should not setFailed when ignoreResults is true even with findings", async () => {
     actionGetConfigMock.mockReturnValue({ ...baseConfig, ignoreResults: true });
     runKnipTasksMock.mockResolvedValue({
@@ -205,29 +307,6 @@ describe("main", () => {
 
     // Logging
     assertOnlyCalled(coreInfoLogMock);
-  });
-
-  it("should setFailed when invoked outside a pull_request event", async () => {
-    delete github.context.payload.pull_request;
-    Object.defineProperty(github.context, "eventName", {
-      value: "push",
-      configurable: true,
-      writable: true,
-    });
-
-    // Behaviour
-    await main();
-
-    expect(apiInitMock).not.toHaveBeenCalled();
-    expect(runKnipTasksMock).not.toHaveBeenCalled();
-    expect(coreSetFailedMock).toHaveBeenCalledOnce();
-    expect(coreSetFailedMock.mock.lastCall?.[0]).toBeInstanceOf(TypeError);
-
-    // Logging
-    assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
-    expect(coreErrorLogMock.mock.calls[0]?.[0]).toMatch(
-      /knip-reporter currently only supports 'pull_request' events/,
-    );
   });
 
   it("should warn when both command_script_name and json_report_path are set", async () => {
