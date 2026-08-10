@@ -196,10 +196,13 @@ export function parseJsonReport(rawJson: string): ParsedReport {
   return out;
 }
 
-export function buildFilesSection(files: string[]): string {
-  const header = `### Unused files (${files.length})`;
-  const body = files.map((file) => `\`${file}\``).join(", ");
-  return header + "\n\n" + body;
+export function buildFilesSection(files: string[]): string[] {
+  const sectionHeader = `### Unused files (${files.length})`;
+  return splitRowsToMessages(
+    sectionHeader,
+    files,
+    (rows) => sectionHeader + "\n\n" + rows.map((file) => `- \`${file}\``).join("\n"),
+  );
 }
 
 export function buildSectionName(name: string): string {
@@ -497,7 +500,7 @@ export function buildMarkdownSections(
 
     if (key === "files") {
       if (report.files.length > 0) {
-        outputSections.push(buildFilesSection(report.files));
+        outputSections.push(...buildFilesSection(report.files));
         core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
       }
       continue;

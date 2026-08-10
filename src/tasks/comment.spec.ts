@@ -158,7 +158,7 @@ describe("comment", () => {
   describe("buildComments", () => {
     const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
-    const shortSections = [buildFilesSection(["Ratchet.ts", "Clank.ts"])];
+    const shortSections = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
     const manyShortSections = (() => {
       const toReturn: string[] = [];
       const { sections } = buildMarkdownSections(parsedReport, false, true);
@@ -167,17 +167,11 @@ describe("comment", () => {
       }
       return toReturn;
     })();
-    const longSection = (() => {
-      const files: string[] = [];
-      let currentLength = 0;
-      const toAdd = ["Ratchet.ts", "Clank.ts"];
-      const toAddLength = toAdd.reduce((acc: number, curr: string) => acc + curr.length, 0);
-      while (currentLength < api.GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-        files.push(...toAdd);
-        currentLength += toAddLength;
-      }
-      return [buildFilesSection(files)];
-    })();
+    // Section builders split their own output, so an over-long section only
+    // reaches buildComments when something upstream failed to split it.
+    const longSection = [
+      `### Unused files (2)\n\n${"a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH)}`,
+    ];
 
     it("should inject a provided comment ID", () => {
       // Behaviour

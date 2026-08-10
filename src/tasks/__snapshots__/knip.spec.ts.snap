@@ -293,9 +293,12 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a types arra
 `;
 
 exports[`knip > buildFilesSection > should return markdown for a collection of files 1`] = `
-"### Unused files (2)
+[
+  "### Unused files (2)
 
-\`Ratchet.ts\`, \`Clank.ts\`"
+- \`Ratchet.ts\`
+- \`Clank.ts\`",
+]
 `;
 
 exports[`knip > buildMapSection > should transform a enumMembers map section to annotations 1`] = `
@@ -676,7 +679,9 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 [
   "### Unused files (3)
 
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
+- \`PolarisGalaxy.ts\`
+- \`Savali.ts\`
+- \`PocketDimension.tsx\`",
   "### Unused dependencies (3)
 
 |Filename|dependencies|
@@ -751,7 +756,9 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
 [
   "### Unused files (3)
 
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
+- \`PolarisGalaxy.ts\`
+- \`Savali.ts\`
+- \`PocketDimension.tsx\`",
   "### Unused dependencies (3)
 
 |Filename|dependencies|
@@ -1040,7 +1047,9 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 [
   "### Unused files (3)
 
-\`PolarisGalaxy.ts\`, \`Savali.ts\`, \`PocketDimension.tsx\`",
+- \`PolarisGalaxy.ts\`
+- \`Savali.ts\`
+- \`PocketDimension.tsx\`",
   "### Unused dependencies (3)
 
 |Filename|dependencies|

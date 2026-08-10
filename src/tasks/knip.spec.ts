@@ -247,20 +247,41 @@ describe("knip", () => {
 
     it("should display the count of files in the header", () => {
       let filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
-      expect(filesSection.split("\n")[0]).toStrictEqual("### Unused files (2)");
+      expect(filesSection[0]?.split("\n")[0]).toStrictEqual("### Unused files (2)");
 
       filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts", "DrNefarious.ts"]);
-      expect(filesSection.split("\n")[0]).toStrictEqual("### Unused files (3)");
+      expect(filesSection[0]?.split("\n")[0]).toStrictEqual("### Unused files (3)");
     });
 
-    it("should wrap each file with backticks to render as code", () => {
+    it("should list each file as a backticked bullet", () => {
       const files = ["Ratchet.ts", "Clank.ts", "DrNefarious.ts"];
-      const filesSection = buildFilesSection(files).split("\n");
-      const filesLine = filesSection.at(-1)?.split(", ") ?? [];
+      const lines = buildFilesSection(files)[0]?.split("\n").slice(2) ?? [];
 
       for (let i = 0; i < files.length; i++) {
-        expect(filesLine[i]).toStrictEqual(`\`${files[i]}\``);
+        expect(lines[i]).toStrictEqual(`- \`${files[i]}\``);
       }
+    });
+
+    it("should split a files section that exceeds the comment limit", () => {
+      const files: string[] = [];
+      let renderedLength = 0;
+      while (renderedLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH + 50) {
+        const file = `apps/dashboard/src/lib/components/ui/Component${files.length}.svelte`;
+        files.push(file);
+        renderedLength += file.length + 5;
+      }
+
+      // Behaviour
+      const messages = buildFilesSection(files);
+      expect(messages.length).toBeGreaterThan(1);
+      for (const message of messages) {
+        expect(message.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+        expect(message).toContain(`### Unused files (${files.length})`);
+      }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
     });
   });
 
