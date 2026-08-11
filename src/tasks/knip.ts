@@ -202,12 +202,29 @@ export function buildFilesSection(files: string[], collapse: CollapseSections): 
     buildSectionMessage(
       sectionHeader,
       files.length,
-      rows.map((file) => `- \`${file}\``).join("\n"),
+      rows.map((file) => `- ${codeSpan(file)}`).join("\n"),
       chunkIndex,
       chunkCount,
       collapse,
     ),
   );
+}
+
+/**
+ * Render a value as an inline code span.
+ *
+ * The delimiter has to be longer than any backtick run in the value,
+ * otherwise the run would close the span early.
+ */
+function codeSpan(value: string): string {
+  const backtickRuns = value.match(/`+/g);
+  if (backtickRuns === null) {
+    return `\`${value}\``;
+  }
+  const longestRun = Math.max(...backtickRuns.map((ticks) => ticks.length));
+  const delimiter = "`".repeat(longestRun + 1);
+  // The padding spaces keep a leading or trailing backtick out of the delimiter.
+  return `${delimiter} ${value} ${delimiter}`;
 }
 
 /**
@@ -218,7 +235,7 @@ export function buildFilesSection(files: string[], collapse: CollapseSections): 
  * the row intact.
  */
 function codeCell(value: string): string {
-  return `\`${value.replaceAll("|", "\\|")}\``;
+  return codeSpan(value.replaceAll("|", "\\|"));
 }
 
 export function buildSectionName(name: string): string {

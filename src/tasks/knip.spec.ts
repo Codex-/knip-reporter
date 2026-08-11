@@ -262,6 +262,11 @@ describe("knip", () => {
       }
     });
 
+    it("should widen the code span delimiter for a filename containing a backtick", () => {
+      const lines = buildFilesSection(["foo`bar.ts"], "auto")[0]?.split("\n").slice(2) ?? [];
+      expect(lines[0]).toStrictEqual("- `` foo`bar.ts ``");
+    });
+
     /**
      * Builds a file list whose rendered section just exceeds the budget.
      */
@@ -382,6 +387,17 @@ describe("knip", () => {
       const section = buildArraySection("unresolved", unresolved, "auto");
       const row = section[0]?.split("\n").at(-1);
       expect(row).toStrictEqual("|`src/routes/[a\\|b]/+page.ts`|`pkg\\|name`|");
+    });
+
+    it("should widen the code span delimiter when a value contains a backtick", () => {
+      const unresolved = {
+        "src/pages/foo`bar.ts": [{ name: "pkg``name" }],
+      };
+
+      // A backtick run inside a single-backtick span would close it early.
+      const section = buildArraySection("unresolved", unresolved, "auto");
+      const row = section[0]?.split("\n").at(-1);
+      expect(row).toStrictEqual("|`` src/pages/foo`bar.ts ``|``` pkg``name ```|");
     });
 
     it("should transform a devDependencies array section to markdown", () => {
