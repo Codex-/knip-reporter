@@ -813,7 +813,7 @@ describe("knip", () => {
       }
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, tableHeader, body);
+      const messages = processSectionToMessages(sectionHeader, body.length, tableHeader, body);
 
       // Chunk count is bounded by the number of comments required to fit the
       // output. Earlier iterations produced ~500 chunks of 3 rows; the intended
@@ -824,10 +824,16 @@ describe("knip", () => {
       // Each chunk fits in a comment and renders as a standalone section.
       const tableHeaderLine = "|Filename|Enum|Member|";
       let observedRows = 0;
-      for (const msg of messages) {
+      for (const [index, msg] of messages.entries()) {
         expect(msg.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
         expect(msg).toContain(sectionHeader);
         expect(msg).toContain(tableHeaderLine);
+        // Each chunk closes its own details block, otherwise the markup breaks
+        // across the comments the chunks are posted in.
+        expect(msg).toContain(
+          `<summary>View <b>${body.length}</b> results (part ${index + 1} of ${messages.length})</summary>`,
+        );
+        expect(msg.endsWith("\n\n</details>")).toBe(true);
         observedRows += msg
           .split("\n")
           .filter((l) => l.startsWith("|") && l !== tableHeaderLine && !l.startsWith("|-")).length;
@@ -848,6 +854,21 @@ describe("knip", () => {
       );
     });
 
+    it("should collapse a section holding more results than the threshold", () => {
+      const tableBody = [["DrNefarious.ts", "`Magmos`"]];
+
+      // Behaviour
+      expect(processSectionToMessages("### Ten", 10, ["File", "Item"], tableBody)[0]).not.toContain(
+        "<details>",
+      );
+      expect(processSectionToMessages("### Eleven", 11, ["File", "Item"], tableBody)[0]).toContain(
+        "<summary>View <b>11</b> results</summary>",
+      );
+
+      // Logging: no splitting → no logs
+      assertNoneCalled();
+    });
+
     it("should split a section that only just exceeds the limit", () => {
       const sectionHeader = "### Just Over";
       const tableHeader = ["Filename", "Item"];
@@ -860,7 +881,12 @@ describe("knip", () => {
       }
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+      const messages = processSectionToMessages(
+        sectionHeader,
+        tableBody.length,
+        tableHeader,
+        tableBody,
+      );
       expect(messages).toHaveLength(2);
       for (const message of messages) {
         expect(message.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
@@ -880,7 +906,7 @@ describe("knip", () => {
       ];
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+      const messages = processSectionToMessages(sectionHeader, 2, tableHeader, tableBody);
       expect(messages).toHaveLength(1);
       expect(messages[0]).toContain(sectionHeader);
       expect(messages[0]).toContain("|File|Item|");

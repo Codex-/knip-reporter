@@ -198,10 +198,14 @@ export function parseJsonReport(rawJson: string): ParsedReport {
 
 export function buildFilesSection(files: string[]): string[] {
   const sectionHeader = `### Unused files (${files.length})`;
-  return splitRowsToMessages(
-    sectionHeader,
-    files,
-    (rows) => sectionHeader + "\n\n" + rows.map((file) => `- \`${file}\``).join("\n"),
+  return splitRowsToMessages(sectionHeader, files, (rows, chunkIndex, chunkCount) =>
+    buildSectionMessage(
+      sectionHeader,
+      files.length,
+      rows.map((file) => `- \`${file}\``).join("\n"),
+      chunkIndex,
+      chunkCount,
+    ),
   );
 }
 
@@ -254,7 +258,7 @@ export function buildArraySection(
 
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, totalUnused, tableHeader, tableBody);
 }
 
 function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
@@ -346,7 +350,12 @@ export function buildArraySectionWithAnnotations(
   if (shouldBuildMarkdown) {
     const tableHeader = ["Filename", name];
     const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
-    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+    const processedSections = processSectionToMessages(
+      sectionHeader,
+      totalUnused,
+      tableHeader,
+      tableBody,
+    );
 
     return { sections: processedSections, annotations: annotations };
   }
@@ -405,7 +414,12 @@ export function buildMapSection(
     const tableHeader = ["Filename", resultType, "Member"];
     const sectionHeaderName = `${resultType} Members`;
     const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
-    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+    const processedSections = processSectionToMessages(
+      sectionHeader,
+      totalUnused,
+      tableHeader,
+      tableBody,
+    );
 
     return { sections: processedSections, annotations: annotations };
   }
@@ -434,9 +448,9 @@ function chunkRows<Row>(rows: Row[], chunkCount: number): Row[][] {
 function splitRowsToMessages<Row>(
   sectionHeader: string,
   rows: Row[],
-  render: (rows: Row[]) => string,
+  render: (rows: Row[], chunkIndex: number, chunkCount: number) => string,
 ): string[] {
-  let messages = [render(rows)];
+  let messages = [render(rows, 0, 1)];
   if ((messages[0]?.length ?? 0) < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
     // Output doesn't violate the limit, simply return and move on
     return messages;
@@ -452,7 +466,8 @@ function splitRowsToMessages<Row>(
     Math.ceil((messages[0]?.length ?? 0) / GITHUB_COMMENT_MAX_COMMENT_LENGTH),
   );
   for (let splitFactor = start; splitFactor <= rows.length; splitFactor++) {
-    messages = chunkRows(rows, splitFactor).map(render);
+    const chunks = chunkRows(rows, splitFactor);
+    messages = chunks.map((chunk, index) => render(chunk, index, chunks.length));
     if (messages.every((message) => message.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH)) {
       break;
     }
@@ -467,16 +482,51 @@ const MARKDOWN_TABLE_OPTIONS: MarkdownTableOptions = {
   padding: false,
 };
 
+/**
+ * Sections this small read fine inline, so collapsing them costs a click and
+ * gains nothing.
+ */
+const COLLAPSE_RESULT_THRESHOLD = 10;
+
+/**
+ * Assemble one message for a section, collapsing the body behind a `<details>`
+ * block when the section is large enough to be worth hiding.
+ *
+ * `resultCount` is the section total rather than this message's share of it,
+ * so a split section is labelled with the part it holds.
+ */
+function buildSectionMessage(
+  sectionHeader: string,
+  resultCount: number,
+  body: string,
+  chunkIndex: number,
+  chunkCount: number,
+): string {
+  if (resultCount <= COLLAPSE_RESULT_THRESHOLD) {
+    return sectionHeader + "\n\n" + body;
+  }
+
+  const part = chunkCount > 1 ? ` (part ${chunkIndex + 1} of ${chunkCount})` : "";
+  const summary = `View <b>${resultCount}</b> results${part}`;
+  // Blank lines around the body are required for GitHub to render markdown
+  // nested inside the HTML block.
+  return `${sectionHeader}\n\n<details>\n<summary>${summary}</summary>\n\n${body}\n\n</details>`;
+}
+
 export function processSectionToMessages(
   sectionHeader: string,
+  resultCount: number,
   tableHeader: string[],
   tableBody: string[][],
 ): string[] {
-  return splitRowsToMessages(
-    sectionHeader,
-    tableBody,
-    (rows) =>
-      sectionHeader + "\n\n" + markdownTable([tableHeader, ...rows], MARKDOWN_TABLE_OPTIONS),
+  return splitRowsToMessages(sectionHeader, tableBody, (rows, chunkIndex, chunkCount) =>
+    buildSectionMessage(
+      sectionHeader,
+      resultCount,
+      markdownTable([tableHeader, ...rows], MARKDOWN_TABLE_OPTIONS),
+      chunkIndex,
+      chunkCount,
+    ),
   );
 }
 

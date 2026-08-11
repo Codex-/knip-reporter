@@ -399,11 +399,16 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
   "sections": [
     "### Unused Enum Members (12)
 
+<details>
+<summary>View <b>12</b> results</summary>
+
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+
+</details>",
   ],
 }
 `;
@@ -499,11 +504,16 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
   "sections": [
     "### Unused Enum Members (12)
 
+<details>
+<summary>View <b>12</b> results</summary>
+
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+
+</details>",
   ],
 }
 `;
@@ -514,11 +524,16 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
   "sections": [
     "### Unused Enum Members (12)
 
+<details>
+<summary>View <b>12</b> results</summary>
+
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+
+</details>",
   ],
 }
 `;
@@ -737,11 +752,16 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 |WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
   "### Unused Enum Members (12)
 
+<details>
+<summary>View <b>12</b> results</summary>
+
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+
+</details>",
   "### Unused Namespace Members (7)
 
 |Filename|Namespace|Member|
@@ -1105,11 +1125,16 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 |WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
   "### Unused Enum Members (12)
 
+<details>
+<summary>View <b>12</b> results</summary>
+
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+
+</details>",
   "### Unused Namespace Members (7)
 
 |Filename|Namespace|Member|
@@ -1734,6 +1759,9 @@ exports[`knip > processSectionToMessage > should return sections that are below 
 [
   "### Unused Enum Members (12)
 
+<details>
+<summary>View <b>1500</b> results (part 1 of 3)</summary>
+
 |Filename|Enum|Member|
 |-|-|-|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
@@ -2235,8 +2263,13 @@ exports[`knip > processSectionToMessage > should return sections that are below 
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|",
+|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+
+</details>",
   "### Unused Enum Members (12)
+
+<details>
+<summary>View <b>1500</b> results (part 2 of 3)</summary>
 
 |Filename|Enum|Member|
 |-|-|-|
@@ -2739,8 +2772,13 @@ exports[`knip > processSectionToMessage > should return sections that are below 
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|",
+|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+
+</details>",
   "### Unused Enum Members (12)
+
+<details>
+<summary>View <b>1500</b> results (part 3 of 3)</summary>
 
 |Filename|Enum|Member|
 |-|-|-|
@@ -3243,6 +3281,8 @@ exports[`knip > processSectionToMessage > should return sections that are below 
 |Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
 |DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
 |Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|",
+|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+
+</details>",
 ]
 `;
