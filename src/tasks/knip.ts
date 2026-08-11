@@ -524,11 +524,13 @@ function buildSectionMessage(
 ): string {
   const shouldCollapse =
     collapse === "always" || (collapse === "auto" && resultCount > COLLAPSE_RESULT_THRESHOLD);
+  const part = chunkCount > 1 ? ` (part ${chunkIndex + 1} of ${chunkCount})` : "";
   if (!shouldCollapse) {
-    return sectionHeader + "\n\n" + body;
+    // Without a details block the part label goes on the header, otherwise
+    // split chunks render as indistinguishable repeats of the same section.
+    return `${sectionHeader}${part}\n\n${body}`;
   }
 
-  const part = chunkCount > 1 ? ` (part ${chunkIndex + 1} of ${chunkCount})` : "";
   const summary = `View <b>${resultCount}</b> results${part}`;
   // Blank lines around the body are required for GitHub to render markdown
   // nested inside the HTML block.

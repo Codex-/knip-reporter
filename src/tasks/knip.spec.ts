@@ -262,7 +262,10 @@ describe("knip", () => {
       }
     });
 
-    it("should split a files section that exceeds the comment limit", () => {
+    /**
+     * Builds a file list whose rendered section just exceeds the budget.
+     */
+    function buildOverBudgetFiles(): string[] {
       const files: string[] = [];
       let renderedLength = 0;
       while (renderedLength < COMMENT_SECTION_BUDGET + 50) {
@@ -270,6 +273,11 @@ describe("knip", () => {
         files.push(file);
         renderedLength += file.length + 5;
       }
+      return files;
+    }
+
+    it("should split a files section that exceeds the comment limit", () => {
+      const files = buildOverBudgetFiles();
 
       // Behaviour
       const messages = buildFilesSection(files, "auto");
@@ -277,6 +285,24 @@ describe("knip", () => {
       for (const message of messages) {
         expect(message.length).toBeLessThan(COMMENT_SECTION_BUDGET);
         expect(message).toContain(`### Unused files (${files.length})`);
+      }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+    });
+
+    it("should label split chunks in the header when the section is not collapsed", () => {
+      const files = buildOverBudgetFiles();
+
+      // Behaviour
+      const messages = buildFilesSection(files, "never");
+      expect(messages.length).toBeGreaterThan(1);
+      for (const [index, message] of messages.entries()) {
+        expect(message).toContain(
+          `### Unused files (${files.length}) (part ${index + 1} of ${messages.length})`,
+        );
+        expect(message).not.toContain("<details>");
       }
 
       // Logging
