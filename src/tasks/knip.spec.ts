@@ -241,21 +241,21 @@ describe("knip", () => {
 
   describe("buildFilesSection", () => {
     it("should return markdown for a collection of files", () => {
-      const filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
+      const filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
       expect(filesSection).toMatchSnapshot();
     });
 
     it("should display the count of files in the header", () => {
-      let filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
+      let filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
       expect(filesSection[0]?.split("\n")[0]).toStrictEqual("### Unused files (2)");
 
-      filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts", "DrNefarious.ts"]);
+      filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts", "DrNefarious.ts"], "auto");
       expect(filesSection[0]?.split("\n")[0]).toStrictEqual("### Unused files (3)");
     });
 
     it("should list each file as a backticked bullet", () => {
       const files = ["Ratchet.ts", "Clank.ts", "DrNefarious.ts"];
-      const lines = buildFilesSection(files)[0]?.split("\n").slice(2) ?? [];
+      const lines = buildFilesSection(files, "auto")[0]?.split("\n").slice(2) ?? [];
 
       for (let i = 0; i < files.length; i++) {
         expect(lines[i]).toStrictEqual(`- \`${files[i]}\``);
@@ -272,7 +272,7 @@ describe("knip", () => {
       }
 
       // Behaviour
-      const messages = buildFilesSection(files);
+      const messages = buildFilesSection(files, "auto");
       expect(messages.length).toBeGreaterThan(1);
       for (const message of messages) {
         expect(message.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
@@ -323,7 +323,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("dependencies", dependencies);
+      const section = buildArraySection("dependencies", dependencies, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -352,7 +352,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("devDependencies", devDependencies);
+      const section = buildArraySection("devDependencies", devDependencies, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -370,7 +370,11 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("optionalPeerDependencies", optionalPeerDependencies);
+      const section = buildArraySection(
+        "optionalPeerDependencies",
+        optionalPeerDependencies,
+        "auto",
+      );
       expect(section).toMatchSnapshot();
     });
 
@@ -386,7 +390,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("unlisted", unlisted);
+      const section = buildArraySection("unlisted", unlisted, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -399,7 +403,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("binaries", binaries);
+      const section = buildArraySection("binaries", binaries, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -415,7 +419,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("unresolved", unresolved);
+      const section = buildArraySection("unresolved", unresolved, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -443,7 +447,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("duplicates", duplicates);
+      const section = buildArraySection("duplicates", duplicates, "auto");
       expect(section).toMatchSnapshot();
     });
   });
@@ -513,42 +517,42 @@ describe("knip", () => {
     };
 
     it("should transform a exports array section to markdown", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, false, true);
+      const section = buildArraySectionWithAnnotations("exports", exports, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a exports array section to markdown if verbose and annotations are disabled", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, false, false);
+      const section = buildArraySectionWithAnnotations("exports", exports, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a exports array section to annotations", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, true, false);
+      const section = buildArraySectionWithAnnotations("exports", exports, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a exports array section to markdown and annotations", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, true, true);
+      const section = buildArraySectionWithAnnotations("exports", exports, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to markdown", () => {
-      const section = buildArraySectionWithAnnotations("types", types, false, true);
+      const section = buildArraySectionWithAnnotations("types", types, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to markdown if verbose and annotations are disabled", () => {
-      const section = buildArraySectionWithAnnotations("types", types, false, false);
+      const section = buildArraySectionWithAnnotations("types", types, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to annotations", () => {
-      const section = buildArraySectionWithAnnotations("types", types, true, false);
+      const section = buildArraySectionWithAnnotations("types", types, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to markdown and annotations", () => {
-      const section = buildArraySectionWithAnnotations("types", types, true, true);
+      const section = buildArraySectionWithAnnotations("types", types, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
   });
@@ -694,42 +698,42 @@ describe("knip", () => {
     };
 
     it("should transform a enumMembers map section to markdown", () => {
-      const section = buildMapSection("enumMembers", enumMembers, false, true);
+      const section = buildMapSection("enumMembers", enumMembers, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a enumMembers map section to markdown if verbose and annotations are disabled", () => {
-      const section = buildMapSection("enumMembers", enumMembers, false, false);
+      const section = buildMapSection("enumMembers", enumMembers, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a enumMembers map section to annotations", () => {
-      const section = buildMapSection("enumMembers", enumMembers, true, false);
+      const section = buildMapSection("enumMembers", enumMembers, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a enumMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("enumMembers", enumMembers, true, true);
+      const section = buildMapSection("enumMembers", enumMembers, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to markdown", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, false, true);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to markdown if verbose and annotations are disabled", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, false, false);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to annotations", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, true, false);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, true, true);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
   });
@@ -739,7 +743,7 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
       // Behaviour
-      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true, "auto");
       expect(sections).toHaveLength(12);
       expect(annotations).toHaveLength(0);
       for (const section of sections) {
@@ -755,7 +759,7 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
       // Behaviour
-      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true, "auto");
       expect(sections).toHaveLength(12);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
@@ -776,7 +780,7 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
       // Behaviour
-      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false, "auto");
       expect(sections).toHaveLength(7);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
@@ -813,7 +817,13 @@ describe("knip", () => {
       }
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, body.length, tableHeader, body);
+      const messages = processSectionToMessages(
+        sectionHeader,
+        body.length,
+        tableHeader,
+        body,
+        "auto",
+      );
 
       // Chunk count is bounded by the number of comments required to fit the
       // output. Earlier iterations produced ~500 chunks of 3 rows; the intended
@@ -858,12 +868,12 @@ describe("knip", () => {
       const tableBody = [["DrNefarious.ts", "`Magmos`"]];
 
       // Behaviour
-      expect(processSectionToMessages("### Ten", 10, ["File", "Item"], tableBody)[0]).not.toContain(
-        "<details>",
-      );
-      expect(processSectionToMessages("### Eleven", 11, ["File", "Item"], tableBody)[0]).toContain(
-        "<summary>View <b>11</b> results</summary>",
-      );
+      expect(
+        processSectionToMessages("### Ten", 10, ["File", "Item"], tableBody, "auto")[0],
+      ).not.toContain("<details>");
+      expect(
+        processSectionToMessages("### Eleven", 11, ["File", "Item"], tableBody, "auto")[0],
+      ).toContain("<summary>View <b>11</b> results</summary>");
 
       // Logging: no splitting → no logs
       assertNoneCalled();
@@ -886,6 +896,7 @@ describe("knip", () => {
         tableBody.length,
         tableHeader,
         tableBody,
+        "auto",
       );
       expect(messages).toHaveLength(2);
       for (const message of messages) {
@@ -906,7 +917,7 @@ describe("knip", () => {
       ];
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, 2, tableHeader, tableBody);
+      const messages = processSectionToMessages(sectionHeader, 2, tableHeader, tableBody, "auto");
       expect(messages).toHaveLength(1);
       expect(messages[0]).toContain(sectionHeader);
       expect(messages[0]).toContain("|File|Item|");
@@ -1038,6 +1049,7 @@ ${JSON.stringify(reportJson, null, 2)}
         jsonReportPath: "report.json",
         annotationsEnabled: false,
         verboseEnabled: false,
+        collapse: "auto",
       });
       expect(execSpy).not.toHaveBeenCalled();
       expect(result.sections.length).toBeGreaterThan(0);
@@ -1058,6 +1070,7 @@ ${JSON.stringify(reportJson, null, 2)}
         jsonReportPath: undefined,
         annotationsEnabled: false,
         verboseEnabled: false,
+        collapse: "auto",
       });
       expect(execSpy).toHaveBeenCalledOnce();
       expect(result.sections.length).toBeGreaterThan(0);

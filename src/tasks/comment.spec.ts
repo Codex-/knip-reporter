@@ -158,10 +158,10 @@ describe("comment", () => {
   describe("buildComments", () => {
     const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
-    const shortSections = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
+    const shortSections = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
     const manyShortSections = (() => {
       const toReturn: string[] = [];
-      const { sections } = buildMarkdownSections(parsedReport, false, true);
+      const { sections } = buildMarkdownSections(parsedReport, false, true, "auto");
       for (let i = 0; i < 100; i++) {
         toReturn.push(...sections);
       }

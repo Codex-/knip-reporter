@@ -7,7 +7,7 @@ import { markdownTable, type Options as MarkdownTableOptions } from "markdown-ta
 
 import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { timeTask } from "./task.ts";
-import type { ItemMeta } from "./types.ts";
+import type { CollapseSections, ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string, cwd?: string): Promise<string> {
   const knipArgs = [buildScriptName, "--reporter json"];
@@ -196,7 +196,7 @@ export function parseJsonReport(rawJson: string): ParsedReport {
   return out;
 }
 
-export function buildFilesSection(files: string[]): string[] {
+export function buildFilesSection(files: string[], collapse: CollapseSections): string[] {
   const sectionHeader = `### Unused files (${files.length})`;
   return splitRowsToMessages(sectionHeader, files, (rows, chunkIndex, chunkCount) =>
     buildSectionMessage(
@@ -205,6 +205,7 @@ export function buildFilesSection(files: string[]): string[] {
       rows.map((file) => `- \`${file}\``).join("\n"),
       chunkIndex,
       chunkCount,
+      collapse,
     ),
   );
 }
@@ -236,6 +237,7 @@ export function buildSectionName(name: string): string {
 export function buildArraySection(
   name: string,
   rawResults: Record<string, Item[] | Item[][]>,
+  collapse: CollapseSections,
 ): string[] {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
@@ -258,7 +260,7 @@ export function buildArraySection(
 
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return processSectionToMessages(sectionHeader, totalUnused, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, totalUnused, tableHeader, tableBody, collapse);
 }
 
 function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
@@ -288,6 +290,7 @@ export function buildArraySectionWithAnnotations(
   rawResults: Record<string, Item[] | Item[][]>,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  collapse: CollapseSections,
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
@@ -355,6 +358,7 @@ export function buildArraySectionWithAnnotations(
       totalUnused,
       tableHeader,
       tableBody,
+      collapse,
     );
 
     return { sections: processedSections, annotations: annotations };
@@ -377,6 +381,7 @@ export function buildMapSection(
   rawResults: Record<string, Record<string, Item[]>>,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  collapse: CollapseSections,
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
@@ -419,6 +424,7 @@ export function buildMapSection(
       totalUnused,
       tableHeader,
       tableBody,
+      collapse,
     );
 
     return { sections: processedSections, annotations: annotations };
@@ -501,8 +507,11 @@ function buildSectionMessage(
   body: string,
   chunkIndex: number,
   chunkCount: number,
+  collapse: CollapseSections,
 ): string {
-  if (resultCount <= COLLAPSE_RESULT_THRESHOLD) {
+  const shouldCollapse =
+    collapse === "always" || (collapse === "auto" && resultCount > COLLAPSE_RESULT_THRESHOLD);
+  if (!shouldCollapse) {
     return sectionHeader + "\n\n" + body;
   }
 
@@ -518,6 +527,7 @@ export function processSectionToMessages(
   resultCount: number,
   tableHeader: string[],
   tableBody: string[][],
+  collapse: CollapseSections,
 ): string[] {
   return splitRowsToMessages(sectionHeader, tableBody, (rows, chunkIndex, chunkCount) =>
     buildSectionMessage(
@@ -526,6 +536,7 @@ export function processSectionToMessages(
       markdownTable([tableHeader, ...rows], MARKDOWN_TABLE_OPTIONS),
       chunkIndex,
       chunkCount,
+      collapse,
     ),
   );
 }
@@ -534,6 +545,7 @@ export function buildMarkdownSections(
   report: ParsedReport,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  collapse: CollapseSections,
 ): { sections: string[]; annotations: ItemMeta[] } {
   const outputAnnotations: ItemMeta[] = [];
   const outputSections: string[] = [];
@@ -550,7 +562,7 @@ export function buildMarkdownSections(
 
     if (key === "files") {
       if (report.files.length > 0) {
-        outputSections.push(...buildFilesSection(report.files));
+        outputSections.push(...buildFilesSection(report.files, collapse));
         core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
       }
       continue;
@@ -567,7 +579,11 @@ export function buildMarkdownSections(
       case "unlisted":
       case "binaries":
       case "unresolved": {
-        const sections = buildArraySection(key, value as Parameters<typeof buildArraySection>[1]);
+        const sections = buildArraySection(
+          key,
+          value as Parameters<typeof buildArraySection>[1],
+          collapse,
+        );
         outputSections.push(...sections);
         core.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
         break;
@@ -581,6 +597,7 @@ export function buildMarkdownSections(
             value as Parameters<typeof buildArraySectionWithAnnotations>[1],
             annotationsEnabled,
             verboseEnabled,
+            collapse,
           );
         length = Object.keys(value).length;
         break;
@@ -592,6 +609,7 @@ export function buildMarkdownSections(
             value as Parameters<typeof buildMapSection>[1],
             annotationsEnabled,
             verboseEnabled,
+            collapse,
           );
         length = Object.keys(value).length;
 
@@ -716,6 +734,7 @@ interface RunKnipTasksOpts {
   jsonReportPath?: string;
   annotationsEnabled: boolean;
   verboseEnabled: boolean;
+  collapse: CollapseSections;
   cwd?: string;
 }
 
@@ -724,6 +743,7 @@ export async function runKnipTasks({
   jsonReportPath,
   annotationsEnabled,
   verboseEnabled,
+  collapse,
   cwd,
 }: RunKnipTasksOpts): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
@@ -736,7 +756,7 @@ export async function runKnipTasks({
     Promise.resolve(parseJsonReport(output)),
   );
   const sectionsAndAnnotations = await timeTask("Convert report to markdown", () =>
-    Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled)),
+    Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled, collapse)),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);

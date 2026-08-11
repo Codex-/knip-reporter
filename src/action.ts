@@ -2,6 +2,14 @@ import path from "node:path";
 
 import * as core from "@actions/core";
 
+import type { CollapseSections } from "./tasks/types.ts";
+
+export const COLLAPSE_SECTIONS_VALUES = [
+  "auto",
+  "always",
+  "never",
+] as const satisfies readonly CollapseSections[];
+
 export const DEFAULT_KNIP_COMMAND = "knip";
 
 /**
@@ -39,6 +47,11 @@ export interface ActionConfig {
   ignoreResults: boolean;
 
   /**
+   * When to hide a report section's body behind a collapsible block.
+   */
+  collapseSections: CollapseSections;
+
+  /**
    * Directory in which to run the knip action.
    */
   workingDirectory?: string;
@@ -49,6 +62,17 @@ export interface ActionConfig {
    * If provided, the action will use this instead of running Knip.
    */
   jsonReportPath?: string;
+}
+
+function getCollapseSections(): CollapseSections {
+  const input = core.getInput("collapse_sections", { required: false }) || "auto";
+  const match = COLLAPSE_SECTIONS_VALUES.find((value) => value === input);
+  if (!match) {
+    throw new Error(
+      `Invalid 'collapse_sections' value '${input}', expected one of: ${COLLAPSE_SECTIONS_VALUES.join(", ")}`,
+    );
+  }
+  return match;
 }
 
 export function getConfig(): ActionConfig {
@@ -63,6 +87,7 @@ export function getConfig(): ActionConfig {
     annotations: core.getBooleanInput("annotations", { required: false }),
     verbose: core.getBooleanInput("verbose", { required: false }),
     ignoreResults: core.getBooleanInput("ignore_results", { required: false }),
+    collapseSections: getCollapseSections(),
     workingDirectory,
     jsonReportPath: jsonReportPathInput
       ? path.resolve(workingDirectory ?? ".", jsonReportPathInput)
@@ -78,6 +103,7 @@ export function configToStr(cfg: ActionConfig): string {
     annotations: ${cfg.annotations}
     verbose: ${cfg.verbose}
     ignoreResults: ${cfg.ignoreResults}
+    collapseSections: ${cfg.collapseSections}
     workingDirectory: ${cfg.workingDirectory}
     jsonReportPath: ${cfg.jsonReportPath}
 `;
