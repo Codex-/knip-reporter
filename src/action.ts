@@ -4,7 +4,7 @@ import * as core from "@actions/core";
 
 import type { CollapseSections } from "./tasks/types.ts";
 
-export const COLLAPSE_SECTIONS_VALUES = [
+const COLLAPSE_SECTIONS_VALUES = [
   "auto",
   "always",
   "never",
