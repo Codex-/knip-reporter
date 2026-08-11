@@ -952,6 +952,21 @@ describe("knip", () => {
       assertNoneCalled();
     });
 
+    it("should let always and never override the threshold", () => {
+      const tableBody = [["DrNefarious.ts", "`Magmos`"]];
+
+      // Behaviour
+      expect(
+        processSectionToMessages("### One", 1, ["File", "Item"], tableBody, "always")[0],
+      ).toContain("<summary>View <b>1</b> results</summary>");
+      expect(
+        processSectionToMessages("### Five Hundred", 500, ["File", "Item"], tableBody, "never")[0],
+      ).not.toContain("<details>");
+
+      // Logging: no splitting → no logs
+      assertNoneCalled();
+    });
+
     it("should split a section that only just exceeds the limit", () => {
       const sectionHeader = "### Just Over";
       const tableHeader = ["Filename", "Item"];
