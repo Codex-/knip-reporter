@@ -478,7 +478,12 @@ function splitRowsToMessages<Row>(
 
   // Per-message overhead is only known once rendered, so grow the split factor
   // until every message fits rather than predicting the row count up front.
-  const start = Math.max(2, Math.ceil((messages[0]?.length ?? 0) / COMMENT_SECTION_BUDGET));
+  // Clamp to rows.length so a huge row cannot push the estimate past the
+  // last valid split factor, which would skip the loop entirely.
+  const start = Math.min(
+    rows.length,
+    Math.max(2, Math.ceil((messages[0]?.length ?? 0) / COMMENT_SECTION_BUDGET)),
+  );
   for (let splitFactor = start; splitFactor <= rows.length; splitFactor++) {
     const chunks = chunkRows(rows, splitFactor);
     messages = chunks.map((chunk, index) => render(chunk, index, chunks.length));

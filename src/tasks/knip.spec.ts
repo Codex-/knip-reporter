@@ -283,6 +283,25 @@ describe("knip", () => {
       assertOnlyCalled(coreInfoLogMock);
       expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
     });
+
+    it("should still split rows that fit when one row alone exceeds the budget", () => {
+      // The oversized row makes the initial split-factor estimate exceed the
+      // row count; the postable row must still get its own message.
+      const files = ["small.ts", "x".repeat(COMMENT_SECTION_BUDGET * 2)];
+
+      // Behaviour
+      const messages = buildFilesSection(files, "auto");
+      expect(messages).toHaveLength(2);
+      expect(messages[0]).toContain("- `small.ts`");
+      expect(messages[0]?.length).toBeLessThan(COMMENT_SECTION_BUDGET);
+      // The huge row cannot fit anywhere and is returned oversized for the
+      // caller to report.
+      expect(messages[1]?.length).toBeGreaterThan(COMMENT_SECTION_BUDGET);
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe("buildSectionName", () => {
