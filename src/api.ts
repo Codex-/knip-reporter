@@ -3,6 +3,7 @@ import * as github from "@actions/github";
 
 import { type ActionConfig, getConfig } from "./action.ts";
 import { getCommitSha } from "./github-utils/get-commit-sha.ts";
+import { withRetry } from "./github-utils/with-retry.ts";
 
 export const GITHUB_COMMENT_MAX_COMMENT_LENGTH = 65535;
 
@@ -24,12 +25,14 @@ export async function createComment(
 
   // https://docs.github.com/en/rest/issues/comments#create-an-issue-comment
   try {
-    return await octokit.rest.issues.createComment({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      issue_number: pullRequestNumber,
-      body: body,
-    });
+    return await withRetry("createComment", () =>
+      octokit.rest.issues.createComment({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        issue_number: pullRequestNumber,
+        body: body,
+      }),
+    );
   } catch (error) {
     throw new Error("Failed to create comment", { cause: error });
   }
@@ -46,21 +49,27 @@ export async function listCommentIds(
     issue_number: pullRequestNumber,
     per_page: 100,
   };
-  const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
 
-  const messageIds: number[] = [];
+  let messageIds: number[];
   try {
-    for await (const { data } of restIter) {
-      for (const { id, body } of data) {
-        if (!body) {
-          continue;
-        }
+    // A retry restarts pagination, so the accumulator is built per attempt.
+    messageIds = await withRetry("listCommentIds", async () => {
+      const restIter = octokit.paginate.iterator(octokit.rest.issues.listComments, params);
 
-        if (body.includes(cfgCommentId)) {
-          messageIds.push(id);
+      const ids: number[] = [];
+      for await (const { data } of restIter) {
+        for (const { id, body } of data) {
+          if (!body) {
+            continue;
+          }
+
+          if (body.includes(cfgCommentId)) {
+            ids.push(id);
+          }
         }
       }
-    }
+      return ids;
+    });
   } catch (error) {
     throw new Error("Failed to find comment IDs", { cause: error });
   }
@@ -81,12 +90,14 @@ export async function updateComment(
 ): Promise<UpdateCommentResponse> {
   // https://docs.github.com/en/rest/issues/comments#update-an-issue-comment
   try {
-    return await octokit.rest.issues.updateComment({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      comment_id: commentId,
-      body: body,
-    });
+    return await withRetry("updateComment", () =>
+      octokit.rest.issues.updateComment({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        comment_id: commentId,
+        body: body,
+      }),
+    );
   } catch (error) {
     throw new Error("Failed to update comment", { cause: error });
   }
@@ -96,11 +107,13 @@ type DeleteCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["delet
 export async function deleteComment(commentId: number): Promise<DeleteCommentResponse> {
   // https://docs.github.com/en/rest/issues/comments#delete-an-issue-comment
   try {
-    return await octokit.rest.issues.deleteComment({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      comment_id: commentId,
-    });
+    return await withRetry("deleteComment", () =>
+      octokit.rest.issues.deleteComment({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        comment_id: commentId,
+      }),
+    );
   } catch (error) {
     throw new Error("Failed to delete comment", { cause: error });
   }
@@ -112,17 +125,19 @@ export async function createCheck(name: string, title: string): Promise<CreateCh
 
   // https://docs.github.com/en/rest/checks/runs#create-a-check-run
   try {
-    return await octokit.rest.checks.create({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      name: name,
-      head_sha: headSha,
-      status: "in_progress",
-      output: {
-        title: title,
-        summary: "",
-      },
-    });
+    return await withRetry("createCheck", () =>
+      octokit.rest.checks.create({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        name: name,
+        head_sha: headSha,
+        status: "in_progress",
+        output: {
+          title: title,
+          summary: "",
+        },
+      }),
+    );
   } catch (error) {
     throw new Error("Failed to create check", { cause: error });
   }
@@ -142,14 +157,16 @@ export async function updateCheck(
 ): Promise<UpdateCheckResponse> {
   // https://docs.github.com/en/rest/checks/runs#update-a-check-run
   try {
-    return await octokit.rest.checks.update({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      check_run_id: checkRunId,
-      status: status,
-      conclusion: conclusion,
-      output: output,
-    });
+    return await withRetry("updateCheck", () =>
+      octokit.rest.checks.update({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        check_run_id: checkRunId,
+        status: status,
+        conclusion: conclusion,
+        output: output,
+      }),
+    );
   } catch (error) {
     throw new Error("Failed to update check", { cause: error });
   }
@@ -163,38 +180,48 @@ export async function findPullRequestNumberForCommitSha(sha: string): Promise<nu
   // SHA and the action would fail to find the PR.
   // `listPullRequestsAssociatedWithCommit` gives us all of them irrespective
   // of status.
+  let pullRequestNumber: number | undefined;
   try {
-    const pullRequestsIterator = octokit.paginate.iterator(
-      octokit.rest.repos.listPullRequestsAssociatedWithCommit,
-      {
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
-        commit_sha: sha,
-        per_page: 100,
-      },
-    );
-
-    for await (const { data: pullRequests } of pullRequestsIterator) {
-      core.info(
-        `[findPullRequestNumberForCommitSha]: Found ${pullRequests.length} pull-requests for this commit.`,
+    // A retry restarts pagination, so the search runs wholly inside here.
+    pullRequestNumber = await withRetry("findPullRequestNumberForCommitSha", async () => {
+      const pullRequestsIterator = octokit.paginate.iterator(
+        octokit.rest.repos.listPullRequestsAssociatedWithCommit,
+        {
+          owner: github.context.repo.owner,
+          repo: github.context.repo.repo,
+          commit_sha: sha,
+          per_page: 100,
+        },
       );
 
-      for (const pullRequest of pullRequests) {
-        core.debug(
-          `[findPullRequestNumberForCommitSha]: Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`,
+      for await (const { data: pullRequests } of pullRequestsIterator) {
+        core.info(
+          `[findPullRequestNumberForCommitSha]: Found ${pullRequests.length} pull-requests for this commit.`,
         );
 
-        if (pullRequest.head.sha === sha) {
-          return pullRequest.number;
+        for (const pullRequest of pullRequests) {
+          core.debug(
+            `[findPullRequestNumberForCommitSha]: Comparing: ${pullRequest.number} sha: ${pullRequest.head.sha} with expected: ${sha}.`,
+          );
+
+          if (pullRequest.head.sha === sha) {
+            return pullRequest.number;
+          }
         }
       }
-    }
+
+      return undefined;
+    });
   } catch (error) {
     throw new Error("Failed to find pull requests for commit", { cause: error });
   } finally {
-    // Always close the log group, even on an early return or a thrown
-    // pagination error, so subsequent logs are not nested under it.
+    // Always close the log group, even on a thrown pagination error, so
+    // subsequent logs are not nested under it.
     core.endGroup();
+  }
+
+  if (pullRequestNumber !== undefined) {
+    return pullRequestNumber;
   }
 
   core.info(
