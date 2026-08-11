@@ -29,7 +29,7 @@ permissions:
 
 steps:
   - name: Post the knip results
-    uses: codex-/knip-reporter@v3
+    uses: codex-/knip-reporter@v4
 ```
 
 ### Provide the report
@@ -56,7 +56,7 @@ steps:
     continue-on-error: true # Any reports generated with content result in a non-zero exit code
 
   - name: Post the knip results
-    uses: codex-/knip-reporter@v3
+    uses: codex-/knip-reporter@v4
     with:
       json_report_path: ./knip-report.json
 ```
