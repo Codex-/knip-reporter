@@ -444,11 +444,10 @@ export function buildMapSection(
   return { sections: [], annotations: annotations };
 }
 
-function chunkRows<Row>(rows: Row[], chunkCount: number): Row[][] {
-  const window = Math.ceil(rows.length / chunkCount);
+function chunkRows<Row>(rows: Row[], rowsPerChunk: number): Row[][] {
   const chunks: Row[][] = [];
-  for (let start = 0; start < rows.length; start += window) {
-    chunks.push(rows.slice(start, start + window));
+  for (let start = 0; start < rows.length; start += rowsPerChunk) {
+    chunks.push(rows.slice(start, start + rowsPerChunk));
   }
   return chunks;
 }
@@ -476,19 +475,29 @@ function splitRowsToMessages<Row>(
   const sectionProcessingMs = Date.now();
   core.info(`    - Splitting section ${sectionHeader}`);
 
-  // Per-message overhead is only known once rendered, so grow the split factor
-  // until every message fits rather than predicting the row count up front.
-  // Clamp to rows.length so a huge row cannot push the estimate past the
-  // last valid split factor, which would skip the loop entirely.
-  const start = Math.min(
-    rows.length,
-    Math.max(2, Math.ceil((messages[0]?.length ?? 0) / COMMENT_SECTION_BUDGET)),
+  // Message overhead is only known once rendered, so start from an estimate
+  // and shrink the chunk size by the observed overflow until every chunk fits.
+  const estimatedChunks = Math.max(
+    2,
+    Math.ceil((messages[0]?.length ?? 0) / COMMENT_SECTION_BUDGET),
   );
-  for (let splitFactor = start; splitFactor <= rows.length; splitFactor++) {
-    const chunks = chunkRows(rows, splitFactor);
+  let rowsPerChunk = Math.ceil(rows.length / estimatedChunks);
+  let done = false;
+  while (!done) {
+    const chunks = chunkRows(rows, rowsPerChunk);
     messages = chunks.map((chunk, index) => render(chunk, index, chunks.length));
-    if (messages.every((message) => message.length < COMMENT_SECTION_BUDGET)) {
-      break;
+    let longest = 0;
+    for (const message of messages) {
+      longest = Math.max(longest, message.length);
+    }
+    // At one row per chunk, oversized messages are left for the caller to report.
+    done = longest < COMMENT_SECTION_BUDGET || rowsPerChunk === 1;
+    if (!done) {
+      // Shrink by the overflow ratio, and by at least one row to terminate.
+      rowsPerChunk = Math.max(
+        1,
+        Math.min(rowsPerChunk - 1, Math.floor((rowsPerChunk * COMMENT_SECTION_BUDGET) / longest)),
+      );
     }
   }
 
