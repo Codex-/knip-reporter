@@ -34,6 +34,7 @@ describe("Action", () => {
       ignore_results: actionInputs.ignore_results?.default,
       working_directory: actionInputs.working_directory?.default,
       json_report_path: actionInputs.json_report_path?.default,
+      collapse_sections: actionInputs.collapse_sections?.default,
     };
 
     vi.spyOn(core, "getInput").mockImplementation((input: string) => {
@@ -43,6 +44,7 @@ describe("Action", () => {
         case "comment_id":
         case "working_directory":
         case "json_report_path":
+        case "collapse_sections":
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           return mockEnvConfig[input];
         default:
@@ -79,6 +81,7 @@ describe("Action", () => {
       expect(config.ignoreResults).toStrictEqual(actionInputs.ignore_results?.default);
       expect(config.workingDirectory).toStrictEqual(actionInputs.working_directory?.default);
       expect(config.jsonReportPath).toStrictEqual(actionInputs.json_report_path?.default);
+      expect(config.collapseSections).toStrictEqual(actionInputs.collapse_sections?.default);
     });
 
     describe("custom values", () => {
@@ -143,6 +146,28 @@ describe("Action", () => {
         const config: ActionConfig = getConfig();
 
         expect(config.workingDirectory).toStrictEqual("some_directory");
+      });
+
+      it("should load a custom value for collapseSections", () => {
+        mockEnvConfig.collapse_sections = "never";
+        const config: ActionConfig = getConfig();
+
+        expect(config.collapseSections).toStrictEqual("never");
+      });
+
+      it("should fall back to auto when collapseSections is an empty string", () => {
+        mockEnvConfig.collapse_sections = "";
+        const config: ActionConfig = getConfig();
+
+        expect(config.collapseSections).toStrictEqual("auto");
+      });
+
+      it("should throw for an unrecognised collapseSections value", () => {
+        mockEnvConfig.collapse_sections = "sometimes";
+
+        expect(() => getConfig()).toThrowErrorMatchingInlineSnapshot(
+          `[Error: Invalid 'collapse_sections' value 'sometimes', expected one of: auto, always, never]`,
+        );
       });
 
       it("should resolve jsonReportPath against process.cwd when workingDirectory is unset", () => {

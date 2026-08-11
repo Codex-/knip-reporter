@@ -158,26 +158,20 @@ describe("comment", () => {
   describe("buildComments", () => {
     const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
-    const shortSections = [buildFilesSection(["Ratchet.ts", "Clank.ts"])];
+    const shortSections = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
     const manyShortSections = (() => {
       const toReturn: string[] = [];
-      const { sections } = buildMarkdownSections(parsedReport, false, true);
+      const { sections } = buildMarkdownSections(parsedReport, false, true, "auto");
       for (let i = 0; i < 100; i++) {
         toReturn.push(...sections);
       }
       return toReturn;
     })();
-    const longSection = (() => {
-      const files: string[] = [];
-      let currentLength = 0;
-      const toAdd = ["Ratchet.ts", "Clank.ts"];
-      const toAddLength = toAdd.reduce((acc: number, curr: string) => acc + curr.length, 0);
-      while (currentLength < api.GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
-        files.push(...toAdd);
-        currentLength += toAddLength;
-      }
-      return [buildFilesSection(files)];
-    })();
+    // Section builders split their own output, so an over-long section only
+    // reaches buildComments when something upstream failed to split it.
+    const longSection = [
+      `### Unused files (2)\n\n${"a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH)}`,
+    ];
 
     it("should inject a provided comment ID", () => {
       // Behaviour
@@ -216,10 +210,52 @@ describe("comment", () => {
       assertOnlyCalled(coreDebugLogMock);
     });
 
-    it("should output a long section", () => {
+    it("should warn once on the first comment of a multi-comment report", () => {
       // Behaviour
+      const comments = buildComments("hello", manyShortSections);
+      expect(comments).toHaveLength(4);
+      expect(comments[0]).toContain("<!-- hello-0 -->\n\n> [!WARNING]\n");
+      for (const comment of comments.slice(1)) {
+        expect(comment).not.toContain("[!WARNING]");
+      }
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should not output a warning when there are no sections to report", () => {
+      // Behaviour
+      expect(buildComments("hello", [])).toHaveLength(0);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should count the warning against the first comment's length budget", () => {
+      // A section that fits alongside the comment ID but not alongside the
+      // warning as well has to move to the second comment rather than
+      // overflowing the first.
+      const sectionHeader = "### Snug";
+      const filler = "a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH - sectionHeader.length - 120);
+      const snug = `${sectionHeader}\n\n${filler}`;
+
+      // Behaviour
+      const comments = buildComments("hello", [snug]);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[0]?.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should output a long section", () => {
+      // Behaviour: the section is dropped, but the lead warning still posts.
       const comments = buildComments("hello", longSection);
-      expect(comments).toHaveLength(0);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[0]).not.toContain("Unused files");
 
       // Logging
       assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
@@ -242,15 +278,55 @@ describe("comment", () => {
       const borderline = `${sectionHeader}\n\n${filler}`;
       expect(borderline.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
 
-      // Behaviour
+      // Behaviour: only the lead warning posts.
       const comments = buildComments("hello", [borderline]);
-      expect(comments).toHaveLength(0);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).not.toContain(sectionHeader);
 
       // Logging
       assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
       expect(coreWarningLogMock).toHaveBeenCalledTimes(3);
       expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(sectionHeader);
       expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(`(${borderline.length})`);
+    });
+
+    it("should defer a section that cannot share the first comment with the warning", () => {
+      // Sits inside the window where the section fits beside a bare comment id
+      // but not beside the id plus the warning.
+      const sectionHeader = "### Deferred";
+      const filler = "a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH - sectionHeader.length - 62);
+      const deferred = `${sectionHeader}\n\n${filler}`;
+
+      // Behaviour: nothing is dropped, the section moves to the second comment.
+      const comments = buildComments("hello", [deferred]);
+      expect(comments).toHaveLength(2);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[1]).toContain("<!-- hello-1 -->");
+      expect(comments[1]).toContain(sectionHeader);
+      expect(comments[1]).not.toContain("[!WARNING]");
+      for (const comment of comments) {
+        expect(comment.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      }
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should keep the warning and contiguous ids when the first section is unpostable", () => {
+      const sections = [...longSection, ...shortSections];
+
+      // Behaviour
+      const comments = buildComments("hello", sections);
+      expect(comments).toHaveLength(2);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[1]).toContain("<!-- hello-1 -->");
+      expect(comments[1]).toContain("### Unused files (2)");
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
+      expect(coreWarningLogMock).toHaveBeenCalledTimes(3);
     });
 
     it("should not output a warning for a regular section", () => {

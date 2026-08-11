@@ -48,6 +48,7 @@ describe("main", () => {
     annotations: true,
     verbose: false,
     ignoreResults: false,
+    collapseSections: "auto",
     workingDirectory: ".",
   };
 
@@ -111,6 +112,7 @@ describe("main", () => {
       jsonReportPath: undefined,
       annotationsEnabled: true,
       verboseEnabled: false,
+      collapse: "auto",
       cwd: ".",
     });
     expect(runCommentTaskMock).toHaveBeenCalledWith("knip-report", 42, []);

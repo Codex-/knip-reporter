@@ -14,8 +14,8 @@ import {
   type MockInstance,
 } from "vitest";
 
-import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
+import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import {
   buildArraySection,
   buildArraySectionWithAnnotations,
@@ -241,26 +241,97 @@ describe("knip", () => {
 
   describe("buildFilesSection", () => {
     it("should return markdown for a collection of files", () => {
-      const filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
+      const filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
       expect(filesSection).toMatchSnapshot();
     });
 
     it("should display the count of files in the header", () => {
-      let filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"]);
-      expect(filesSection.split("\n")[0]).toStrictEqual("### Unused files (2)");
+      let filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
+      expect(filesSection[0]?.split("\n")[0]).toStrictEqual("### Unused files (2)");
 
-      filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts", "DrNefarious.ts"]);
-      expect(filesSection.split("\n")[0]).toStrictEqual("### Unused files (3)");
+      filesSection = buildFilesSection(["Ratchet.ts", "Clank.ts", "DrNefarious.ts"], "auto");
+      expect(filesSection[0]?.split("\n")[0]).toStrictEqual("### Unused files (3)");
     });
 
-    it("should wrap each file with backticks to render as code", () => {
+    it("should list each file as a backticked bullet", () => {
       const files = ["Ratchet.ts", "Clank.ts", "DrNefarious.ts"];
-      const filesSection = buildFilesSection(files).split("\n");
-      const filesLine = filesSection.at(-1)?.split(", ") ?? [];
+      const lines = buildFilesSection(files, "auto")[0]?.split("\n").slice(2) ?? [];
 
       for (let i = 0; i < files.length; i++) {
-        expect(filesLine[i]).toStrictEqual(`\`${files[i]}\``);
+        expect(lines[i]).toStrictEqual(`- \`${files[i]}\``);
       }
+    });
+
+    it("should widen the code span delimiter for a filename containing a backtick", () => {
+      const lines = buildFilesSection(["foo`bar.ts"], "auto")[0]?.split("\n").slice(2) ?? [];
+      expect(lines[0]).toStrictEqual("- `` foo`bar.ts ``");
+    });
+
+    /**
+     * Builds a file list whose rendered section just exceeds the budget.
+     */
+    function buildOverBudgetFiles(): string[] {
+      const files: string[] = [];
+      let renderedLength = 0;
+      while (renderedLength < COMMENT_SECTION_BUDGET + 50) {
+        const file = `apps/dashboard/src/lib/components/ui/Component${files.length}.svelte`;
+        files.push(file);
+        renderedLength += file.length + 5;
+      }
+      return files;
+    }
+
+    it("should split a files section that exceeds the comment limit", () => {
+      const files = buildOverBudgetFiles();
+
+      // Behaviour
+      const messages = buildFilesSection(files, "auto");
+      expect(messages.length).toBeGreaterThan(1);
+      for (const message of messages) {
+        expect(message.length).toBeLessThan(COMMENT_SECTION_BUDGET);
+        expect(message).toContain(`### Unused files (${files.length})`);
+      }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+    });
+
+    it("should label split chunks in the header when the section is not collapsed", () => {
+      const files = buildOverBudgetFiles();
+
+      // Behaviour
+      const messages = buildFilesSection(files, "never");
+      expect(messages.length).toBeGreaterThan(1);
+      for (const [index, message] of messages.entries()) {
+        expect(message).toContain(
+          `### Unused files (${files.length}) (part ${index + 1} of ${messages.length})`,
+        );
+        expect(message).not.toContain("<details>");
+      }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+    });
+
+    it("should still split rows that fit when one row alone exceeds the budget", () => {
+      // The oversized row makes the initial split-factor estimate exceed the
+      // row count; the postable row must still get its own message.
+      const files = ["small.ts", "x".repeat(COMMENT_SECTION_BUDGET * 2)];
+
+      // Behaviour
+      const messages = buildFilesSection(files, "auto");
+      expect(messages).toHaveLength(2);
+      expect(messages[0]).toContain("- `small.ts`");
+      expect(messages[0]?.length).toBeLessThan(COMMENT_SECTION_BUDGET);
+      // The huge row cannot fit anywhere and is returned oversized for the
+      // caller to report.
+      expect(messages[1]?.length).toBeGreaterThan(COMMENT_SECTION_BUDGET);
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -302,8 +373,31 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("dependencies", dependencies);
+      const section = buildArraySection("dependencies", dependencies, "auto");
       expect(section).toMatchSnapshot();
+    });
+
+    it("should escape a pipe so it cannot split the table row", () => {
+      const unresolved = {
+        "src/routes/[a|b]/+page.ts": [{ name: "pkg|name" }],
+      };
+
+      // A code span does not protect a pipe from GFM's row splitting, so the
+      // row has to stay at the expected column count.
+      const section = buildArraySection("unresolved", unresolved, "auto");
+      const row = section[0]?.split("\n").at(-1);
+      expect(row).toStrictEqual("|`src/routes/[a\\|b]/+page.ts`|`pkg\\|name`|");
+    });
+
+    it("should widen the code span delimiter when a value contains a backtick", () => {
+      const unresolved = {
+        "src/pages/foo`bar.ts": [{ name: "pkg``name" }],
+      };
+
+      // A backtick run inside a single-backtick span would close it early.
+      const section = buildArraySection("unresolved", unresolved, "auto");
+      const row = section[0]?.split("\n").at(-1);
+      expect(row).toStrictEqual("|`` src/pages/foo`bar.ts ``|``` pkg``name ```|");
     });
 
     it("should transform a devDependencies array section to markdown", () => {
@@ -331,7 +425,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("devDependencies", devDependencies);
+      const section = buildArraySection("devDependencies", devDependencies, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -349,7 +443,11 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("optionalPeerDependencies", optionalPeerDependencies);
+      const section = buildArraySection(
+        "optionalPeerDependencies",
+        optionalPeerDependencies,
+        "auto",
+      );
       expect(section).toMatchSnapshot();
     });
 
@@ -365,7 +463,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("unlisted", unlisted);
+      const section = buildArraySection("unlisted", unlisted, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -378,7 +476,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("binaries", binaries);
+      const section = buildArraySection("binaries", binaries, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -394,7 +492,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("unresolved", unresolved);
+      const section = buildArraySection("unresolved", unresolved, "auto");
       expect(section).toMatchSnapshot();
     });
 
@@ -422,7 +520,7 @@ describe("knip", () => {
         ],
       };
 
-      const section = buildArraySection("duplicates", duplicates);
+      const section = buildArraySection("duplicates", duplicates, "auto");
       expect(section).toMatchSnapshot();
     });
   });
@@ -492,42 +590,42 @@ describe("knip", () => {
     };
 
     it("should transform a exports array section to markdown", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, false, true);
+      const section = buildArraySectionWithAnnotations("exports", exports, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a exports array section to markdown if verbose and annotations are disabled", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, false, false);
+      const section = buildArraySectionWithAnnotations("exports", exports, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a exports array section to annotations", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, true, false);
+      const section = buildArraySectionWithAnnotations("exports", exports, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a exports array section to markdown and annotations", () => {
-      const section = buildArraySectionWithAnnotations("exports", exports, true, true);
+      const section = buildArraySectionWithAnnotations("exports", exports, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to markdown", () => {
-      const section = buildArraySectionWithAnnotations("types", types, false, true);
+      const section = buildArraySectionWithAnnotations("types", types, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to markdown if verbose and annotations are disabled", () => {
-      const section = buildArraySectionWithAnnotations("types", types, false, false);
+      const section = buildArraySectionWithAnnotations("types", types, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to annotations", () => {
-      const section = buildArraySectionWithAnnotations("types", types, true, false);
+      const section = buildArraySectionWithAnnotations("types", types, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a types array section to markdown and annotations", () => {
-      const section = buildArraySectionWithAnnotations("types", types, true, true);
+      const section = buildArraySectionWithAnnotations("types", types, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
   });
@@ -673,42 +771,42 @@ describe("knip", () => {
     };
 
     it("should transform a enumMembers map section to markdown", () => {
-      const section = buildMapSection("enumMembers", enumMembers, false, true);
+      const section = buildMapSection("enumMembers", enumMembers, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a enumMembers map section to markdown if verbose and annotations are disabled", () => {
-      const section = buildMapSection("enumMembers", enumMembers, false, false);
+      const section = buildMapSection("enumMembers", enumMembers, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a enumMembers map section to annotations", () => {
-      const section = buildMapSection("enumMembers", enumMembers, true, false);
+      const section = buildMapSection("enumMembers", enumMembers, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a enumMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("enumMembers", enumMembers, true, true);
+      const section = buildMapSection("enumMembers", enumMembers, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to markdown", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, false, true);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, true, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to markdown if verbose and annotations are disabled", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, false, false);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, false, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to annotations", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, true, false);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, false, "auto");
       expect(section).toMatchSnapshot();
     });
 
     it("should transform a namespaceMembers map section to markdown and annotations", () => {
-      const section = buildMapSection("namespaceMembers", namespaceMembers, true, true);
+      const section = buildMapSection("namespaceMembers", namespaceMembers, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
   });
@@ -718,7 +816,7 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
       // Behaviour
-      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, false, true, "auto");
       expect(sections).toHaveLength(12);
       expect(annotations).toHaveLength(0);
       for (const section of sections) {
@@ -734,7 +832,7 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
       // Behaviour
-      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, true, "auto");
       expect(sections).toHaveLength(12);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
@@ -755,7 +853,7 @@ describe("knip", () => {
       const parsedReport = parseJsonReport(JSON.stringify(reportJson));
 
       // Behaviour
-      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false);
+      const { sections, annotations } = buildMarkdownSections(parsedReport, true, false, "auto");
       expect(sections).toHaveLength(7);
       for (const section of sections) {
         expect(section).toBeTypeOf("string");
@@ -792,7 +890,13 @@ describe("knip", () => {
       }
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, tableHeader, body);
+      const messages = processSectionToMessages(
+        sectionHeader,
+        body.length,
+        tableHeader,
+        body,
+        "auto",
+      );
 
       // Chunk count is bounded by the number of comments required to fit the
       // output. Earlier iterations produced ~500 chunks of 3 rows; the intended
@@ -803,10 +907,16 @@ describe("knip", () => {
       // Each chunk fits in a comment and renders as a standalone section.
       const tableHeaderLine = "|Filename|Enum|Member|";
       let observedRows = 0;
-      for (const msg of messages) {
-        expect(msg.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      for (const [index, msg] of messages.entries()) {
+        expect(msg.length).toBeLessThan(COMMENT_SECTION_BUDGET);
         expect(msg).toContain(sectionHeader);
         expect(msg).toContain(tableHeaderLine);
+        // Each chunk closes its own details block, otherwise the markup breaks
+        // across the comments the chunks are posted in.
+        expect(msg).toContain(
+          `<summary>View <b>${body.length}</b> results (part ${index + 1} of ${messages.length})</summary>`,
+        );
+        expect(msg.endsWith("\n\n</details>")).toBe(true);
         observedRows += msg
           .split("\n")
           .filter((l) => l.startsWith("|") && l !== tableHeaderLine && !l.startsWith("|-")).length;
@@ -827,6 +937,65 @@ describe("knip", () => {
       );
     });
 
+    it("should collapse a section holding more results than the threshold", () => {
+      const tableBody = [["DrNefarious.ts", "`Magmos`"]];
+
+      // Behaviour
+      expect(
+        processSectionToMessages("### Ten", 10, ["File", "Item"], tableBody, "auto")[0],
+      ).not.toContain("<details>");
+      expect(
+        processSectionToMessages("### Eleven", 11, ["File", "Item"], tableBody, "auto")[0],
+      ).toContain("<summary>View <b>11</b> results</summary>");
+
+      // Logging: no splitting → no logs
+      assertNoneCalled();
+    });
+
+    it("should let always and never override the threshold", () => {
+      const tableBody = [["DrNefarious.ts", "`Magmos`"]];
+
+      // Behaviour
+      expect(
+        processSectionToMessages("### One", 1, ["File", "Item"], tableBody, "always")[0],
+      ).toContain("<summary>View <b>1</b> results</summary>");
+      expect(
+        processSectionToMessages("### Five Hundred", 500, ["File", "Item"], tableBody, "never")[0],
+      ).not.toContain("<details>");
+
+      // Logging: no splitting → no logs
+      assertNoneCalled();
+    });
+
+    it("should split a section that only just exceeds the limit", () => {
+      const sectionHeader = "### Just Over";
+      const tableHeader = ["Filename", "Item"];
+      const row = ["DrNefarious.ts", "`Magmos`"];
+      const tableBody: string[][] = [];
+      let renderedLength = 0;
+      while (renderedLength < COMMENT_SECTION_BUDGET + 50) {
+        tableBody.push(row);
+        renderedLength += row.join("|").length + 3;
+      }
+
+      // Behaviour
+      const messages = processSectionToMessages(
+        sectionHeader,
+        tableBody.length,
+        tableHeader,
+        tableBody,
+        "auto",
+      );
+      expect(messages).toHaveLength(2);
+      for (const message of messages) {
+        expect(message.length).toBeLessThan(COMMENT_SECTION_BUDGET);
+      }
+
+      // Logging
+      assertOnlyCalled(coreInfoLogMock);
+      expect(coreInfoLogMock).toHaveBeenCalledTimes(2);
+    });
+
     it("should return a single message when the section fits in one comment", () => {
       const sectionHeader = "### Small";
       const tableHeader = ["File", "Item"];
@@ -836,11 +1005,11 @@ describe("knip", () => {
       ];
 
       // Behaviour
-      const messages = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+      const messages = processSectionToMessages(sectionHeader, 2, tableHeader, tableBody, "auto");
       expect(messages).toHaveLength(1);
       expect(messages[0]).toContain(sectionHeader);
       expect(messages[0]).toContain("|File|Item|");
-      expect(messages[0]?.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      expect(messages[0]?.length).toBeLessThan(COMMENT_SECTION_BUDGET);
 
       // Logging: no splitting → no logs
       assertNoneCalled();
@@ -968,6 +1137,7 @@ ${JSON.stringify(reportJson, null, 2)}
         jsonReportPath: "report.json",
         annotationsEnabled: false,
         verboseEnabled: false,
+        collapse: "auto",
       });
       expect(execSpy).not.toHaveBeenCalled();
       expect(result.sections.length).toBeGreaterThan(0);
@@ -988,6 +1158,7 @@ ${JSON.stringify(reportJson, null, 2)}
         jsonReportPath: undefined,
         annotationsEnabled: false,
         verboseEnabled: false,
+        collapse: "auto",
       });
       expect(execSpy).toHaveBeenCalledOnce();
       expect(result.sections.length).toBeGreaterThan(0);

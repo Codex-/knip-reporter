@@ -118,6 +118,7 @@ describe("API", () => {
     annotations: true,
     verbose: false,
     ignoreResults: false,
+    collapseSections: "auto",
     workingDirectory: ".",
   };
 

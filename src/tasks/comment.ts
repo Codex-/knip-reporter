@@ -18,16 +18,37 @@ function createCommentId(cfgCommentId: string, n: number): string {
 // Double newlines for markdown
 const COMMENT_SECTION_DELIMITER = "\n\n";
 
+const REPORT_WARNING =
+  "> [!WARNING]\n> Knip has reported the following issues with the proposed changes";
+
+/**
+ * Largest section a comment can carry. The 512 reserve leaves room for the
+ * comment preamble (id and warning) plus delimiters.
+ */
+export const COMMENT_SECTION_BUDGET = GITHUB_COMMENT_MAX_COMMENT_LENGTH - 512;
+
 export function buildComments(cfgCommentId: string, reportSections: string[]): string[] {
   core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
-  let currentCommentEntryNumber = 0;
-  let currentCommentSections: string[] = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
-  let currentCommentLength = currentCommentSections[0]?.length ?? 0;
+  // The warning is packed as the leading section, so it stays on the first
+  // posted comment even when the first report section overflows or is dropped.
+  const sections = reportSections.length > 0 ? [REPORT_WARNING, ...reportSections] : [];
+
+  let currentCommentSections: string[] = [];
+  let currentCommentLength = 0;
+  // Comments are numbered by what has been pushed, keeping ids contiguous
+  // even when a section is dropped.
+  const startNewComment = (): void => {
+    const commentId = createCommentId(cfgCommentId, comments.length);
+    currentCommentSections = [commentId];
+    currentCommentLength = commentId.length;
+  };
+  startNewComment();
+
   let currentSectionIndex = 0;
-  while (currentSectionIndex < reportSections.length) {
-    const section = reportSections[currentSectionIndex];
+  while (currentSectionIndex < sections.length) {
+    const section = sections[currentSectionIndex];
     if (section === undefined) {
       // Due to the while condition, this should never be reached.
       core.debug(
@@ -48,17 +69,16 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
 
       // If we are at the end of the sections, we do not continue but simply
       // proceed to add the comment sections to the output.
-      if (currentSectionIndex - 1 < reportSections.length - 1) {
+      if (currentSectionIndex < sections.length) {
         continue;
       }
     }
 
-    // A section under MAX is still unpostable when combined with the comment-id
-    // header + delimiter would exceed MAX in an otherwise-empty comment. Without
-    // catching that here the loop never advances on such a section.
+    // The comment id is the smallest preamble a section can share a comment
+    // with, so a section overflowing an otherwise-empty comment can never be
+    // posted. Skipping it here keeps the loop advancing.
     const sectionUnpostable =
-      section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH ||
-      (currentCommentSections.length === 1 && newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      currentCommentSections.length === 1 && newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH;
     if (sectionUnpostable) {
       const sectionHeader = section.split("\n")[0] ?? "";
       core.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
@@ -73,12 +93,7 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
       core.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
     }
 
-    // Increase the number for comment IDs
-    currentCommentEntryNumber++;
-    // Reset the sections to just the new comment ID header
-    currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
-    // Reset the length to the newly generated comment ID header
-    currentCommentLength = currentCommentSections[0]?.length ?? 0;
+    startNewComment();
   }
 
   core.debug(`[prepareComments]: ${comments.length} comments prepared`);

@@ -5,9 +5,9 @@ import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
 import { markdownTable, type Options as MarkdownTableOptions } from "markdown-table";
 
-import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
+import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import { timeTask } from "./task.ts";
-import type { ItemMeta } from "./types.ts";
+import type { CollapseSections, ItemMeta } from "./types.ts";
 
 export async function buildRunKnipCommand(buildScriptName: string, cwd?: string): Promise<string> {
   const knipArgs = [buildScriptName, "--reporter json"];
@@ -196,10 +196,46 @@ export function parseJsonReport(rawJson: string): ParsedReport {
   return out;
 }
 
-export function buildFilesSection(files: string[]): string {
-  const header = `### Unused files (${files.length})`;
-  const body = files.map((file) => `\`${file}\``).join(", ");
-  return header + "\n\n" + body;
+export function buildFilesSection(files: string[], collapse: CollapseSections): string[] {
+  const sectionHeader = `### Unused files (${files.length})`;
+  return splitRowsToMessages(sectionHeader, files, (rows, chunkIndex, chunkCount) =>
+    buildSectionMessage(
+      sectionHeader,
+      files.length,
+      rows.map((file) => `- ${codeSpan(file)}`).join("\n"),
+      chunkIndex,
+      chunkCount,
+      collapse,
+    ),
+  );
+}
+
+/**
+ * Render a value as an inline code span.
+ *
+ * The delimiter has to be longer than any backtick run in the value,
+ * otherwise the run would close the span early.
+ */
+function codeSpan(value: string): string {
+  const backtickRuns = value.match(/`+/g);
+  if (backtickRuns === null) {
+    return `\`${value}\``;
+  }
+  const longestRun = Math.max(...backtickRuns.map((ticks) => ticks.length));
+  const delimiter = "`".repeat(longestRun + 1);
+  // The padding spaces keep a leading or trailing backtick out of the delimiter.
+  return `${delimiter} ${value} ${delimiter}`;
+}
+
+/**
+ * Render a value as a code span in a markdown table cell.
+ *
+ * GitHub flavoured markdown splits a row on `|` even inside a code
+ * span, so a pipe in a path or identifier has to be escaped to keep
+ * the row intact.
+ */
+function codeCell(value: string): string {
+  return codeSpan(value.replaceAll("|", "\\|"));
 }
 
 export function buildSectionName(name: string): string {
@@ -229,6 +265,7 @@ export function buildSectionName(name: string): string {
 export function buildArraySection(
   name: string,
   rawResults: Record<string, Item[] | Item[][]>,
+  collapse: CollapseSections,
 ): string[] {
   let totalUnused = 0;
   const tableHeader = ["Filename", name];
@@ -237,13 +274,13 @@ export function buildArraySection(
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
     tableBody.push([
-      fileName,
+      codeCell(fileName),
       results
         .map((result) => {
           if (Array.isArray(result)) {
-            return result.map((item) => `\`${item.name}\``).join(", ");
+            return result.map((item) => codeCell(item.name)).join(", ");
           }
-          return `\`${result.name}\``;
+          return codeCell(result.name);
         })
         .join("<br/>"),
     ]);
@@ -251,7 +288,7 @@ export function buildArraySection(
 
   const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
 
-  return processSectionToMessages(sectionHeader, tableHeader, tableBody);
+  return processSectionToMessages(sectionHeader, totalUnused, tableHeader, tableBody, collapse);
 }
 
 function getMetaType(type: ParsedReportKey): ItemMeta["type"] {
@@ -281,6 +318,7 @@ export function buildArraySectionWithAnnotations(
   rawResults: Record<string, Item[] | Item[][]>,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  collapse: CollapseSections,
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
@@ -315,7 +353,7 @@ export function buildArraySectionWithAnnotations(
           }
         }
         if (shouldBuildMarkdown) {
-          itemNames.push(item.map((dup) => `\`${dup.name}\``).join(", "));
+          itemNames.push(item.map((dup) => codeCell(dup.name)).join(", "));
         }
         totalUnused += item.length;
         continue;
@@ -331,19 +369,25 @@ export function buildArraySectionWithAnnotations(
         });
       }
       if (shouldBuildMarkdown) {
-        itemNames.push(`\`${item.name}\``);
+        itemNames.push(codeCell(item.name));
       }
       totalUnused++;
     }
     if (shouldBuildMarkdown) {
-      tableBody.push([filename, itemNames.join("<br/>")]);
+      tableBody.push([codeCell(filename), itemNames.join("<br/>")]);
     }
   }
 
   if (shouldBuildMarkdown) {
     const tableHeader = ["Filename", name];
     const sectionHeader = `### ${buildSectionName(name)} (${totalUnused})`;
-    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+    const processedSections = processSectionToMessages(
+      sectionHeader,
+      totalUnused,
+      tableHeader,
+      tableBody,
+      collapse,
+    );
 
     return { sections: processedSections, annotations: annotations };
   }
@@ -365,6 +409,7 @@ export function buildMapSection(
   rawResults: Record<string, Record<string, Item[]>>,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  collapse: CollapseSections,
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
@@ -388,12 +433,12 @@ export function buildMapSection(
           });
         }
         if (shouldBuildMarkdown) {
-          itemNames.push(`\`${member.name}\``);
+          itemNames.push(codeCell(member.name));
         }
       }
       totalUnused += members.length;
       if (shouldBuildMarkdown) {
-        tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+        tableBody.push([codeCell(filename), codeCell(definitionName), itemNames.join("<br/>")]);
       }
     }
   }
@@ -402,7 +447,13 @@ export function buildMapSection(
     const tableHeader = ["Filename", resultType, "Member"];
     const sectionHeaderName = `${resultType} Members`;
     const sectionHeader = `### Unused ${sectionHeaderName} (${totalUnused})`;
-    const processedSections = processSectionToMessages(sectionHeader, tableHeader, tableBody);
+    const processedSections = processSectionToMessages(
+      sectionHeader,
+      totalUnused,
+      tableHeader,
+      tableBody,
+      collapse,
+    );
 
     return { sections: processedSections, annotations: annotations };
   }
@@ -410,56 +461,132 @@ export function buildMapSection(
   return { sections: [], annotations: annotations };
 }
 
-export function processSectionToMessages(
-  sectionHeader: string,
-  tableHeader: string[],
-  tableBody: string[][],
-): string[] {
-  const markdownTableOptions: MarkdownTableOptions = {
-    alignDelimiters: false,
-    padding: false,
-  };
+function chunkRows<Row>(rows: Row[], rowsPerChunk: number): Row[][] {
+  const chunks: Row[][] = [];
+  for (let start = 0; start < rows.length; start += rowsPerChunk) {
+    chunks.push(rows.slice(start, start + rowsPerChunk));
+  }
+  return chunks;
+}
 
-  const sectionProcessingMs = Date.now();
-  const originalOutput =
-    sectionHeader + "\n\n" + markdownTable([tableHeader, ...tableBody], markdownTableOptions);
-  let output = [originalOutput];
-  if (originalOutput.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+/**
+ * Split a section's rows across as many messages as needed to keep each one
+ * within the section budget, leaving room for the comment preamble.
+ *
+ * `render` must return the complete message for a slice of rows so that the
+ * header and any surrounding markup count toward the limit. A single row that
+ * cannot fit on its own is still returned oversized, leaving the caller to
+ * report it.
+ */
+function splitRowsToMessages<Row>(
+  sectionHeader: string,
+  rows: Row[],
+  render: (rows: Row[], chunkIndex: number, chunkCount: number) => string,
+): string[] {
+  let messages = [render(rows, 0, 1)];
+  if ((messages[0]?.length ?? 0) < COMMENT_SECTION_BUDGET) {
     // Output doesn't violate the limit, simply return and move on
-    return output;
+    return messages;
   }
 
+  const sectionProcessingMs = Date.now();
   core.info(`    - Splitting section ${sectionHeader}`);
-  output = [];
 
-  // We round this number up otherwise the splitLength will result in exactly 65535-100
-  // Adding 100 to the limit to give us a bit of wiggle room when splitting the section
-  const splitFactor = Math.ceil(originalOutput.length / (GITHUB_COMMENT_MAX_COMMENT_LENGTH + 100));
-  const tableBodySize = tableBody.length;
-  const tableBodyItemWindow = Math.ceil(tableBodySize / splitFactor);
-  let tableBodySliceStart = 0;
-  let tableBodySliceEnd = tableBodyItemWindow;
-  while (tableBodySliceStart < tableBodySize) {
-    const slicedBodyItems = tableBody.slice(tableBodySliceStart, tableBodySliceEnd);
-    if (slicedBodyItems.length === 0) {
-      break;
+  // Message overhead is only known once rendered, so start from an estimate
+  // and shrink the chunk size by the observed overflow until every chunk fits.
+  const estimatedChunks = Math.max(
+    2,
+    Math.ceil((messages[0]?.length ?? 0) / COMMENT_SECTION_BUDGET),
+  );
+  let rowsPerChunk = Math.ceil(rows.length / estimatedChunks);
+  let done = false;
+  while (!done) {
+    const chunks = chunkRows(rows, rowsPerChunk);
+    messages = chunks.map((chunk, index) => render(chunk, index, chunks.length));
+    let longest = 0;
+    for (const message of messages) {
+      longest = Math.max(longest, message.length);
     }
-    const markdown = markdownTable([tableHeader, ...slicedBodyItems], markdownTableOptions);
-    const newSection = sectionHeader + "\n\n" + markdown;
-    output.push(newSection);
-
-    tableBodySliceStart = tableBodySliceEnd;
-    tableBodySliceEnd += tableBodyItemWindow;
+    // At one row per chunk, oversized messages are left for the caller to report.
+    done = longest < COMMENT_SECTION_BUDGET || rowsPerChunk === 1;
+    if (!done) {
+      // Shrink by the overflow ratio, and by at least one row to terminate.
+      rowsPerChunk = Math.max(
+        1,
+        Math.min(rowsPerChunk - 1, Math.floor((rowsPerChunk * COMMENT_SECTION_BUDGET) / longest)),
+      );
+    }
   }
 
   core.info(`    ✔ Splitting section ${sectionHeader} (${Date.now() - sectionProcessingMs}ms)`);
-  return output;
+  return messages;
+}
+
+const MARKDOWN_TABLE_OPTIONS: MarkdownTableOptions = {
+  alignDelimiters: false,
+  padding: false,
+};
+
+/**
+ * Sections this small read fine inline, so collapsing them costs a click and
+ * gains nothing.
+ */
+const COLLAPSE_RESULT_THRESHOLD = 10;
+
+/**
+ * Assemble one message for a section, collapsing the body behind a `<details>`
+ * block when the section is large enough to be worth hiding.
+ *
+ * `resultCount` is the section total rather than this message's share of it,
+ * so a split section is labelled with the part it holds.
+ */
+function buildSectionMessage(
+  sectionHeader: string,
+  resultCount: number,
+  body: string,
+  chunkIndex: number,
+  chunkCount: number,
+  collapse: CollapseSections,
+): string {
+  const shouldCollapse =
+    collapse === "always" || (collapse === "auto" && resultCount > COLLAPSE_RESULT_THRESHOLD);
+  const part = chunkCount > 1 ? ` (part ${chunkIndex + 1} of ${chunkCount})` : "";
+  if (!shouldCollapse) {
+    // Without a details block the part label goes on the header, otherwise
+    // split chunks render as indistinguishable repeats of the same section.
+    return `${sectionHeader}${part}\n\n${body}`;
+  }
+
+  const summary = `View <b>${resultCount}</b> results${part}`;
+  // Blank lines around the body are required for GitHub to render markdown
+  // nested inside the HTML block.
+  return `${sectionHeader}\n\n<details>\n<summary>${summary}</summary>\n\n${body}\n\n</details>`;
+}
+
+export function processSectionToMessages(
+  sectionHeader: string,
+  resultCount: number,
+  tableHeader: string[],
+  tableBody: string[][],
+  collapse: CollapseSections,
+): string[] {
+  return splitRowsToMessages(sectionHeader, tableBody, (rows, chunkIndex, chunkCount) =>
+    buildSectionMessage(
+      sectionHeader,
+      resultCount,
+      markdownTable([tableHeader, ...rows], MARKDOWN_TABLE_OPTIONS),
+      chunkIndex,
+      chunkCount,
+      collapse,
+    ),
+  );
 }
 
 export function buildMarkdownSections(
   report: ParsedReport,
   annotationsEnabled: boolean,
   verboseEnabled: boolean,
+  collapse: CollapseSections,
 ): { sections: string[]; annotations: ItemMeta[] } {
   const outputAnnotations: ItemMeta[] = [];
   const outputSections: string[] = [];
@@ -476,7 +603,7 @@ export function buildMarkdownSections(
 
     if (key === "files") {
       if (report.files.length > 0) {
-        outputSections.push(buildFilesSection(report.files));
+        outputSections.push(...buildFilesSection(report.files, collapse));
         core.debug(`[buildMarkdownSections]: Parsed ${key} (${report.files.length})`);
       }
       continue;
@@ -493,7 +620,11 @@ export function buildMarkdownSections(
       case "unlisted":
       case "binaries":
       case "unresolved": {
-        const sections = buildArraySection(key, value as Parameters<typeof buildArraySection>[1]);
+        const sections = buildArraySection(
+          key,
+          value as Parameters<typeof buildArraySection>[1],
+          collapse,
+        );
         outputSections.push(...sections);
         core.debug(`[buildArraySections]: Parsed ${key} (${Object.keys(value).length})`);
         break;
@@ -507,6 +638,7 @@ export function buildMarkdownSections(
             value as Parameters<typeof buildArraySectionWithAnnotations>[1],
             annotationsEnabled,
             verboseEnabled,
+            collapse,
           );
         length = Object.keys(value).length;
         break;
@@ -518,6 +650,7 @@ export function buildMarkdownSections(
             value as Parameters<typeof buildMapSection>[1],
             annotationsEnabled,
             verboseEnabled,
+            collapse,
           );
         length = Object.keys(value).length;
 
@@ -642,6 +775,7 @@ interface RunKnipTasksOpts {
   jsonReportPath?: string;
   annotationsEnabled: boolean;
   verboseEnabled: boolean;
+  collapse: CollapseSections;
   cwd?: string;
 }
 
@@ -650,6 +784,7 @@ export async function runKnipTasks({
   jsonReportPath,
   annotationsEnabled,
   verboseEnabled,
+  collapse,
   cwd,
 }: RunKnipTasksOpts): Promise<{ sections: string[]; annotations: ItemMeta[] }> {
   const taskMs = Date.now();
@@ -662,7 +797,7 @@ export async function runKnipTasks({
     Promise.resolve(parseJsonReport(output)),
   );
   const sectionsAndAnnotations = await timeTask("Convert report to markdown", () =>
-    Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled)),
+    Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled, collapse)),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);

@@ -67,6 +67,7 @@ export async function main(): Promise<void> {
       jsonReportPath: config.jsonReportPath,
       annotationsEnabled: config.annotations,
       verboseEnabled: config.verbose,
+      collapse: config.collapseSections,
       cwd: config.workingDirectory,
     });
     const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;

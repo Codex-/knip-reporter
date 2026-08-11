@@ -29,6 +29,13 @@ inputs:
     description: Do not fail the action run if knip results are found.
     default: false
     required: false
+  collapse_sections:
+    description: |
+      When to hide a report section's body behind a collapsible block.
+      One of `auto`, `always`, or `never`. `auto` collapses only sections
+      with more than ten results.
+    default: auto
+    required: false
   working_directory:
     description: Directory in which to run the knip action.
     default: "."
