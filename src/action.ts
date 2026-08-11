@@ -2,13 +2,7 @@ import path from "node:path";
 
 import * as core from "@actions/core";
 
-import type { CollapseSections } from "./tasks/types.ts";
-
-const COLLAPSE_SECTIONS_VALUES = [
-  "auto",
-  "always",
-  "never",
-] as const satisfies readonly CollapseSections[];
+import { COLLAPSE_SECTIONS_VALUES, type CollapseSections } from "./tasks/types.ts";
 
 export const DEFAULT_KNIP_COMMAND = "knip";
 

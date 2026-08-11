@@ -17,10 +17,12 @@ type ItemMetaDuplicate = Omit<ItemMetaBase, "type"> & {
 
 export type ItemMeta = ItemMetaBase | ItemMetaDuplicate;
 
+export const COLLAPSE_SECTIONS_VALUES = ["auto", "always", "never"] as const;
+
 /**
  * When to hide a report section's body behind a collapsible block.
  *
  * `auto` collapses only the sections large enough to crowd out the rest of
  * the report.
  */
-export type CollapseSections = "auto" | "always" | "never";
+export type CollapseSections = (typeof COLLAPSE_SECTIONS_VALUES)[number];
