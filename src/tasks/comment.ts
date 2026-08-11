@@ -27,31 +27,28 @@ const REPORT_WARNING =
  */
 export const COMMENT_SECTION_BUDGET = GITHUB_COMMENT_MAX_COMMENT_LENGTH - 512;
 
-/**
- * Open a comment with the sections every comment carries.
- *
- * The warning goes on the first comment only, so a report spanning several
- * comments reads as one report rather than a run of separate warnings.
- */
-function buildCommentPreamble(cfgCommentId: string, entryNumber: number): string[] {
-  const preamble = [createCommentId(cfgCommentId, entryNumber)];
-  if (entryNumber === 0) {
-    preamble.push(REPORT_WARNING);
-  }
-  return preamble;
-}
-
 export function buildComments(cfgCommentId: string, reportSections: string[]): string[] {
   core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
-  let currentCommentEntryNumber = 0;
-  let currentCommentSections = buildCommentPreamble(cfgCommentId, currentCommentEntryNumber);
-  let currentCommentPreambleSize = currentCommentSections.length;
-  let currentCommentLength = currentCommentSections.join(COMMENT_SECTION_DELIMITER).length;
+  // The warning is packed as the leading section, so it stays on the first
+  // posted comment even when the first report section overflows or is dropped.
+  const sections = reportSections.length > 0 ? [REPORT_WARNING, ...reportSections] : [];
+
+  let currentCommentSections: string[] = [];
+  let currentCommentLength = 0;
+  // Comments are numbered by what has been pushed, keeping ids contiguous
+  // even when a section is dropped.
+  const startNewComment = (): void => {
+    const commentId = createCommentId(cfgCommentId, comments.length);
+    currentCommentSections = [commentId];
+    currentCommentLength = commentId.length;
+  };
+  startNewComment();
+
   let currentSectionIndex = 0;
-  while (currentSectionIndex < reportSections.length) {
-    const section = reportSections[currentSectionIndex];
+  while (currentSectionIndex < sections.length) {
+    const section = sections[currentSectionIndex];
     if (section === undefined) {
       // Due to the while condition, this should never be reached.
       core.debug(
@@ -72,18 +69,16 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
 
       // If we are at the end of the sections, we do not continue but simply
       // proceed to add the comment sections to the output.
-      if (currentSectionIndex - 1 < reportSections.length - 1) {
+      if (currentSectionIndex < sections.length) {
         continue;
       }
     }
 
-    // A section under MAX is still unpostable when combined with the comment
-    // preamble + delimiter would exceed MAX in an otherwise-empty comment.
-    // Without catching that here the loop never advances on such a section.
+    // The comment id is the smallest preamble a section can share a comment
+    // with, so a section overflowing an otherwise-empty comment can never be
+    // posted. Skipping it here keeps the loop advancing.
     const sectionUnpostable =
-      section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH ||
-      (currentCommentSections.length === currentCommentPreambleSize &&
-        newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      currentCommentSections.length === 1 && newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH;
     if (sectionUnpostable) {
       const sectionHeader = section.split("\n")[0] ?? "";
       core.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
@@ -92,18 +87,13 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
       currentSectionIndex++;
     }
 
-    if (currentCommentSections.length > currentCommentPreambleSize) {
+    if (currentCommentSections.length > 1) {
       // Current comment is now complete
       comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
       core.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
     }
 
-    // Increase the number for comment IDs
-    currentCommentEntryNumber++;
-    // Reset the sections to just the new comment's preamble
-    currentCommentSections = buildCommentPreamble(cfgCommentId, currentCommentEntryNumber);
-    currentCommentPreambleSize = currentCommentSections.length;
-    currentCommentLength = currentCommentSections.join(COMMENT_SECTION_DELIMITER).length;
+    startNewComment();
   }
 
   core.debug(`[prepareComments]: ${comments.length} comments prepared`);

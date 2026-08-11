@@ -250,9 +250,12 @@ describe("comment", () => {
     });
 
     it("should output a long section", () => {
-      // Behaviour
+      // Behaviour: the section is dropped, but the lead warning still posts.
       const comments = buildComments("hello", longSection);
-      expect(comments).toHaveLength(0);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[0]).not.toContain("Unused files");
 
       // Logging
       assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
@@ -275,15 +278,55 @@ describe("comment", () => {
       const borderline = `${sectionHeader}\n\n${filler}`;
       expect(borderline.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
 
-      // Behaviour
+      // Behaviour: only the lead warning posts.
       const comments = buildComments("hello", [borderline]);
-      expect(comments).toHaveLength(0);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).not.toContain(sectionHeader);
 
       // Logging
       assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
       expect(coreWarningLogMock).toHaveBeenCalledTimes(3);
       expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(sectionHeader);
       expect(coreWarningLogMock.mock.calls[0]?.[0]).toContain(`(${borderline.length})`);
+    });
+
+    it("should defer a section that cannot share the first comment with the warning", () => {
+      // Sits inside the window where the section fits beside a bare comment id
+      // but not beside the id plus the warning.
+      const sectionHeader = "### Deferred";
+      const filler = "a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH - sectionHeader.length - 62);
+      const deferred = `${sectionHeader}\n\n${filler}`;
+
+      // Behaviour: nothing is dropped, the section moves to the second comment.
+      const comments = buildComments("hello", [deferred]);
+      expect(comments).toHaveLength(2);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[1]).toContain("<!-- hello-1 -->");
+      expect(comments[1]).toContain(sectionHeader);
+      expect(comments[1]).not.toContain("[!WARNING]");
+      for (const comment of comments) {
+        expect(comment.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      }
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should keep the warning and contiguous ids when the first section is unpostable", () => {
+      const sections = [...longSection, ...shortSections];
+
+      // Behaviour
+      const comments = buildComments("hello", sections);
+      expect(comments).toHaveLength(2);
+      expect(comments[0]).toContain("<!-- hello-0 -->");
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[1]).toContain("<!-- hello-1 -->");
+      expect(comments[1]).toContain("### Unused files (2)");
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock, coreWarningLogMock);
+      expect(coreWarningLogMock).toHaveBeenCalledTimes(3);
     });
 
     it("should not output a warning for a regular section", () => {
