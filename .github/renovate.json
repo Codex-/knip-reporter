@@ -1,10 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "group:allNonMajor", "schedule:monthly"],
+  "extends": ["config:best-practices", "group:allNonMajor", "schedule:monthly"],
   "timezone": "Pacific/Auckland",
-  "labels": ["dependencies", "renovate"],
+  "labels": ["dependencies"],
+  "postUpdateOptions": ["pnpmDedupe"],
   "lockFileMaintenance": {
     "enabled": true,
+    "automerge": true,
     "schedule": ["every 3 months on the first day of the month"]
   },
   "packageRules": [
@@ -23,6 +25,9 @@
     { "matchDepNames": ["knip"], "groupName": "update knip", "automerge": false }
   ],
   "vulnerabilityAlerts": {
-    "labels": ["security"]
+    "labels": ["dependencies", "security"],
+    "automerge": true,
+    "schedule": ["at any time"],
+    "minimumReleaseAge": null
   }
 }
