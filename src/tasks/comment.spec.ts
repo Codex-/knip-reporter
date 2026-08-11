@@ -210,6 +210,45 @@ describe("comment", () => {
       assertOnlyCalled(coreDebugLogMock);
     });
 
+    it("should warn once on the first comment of a multi-comment report", () => {
+      // Behaviour
+      const comments = buildComments("hello", manyShortSections);
+      expect(comments).toHaveLength(4);
+      expect(comments[0]).toContain("<!-- hello-0 -->\n\n> [!WARNING]\n");
+      for (const comment of comments.slice(1)) {
+        expect(comment).not.toContain("[!WARNING]");
+      }
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should not output a warning when there are no sections to report", () => {
+      // Behaviour
+      expect(buildComments("hello", [])).toHaveLength(0);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
+    it("should count the warning against the first comment's length budget", () => {
+      // A section that fits alongside the comment ID but not alongside the
+      // warning as well has to move to the second comment rather than
+      // overflowing the first.
+      const sectionHeader = "### Snug";
+      const filler = "a".repeat(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH - sectionHeader.length - 120);
+      const snug = `${sectionHeader}\n\n${filler}`;
+
+      // Behaviour
+      const comments = buildComments("hello", [snug]);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toContain("[!WARNING]");
+      expect(comments[0]?.length).toBeLessThan(api.GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+    });
+
     it("should output a long section", () => {
       // Behaviour
       const comments = buildComments("hello", longSection);

@@ -18,13 +18,31 @@ function createCommentId(cfgCommentId: string, n: number): string {
 // Double newlines for markdown
 const COMMENT_SECTION_DELIMITER = "\n\n";
 
+const REPORT_WARNING =
+  "> [!WARNING]\n> Knip has reported the following issues with the proposed changes";
+
+/**
+ * Open a comment with the sections every comment carries.
+ *
+ * The warning goes on the first comment only, so a report spanning several
+ * comments reads as one report rather than a run of separate warnings.
+ */
+function buildCommentPreamble(cfgCommentId: string, entryNumber: number): string[] {
+  const preamble = [createCommentId(cfgCommentId, entryNumber)];
+  if (entryNumber === 0) {
+    preamble.push(REPORT_WARNING);
+  }
+  return preamble;
+}
+
 export function buildComments(cfgCommentId: string, reportSections: string[]): string[] {
   core.debug(`[prepareComments]: ${reportSections.length} sections to prepare`);
   const comments: string[] = [];
 
   let currentCommentEntryNumber = 0;
-  let currentCommentSections: string[] = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
-  let currentCommentLength = currentCommentSections[0]?.length ?? 0;
+  let currentCommentSections = buildCommentPreamble(cfgCommentId, currentCommentEntryNumber);
+  let currentCommentPreambleSize = currentCommentSections.length;
+  let currentCommentLength = currentCommentSections.join(COMMENT_SECTION_DELIMITER).length;
   let currentSectionIndex = 0;
   while (currentSectionIndex < reportSections.length) {
     const section = reportSections[currentSectionIndex];
@@ -53,12 +71,13 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
       }
     }
 
-    // A section under MAX is still unpostable when combined with the comment-id
-    // header + delimiter would exceed MAX in an otherwise-empty comment. Without
-    // catching that here the loop never advances on such a section.
+    // A section under MAX is still unpostable when combined with the comment
+    // preamble + delimiter would exceed MAX in an otherwise-empty comment.
+    // Without catching that here the loop never advances on such a section.
     const sectionUnpostable =
       section.length > GITHUB_COMMENT_MAX_COMMENT_LENGTH ||
-      (currentCommentSections.length === 1 && newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      (currentCommentSections.length === currentCommentPreambleSize &&
+        newLength >= GITHUB_COMMENT_MAX_COMMENT_LENGTH);
     if (sectionUnpostable) {
       const sectionHeader = section.split("\n")[0] ?? "";
       core.warning(`Section "${sectionHeader}" contents too long to post (${section.length})`);
@@ -67,7 +86,7 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
       currentSectionIndex++;
     }
 
-    if (currentCommentSections.length > 1) {
+    if (currentCommentSections.length > currentCommentPreambleSize) {
       // Current comment is now complete
       comments.push(currentCommentSections.join(COMMENT_SECTION_DELIMITER));
       core.debug(`[prepareComments]: currentCommentSections joined and added to comments`);
@@ -75,10 +94,10 @@ export function buildComments(cfgCommentId: string, reportSections: string[]): s
 
     // Increase the number for comment IDs
     currentCommentEntryNumber++;
-    // Reset the sections to just the new comment ID header
-    currentCommentSections = [createCommentId(cfgCommentId, currentCommentEntryNumber)];
-    // Reset the length to the newly generated comment ID header
-    currentCommentLength = currentCommentSections[0]?.length ?? 0;
+    // Reset the sections to just the new comment's preamble
+    currentCommentSections = buildCommentPreamble(cfgCommentId, currentCommentEntryNumber);
+    currentCommentPreambleSize = currentCommentSections.length;
+    currentCommentLength = currentCommentSections.join(COMMENT_SECTION_DELIMITER).length;
   }
 
   core.debug(`[prepareComments]: ${comments.length} comments prepared`);

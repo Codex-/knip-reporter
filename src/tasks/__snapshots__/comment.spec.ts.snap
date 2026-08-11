@@ -4,6 +4,9 @@ exports[`comment > buildComments > should output multiple comments if all sectio
 [
   "<!-- hello-0 -->
 
+> [!WARNING]
+> Knip has reported the following issues with the proposed changes
+
 ### Unused files (3)
 
 - \`PolarisGalaxy.ts\`
