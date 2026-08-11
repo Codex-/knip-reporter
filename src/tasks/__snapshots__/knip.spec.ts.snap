@@ -6,7 +6,7 @@ exports[`knip > buildArraySection > should transform a binaries array section to
 
 |Filename|binaries|
 |-|-|
-|packages/e/package.json|\`apollo\`|",
+|\`packages/e/package.json\`|\`apollo\`|",
 ]
 `;
 
@@ -16,8 +16,8 @@ exports[`knip > buildArraySection > should transform a dependencies array sectio
 
 |Filename|dependencies|
 |-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|",
+|\`packages/a/package.json\`|\`react\`<br/>\`react-dom\`|
+|\`packages/d/package.json\`|\`react\`|",
 ]
 `;
 
@@ -27,9 +27,9 @@ exports[`knip > buildArraySection > should transform a devDependencies array sec
 
 |Filename|devDependencies|
 |-|-|
-|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/d/package.json|\`dotenv\`|",
+|\`packages/a/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/b/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/d/package.json\`|\`dotenv\`|",
 ]
 `;
 
@@ -39,8 +39,8 @@ exports[`knip > buildArraySection > should transform a duplicate array array sec
 
 |Filename|duplicates|
 |-|-|
-|Lombax.ts|\`Ratchet\`, \`default\`|
-|WarBot.ts|\`Kit\`, \`default\`|",
+|\`Lombax.ts\`|\`Ratchet\`, \`default\`|
+|\`WarBot.ts\`|\`Kit\`, \`default\`|",
 ]
 `;
 
@@ -50,8 +50,8 @@ exports[`knip > buildArraySection > should transform a optionalPeerDependencies 
 
 |Filename|optionalPeerDependencies|
 |-|-|
-|packages/c/package.json|\`dotenv\`|
-|packages/d/package.json|\`@mui/material\`|",
+|\`packages/c/package.json\`|\`dotenv\`|
+|\`packages/d/package.json\`|\`@mui/material\`|",
 ]
 `;
 
@@ -61,7 +61,7 @@ exports[`knip > buildArraySection > should transform a unlisted array section to
 
 |Filename|unlisted|
 |-|-|
-|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+|\`.eslintrc.cjs\`|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
 ]
 `;
 
@@ -71,7 +71,7 @@ exports[`knip > buildArraySection > should transform a unresolved array section 
 
 |Filename|unresolved|
 |-|-|
-|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+|\`jest.config.js\`|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
 ]
 `;
 
@@ -112,8 +112,8 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a exports ar
 
 |Filename|exports|
 |-|-|
-|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
-|packages/a/src/Weapons.ts|\`sheepinator\`|",
+|\`packages/a/src/Utils.ts\`|\`specialFunc\`<br/>\`uselessFunc\`|
+|\`packages/a/src/Weapons.ts\`|\`sheepinator\`|",
   ],
 }
 `;
@@ -148,8 +148,8 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a exports ar
 
 |Filename|exports|
 |-|-|
-|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
-|packages/a/src/Weapons.ts|\`sheepinator\`|",
+|\`packages/a/src/Utils.ts\`|\`specialFunc\`<br/>\`uselessFunc\`|
+|\`packages/a/src/Weapons.ts\`|\`sheepinator\`|",
   ],
 }
 `;
@@ -162,8 +162,8 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a exports ar
 
 |Filename|exports|
 |-|-|
-|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
-|packages/a/src/Weapons.ts|\`sheepinator\`|",
+|\`packages/a/src/Utils.ts\`|\`specialFunc\`<br/>\`uselessFunc\`|
+|\`packages/a/src/Weapons.ts\`|\`sheepinator\`|",
   ],
 }
 `;
@@ -219,9 +219,9 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a types arra
 
 |Filename|types|
 |-|-|
-|packages/a/src/Weapons.ts|\`cowinator\`|
-|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
-|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+|\`packages/a/src/Weapons.ts\`|\`cowinator\`|
+|\`packages/b/Clank.ts\`|\`SpecialAgent\`<br/>\`Zoni\`|
+|\`packages/b/Ratchet.ts\`|\`Lombax\`<br/>\`Homeworld\`|",
   ],
 }
 `;
@@ -270,9 +270,9 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a types arra
 
 |Filename|types|
 |-|-|
-|packages/a/src/Weapons.ts|\`cowinator\`|
-|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
-|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+|\`packages/a/src/Weapons.ts\`|\`cowinator\`|
+|\`packages/b/Clank.ts\`|\`SpecialAgent\`<br/>\`Zoni\`|
+|\`packages/b/Ratchet.ts\`|\`Lombax\`<br/>\`Homeworld\`|",
   ],
 }
 `;
@@ -285,9 +285,9 @@ exports[`knip > buildArraySectionWithAnnotations > should transform a types arra
 
 |Filename|types|
 |-|-|
-|packages/a/src/Weapons.ts|\`cowinator\`|
-|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
-|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+|\`packages/a/src/Weapons.ts\`|\`cowinator\`|
+|\`packages/b/Clank.ts\`|\`SpecialAgent\`<br/>\`Zoni\`|
+|\`packages/b/Ratchet.ts\`|\`Lombax\`<br/>\`Homeworld\`|",
   ],
 }
 `;
@@ -404,9 +404,9 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+|\`DrNefarious.ts\`|\`Homeworld\`|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|\`Sigmund.ts\`|\`Membership\`|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|\`Sigmund.ts\`|\`Residence\`|\`Viceron\`<br/>\`GreatClock\`|
 
 </details>",
   ],
@@ -509,9 +509,9 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+|\`DrNefarious.ts\`|\`Homeworld\`|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|\`Sigmund.ts\`|\`Membership\`|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|\`Sigmund.ts\`|\`Residence\`|\`Viceron\`<br/>\`GreatClock\`|
 
 </details>",
   ],
@@ -529,9 +529,9 @@ exports[`knip > buildMapSection > should transform a enumMembers map section to 
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
+|\`DrNefarious.ts\`|\`Homeworld\`|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|\`Sigmund.ts\`|\`Membership\`|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|\`Sigmund.ts\`|\`Residence\`|\`Viceron\`<br/>\`GreatClock\`|
 
 </details>",
   ],
@@ -603,9 +603,9 @@ exports[`knip > buildMapSection > should transform a namespaceMembers map sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|",
+|\`Qwark.ts\`|\`InsaneQwark\`|\`destroy\`|
+|\`Qwark.ts\`|\`SaneQwark\`|\`rescue\`|
+|\`Rivet.ts\`|\`Rivet\`|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|",
   ],
 }
 `;
@@ -668,9 +668,9 @@ exports[`knip > buildMapSection > should transform a namespaceMembers map sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|",
+|\`Qwark.ts\`|\`InsaneQwark\`|\`destroy\`|
+|\`Qwark.ts\`|\`SaneQwark\`|\`rescue\`|
+|\`Rivet.ts\`|\`Rivet\`|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|",
   ],
 }
 `;
@@ -683,9 +683,9 @@ exports[`knip > buildMapSection > should transform a namespaceMembers map sectio
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Qwark.ts|InsaneQwark|\`destroy\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|",
+|\`Qwark.ts\`|\`InsaneQwark\`|\`destroy\`|
+|\`Qwark.ts\`|\`SaneQwark\`|\`rescue\`|
+|\`Rivet.ts\`|\`Rivet\`|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|",
   ],
 }
 `;
@@ -701,55 +701,55 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 
 |Filename|dependencies|
 |-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|",
+|\`packages/a/package.json\`|\`react\`<br/>\`react-dom\`|
+|\`packages/d/package.json\`|\`react\`|",
   "### Unused devDependencies (5)
 
 |Filename|devDependencies|
 |-|-|
-|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/d/package.json|\`dotenv\`|",
+|\`packages/a/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/b/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/d/package.json\`|\`dotenv\`|",
   "### Unused optionalPeerDependencies (2)
 
 |Filename|optionalPeerDependencies|
 |-|-|
-|packages/c/package.json|\`dotenv\`|
-|packages/d/package.json|\`@mui/material\`|",
+|\`packages/c/package.json\`|\`dotenv\`|
+|\`packages/d/package.json\`|\`@mui/material\`|",
   "### Unlisted dependencies (2)
 
 |Filename|unlisted|
 |-|-|
-|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+|\`.eslintrc.cjs\`|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
   "### Unlisted binaries (1)
 
 |Filename|binaries|
 |-|-|
-|packages/e/package.json|\`apollo\`|",
+|\`packages/e/package.json\`|\`apollo\`|",
   "### Unresolved imports (2)
 
 |Filename|unresolved|
 |-|-|
-|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+|\`jest.config.js\`|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
   "### Unused exports (3)
 
 |Filename|exports|
 |-|-|
-|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
-|packages/a/src/Weapons.ts|\`sheepinator\`|",
+|\`packages/a/src/Utils.ts\`|\`specialFunc\`<br/>\`uselessFunc\`|
+|\`packages/a/src/Weapons.ts\`|\`sheepinator\`|",
   "### Unused types (5)
 
 |Filename|types|
 |-|-|
-|packages/a/src/Weapons.ts|\`cowinator\`|
-|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
-|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+|\`packages/a/src/Weapons.ts\`|\`cowinator\`|
+|\`packages/b/Clank.ts\`|\`SpecialAgent\`<br/>\`Zoni\`|
+|\`packages/b/Ratchet.ts\`|\`Lombax\`<br/>\`Homeworld\`|",
   "### Duplicates (5)
 
 |Filename|duplicates|
 |-|-|
-|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
-|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
+|\`Lombax.ts\`|\`Ratchet\`, \`EvilRatchet\`|
+|\`WarBot.ts\`|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
   "### Unused Enum Members (12)
 
 <details>
@@ -757,18 +757,18 @@ exports[`knip > buildMarkdownSections > outputs only sections 1`] = `
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|\`DrNefarious.ts\`|\`Homeworld\`|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|\`Sigmund.ts\`|\`Residence\`|\`Viceron\`<br/>\`GreatClock\`|
+|\`Sigmund.ts\`|\`Membership\`|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
 </details>",
   "### Unused Namespace Members (7)
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|",
+|\`Rivet.ts\`|\`Rivet\`|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
+|\`Qwark.ts\`|\`SaneQwark\`|\`rescue\`|
+|\`Qwark.ts\`|\`InsaneQwark\`|\`destroy\`|",
 ]
 `;
 
@@ -783,36 +783,36 @@ exports[`knip > buildMarkdownSections > outputs sections and annotations 1`] = `
 
 |Filename|dependencies|
 |-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|",
+|\`packages/a/package.json\`|\`react\`<br/>\`react-dom\`|
+|\`packages/d/package.json\`|\`react\`|",
   "### Unused devDependencies (5)
 
 |Filename|devDependencies|
 |-|-|
-|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/d/package.json|\`dotenv\`|",
+|\`packages/a/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/b/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/d/package.json\`|\`dotenv\`|",
   "### Unused optionalPeerDependencies (2)
 
 |Filename|optionalPeerDependencies|
 |-|-|
-|packages/c/package.json|\`dotenv\`|
-|packages/d/package.json|\`@mui/material\`|",
+|\`packages/c/package.json\`|\`dotenv\`|
+|\`packages/d/package.json\`|\`@mui/material\`|",
   "### Unlisted dependencies (2)
 
 |Filename|unlisted|
 |-|-|
-|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+|\`.eslintrc.cjs\`|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
   "### Unlisted binaries (1)
 
 |Filename|binaries|
 |-|-|
-|packages/e/package.json|\`apollo\`|",
+|\`packages/e/package.json\`|\`apollo\`|",
   "### Unresolved imports (2)
 
 |Filename|unresolved|
 |-|-|
-|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+|\`jest.config.js\`|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
 ]
 `;
 
@@ -1074,55 +1074,55 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 
 |Filename|dependencies|
 |-|-|
-|packages/a/package.json|\`react\`<br/>\`react-dom\`|
-|packages/d/package.json|\`react\`|",
+|\`packages/a/package.json\`|\`react\`<br/>\`react-dom\`|
+|\`packages/d/package.json\`|\`react\`|",
   "### Unused devDependencies (5)
 
 |Filename|devDependencies|
 |-|-|
-|packages/a/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/b/package.json|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
-|packages/d/package.json|\`dotenv\`|",
+|\`packages/a/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/b/package.json\`|\`dotenv\`<br/>\`eslint-plugin-jest-dom\`|
+|\`packages/d/package.json\`|\`dotenv\`|",
   "### Unused optionalPeerDependencies (2)
 
 |Filename|optionalPeerDependencies|
 |-|-|
-|packages/c/package.json|\`dotenv\`|
-|packages/d/package.json|\`@mui/material\`|",
+|\`packages/c/package.json\`|\`dotenv\`|
+|\`packages/d/package.json\`|\`@mui/material\`|",
   "### Unlisted dependencies (2)
 
 |Filename|unlisted|
 |-|-|
-|.eslintrc.cjs|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
+|\`.eslintrc.cjs\`|\`@emotion/eslint-plugin\`<br/>\`eslint-plugin-jest-dom\`|",
   "### Unlisted binaries (1)
 
 |Filename|binaries|
 |-|-|
-|packages/e/package.json|\`apollo\`|",
+|\`packages/e/package.json\`|\`apollo\`|",
   "### Unresolved imports (2)
 
 |Filename|unresolved|
 |-|-|
-|jest.config.js|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
+|\`jest.config.js\`|\`packages/a/src/setupTests.ts\`<br/>\`packages/a/../b/src\`|",
   "### Unused exports (3)
 
 |Filename|exports|
 |-|-|
-|packages/a/src/Utils.ts|\`specialFunc\`<br/>\`uselessFunc\`|
-|packages/a/src/Weapons.ts|\`sheepinator\`|",
+|\`packages/a/src/Utils.ts\`|\`specialFunc\`<br/>\`uselessFunc\`|
+|\`packages/a/src/Weapons.ts\`|\`sheepinator\`|",
   "### Unused types (5)
 
 |Filename|types|
 |-|-|
-|packages/a/src/Weapons.ts|\`cowinator\`|
-|packages/b/Clank.ts|\`SpecialAgent\`<br/>\`Zoni\`|
-|packages/b/Ratchet.ts|\`Lombax\`<br/>\`Homeworld\`|",
+|\`packages/a/src/Weapons.ts\`|\`cowinator\`|
+|\`packages/b/Clank.ts\`|\`SpecialAgent\`<br/>\`Zoni\`|
+|\`packages/b/Ratchet.ts\`|\`Lombax\`<br/>\`Homeworld\`|",
   "### Duplicates (5)
 
 |Filename|duplicates|
 |-|-|
-|Lombax.ts|\`Ratchet\`, \`EvilRatchet\`|
-|WarBot.ts|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
+|\`Lombax.ts\`|\`Ratchet\`, \`EvilRatchet\`|
+|\`WarBot.ts\`|\`Kit\`, \`EvilKit\`, \`DefinitelyNotKit\`|",
   "### Unused Enum Members (12)
 
 <details>
@@ -1130,18 +1130,18 @@ exports[`knip > buildMarkdownSections > outputs verbose sections and annotations
 
 |Filename|Enum|Member|
 |-|-|-|
-|DrNefarious.ts|Homeworld|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
-|Sigmund.ts|Residence|\`Viceron\`<br/>\`GreatClock\`|
-|Sigmund.ts|Membership|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
+|\`DrNefarious.ts\`|\`Homeworld\`|\`Magmos\`<br/>\`Aquatos\`<br/>\`Leviathan\`<br/>\`TombliOutpost\`<br/>\`Zanifar\`<br/>\`NefariousSpaceStation\`<br/>\`NefariousCity\`<br/>\`CorsonV\`|
+|\`Sigmund.ts\`|\`Residence\`|\`Viceron\`<br/>\`GreatClock\`|
+|\`Sigmund.ts\`|\`Membership\`|\`ZordoomPrison\`<br/>\`GreatClockStaff\`|
 
 </details>",
   "### Unused Namespace Members (7)
 
 |Filename|Namespace|Member|
 |-|-|-|
-|Rivet.ts|Rivet|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
-|Qwark.ts|SaneQwark|\`rescue\`|
-|Qwark.ts|InsaneQwark|\`destroy\`|",
+|\`Rivet.ts\`|\`Rivet\`|\`fly\`<br/>\`swim\`<br/>\`explode\`<br/>\`mutate\`<br/>\`refineGelatonium\`|
+|\`Qwark.ts\`|\`SaneQwark\`|\`rescue\`|
+|\`Qwark.ts\`|\`InsaneQwark\`|\`destroy\`|",
 ]
 `;
 

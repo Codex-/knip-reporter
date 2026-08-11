@@ -327,6 +327,18 @@ describe("knip", () => {
       expect(section).toMatchSnapshot();
     });
 
+    it("should escape a pipe so it cannot split the table row", () => {
+      const unresolved = {
+        "src/routes/[a|b]/+page.ts": [{ name: "pkg|name" }],
+      };
+
+      // A code span does not protect a pipe from GFM's row splitting, so the
+      // row has to stay at the expected column count.
+      const section = buildArraySection("unresolved", unresolved, "auto");
+      const row = section[0]?.split("\n").at(-1);
+      expect(row).toStrictEqual("|`src/routes/[a\\|b]/+page.ts`|`pkg\\|name`|");
+    });
+
     it("should transform a devDependencies array section to markdown", () => {
       const devDependencies = {
         "packages/a/package.json": [

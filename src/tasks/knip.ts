@@ -210,6 +210,17 @@ export function buildFilesSection(files: string[], collapse: CollapseSections): 
   );
 }
 
+/**
+ * Render a value as a code span in a markdown table cell.
+ *
+ * GitHub flavoured markdown splits a row on `|` even inside a code
+ * span, so a pipe in a path or identifier has to be escaped to keep
+ * the row intact.
+ */
+function codeCell(value: string): string {
+  return `\`${value.replaceAll("|", "\\|")}\``;
+}
+
 export function buildSectionName(name: string): string {
   switch (name) {
     case "dependencies":
@@ -246,13 +257,13 @@ export function buildArraySection(
   for (const [fileName, results] of Object.entries(rawResults)) {
     totalUnused += results.length;
     tableBody.push([
-      fileName,
+      codeCell(fileName),
       results
         .map((result) => {
           if (Array.isArray(result)) {
-            return result.map((item) => `\`${item.name}\``).join(", ");
+            return result.map((item) => codeCell(item.name)).join(", ");
           }
-          return `\`${result.name}\``;
+          return codeCell(result.name);
         })
         .join("<br/>"),
     ]);
@@ -325,7 +336,7 @@ export function buildArraySectionWithAnnotations(
           }
         }
         if (shouldBuildMarkdown) {
-          itemNames.push(item.map((dup) => `\`${dup.name}\``).join(", "));
+          itemNames.push(item.map((dup) => codeCell(dup.name)).join(", "));
         }
         totalUnused += item.length;
         continue;
@@ -341,12 +352,12 @@ export function buildArraySectionWithAnnotations(
         });
       }
       if (shouldBuildMarkdown) {
-        itemNames.push(`\`${item.name}\``);
+        itemNames.push(codeCell(item.name));
       }
       totalUnused++;
     }
     if (shouldBuildMarkdown) {
-      tableBody.push([filename, itemNames.join("<br/>")]);
+      tableBody.push([codeCell(filename), itemNames.join("<br/>")]);
     }
   }
 
@@ -405,12 +416,12 @@ export function buildMapSection(
           });
         }
         if (shouldBuildMarkdown) {
-          itemNames.push(`\`${member.name}\``);
+          itemNames.push(codeCell(member.name));
         }
       }
       totalUnused += members.length;
       if (shouldBuildMarkdown) {
-        tableBody.push([filename, definitionName, itemNames.join("<br/>")]);
+        tableBody.push([codeCell(filename), codeCell(definitionName), itemNames.join("<br/>")]);
       }
     }
   }
