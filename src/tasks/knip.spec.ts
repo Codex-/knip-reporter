@@ -14,8 +14,8 @@ import {
   type MockInstance,
 } from "vitest";
 
-import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
+import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import {
   buildArraySection,
   buildArraySectionWithAnnotations,
@@ -265,7 +265,7 @@ describe("knip", () => {
     it("should split a files section that exceeds the comment limit", () => {
       const files: string[] = [];
       let renderedLength = 0;
-      while (renderedLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH + 50) {
+      while (renderedLength < COMMENT_SECTION_BUDGET + 50) {
         const file = `apps/dashboard/src/lib/components/ui/Component${files.length}.svelte`;
         files.push(file);
         renderedLength += file.length + 5;
@@ -275,7 +275,7 @@ describe("knip", () => {
       const messages = buildFilesSection(files, "auto");
       expect(messages.length).toBeGreaterThan(1);
       for (const message of messages) {
-        expect(message.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+        expect(message.length).toBeLessThan(COMMENT_SECTION_BUDGET);
         expect(message).toContain(`### Unused files (${files.length})`);
       }
 
@@ -847,7 +847,7 @@ describe("knip", () => {
       const tableHeaderLine = "|Filename|Enum|Member|";
       let observedRows = 0;
       for (const [index, msg] of messages.entries()) {
-        expect(msg.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+        expect(msg.length).toBeLessThan(COMMENT_SECTION_BUDGET);
         expect(msg).toContain(sectionHeader);
         expect(msg).toContain(tableHeaderLine);
         // Each chunk closes its own details block, otherwise the markup breaks
@@ -897,7 +897,7 @@ describe("knip", () => {
       const row = ["DrNefarious.ts", "`Magmos`"];
       const tableBody: string[][] = [];
       let renderedLength = 0;
-      while (renderedLength < GITHUB_COMMENT_MAX_COMMENT_LENGTH + 50) {
+      while (renderedLength < COMMENT_SECTION_BUDGET + 50) {
         tableBody.push(row);
         renderedLength += row.join("|").length + 3;
       }
@@ -912,7 +912,7 @@ describe("knip", () => {
       );
       expect(messages).toHaveLength(2);
       for (const message of messages) {
-        expect(message.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+        expect(message.length).toBeLessThan(COMMENT_SECTION_BUDGET);
       }
 
       // Logging
@@ -933,7 +933,7 @@ describe("knip", () => {
       expect(messages).toHaveLength(1);
       expect(messages[0]).toContain(sectionHeader);
       expect(messages[0]).toContain("|File|Item|");
-      expect(messages[0]?.length).toBeLessThan(GITHUB_COMMENT_MAX_COMMENT_LENGTH);
+      expect(messages[0]?.length).toBeLessThan(COMMENT_SECTION_BUDGET);
 
       // Logging: no splitting → no logs
       assertNoneCalled();

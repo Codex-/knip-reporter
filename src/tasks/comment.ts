@@ -22,6 +22,12 @@ const REPORT_WARNING =
   "> [!WARNING]\n> Knip has reported the following issues with the proposed changes";
 
 /**
+ * Largest section a comment can carry. The 512 reserve leaves room for the
+ * comment preamble (id and warning) plus delimiters.
+ */
+export const COMMENT_SECTION_BUDGET = GITHUB_COMMENT_MAX_COMMENT_LENGTH - 512;
+
+/**
  * Open a comment with the sections every comment carries.
  *
  * The warning goes on the first comment only, so a report spanning several

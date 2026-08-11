@@ -5,7 +5,7 @@ import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
 import { markdownTable, type Options as MarkdownTableOptions } from "markdown-table";
 
-import { GITHUB_COMMENT_MAX_COMMENT_LENGTH } from "../api.ts";
+import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import { timeTask } from "./task.ts";
 import type { CollapseSections, ItemMeta } from "./types.ts";
 
@@ -455,7 +455,7 @@ function chunkRows<Row>(rows: Row[], chunkCount: number): Row[][] {
 
 /**
  * Split a section's rows across as many messages as needed to keep each one
- * under the comment length limit.
+ * within the section budget, leaving room for the comment preamble.
  *
  * `render` must return the complete message for a slice of rows so that the
  * header and any surrounding markup count toward the limit. A single row that
@@ -468,7 +468,7 @@ function splitRowsToMessages<Row>(
   render: (rows: Row[], chunkIndex: number, chunkCount: number) => string,
 ): string[] {
   let messages = [render(rows, 0, 1)];
-  if ((messages[0]?.length ?? 0) < GITHUB_COMMENT_MAX_COMMENT_LENGTH) {
+  if ((messages[0]?.length ?? 0) < COMMENT_SECTION_BUDGET) {
     // Output doesn't violate the limit, simply return and move on
     return messages;
   }
@@ -478,14 +478,11 @@ function splitRowsToMessages<Row>(
 
   // Per-message overhead is only known once rendered, so grow the split factor
   // until every message fits rather than predicting the row count up front.
-  const start = Math.max(
-    2,
-    Math.ceil((messages[0]?.length ?? 0) / GITHUB_COMMENT_MAX_COMMENT_LENGTH),
-  );
+  const start = Math.max(2, Math.ceil((messages[0]?.length ?? 0) / COMMENT_SECTION_BUDGET));
   for (let splitFactor = start; splitFactor <= rows.length; splitFactor++) {
     const chunks = chunkRows(rows, splitFactor);
     messages = chunks.map((chunk, index) => render(chunk, index, chunks.length));
-    if (messages.every((message) => message.length < GITHUB_COMMENT_MAX_COMMENT_LENGTH)) {
+    if (messages.every((message) => message.length < COMMENT_SECTION_BUDGET)) {
       break;
     }
   }
