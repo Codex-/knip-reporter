@@ -1,7 +1,8 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
-import { type ActionConfig, getConfig } from "./action.ts";
+import type { ActionConfig } from "./action.ts";
+import { hasCommentMarker } from "./comment-marker.ts";
 import { getCommitSha } from "./github-utils/get-commit-sha.ts";
 import { withRetry } from "./github-utils/with-retry.ts";
 
@@ -11,9 +12,8 @@ type Octokit = ReturnType<(typeof github)["getOctokit"]>;
 
 let octokit: Octokit;
 
-export function init(cfg?: ActionConfig): void {
-  const resolved = cfg ?? getConfig();
-  octokit = github.getOctokit(resolved.token);
+export function init(cfg: ActionConfig): void {
+  octokit = github.getOctokit(cfg.token);
 }
 
 type CreateCommentResponse = Awaited<ReturnType<Octokit["rest"]["issues"]["createComment"]>>;
@@ -63,7 +63,7 @@ export async function listCommentIds(
             continue;
           }
 
-          if (body.includes(cfgCommentId)) {
+          if (hasCommentMarker(body, cfgCommentId)) {
             ids.push(id);
           }
         }

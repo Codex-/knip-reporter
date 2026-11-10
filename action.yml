@@ -6,7 +6,7 @@ branding:
   color: green
 inputs:
   token:
-    description: GitHub Personal Access Token for making API requests.
+    description: GitHub token for making API requests.
     default: "${{ github.token }}"
     required: false
   command_script_name:

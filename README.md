@@ -16,6 +16,8 @@ The execution of `knip` requires you to have followed the general `knip` setup a
 
 `knip-reporter` appends a reporter to the `knip` command used, `--reporter json`, to output a parseable report with information needed for annotations where supported.
 
+The package manager is detected from, and the script is run in, the directory the action runs in (the repository root by default). `working_directory` only changes the directory `knip` analyses, by passing `--directory`.
+
 ```yaml
 name: Pull Request
 on:
@@ -63,10 +65,10 @@ steps:
 
 ### Permissions
 
-| Permission             | Used for                                    | If missing              |
-| ---------------------- | ------------------------------------------- | ----------------------- |
-| `checks: write`        | The check run carrying the knip annotations | Annotations are skipped |
-| `pull-requests: write` | Creating and updating the report comment    | The comment is skipped  |
+| Permission             | Used for                                    | If missing                                        |
+| ---------------------- | ------------------------------------------- | ------------------------------------------------- |
+| `checks: write`        | The check run carrying the knip annotations | Annotated items are listed in the comment instead |
+| `pull-requests: write` | Creating and updating the report comment    | The comment is skipped                            |
 
 A missing permission drops that part of the report instead of failing the run, and findings still fail the run unless `ignore_results` is set, so a skipped comment cannot hide a bad report.
 
@@ -78,14 +80,14 @@ The following inputs are supported
 
 | Input                 | Description                                                                                                                                        | Required | Default                                |
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------- |
-| `token`               | GitHub Personal Access Token for making API requests.                                                                                              | `false`  | `${{ github.token }}`                  |
+| `token`               | GitHub token for making API requests.                                                                                                              | `false`  | `${{ github.token }}`                  |
 | `command_script_name` | The package script that runs knip.                                                                                                                 | `false`  | `knip`                                 |
 | `comment_id`          | ID to use when updating the PR comment. Spaces will be replaced with dashes.                                                                       | `false`  | `${{ github.workflow }}-knip-reporter` |
 | `annotations`         | Annotate the project code with the knip results.                                                                                                   | `false`  | `true`                                 |
 | `verbose`             | Include annotated items in the comment report.                                                                                                     | `false`  | `false`                                |
 | `ignore_results`      | Do not fail the action run if knip results are found.                                                                                              | `false`  | `false`                                |
-| `working_directory`   | Run knip in a different directory.                                                                                                                 | `false`  | `.`                                    |
-| `json_report_path`    | Use a pre-existing knip report instead of running `knip`. Relative paths are resolved against `working_directory`.                                 | `false`  |                                        |
+| `working_directory`   | Run knip in a different directory. Annotation paths are prefixed with it.                                                                          | `false`  | `.`                                    |
+| `json_report_path`    | Use a pre-existing knip report instead of running `knip`. Resolved against `working_directory`, which should be where the report was generated.    | `false`  |                                        |
 | `collapse_sections`   | When to hide a section's body behind a collapsible block: `auto`, `always`, or `never`. `auto` collapses only sections with more than ten results. | `false`  | `auto`                                 |
 
 ### Issues

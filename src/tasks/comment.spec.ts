@@ -156,7 +156,7 @@ describe("comment", () => {
   });
 
   describe("buildComments", () => {
-    const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+    const parsedReport = parseJsonReport(reportJson);
 
     const shortSections = buildFilesSection(["Ratchet.ts", "Clank.ts"], "auto");
     const manyShortSections = (() => {

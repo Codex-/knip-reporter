@@ -37,6 +37,23 @@ async function runIfPermitted<T>(
   }
 }
 
+/**
+ * Resolve the check, downgrading a failure to a warning so teardown errors
+ * cannot leak to the caller and override `setFailed` with the wrong message.
+ */
+async function resolveCheckSafely(
+  checkId: number,
+  conclusion: "success" | "failure",
+  counts: AnnotationsCount,
+): Promise<void> {
+  try {
+    await resolveCheck(checkId, conclusion, counts);
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error);
+    core.warning(`Unable to resolve check: ${detail}`);
+  }
+}
+
 export async function main(): Promise<void> {
   try {
     const config = getConfig();
@@ -58,58 +75,64 @@ export async function main(): Promise<void> {
           timeTask("Create check ID", () =>
             createCheckId("knip-reporter-annotations-check", "Knip reporter analysis"),
           ),
-        "Unable to create a check: the GITHUB_TOKEN lacks 'checks: write' permission. Skipping annotations.",
+        "Unable to create a check: the GITHUB_TOKEN lacks 'checks: write' permission. Reporting annotated items in the comment instead.",
       );
     }
 
-    const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
-      buildScriptName: config.commandScriptName,
-      jsonReportPath: config.jsonReportPath,
-      annotationsEnabled: config.annotations,
-      verboseEnabled: config.verbose,
-      collapse: config.collapseSections,
-      cwd: config.workingDirectory,
-    });
-    const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
-
-    // Creating a comment requires an associated PR to work against.
-    // In the case where this action is triggered by a non-pr event, we skip
-    // the comment creation task.
-    const pullRequestNumber = await getPullRequestNumber();
-    if (pullRequestNumber) {
-      await runIfPermitted(
-        () => runCommentTask(config.commentId, pullRequestNumber, knipSections),
-        "Unable to post the report: the GITHUB_TOKEN lacks 'pull-requests: write' permission. Skipping the comment.",
-      );
-    } else {
-      core.info("No pull request associated with this event, skipping comment creation");
-    }
+    // Without a check to carry them, annotated items would be lost from the
+    // report entirely, so they fall back to the comment.
+    const annotationsEnabled = config.annotations && checkId !== undefined;
 
     let counts = new AnnotationsCount();
-    if (checkId !== undefined) {
-      counts = await updateCheckAnnotations(checkId, knipAnnotations, config.ignoreResults);
-    }
+    try {
+      const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
+        buildScriptName: config.commandScriptName,
+        jsonReportPath: config.jsonReportPath,
+        annotationsEnabled,
+        verboseEnabled: config.verbose,
+        collapse: config.collapseSections,
+        cwd: config.workingDirectory,
+      });
+      const hasFindings = knipSections.length > 0 || knipAnnotations.length > 0;
 
-    if (!config.ignoreResults && hasFindings) {
-      core.setFailed("knip has resulted in findings, please see the report for more details");
-    }
-
-    if (checkId !== undefined) {
-      // Handle errors here so teardown failures don't leak to the catch
-      // and end up overriding `setFailed` with the wrong message.
-      try {
-        const conclusion = !config.ignoreResults && hasFindings ? "failure" : "success";
-        await resolveCheck(checkId, conclusion, counts);
-      } catch (error) {
-        const detail = error instanceof Error ? error.message : String(error);
-        core.warning(`Unable to resolve check: ${detail}`);
+      // Creating a comment requires an associated PR to work against.
+      // In the case where this action is triggered by a non-pr event, we skip
+      // the comment creation task.
+      const pullRequestNumber = await getPullRequestNumber();
+      if (pullRequestNumber) {
+        await runIfPermitted(
+          () => runCommentTask(config.commentId, pullRequestNumber, knipSections),
+          "Unable to post the report: the GITHUB_TOKEN lacks 'pull-requests: write' permission. Skipping the comment.",
+        );
+      } else {
+        core.info("No pull request associated with this event, skipping comment creation");
       }
+
+      if (checkId !== undefined) {
+        counts = await updateCheckAnnotations(checkId, knipAnnotations, config.ignoreResults);
+      }
+
+      if (!config.ignoreResults && hasFindings) {
+        core.setFailed("knip has resulted in findings, please see the report for more details");
+      }
+
+      if (checkId !== undefined) {
+        const conclusion = !config.ignoreResults && hasFindings ? "failure" : "success";
+        await resolveCheckSafely(checkId, conclusion, counts);
+      }
+    } catch (error) {
+      // A check left `in_progress` blocks merging when it is required, so
+      // conclude it before the error fails the run.
+      if (checkId !== undefined) {
+        await resolveCheckSafely(checkId, "failure", counts);
+      }
+      throw error;
     }
 
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    core.error(`🧨 Failed: ${err.message}`);
+    // `setFailed` logs the message itself, so only the stack is added here.
     core.error(`📚 Stack: ${err.stack ?? ""}`);
     core.setFailed(err);
   }

@@ -1,6 +1,7 @@
 import * as cp from "node:child_process";
 import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
+import path from "node:path";
 
 import * as ni from "@antfu/ni";
 import {
@@ -17,6 +18,7 @@ import {
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import {
+  annotationPathPrefix,
   buildArraySection,
   buildArraySectionWithAnnotations,
   buildFilesSection,
@@ -99,7 +101,17 @@ describe("knip", () => {
       const cmd = await buildRunKnipCommand("knip", "./working/directory");
       expect(cmd).toMatch("knip");
       expect(cmd).toMatch("--reporter json");
-      expect(cmd).toMatch("--directory ./working/directory");
+      expect(cmd).toMatch('--directory "./working/directory"');
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
+    });
+
+    it("should quote a working directory containing spaces and double quotes", async () => {
+      // Behaviour
+      const cmd = await buildRunKnipCommand("knip", 'packages/my "app"');
+      expect(cmd).toMatch('--directory "packages/my \\"app\\""');
 
       // Logging
       assertOnlyCalled(coreDebugLogMock);
@@ -112,6 +124,7 @@ describe("knip", () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, "resolved promise", "");
@@ -120,13 +133,68 @@ describe("knip", () => {
       const results = await run("test cmd");
 
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
-      expect(results).toStrictEqual("resolved promise");
+      expect(execSpy.mock.lastCall?.[1]).toStrictEqual({ maxBuffer: Infinity });
+      expect(results).toStrictEqual({ stdout: "resolved promise", exitCode: undefined });
+    });
+
+    it("resolves with stdout and the exit code when knip exits non-zero", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func({ code: 1, message: "Command failed" }, "stdout output", "");
+      }) as any);
+
+      const results = await run("test cmd");
+
+      expect(results).toStrictEqual({ stdout: "stdout output", exitCode: 1 });
+      assertNoneCalled();
+    });
+
+    it("rejects when the process could not be spawned", async () => {
+      const execError = Object.assign(new Error("spawn /bin/sh ENOENT"), { code: "ENOENT" });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func(execError, "", "");
+      }) as any);
+
+      await expect(run("test cmd")).rejects.toMatchObject({
+        message: "Failed to run knip: spawn /bin/sh ENOENT",
+        cause: execError,
+      });
+    });
+
+    it("rejects when the process was killed by a signal", async () => {
+      const execError = Object.assign(new Error("Command failed"), {
+        killed: true,
+        signal: "SIGTERM",
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func(execError, "partial output", "");
+      }) as any);
+
+      await expect(run("test cmd")).rejects.toMatchObject({
+        message: "Failed to run knip: Command failed",
+        cause: execError,
+      });
     });
 
     it("emits a warning log if stderr isn't empty", async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, "", "stderr output");
@@ -149,6 +217,7 @@ describe("knip", () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, "stdout output", "stderr output");
@@ -157,7 +226,7 @@ describe("knip", () => {
       // Behaviour
       const result = await run("test cmd");
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
-      expect(result).toStrictEqual("stdout output");
+      expect(result.stdout).toStrictEqual("stdout output");
 
       // Logging
       assertOnlyCalled(coreWarningLogMock);
@@ -172,7 +241,7 @@ describe("knip", () => {
   describe("parseJsonReport", () => {
     it("should parse the knip output", () => {
       // Behaviour
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
       expect(parsedReport).toMatchSnapshot();
 
       // Logging
@@ -182,7 +251,7 @@ describe("knip", () => {
 
     it("should not attempt to handle an undefined or null key", () => {
       // Behaviour
-      const parsedReport = parseJsonReport(JSON.stringify(invalidReportJson));
+      const parsedReport = parseJsonReport(invalidReportJson);
       expect(parsedReport).toMatchSnapshot();
 
       // Logging
@@ -199,7 +268,7 @@ describe("knip", () => {
       };
 
       // Behaviour
-      const parsed = parseJsonReport(JSON.stringify(input));
+      const parsed = parseJsonReport(input);
       expect(parsed.exports["foo.ts"]).toEqual([{ name: "a", line: 1, col: 1, pos: 1 }]);
       expect(parsed.types["foo.ts"]).toEqual([{ name: "T", line: 2, col: 1, pos: 10 }]);
 
@@ -220,7 +289,7 @@ describe("knip", () => {
       };
 
       // Behaviour
-      const parsed = parseJsonReport(JSON.stringify(input));
+      const parsed = parseJsonReport(input);
       expect(parsed.exports["foo.ts"]).toEqual([{ name: "second", line: 2, col: 1, pos: 10 }]);
 
       // Logging
@@ -230,7 +299,7 @@ describe("knip", () => {
 
     it("should return an empty report when the root JSON is not an object", () => {
       for (const raw of ["[]", "null", '"a string"', "42"]) {
-        const parsed = parseJsonReport(raw);
+        const parsed = parseJsonReport(JSON.parse(raw));
         expect(parsed.files, raw).toEqual([]);
         expect(parsed.exports, raw).toEqual({});
         expect(parsed.dependencies, raw).toEqual({});
@@ -628,6 +697,25 @@ describe("knip", () => {
       const section = buildArraySectionWithAnnotations("types", types, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
+
+    it("should annotate an item that has a line and column but no pos", () => {
+      const section = buildArraySectionWithAnnotations(
+        "exports",
+        { "foo.ts": [{ name: "noPos", line: 3, col: 7 }] },
+        true,
+        false,
+        "auto",
+      );
+      expect(section.annotations).toStrictEqual([
+        {
+          path: "foo.ts",
+          identifier: "noPos",
+          start_line: 3,
+          start_column: 7,
+          type: "export",
+        },
+      ]);
+    });
   });
 
   describe("buildMapSection", () => {
@@ -813,7 +901,7 @@ describe("knip", () => {
 
   describe("buildMarkdownSections", () => {
     it("outputs only sections", () => {
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
 
       // Behaviour
       const { sections, annotations } = buildMarkdownSections(parsedReport, false, true, "auto");
@@ -829,7 +917,7 @@ describe("knip", () => {
     });
 
     it("outputs verbose sections and annotations", () => {
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
 
       // Behaviour
       const { sections, annotations } = buildMarkdownSections(parsedReport, true, true, "auto");
@@ -850,7 +938,7 @@ describe("knip", () => {
     });
 
     it("outputs sections and annotations", () => {
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
 
       // Behaviour
       const { sections, annotations } = buildMarkdownSections(parsedReport, true, false, "auto");
@@ -1031,10 +1119,7 @@ ${JSON.stringify(reportJson)}
 
 `;
       /* eslint-enable no-irregular-whitespace */
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(() => JSON.parse(jsonStr)).not.toThrow();
-      const jsonObj = JSON.parse(jsonStr);
-      expect(jsonObj).toBeTypeOf("object");
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
     });
 
     it("should throw if there isn't valid output", () => {
@@ -1062,8 +1147,38 @@ ${JSON.stringify(reportJson, null, 2)}
 
 ELIFECYCLE  Command failed with exit code 3.
 `;
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
+    });
+
+    it("should skip a trailing brace-wrapped line that is not JSON", () => {
+      const cliOutput = `
+${JSON.stringify(reportJson)}
+{done in 1.2s}
+`;
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
+
+      // Logging: the single-line pass still succeeds, so no fallback log
+      assertNoneCalled();
+    });
+
+    it("should find a single-line report in CRLF output", () => {
+      const cliOutput = ["> knip --reporter json", JSON.stringify(reportJson), ""].join("\r\n");
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
+
+      // Logging
+      assertNoneCalled();
+    });
+
+    it("should extract a large pretty-printed report without scanning every nested object", () => {
+      // The previous scan tried every nested `{` as a start line and parsed
+      // each span, which took seconds at this size and exceeds the test timeout.
+      const issues = Array.from({ length: 6000 }, (_, i) => ({
+        file: `file${i}.ts`,
+        exports: [{ name: "a", line: 1, col: 1, pos: 1 }],
+      }));
+      const cliOutput = `> knip\n${JSON.stringify({ issues }, null, 2)}\n ELIFECYCLE  Command failed with exit code 1.`;
+
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual({ issues });
     });
 
     it("should skip multi-line blocks that look like JSON but don't parse", () => {
@@ -1074,8 +1189,7 @@ ELIFECYCLE  Command failed with exit code 3.
 
 ${JSON.stringify(reportJson, null, 2)}
 `;
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
     });
   });
 
@@ -1085,8 +1199,7 @@ ${JSON.stringify(reportJson, null, 2)}
       vi.spyOn(fs, "readFile").mockResolvedValueOnce(JSON.stringify(reportJson));
 
       // Behaviour
-      const jsonStr = await getJsonFromInputFile("knip-report.json");
-      expect(() => JSON.parse(jsonStr)).not.toThrow();
+      await expect(getJsonFromInputFile("knip-report.json")).resolves.toStrictEqual(reportJson);
     });
 
     it("should throw an error if the file does not exist", async () => {
@@ -1119,9 +1232,33 @@ ${JSON.stringify(reportJson, null, 2)}
       vi.spyOn(fs, "readFile").mockResolvedValueOnce("This is not JSON");
 
       // Behaviour
-      await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided 'json_report_path' content contains invalid JSON: ${filePath}`,
-      );
+      await expect(getJsonFromInputFile(filePath)).rejects.toMatchObject({
+        message: `Provided 'json_report_path' content contains invalid JSON: ${filePath}`,
+        cause: expect.any(SyntaxError),
+      });
+    });
+  });
+
+  describe("annotationPathPrefix", () => {
+    afterEach(() => {
+      vi.unstubAllEnvs();
+    });
+
+    it("should be empty when knip runs at the workspace root", () => {
+      vi.stubEnv("GITHUB_WORKSPACE", process.cwd());
+      expect(annotationPathPrefix(".")).toBe("");
+      expect(annotationPathPrefix(undefined)).toBe("");
+    });
+
+    it("should be the working directory relative to the workspace", () => {
+      vi.stubEnv("GITHUB_WORKSPACE", process.cwd());
+      expect(annotationPathPrefix("packages/a")).toBe("packages/a");
+      expect(annotationPathPrefix("./packages/a/")).toBe("packages/a");
+    });
+
+    it("should fall back to the process cwd without a workspace", () => {
+      vi.stubEnv("GITHUB_WORKSPACE", undefined);
+      expect(annotationPathPrefix("packages/a")).toBe("packages/a");
     });
   });
 
@@ -1147,6 +1284,7 @@ ${JSON.stringify(reportJson, null, 2)}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, JSON.stringify(reportJson), "");
@@ -1162,6 +1300,84 @@ ${JSON.stringify(reportJson, null, 2)}
       });
       expect(execSpy).toHaveBeenCalledOnce();
       expect(result.sections.length).toBeGreaterThan(0);
+    });
+
+    it("should prefix annotation paths with the working directory relative to the workspace", async () => {
+      vi.stubEnv("GITHUB_WORKSPACE", process.cwd());
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce(
+        JSON.stringify({
+          issues: [{ file: "src/Utils.ts", exports: [{ name: "a", line: 1, col: 1, pos: 1 }] }],
+        }),
+      );
+
+      // Behaviour
+      const result = await runKnipTasks({
+        buildScriptName: "knip",
+        jsonReportPath: "report.json",
+        annotationsEnabled: true,
+        verboseEnabled: false,
+        collapse: "auto",
+        cwd: "packages/a",
+      });
+      expect(result.annotations.map((annotation) => annotation.path)).toStrictEqual([
+        "packages/a/src/Utils.ts",
+      ]);
+
+      vi.unstubAllEnvs();
+    });
+
+    it("should leave annotation paths alone and warn when the working directory is outside the workspace", async () => {
+      vi.stubEnv("GITHUB_WORKSPACE", path.join(process.cwd(), "nested"));
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce(
+        JSON.stringify({
+          issues: [{ file: "src/Utils.ts", exports: [{ name: "a", line: 1, col: 1, pos: 1 }] }],
+        }),
+      );
+
+      // Behaviour
+      const result = await runKnipTasks({
+        buildScriptName: "knip",
+        jsonReportPath: "report.json",
+        annotationsEnabled: true,
+        verboseEnabled: false,
+        collapse: "auto",
+        cwd: ".",
+      });
+      expect(result.annotations.map((annotation) => annotation.path)).toStrictEqual([
+        "src/Utils.ts",
+      ]);
+
+      // Logging
+      expect(coreWarningLogMock).toHaveBeenCalledOnce();
+      expect(coreWarningLogMock.mock.lastCall?.[0]).toContain("outside the workspace");
+
+      vi.unstubAllEnvs();
+    });
+
+    it("should include the exit code when no report is found in the knip output", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func({ code: 127, message: "Command failed" }, "sh: pnpm: command not found", "");
+      }) as any);
+
+      await expect(
+        runKnipTasks({
+          buildScriptName: "knip",
+          jsonReportPath: undefined,
+          annotationsEnabled: false,
+          verboseEnabled: false,
+          collapse: "auto",
+        }),
+      ).rejects.toMatchObject({
+        message: "Unable to find JSON blob in knip output (exit code 127)",
+        cause: { message: "Unable to find JSON blob" },
+      });
     });
   });
 });

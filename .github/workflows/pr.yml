@@ -17,10 +17,13 @@ jobs:
           fetch-depth: 0 # Needed to compare new build to existing
       - uses: jdx/mise-action@b44d12e7d0d8ee7461bb893e1b1993500433185b # v5
       - run: pnpm i
-      - name: Check if dist was modified in PR
+      # Anything feeding the bundle counts, not just dist/ itself, otherwise a
+      # src/ only change lands with a stale dist/ that the release build rejects.
+      # Dependency bumps are left out so Renovate PRs need not rebuild dist/.
+      - name: Check if the build inputs or output were modified in PR
         id: dist-check
         run: |
-          if git diff --quiet "origin/${{ github.base_ref }}...HEAD" -- dist/; then
+          if git diff --quiet "origin/${{ github.base_ref }}...HEAD" -- dist/ src/ esbuild.config.mjs; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"

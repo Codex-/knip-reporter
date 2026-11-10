@@ -1,5 +1,6 @@
 import { exec } from "node:child_process";
 import fs from "node:fs/promises";
+import path from "node:path";
 
 import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
@@ -9,10 +10,18 @@ import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import { timeTask } from "./task.ts";
 import type { CollapseSections, ItemMeta } from "./types.ts";
 
+/**
+ * Build the shell command that runs the knip script.
+ *
+ * The package manager and the script come from the process working directory
+ * (the repository root in a workflow). `cwd` only changes the directory knip
+ * analyses, via `--directory`, and is quoted since the command runs in a shell.
+ */
 export async function buildRunKnipCommand(buildScriptName: string, cwd?: string): Promise<string> {
   const knipArgs = [buildScriptName, "--reporter json"];
   if (cwd) {
-    knipArgs.push(`--directory ${cwd}`);
+    // Double quotes work in both sh and cmd.exe, so this covers every runner OS.
+    knipArgs.push(`--directory "${cwd.replaceAll('"', '\\"')}"`);
   }
   const cmd = await getCliCommand(parseNr, knipArgs, {
     programmatic: true,
@@ -26,20 +35,42 @@ export async function buildRunKnipCommand(buildScriptName: string, cwd?: string)
   return command;
 }
 
-export async function run(runCmd: string): Promise<string> {
-  const result = await new Promise<string>((resolve) => {
-    exec(runCmd, (_err, stdout, stderr) => {
-      // Knip will exit with a non-zero code on there being results
-      // If there is anything in the stderr stream, log the output as a warning
-      // as knip having results will always give an error exit code
+export interface RunResult {
+  stdout: string;
+
+  /**
+   * Undefined when the process exited normally with code 0.
+   */
+  exitCode: number | undefined;
+}
+
+/**
+ * Run the knip command and capture its output.
+ *
+ * Resolves on any exit code, since knip exits non-zero whenever it has
+ * findings. Rejects only when the process could not run to completion.
+ */
+export function run(runCmd: string): Promise<RunResult> {
+  return new Promise<RunResult>((resolve, reject) => {
+    // The default 1 MiB maxBuffer kills the process and truncates stdout,
+    // which a large JSON report can easily exceed.
+    exec(runCmd, { maxBuffer: Infinity }, (error, stdout, stderr) => {
+      // Knip having results always gives an error exit code, so stderr
+      // content is only worth a warning.
       if (stderr.length > 0) {
         core.warning("knip stderr:\n" + stderr);
       }
-      resolve(stdout);
+
+      // A string code (e.g. ENOENT) or a signal means the process never ran
+      // to completion, so its output cannot be trusted.
+      if (error && (typeof error.code === "string" || error.signal)) {
+        reject(new Error(`Failed to run knip: ${error.message}`, { cause: error }));
+        return;
+      }
+
+      resolve({ stdout, exitCode: error?.code });
     });
   });
-  // Knip always returns an object
-  return result;
 }
 
 interface Item {
@@ -116,11 +147,17 @@ interface UnknownIssue {
   file: string;
 }
 
-export function parseJsonReport(rawJson: string): ParsedReport {
+/**
+ * Walk an already-parsed JSON report into the per-type maps.
+ *
+ * Takes the parsed value rather than the text so the report is parsed once,
+ * where it was read, and not again here.
+ */
+export function parseJsonReport(report: unknown): ParsedReport {
   // Default JSON reporter no longer has a top-level `files` key.
   // Unused files now appear as `Row.files: Item[]` per row, and enum/namespace
   // members are flat `Item[]` with the enum/namespace name in `Item.namespace`.
-  const parsed = JSON.parse(rawJson) as { issues?: UnknownIssue[] } | null;
+  const parsed = report as { issues?: UnknownIssue[] } | null;
   const { issues = [] } = parsed ?? {};
   const out: ParsedReport = {
     files: [],
@@ -150,10 +187,11 @@ export function parseJsonReport(rawJson: string): ParsedReport {
         case "files":
           if (Array.isArray(result) && result.length > 0) {
             for (const item of result as Array<{ name: string }>) {
-              if (item.name) out.files.push(item.name);
+              if (item.name) {
+                out.files.push(item.name);
+                summary.files = (summary.files ?? 0) + 1;
+              }
             }
-            summary.files ??= 0;
-            summary.files += result.length;
           }
           break;
         case "dependencies":
@@ -395,8 +433,14 @@ export function buildArraySectionWithAnnotations(
   return { sections: [], annotations: annotations };
 }
 
-function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
-  return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
+type Positioned = Required<Pick<Item, "line" | "col">>;
+
+/**
+ * An annotation needs a line and column. `pos` is a byte offset the Checks
+ * API has no use for, so it must not gate an otherwise-positioned item.
+ */
+function isValidAnnotationBody(item: Omit<Item, "name">): item is Omit<Item, "name"> & Positioned {
+  return item.line !== undefined && item.col !== undefined;
 }
 
 /**
@@ -413,9 +457,8 @@ export function buildMapSection(
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
-  const resultMetaType = name === "namespaceMembers" ? "namespace" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
-  const metaType = getMetaType(name);
+  const metaType = getMetaType(name) as "namespace" | "enum";
   const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
 
   let totalUnused = 0;
@@ -429,7 +472,7 @@ export function buildMapSection(
             identifier: member.name,
             start_line: member.line,
             start_column: member.col,
-            type: resultMetaType,
+            type: metaType,
           });
         }
         if (shouldBuildMarkdown) {
@@ -671,41 +714,69 @@ export function buildMarkdownSections(
 }
 
 /**
+ * @returns the parsed value, or undefined when `candidate` is not JSON.
+ * JSON cannot encode undefined, so it is unambiguous as a sentinel.
+ */
+function tryParseJson(candidate: string): unknown {
+  try {
+    return JSON.parse(candidate);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Simple collection attempt of the input as a single line of JSON.
  *
  * This is the default output from `knip`'s JSON reporter.
  *
- * Assume the report is the last line that starts with `'{'` and
- * ends with `'}'`
+ * Assume the report is the last line that is wrapped in braces and parses
+ * as JSON. Parsing guards against a trailing log line such as `{done}`, and
+ * trimming keeps a CRLF line ending from hiding the closing brace.
  */
-function findSingleLineJson(lines: string[]): string | undefined {
+function findSingleLineJson(lines: string[]): unknown {
   for (let i = lines.length - 1; i >= 0; i--) {
-    const line = lines[i];
-    if (line?.startsWith("{") && line.endsWith("}")) {
-      return line;
+    const line = lines[i]?.trim();
+    if (!line?.startsWith("{") || !line.endsWith("}")) {
+      continue;
+    }
+    const parsed = tryParseJson(line);
+    if (parsed !== undefined) {
+      return parsed;
     }
   }
   return undefined;
+}
+
+function indentOf(line: string): number {
+  return line.length - line.trimStart().length;
 }
 
 /**
  * More complex collection attempt of the input as JSON that spans
  * multiple lines.
  *
- * Scan for a multi-line JSON object by walking backwards from the
- * last `}` line to a balancing `{` line and verifying with JSON.parse.
+ * Walks backwards from each `}` line to a `{` line and verifies the span
+ * with JSON.parse. Only `{` lines at the same indentation as the `}` line
+ * are tried: a pretty printer aligns an object's braces, and trying every
+ * nested `{` made the scan quadratic in the number of objects.
  */
-function findMultiLineJson(lines: string[]): string | undefined {
+function findMultiLineJson(lines: string[]): unknown {
   for (let end = lines.length - 1; end >= 0; end--) {
-    if (!lines[end]?.trimEnd().endsWith("}")) continue;
+    const endLine = lines[end];
+    if (!endLine?.trimEnd().endsWith("}")) {
+      continue;
+    }
+    const indent = indentOf(endLine);
+
     for (let start = end; start >= 0; start--) {
-      if (!lines[start]?.trimStart().startsWith("{")) continue;
-      const candidate = lines.slice(start, end + 1).join("\n");
-      try {
-        JSON.parse(candidate);
-        return candidate;
-      } catch {
-        // not balanced JSON, keep searching
+      const startLine = lines[start];
+      if (!startLine?.trimStart().startsWith("{") || indentOf(startLine) !== indent) {
+        continue;
+      }
+      const parsed = tryParseJson(lines.slice(start, end + 1).join("\n"));
+      if (parsed !== undefined) {
+        return parsed;
       }
     }
   }
@@ -721,13 +792,13 @@ function findMultiLineJson(lines: string[]): string | undefined {
  * Attempts single-line collection first, falling back to multi-line
  * traversal to find the JSON string if single-line collection fails.
  */
-export function getJsonFromOutput(output: string): string {
+export function getJsonFromOutput(output: string): unknown {
   const lines = output.split(/\n/);
 
   // If the knip output is unformatted/unmodified, it will be a
   // single line of JSON, which makes parsing fast and simple.
   const singleLineJsonParseResult = findSingleLineJson(lines);
-  if (singleLineJsonParseResult) {
+  if (singleLineJsonParseResult !== undefined) {
     return singleLineJsonParseResult;
   }
 
@@ -735,14 +806,14 @@ export function getJsonFromOutput(output: string): string {
   // making it certainly a multiline string.
   core.debug("Failed to collect JSON with single-line method, retrying with multi-line method");
   const multiLineJsonParseResult = findMultiLineJson(lines);
-  if (multiLineJsonParseResult) {
+  if (multiLineJsonParseResult !== undefined) {
     return multiLineJsonParseResult;
   }
 
   throw new Error("Unable to find JSON blob");
 }
 
-export async function getJsonFromInputFile(filePath: string): Promise<string> {
+export async function getJsonFromInputFile(filePath: string): Promise<unknown> {
   try {
     await fs.stat(filePath);
   } catch (err) {
@@ -756,18 +827,59 @@ export async function getJsonFromInputFile(filePath: string): Promise<string> {
   }
 
   try {
-    JSON.parse(content);
-  } catch {
-    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`);
+    return JSON.parse(content);
+  } catch (err) {
+    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`, {
+      cause: err,
+    });
   }
-
-  return content;
 }
 
-async function getOutput(buildScriptName: string, cwd?: string): Promise<string> {
+async function getOutput(buildScriptName: string, cwd?: string): Promise<unknown> {
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
+  const { stdout, exitCode } = await run(cmd);
 
-  return getJsonFromOutput(await run(cmd));
+  try {
+    return getJsonFromOutput(stdout);
+  } catch (error) {
+    // Knip exits 1 for findings and 2 for its own errors, and a shell gives
+    // 127 for a missing command, so the code tells the user where to look.
+    throw new Error(`Unable to find JSON blob in knip output (exit code ${exitCode ?? 0})`, {
+      cause: error,
+    });
+  }
+}
+
+/**
+ * Knip reports paths relative to the directory it ran in, while the Checks
+ * API needs them relative to the repository root, which is the workspace.
+ *
+ * @returns the posix prefix to join onto each annotation path, empty when
+ * knip ran at the workspace root
+ */
+export function annotationPathPrefix(cwd: string | undefined): string {
+  const workspace = process.env.GITHUB_WORKSPACE ?? process.cwd();
+  const prefix = path.relative(workspace, path.resolve(cwd ?? "."));
+  return prefix.split(path.sep).join(path.posix.sep);
+}
+
+function toRepoRelativeAnnotations(annotations: ItemMeta[], cwd: string | undefined): ItemMeta[] {
+  const prefix = annotationPathPrefix(cwd);
+  if (prefix === "") {
+    return annotations;
+  }
+
+  if (prefix.startsWith("..")) {
+    core.warning(
+      `working_directory '${cwd ?? "."}' is outside the workspace, annotations may not resolve to files in the repository`,
+    );
+    return annotations;
+  }
+
+  return annotations.map((annotation) => ({
+    ...annotation,
+    path: path.posix.join(prefix, annotation.path),
+  }));
 }
 
 interface RunKnipTasksOpts {
@@ -796,10 +908,10 @@ export async function runKnipTasks({
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),
   );
-  const sectionsAndAnnotations = await timeTask("Convert report to markdown", () =>
+  const { sections, annotations } = await timeTask("Convert report to markdown", () =>
     Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled, collapse)),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);
-  return sectionsAndAnnotations;
+  return { sections, annotations: toRepoRelativeAnnotations(annotations, cwd) };
 }
