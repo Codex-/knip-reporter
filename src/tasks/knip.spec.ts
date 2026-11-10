@@ -241,7 +241,7 @@ describe("knip", () => {
   describe("parseJsonReport", () => {
     it("should parse the knip output", () => {
       // Behaviour
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
       expect(parsedReport).toMatchSnapshot();
 
       // Logging
@@ -251,7 +251,7 @@ describe("knip", () => {
 
     it("should not attempt to handle an undefined or null key", () => {
       // Behaviour
-      const parsedReport = parseJsonReport(JSON.stringify(invalidReportJson));
+      const parsedReport = parseJsonReport(invalidReportJson);
       expect(parsedReport).toMatchSnapshot();
 
       // Logging
@@ -268,7 +268,7 @@ describe("knip", () => {
       };
 
       // Behaviour
-      const parsed = parseJsonReport(JSON.stringify(input));
+      const parsed = parseJsonReport(input);
       expect(parsed.exports["foo.ts"]).toEqual([{ name: "a", line: 1, col: 1, pos: 1 }]);
       expect(parsed.types["foo.ts"]).toEqual([{ name: "T", line: 2, col: 1, pos: 10 }]);
 
@@ -289,7 +289,7 @@ describe("knip", () => {
       };
 
       // Behaviour
-      const parsed = parseJsonReport(JSON.stringify(input));
+      const parsed = parseJsonReport(input);
       expect(parsed.exports["foo.ts"]).toEqual([{ name: "second", line: 2, col: 1, pos: 10 }]);
 
       // Logging
@@ -299,7 +299,7 @@ describe("knip", () => {
 
     it("should return an empty report when the root JSON is not an object", () => {
       for (const raw of ["[]", "null", '"a string"', "42"]) {
-        const parsed = parseJsonReport(raw);
+        const parsed = parseJsonReport(JSON.parse(raw));
         expect(parsed.files, raw).toEqual([]);
         expect(parsed.exports, raw).toEqual({});
         expect(parsed.dependencies, raw).toEqual({});
@@ -901,7 +901,7 @@ describe("knip", () => {
 
   describe("buildMarkdownSections", () => {
     it("outputs only sections", () => {
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
 
       // Behaviour
       const { sections, annotations } = buildMarkdownSections(parsedReport, false, true, "auto");
@@ -917,7 +917,7 @@ describe("knip", () => {
     });
 
     it("outputs verbose sections and annotations", () => {
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
 
       // Behaviour
       const { sections, annotations } = buildMarkdownSections(parsedReport, true, true, "auto");
@@ -938,7 +938,7 @@ describe("knip", () => {
     });
 
     it("outputs sections and annotations", () => {
-      const parsedReport = parseJsonReport(JSON.stringify(reportJson));
+      const parsedReport = parseJsonReport(reportJson);
 
       // Behaviour
       const { sections, annotations } = buildMarkdownSections(parsedReport, true, false, "auto");
@@ -1119,10 +1119,7 @@ ${JSON.stringify(reportJson)}
 
 `;
       /* eslint-enable no-irregular-whitespace */
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(() => JSON.parse(jsonStr)).not.toThrow();
-      const jsonObj = JSON.parse(jsonStr);
-      expect(jsonObj).toBeTypeOf("object");
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
     });
 
     it("should throw if there isn't valid output", () => {
@@ -1150,8 +1147,7 @@ ${JSON.stringify(reportJson, null, 2)}
 
 ELIFECYCLE  Command failed with exit code 3.
 `;
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
     });
 
     it("should skip a trailing brace-wrapped line that is not JSON", () => {
@@ -1159,8 +1155,7 @@ ELIFECYCLE  Command failed with exit code 3.
 ${JSON.stringify(reportJson)}
 {done in 1.2s}
 `;
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
 
       // Logging: the single-line pass still succeeds, so no fallback log
       assertNoneCalled();
@@ -1168,8 +1163,7 @@ ${JSON.stringify(reportJson)}
 
     it("should find a single-line report in CRLF output", () => {
       const cliOutput = ["> knip --reporter json", JSON.stringify(reportJson), ""].join("\r\n");
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
 
       // Logging
       assertNoneCalled();
@@ -1184,8 +1178,7 @@ ${JSON.stringify(reportJson)}
       }));
       const cliOutput = `> knip\n${JSON.stringify({ issues }, null, 2)}\n ELIFECYCLE  Command failed with exit code 1.`;
 
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual({ issues });
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual({ issues });
     });
 
     it("should skip multi-line blocks that look like JSON but don't parse", () => {
@@ -1196,8 +1189,7 @@ ${JSON.stringify(reportJson)}
 
 ${JSON.stringify(reportJson, null, 2)}
 `;
-      const jsonStr = getJsonFromOutput(cliOutput);
-      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+      expect(getJsonFromOutput(cliOutput)).toStrictEqual(reportJson);
     });
   });
 
@@ -1207,8 +1199,7 @@ ${JSON.stringify(reportJson, null, 2)}
       vi.spyOn(fs, "readFile").mockResolvedValueOnce(JSON.stringify(reportJson));
 
       // Behaviour
-      const jsonStr = await getJsonFromInputFile("knip-report.json");
-      expect(() => JSON.parse(jsonStr)).not.toThrow();
+      await expect(getJsonFromInputFile("knip-report.json")).resolves.toStrictEqual(reportJson);
     });
 
     it("should throw an error if the file does not exist", async () => {
@@ -1241,9 +1232,10 @@ ${JSON.stringify(reportJson, null, 2)}
       vi.spyOn(fs, "readFile").mockResolvedValueOnce("This is not JSON");
 
       // Behaviour
-      await expect(getJsonFromInputFile(filePath)).rejects.toThrow(
-        `Provided 'json_report_path' content contains invalid JSON: ${filePath}`,
-      );
+      await expect(getJsonFromInputFile(filePath)).rejects.toMatchObject({
+        message: `Provided 'json_report_path' content contains invalid JSON: ${filePath}`,
+        cause: expect.any(SyntaxError),
+      });
     });
   });
 

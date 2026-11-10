@@ -147,11 +147,17 @@ interface UnknownIssue {
   file: string;
 }
 
-export function parseJsonReport(rawJson: string): ParsedReport {
+/**
+ * Walk an already-parsed JSON report into the per-type maps.
+ *
+ * Takes the parsed value rather than the text so the report is parsed once,
+ * where it was read, and not again here.
+ */
+export function parseJsonReport(report: unknown): ParsedReport {
   // Default JSON reporter no longer has a top-level `files` key.
   // Unused files now appear as `Row.files: Item[]` per row, and enum/namespace
   // members are flat `Item[]` with the enum/namespace name in `Item.namespace`.
-  const parsed = JSON.parse(rawJson) as { issues?: UnknownIssue[] } | null;
+  const parsed = report as { issues?: UnknownIssue[] } | null;
   const { issues = [] } = parsed ?? {};
   const out: ParsedReport = {
     files: [],
@@ -707,12 +713,15 @@ export function buildMarkdownSections(
   return { sections: outputSections, annotations: outputAnnotations };
 }
 
-function isJson(candidate: string): boolean {
+/**
+ * @returns the parsed value, or undefined when `candidate` is not JSON.
+ * JSON cannot encode undefined, so it is unambiguous as a sentinel.
+ */
+function tryParseJson(candidate: string): unknown {
   try {
-    JSON.parse(candidate);
-    return true;
+    return JSON.parse(candidate);
   } catch {
-    return false;
+    return undefined;
   }
 }
 
@@ -725,11 +734,15 @@ function isJson(candidate: string): boolean {
  * as JSON. Parsing guards against a trailing log line such as `{done}`, and
  * trimming keeps a CRLF line ending from hiding the closing brace.
  */
-function findSingleLineJson(lines: string[]): string | undefined {
+function findSingleLineJson(lines: string[]): unknown {
   for (let i = lines.length - 1; i >= 0; i--) {
     const line = lines[i]?.trim();
-    if (line?.startsWith("{") && line.endsWith("}") && isJson(line)) {
-      return line;
+    if (!line?.startsWith("{") || !line.endsWith("}")) {
+      continue;
+    }
+    const parsed = tryParseJson(line);
+    if (parsed !== undefined) {
+      return parsed;
     }
   }
   return undefined;
@@ -748,7 +761,7 @@ function indentOf(line: string): number {
  * are tried: a pretty printer aligns an object's braces, and trying every
  * nested `{` made the scan quadratic in the number of objects.
  */
-function findMultiLineJson(lines: string[]): string | undefined {
+function findMultiLineJson(lines: string[]): unknown {
   for (let end = lines.length - 1; end >= 0; end--) {
     const endLine = lines[end];
     if (!endLine?.trimEnd().endsWith("}")) {
@@ -761,9 +774,9 @@ function findMultiLineJson(lines: string[]): string | undefined {
       if (!startLine?.trimStart().startsWith("{") || indentOf(startLine) !== indent) {
         continue;
       }
-      const candidate = lines.slice(start, end + 1).join("\n");
-      if (isJson(candidate)) {
-        return candidate;
+      const parsed = tryParseJson(lines.slice(start, end + 1).join("\n"));
+      if (parsed !== undefined) {
+        return parsed;
       }
     }
   }
@@ -779,13 +792,13 @@ function findMultiLineJson(lines: string[]): string | undefined {
  * Attempts single-line collection first, falling back to multi-line
  * traversal to find the JSON string if single-line collection fails.
  */
-export function getJsonFromOutput(output: string): string {
+export function getJsonFromOutput(output: string): unknown {
   const lines = output.split(/\n/);
 
   // If the knip output is unformatted/unmodified, it will be a
   // single line of JSON, which makes parsing fast and simple.
   const singleLineJsonParseResult = findSingleLineJson(lines);
-  if (singleLineJsonParseResult) {
+  if (singleLineJsonParseResult !== undefined) {
     return singleLineJsonParseResult;
   }
 
@@ -793,14 +806,14 @@ export function getJsonFromOutput(output: string): string {
   // making it certainly a multiline string.
   core.debug("Failed to collect JSON with single-line method, retrying with multi-line method");
   const multiLineJsonParseResult = findMultiLineJson(lines);
-  if (multiLineJsonParseResult) {
+  if (multiLineJsonParseResult !== undefined) {
     return multiLineJsonParseResult;
   }
 
   throw new Error("Unable to find JSON blob");
 }
 
-export async function getJsonFromInputFile(filePath: string): Promise<string> {
+export async function getJsonFromInputFile(filePath: string): Promise<unknown> {
   try {
     await fs.stat(filePath);
   } catch (err) {
@@ -814,15 +827,15 @@ export async function getJsonFromInputFile(filePath: string): Promise<string> {
   }
 
   try {
-    JSON.parse(content);
-  } catch {
-    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`);
+    return JSON.parse(content);
+  } catch (err) {
+    throw new Error(`Provided 'json_report_path' content contains invalid JSON: ${filePath}`, {
+      cause: err,
+    });
   }
-
-  return content;
 }
 
-async function getOutput(buildScriptName: string, cwd?: string): Promise<string> {
+async function getOutput(buildScriptName: string, cwd?: string): Promise<unknown> {
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
   const { stdout, exitCode } = await run(cmd);
 
