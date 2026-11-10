@@ -26,20 +26,42 @@ export async function buildRunKnipCommand(buildScriptName: string, cwd?: string)
   return command;
 }
 
-export async function run(runCmd: string): Promise<string> {
-  const result = await new Promise<string>((resolve) => {
-    exec(runCmd, (_err, stdout, stderr) => {
-      // Knip will exit with a non-zero code on there being results
-      // If there is anything in the stderr stream, log the output as a warning
-      // as knip having results will always give an error exit code
+export interface RunResult {
+  stdout: string;
+
+  /**
+   * Undefined when the process exited normally with code 0.
+   */
+  exitCode: number | undefined;
+}
+
+/**
+ * Run the knip command and capture its output.
+ *
+ * Resolves on any exit code, since knip exits non-zero whenever it has
+ * findings. Rejects only when the process could not run to completion.
+ */
+export function run(runCmd: string): Promise<RunResult> {
+  return new Promise<RunResult>((resolve, reject) => {
+    // The default 1 MiB maxBuffer kills the process and truncates stdout,
+    // which a large JSON report can easily exceed.
+    exec(runCmd, { maxBuffer: Infinity }, (error, stdout, stderr) => {
+      // Knip having results always gives an error exit code, so stderr
+      // content is only worth a warning.
       if (stderr.length > 0) {
         core.warning("knip stderr:\n" + stderr);
       }
-      resolve(stdout);
+
+      // A string code (e.g. ENOENT) or a signal means the process never ran
+      // to completion, so its output cannot be trusted.
+      if (error && (typeof error.code === "string" || error.signal)) {
+        reject(new Error(`Failed to run knip: ${error.message}`, { cause: error }));
+        return;
+      }
+
+      resolve({ stdout, exitCode: error?.code });
     });
   });
-  // Knip always returns an object
-  return result;
 }
 
 interface Item {
@@ -766,8 +788,17 @@ export async function getJsonFromInputFile(filePath: string): Promise<string> {
 
 async function getOutput(buildScriptName: string, cwd?: string): Promise<string> {
   const cmd = await timeTask("Build knip command", () => buildRunKnipCommand(buildScriptName, cwd));
+  const { stdout, exitCode } = await run(cmd);
 
-  return getJsonFromOutput(await run(cmd));
+  try {
+    return getJsonFromOutput(stdout);
+  } catch (error) {
+    // Knip exits 1 for findings and 2 for its own errors, and a shell gives
+    // 127 for a missing command, so the code tells the user where to look.
+    throw new Error(`Unable to find JSON blob in knip output (exit code ${exitCode ?? 0})`, {
+      cause: error,
+    });
+  }
 }
 
 interface RunKnipTasksOpts {

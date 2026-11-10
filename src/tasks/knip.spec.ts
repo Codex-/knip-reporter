@@ -112,6 +112,7 @@ describe("knip", () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, "resolved promise", "");
@@ -120,13 +121,68 @@ describe("knip", () => {
       const results = await run("test cmd");
 
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
-      expect(results).toStrictEqual("resolved promise");
+      expect(execSpy.mock.lastCall?.[1]).toStrictEqual({ maxBuffer: Infinity });
+      expect(results).toStrictEqual({ stdout: "resolved promise", exitCode: undefined });
+    });
+
+    it("resolves with stdout and the exit code when knip exits non-zero", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func({ code: 1, message: "Command failed" }, "stdout output", "");
+      }) as any);
+
+      const results = await run("test cmd");
+
+      expect(results).toStrictEqual({ stdout: "stdout output", exitCode: 1 });
+      assertNoneCalled();
+    });
+
+    it("rejects when the process could not be spawned", async () => {
+      const execError = Object.assign(new Error("spawn /bin/sh ENOENT"), { code: "ENOENT" });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func(execError, "", "");
+      }) as any);
+
+      await expect(run("test cmd")).rejects.toMatchObject({
+        message: "Failed to run knip: spawn /bin/sh ENOENT",
+        cause: execError,
+      });
+    });
+
+    it("rejects when the process was killed by a signal", async () => {
+      const execError = Object.assign(new Error("Command failed"), {
+        killed: true,
+        signal: "SIGTERM",
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func(execError, "partial output", "");
+      }) as any);
+
+      await expect(run("test cmd")).rejects.toMatchObject({
+        message: "Failed to run knip: Command failed",
+        cause: execError,
+      });
     });
 
     it("emits a warning log if stderr isn't empty", async () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, "", "stderr output");
@@ -149,6 +205,7 @@ describe("knip", () => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, "stdout output", "stderr output");
@@ -157,7 +214,7 @@ describe("knip", () => {
       // Behaviour
       const result = await run("test cmd");
       expect(execSpy.mock.lastCall?.[0]).toStrictEqual("test cmd");
-      expect(result).toStrictEqual("stdout output");
+      expect(result.stdout).toStrictEqual("stdout output");
 
       // Logging
       assertOnlyCalled(coreWarningLogMock);
@@ -1147,6 +1204,7 @@ ${JSON.stringify(reportJson, null, 2)}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const execSpy = vi.spyOn(cp, "exec").mockImplementation(((
         _cmd: string,
+        _opts: unknown,
         func: (error: any, stdout: string, stderr: string) => void,
       ) => {
         func(undefined, JSON.stringify(reportJson), "");
@@ -1162,6 +1220,30 @@ ${JSON.stringify(reportJson, null, 2)}
       });
       expect(execSpy).toHaveBeenCalledOnce();
       expect(result.sections.length).toBeGreaterThan(0);
+    });
+
+    it("should include the exit code when no report is found in the knip output", async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      vi.spyOn(cp, "exec").mockImplementation(((
+        _cmd: string,
+        _opts: unknown,
+        func: (error: any, stdout: string, stderr: string) => void,
+      ) => {
+        func({ code: 127, message: "Command failed" }, "sh: pnpm: command not found", "");
+      }) as any);
+
+      await expect(
+        runKnipTasks({
+          buildScriptName: "knip",
+          jsonReportPath: undefined,
+          annotationsEnabled: false,
+          verboseEnabled: false,
+          collapse: "auto",
+        }),
+      ).rejects.toMatchObject({
+        message: "Unable to find JSON blob in knip output (exit code 127)",
+        cause: { message: "Unable to find JSON blob" },
+      });
     });
   });
 });
