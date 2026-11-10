@@ -262,12 +262,51 @@ describe("main", () => {
     // Behaviour
     await main();
 
-    // A non-permission failure is unexpected and must fail the run.
+    // A non-permission failure is unexpected and must fail the run, but the
+    // check it created must not be left in progress.
     expect(coreSetFailedMock).toHaveBeenCalledOnce();
-    expect(resolveCheckMock).not.toHaveBeenCalled();
+    expect(coreSetFailedMock.mock.lastCall?.[0]).toMatchObject({ message: "boom" });
+    expect(resolveCheckMock).toHaveBeenCalledOnce();
+    expect(resolveCheckMock.mock.lastCall?.[0]).toStrictEqual(123);
+    expect(resolveCheckMock.mock.lastCall?.[1]).toStrictEqual("failure");
 
     // Logging
     assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
+  });
+
+  it("should resolve the check as failure when pushing annotations throws", async () => {
+    updateCheckAnnotationsMock.mockRejectedValue(new Error("Failed to update check"));
+
+    // Behaviour
+    await main();
+
+    expect(coreSetFailedMock).toHaveBeenCalledOnce();
+    expect(coreSetFailedMock.mock.lastCall?.[0]).toMatchObject({
+      message: "Failed to update check",
+    });
+    expect(resolveCheckMock).toHaveBeenCalledOnce();
+    expect(resolveCheckMock.mock.lastCall?.[1]).toStrictEqual("failure");
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreErrorLogMock);
+  });
+
+  it("should still fail with the original error when resolving the check on failure also throws", async () => {
+    runCommentTaskMock.mockRejectedValue(new Error("boom"));
+    resolveCheckMock.mockRejectedValue(new Error("API down"));
+
+    // Behaviour
+    await main();
+
+    expect(coreSetFailedMock).toHaveBeenCalledOnce();
+    expect(coreSetFailedMock.mock.lastCall?.[0]).toMatchObject({ message: "boom" });
+
+    // Logging
+    assertOnlyCalled(coreInfoLogMock, coreWarningLogMock, coreErrorLogMock);
+    expect(coreWarningLogMock).toHaveBeenCalledOnce();
+    expect(coreWarningLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
+      `"Unable to resolve check: API down"`,
+    );
   });
 
   it("should run the check but skip the comment when no pull request is associated", async () => {
