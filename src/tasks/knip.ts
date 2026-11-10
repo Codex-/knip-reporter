@@ -417,8 +417,14 @@ export function buildArraySectionWithAnnotations(
   return { sections: [], annotations: annotations };
 }
 
-function isValidAnnotationBody(item: Omit<Item, "name">): item is Required<Omit<Item, "name">> {
-  return item.pos !== undefined && item.line !== undefined && item.col !== undefined;
+type Positioned = Required<Pick<Item, "line" | "col">>;
+
+/**
+ * An annotation needs a line and column. `pos` is a byte offset the Checks
+ * API has no use for, so it must not gate an otherwise-positioned item.
+ */
+function isValidAnnotationBody(item: Omit<Item, "name">): item is Omit<Item, "name"> & Positioned {
+  return item.line !== undefined && item.col !== undefined;
 }
 
 /**

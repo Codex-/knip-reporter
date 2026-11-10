@@ -63,10 +63,10 @@ steps:
 
 ### Permissions
 
-| Permission             | Used for                                    | If missing              |
-| ---------------------- | ------------------------------------------- | ----------------------- |
-| `checks: write`        | The check run carrying the knip annotations | Annotations are skipped |
-| `pull-requests: write` | Creating and updating the report comment    | The comment is skipped  |
+| Permission             | Used for                                    | If missing                                        |
+| ---------------------- | ------------------------------------------- | ------------------------------------------------- |
+| `checks: write`        | The check run carrying the knip annotations | Annotated items are listed in the comment instead |
+| `pull-requests: write` | Creating and updating the report comment    | The comment is skipped                            |
 
 A missing permission drops that part of the report instead of failing the run, and findings still fail the run unless `ignore_results` is set, so a skipped comment cannot hide a bad report.
 

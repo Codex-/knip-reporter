@@ -205,6 +205,10 @@ describe("main", () => {
     // The check is skipped, but the run continues and does not fail.
     expect(createCheckIdMock).toHaveBeenCalledOnce();
     expect(runKnipTasksMock).toHaveBeenCalledOnce();
+    // Annotated items have nowhere else to go, so they must land in the comment.
+    expect(runKnipTasksMock).toHaveBeenCalledWith(
+      expect.objectContaining({ annotationsEnabled: false }),
+    );
     expect(runCommentTaskMock).toHaveBeenCalledOnce();
     expect(updateCheckAnnotationsMock).not.toHaveBeenCalled();
     expect(resolveCheckMock).not.toHaveBeenCalled();

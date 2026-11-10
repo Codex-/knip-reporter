@@ -685,6 +685,25 @@ describe("knip", () => {
       const section = buildArraySectionWithAnnotations("types", types, true, true, "auto");
       expect(section).toMatchSnapshot();
     });
+
+    it("should annotate an item that has a line and column but no pos", () => {
+      const section = buildArraySectionWithAnnotations(
+        "exports",
+        { "foo.ts": [{ name: "noPos", line: 3, col: 7 }] },
+        true,
+        false,
+        "auto",
+      );
+      expect(section.annotations).toStrictEqual([
+        {
+          path: "foo.ts",
+          identifier: "noPos",
+          start_line: 3,
+          start_column: 7,
+          type: "export",
+        },
+      ]);
+    });
   });
 
   describe("buildMapSection", () => {

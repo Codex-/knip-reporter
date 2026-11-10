@@ -58,14 +58,18 @@ export async function main(): Promise<void> {
           timeTask("Create check ID", () =>
             createCheckId("knip-reporter-annotations-check", "Knip reporter analysis"),
           ),
-        "Unable to create a check: the GITHUB_TOKEN lacks 'checks: write' permission. Skipping annotations.",
+        "Unable to create a check: the GITHUB_TOKEN lacks 'checks: write' permission. Reporting annotated items in the comment instead.",
       );
     }
+
+    // Without a check to carry them, annotated items would be lost from the
+    // report entirely, so they fall back to the comment.
+    const annotationsEnabled = config.annotations && checkId !== undefined;
 
     const { sections: knipSections, annotations: knipAnnotations } = await runKnipTasks({
       buildScriptName: config.commandScriptName,
       jsonReportPath: config.jsonReportPath,
-      annotationsEnabled: config.annotations,
+      annotationsEnabled,
       verboseEnabled: config.verbose,
       collapse: config.collapseSections,
       cwd: config.workingDirectory,
