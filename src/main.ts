@@ -132,7 +132,7 @@ export async function main(): Promise<void> {
     core.info(`✔ knip-reporter action (${Date.now() - actionMs}ms)`);
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    core.error(`🧨 Failed: ${err.message}`);
+    // `setFailed` logs the message itself, so only the stack is added here.
     core.error(`📚 Stack: ${err.stack ?? ""}`);
     core.setFailed(err);
   }

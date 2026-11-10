@@ -187,10 +187,11 @@ export function parseJsonReport(report: unknown): ParsedReport {
         case "files":
           if (Array.isArray(result) && result.length > 0) {
             for (const item of result as Array<{ name: string }>) {
-              if (item.name) out.files.push(item.name);
+              if (item.name) {
+                out.files.push(item.name);
+                summary.files = (summary.files ?? 0) + 1;
+              }
             }
-            summary.files ??= 0;
-            summary.files += result.length;
           }
           break;
         case "dependencies":
@@ -456,9 +457,8 @@ export function buildMapSection(
 ): { sections: string[]; annotations: ItemMeta[] } {
   const tableBody: string[][] = [];
   const annotations: ItemMeta[] = [];
-  const resultMetaType = name === "namespaceMembers" ? "namespace" : "enum";
   const shouldBuildMarkdown = verboseEnabled || !annotationsEnabled;
-  const metaType = getMetaType(name);
+  const metaType = getMetaType(name) as "namespace" | "enum";
   const resultType = metaType.charAt(0).toUpperCase() + metaType.slice(1);
 
   let totalUnused = 0;
@@ -472,7 +472,7 @@ export function buildMapSection(
             identifier: member.name,
             start_line: member.line,
             start_column: member.col,
-            type: resultMetaType,
+            type: metaType,
           });
         }
         if (shouldBuildMarkdown) {
