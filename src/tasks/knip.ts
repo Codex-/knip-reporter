@@ -699,18 +699,28 @@ export function buildMarkdownSections(
   return { sections: outputSections, annotations: outputAnnotations };
 }
 
+function isJson(candidate: string): boolean {
+  try {
+    JSON.parse(candidate);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Simple collection attempt of the input as a single line of JSON.
  *
  * This is the default output from `knip`'s JSON reporter.
  *
- * Assume the report is the last line that starts with `'{'` and
- * ends with `'}'`
+ * Assume the report is the last line that is wrapped in braces and parses
+ * as JSON. Parsing guards against a trailing log line such as `{done}`, and
+ * trimming keeps a CRLF line ending from hiding the closing brace.
  */
 function findSingleLineJson(lines: string[]): string | undefined {
   for (let i = lines.length - 1; i >= 0; i--) {
-    const line = lines[i];
-    if (line?.startsWith("{") && line.endsWith("}")) {
+    const line = lines[i]?.trim();
+    if (line?.startsWith("{") && line.endsWith("}") && isJson(line)) {
       return line;
     }
   }

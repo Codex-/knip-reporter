@@ -1144,6 +1144,27 @@ ELIFECYCLE  Command failed with exit code 3.
       expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
     });
 
+    it("should skip a trailing brace-wrapped line that is not JSON", () => {
+      const cliOutput = `
+${JSON.stringify(reportJson)}
+{done in 1.2s}
+`;
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+
+      // Logging: the single-line pass still succeeds, so no fallback log
+      assertNoneCalled();
+    });
+
+    it("should find a single-line report in CRLF output", () => {
+      const cliOutput = ["> knip --reporter json", JSON.stringify(reportJson), ""].join("\r\n");
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual(reportJson);
+
+      // Logging
+      assertNoneCalled();
+    });
+
     it("should skip multi-line blocks that look like JSON but don't parse", () => {
       const cliOutput = `
 {
