@@ -101,7 +101,17 @@ describe("knip", () => {
       const cmd = await buildRunKnipCommand("knip", "./working/directory");
       expect(cmd).toMatch("knip");
       expect(cmd).toMatch("--reporter json");
-      expect(cmd).toMatch("--directory ./working/directory");
+      expect(cmd).toMatch('--directory "./working/directory"');
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
+    });
+
+    it("should quote a working directory containing spaces and double quotes", async () => {
+      // Behaviour
+      const cmd = await buildRunKnipCommand("knip", 'packages/my "app"');
+      expect(cmd).toMatch('--directory "packages/my \\"app\\""');
 
       // Logging
       assertOnlyCalled(coreDebugLogMock);

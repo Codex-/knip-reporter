@@ -10,10 +10,18 @@ import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import { timeTask } from "./task.ts";
 import type { CollapseSections, ItemMeta } from "./types.ts";
 
+/**
+ * Build the shell command that runs the knip script.
+ *
+ * The package manager and the script come from the process working directory
+ * (the repository root in a workflow). `cwd` only changes the directory knip
+ * analyses, via `--directory`, and is quoted since the command runs in a shell.
+ */
 export async function buildRunKnipCommand(buildScriptName: string, cwd?: string): Promise<string> {
   const knipArgs = [buildScriptName, "--reporter json"];
   if (cwd) {
-    knipArgs.push(`--directory ${cwd}`);
+    // Double quotes work in both sh and cmd.exe, so this covers every runner OS.
+    knipArgs.push(`--directory "${cwd.replaceAll('"', '\\"')}"`);
   }
   const cmd = await getCliCommand(parseNr, knipArgs, {
     programmatic: true,

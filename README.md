@@ -16,6 +16,8 @@ The execution of `knip` requires you to have followed the general `knip` setup a
 
 `knip-reporter` appends a reporter to the `knip` command used, `--reporter json`, to output a parseable report with information needed for annotations where supported.
 
+The package manager is detected from, and the script is run in, the directory the action runs in (the repository root by default). `working_directory` only changes the directory `knip` analyses, by passing `--directory`.
+
 ```yaml
 name: Pull Request
 on:
