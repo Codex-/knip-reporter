@@ -727,24 +727,35 @@ function findSingleLineJson(lines: string[]): string | undefined {
   return undefined;
 }
 
+function indentOf(line: string): number {
+  return line.length - line.trimStart().length;
+}
+
 /**
  * More complex collection attempt of the input as JSON that spans
  * multiple lines.
  *
- * Scan for a multi-line JSON object by walking backwards from the
- * last `}` line to a balancing `{` line and verifying with JSON.parse.
+ * Walks backwards from each `}` line to a `{` line and verifies the span
+ * with JSON.parse. Only `{` lines at the same indentation as the `}` line
+ * are tried: a pretty printer aligns an object's braces, and trying every
+ * nested `{` made the scan quadratic in the number of objects.
  */
 function findMultiLineJson(lines: string[]): string | undefined {
   for (let end = lines.length - 1; end >= 0; end--) {
-    if (!lines[end]?.trimEnd().endsWith("}")) continue;
+    const endLine = lines[end];
+    if (!endLine?.trimEnd().endsWith("}")) {
+      continue;
+    }
+    const indent = indentOf(endLine);
+
     for (let start = end; start >= 0; start--) {
-      if (!lines[start]?.trimStart().startsWith("{")) continue;
+      const startLine = lines[start];
+      if (!startLine?.trimStart().startsWith("{") || indentOf(startLine) !== indent) {
+        continue;
+      }
       const candidate = lines.slice(start, end + 1).join("\n");
-      try {
-        JSON.parse(candidate);
+      if (isJson(candidate)) {
         return candidate;
-      } catch {
-        // not balanced JSON, keep searching
       }
     }
   }

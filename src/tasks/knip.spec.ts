@@ -1165,6 +1165,19 @@ ${JSON.stringify(reportJson)}
       assertNoneCalled();
     });
 
+    it("should extract a large pretty-printed report without scanning every nested object", () => {
+      // The previous scan tried every nested `{` as a start line and parsed
+      // each span, which took seconds at this size and exceeds the test timeout.
+      const issues = Array.from({ length: 6000 }, (_, i) => ({
+        file: `file${i}.ts`,
+        exports: [{ name: "a", line: 1, col: 1, pos: 1 }],
+      }));
+      const cliOutput = `> knip\n${JSON.stringify({ issues }, null, 2)}\n ELIFECYCLE  Command failed with exit code 1.`;
+
+      const jsonStr = getJsonFromOutput(cliOutput);
+      expect(JSON.parse(jsonStr)).toStrictEqual({ issues });
+    });
+
     it("should skip multi-line blocks that look like JSON but don't parse", () => {
       const cliOutput = `
 {
