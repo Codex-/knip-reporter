@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 import { type ActionConfig, getConfig } from "./action.ts";
+import { hasCommentMarker } from "./comment-marker.ts";
 import { getCommitSha } from "./github-utils/get-commit-sha.ts";
 import { withRetry } from "./github-utils/with-retry.ts";
 
@@ -63,7 +64,7 @@ export async function listCommentIds(
             continue;
           }
 
-          if (body.includes(cfgCommentId)) {
+          if (hasCommentMarker(body, cfgCommentId)) {
             ids.push(id);
           }
         }

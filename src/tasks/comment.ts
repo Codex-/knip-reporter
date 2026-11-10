@@ -7,10 +7,11 @@ import {
   listCommentIds,
   updateComment,
 } from "../api.ts";
+import { createCommentMarker } from "../comment-marker.ts";
 import { timeTask } from "./task.ts";
 
 function createCommentId(cfgCommentId: string, n: number): string {
-  const id = `<!-- ${cfgCommentId}-${n} -->`;
+  const id = createCommentMarker(cfgCommentId, n);
   core.debug(`[createCommentId]: Generated '${id}'`);
   return id;
 }

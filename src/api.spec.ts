@@ -256,7 +256,7 @@ describe("API", () => {
     });
 
     it("should return an ID for a single match", async () => {
-      listCommentsToReturn = [[{ id: 0, body: "" }], [{ id: 123, body: "knip" }]];
+      listCommentsToReturn = [[{ id: 0, body: "" }], [{ id: 123, body: "<!-- knip-0 -->" }]];
 
       // Behaviour
       const commentIds = await listCommentIds("knip", 123456);
@@ -275,9 +275,9 @@ describe("API", () => {
     it("should return an ID for every match", async () => {
       listCommentsToReturn = [
         [{ id: 0, body: "" }],
-        [{ id: 123, body: "knip" }],
-        [{ id: 456, body: "knip" }],
-        [{ id: 789, body: "knop" }],
+        [{ id: 123, body: "<!-- knip-0 -->\n\nreport" }],
+        [{ id: 456, body: "<!-- knip-1 -->\n\nreport" }],
+        [{ id: 789, body: "<!-- knop-0 -->" }],
       ];
 
       // Behaviour
@@ -296,7 +296,7 @@ describe("API", () => {
     });
 
     it("should not return an invalid match", async () => {
-      listCommentsToReturn = [[{ id: 0, body: "" }], [{ id: 123, body: "knop" }]];
+      listCommentsToReturn = [[{ id: 0, body: "" }], [{ id: 123, body: "<!-- knop-0 -->" }]];
 
       // Behaviour
       const commentIds = await listCommentIds("knip", 123456);
@@ -308,6 +308,22 @@ describe("API", () => {
       expect(coreDebugLogMock.mock.lastCall?.[0]).toMatchInlineSnapshot(
         `"[getCommentIds]: No existing IDs found"`,
       );
+    });
+
+    it("should not claim a comment that only mentions the id or shares it as a prefix", async () => {
+      listCommentsToReturn = [
+        [{ id: 123, body: "Looks like knip is unhappy about this one" }],
+        [{ id: 456, body: "<!-- knip-extra-0 -->" }],
+        [{ id: 789, body: "<!-- knip- -->" }],
+      ];
+
+      // Behaviour
+      const commentIds = await listCommentIds("knip", 123456);
+      expect(commentIds).toBeUndefined();
+
+      // Logging
+      assertOnlyCalled(coreDebugLogMock);
+      expect(coreDebugLogMock).toHaveBeenCalledOnce();
     });
 
     it("should wrap octokit failures with the underlying cause", async () => {
