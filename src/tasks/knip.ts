@@ -1,5 +1,6 @@
 import { exec } from "node:child_process";
 import fs from "node:fs/promises";
+import path from "node:path";
 
 import * as core from "@actions/core";
 import { parseNr, getCliCommand } from "@antfu/ni";
@@ -807,6 +808,38 @@ async function getOutput(buildScriptName: string, cwd?: string): Promise<string>
   }
 }
 
+/**
+ * Knip reports paths relative to the directory it ran in, while the Checks
+ * API needs them relative to the repository root, which is the workspace.
+ *
+ * @returns the posix prefix to join onto each annotation path, empty when
+ * knip ran at the workspace root
+ */
+export function annotationPathPrefix(cwd: string | undefined): string {
+  const workspace = process.env.GITHUB_WORKSPACE ?? process.cwd();
+  const prefix = path.relative(workspace, path.resolve(cwd ?? "."));
+  return prefix.split(path.sep).join(path.posix.sep);
+}
+
+function toRepoRelativeAnnotations(annotations: ItemMeta[], cwd: string | undefined): ItemMeta[] {
+  const prefix = annotationPathPrefix(cwd);
+  if (prefix === "") {
+    return annotations;
+  }
+
+  if (prefix.startsWith("..")) {
+    core.warning(
+      `working_directory '${cwd ?? "."}' is outside the workspace, annotations may not resolve to files in the repository`,
+    );
+    return annotations;
+  }
+
+  return annotations.map((annotation) => ({
+    ...annotation,
+    path: path.posix.join(prefix, annotation.path),
+  }));
+}
+
 interface RunKnipTasksOpts {
   buildScriptName: string;
   jsonReportPath?: string;
@@ -833,10 +866,10 @@ export async function runKnipTasks({
   const report = await timeTask("Parse knip report", () =>
     Promise.resolve(parseJsonReport(output)),
   );
-  const sectionsAndAnnotations = await timeTask("Convert report to markdown", () =>
+  const { sections, annotations } = await timeTask("Convert report to markdown", () =>
     Promise.resolve(buildMarkdownSections(report, annotationsEnabled, verboseEnabled, collapse)),
   );
 
   core.info(`✔ Running Knip tasks (${Date.now() - taskMs}ms)`);
-  return sectionsAndAnnotations;
+  return { sections, annotations: toRepoRelativeAnnotations(annotations, cwd) };
 }

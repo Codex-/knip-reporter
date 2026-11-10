@@ -84,8 +84,8 @@ The following inputs are supported
 | `annotations`         | Annotate the project code with the knip results.                                                                                                   | `false`  | `true`                                 |
 | `verbose`             | Include annotated items in the comment report.                                                                                                     | `false`  | `false`                                |
 | `ignore_results`      | Do not fail the action run if knip results are found.                                                                                              | `false`  | `false`                                |
-| `working_directory`   | Run knip in a different directory.                                                                                                                 | `false`  | `.`                                    |
-| `json_report_path`    | Use a pre-existing knip report instead of running `knip`. Relative paths are resolved against `working_directory`.                                 | `false`  |                                        |
+| `working_directory`   | Run knip in a different directory. Annotation paths are prefixed with it.                                                                          | `false`  | `.`                                    |
+| `json_report_path`    | Use a pre-existing knip report instead of running `knip`. Resolved against `working_directory`, which should be where the report was generated.    | `false`  |                                        |
 | `collapse_sections`   | When to hide a section's body behind a collapsible block: `auto`, `always`, or `never`. `auto` collapses only sections with more than ten results. | `false`  | `auto`                                 |
 
 ### Issues

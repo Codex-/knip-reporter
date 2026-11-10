@@ -1,6 +1,7 @@
 import * as cp from "node:child_process";
 import type { Stats } from "node:fs";
 import fs from "node:fs/promises";
+import path from "node:path";
 
 import * as ni from "@antfu/ni";
 import {
@@ -17,6 +18,7 @@ import {
 import { invalidReportJson, reportJson } from "./__fixtures__/knip.fixture.ts";
 import { COMMENT_SECTION_BUDGET } from "./comment.ts";
 import {
+  annotationPathPrefix,
   buildArraySection,
   buildArraySectionWithAnnotations,
   buildFilesSection,
@@ -1201,6 +1203,29 @@ ${JSON.stringify(reportJson, null, 2)}
     });
   });
 
+  describe("annotationPathPrefix", () => {
+    afterEach(() => {
+      vi.unstubAllEnvs();
+    });
+
+    it("should be empty when knip runs at the workspace root", () => {
+      vi.stubEnv("GITHUB_WORKSPACE", process.cwd());
+      expect(annotationPathPrefix(".")).toBe("");
+      expect(annotationPathPrefix(undefined)).toBe("");
+    });
+
+    it("should be the working directory relative to the workspace", () => {
+      vi.stubEnv("GITHUB_WORKSPACE", process.cwd());
+      expect(annotationPathPrefix("packages/a")).toBe("packages/a");
+      expect(annotationPathPrefix("./packages/a/")).toBe("packages/a");
+    });
+
+    it("should fall back to the process cwd without a workspace", () => {
+      vi.stubEnv("GITHUB_WORKSPACE", undefined);
+      expect(annotationPathPrefix("packages/a")).toBe("packages/a");
+    });
+  });
+
   describe("runKnipTasks", () => {
     it("should read the report from disk and skip knip when jsonReportPath is set", async () => {
       vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
@@ -1239,6 +1264,60 @@ ${JSON.stringify(reportJson, null, 2)}
       });
       expect(execSpy).toHaveBeenCalledOnce();
       expect(result.sections.length).toBeGreaterThan(0);
+    });
+
+    it("should prefix annotation paths with the working directory relative to the workspace", async () => {
+      vi.stubEnv("GITHUB_WORKSPACE", process.cwd());
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce(
+        JSON.stringify({
+          issues: [{ file: "src/Utils.ts", exports: [{ name: "a", line: 1, col: 1, pos: 1 }] }],
+        }),
+      );
+
+      // Behaviour
+      const result = await runKnipTasks({
+        buildScriptName: "knip",
+        jsonReportPath: "report.json",
+        annotationsEnabled: true,
+        verboseEnabled: false,
+        collapse: "auto",
+        cwd: "packages/a",
+      });
+      expect(result.annotations.map((annotation) => annotation.path)).toStrictEqual([
+        "packages/a/src/Utils.ts",
+      ]);
+
+      vi.unstubAllEnvs();
+    });
+
+    it("should leave annotation paths alone and warn when the working directory is outside the workspace", async () => {
+      vi.stubEnv("GITHUB_WORKSPACE", path.join(process.cwd(), "nested"));
+      vi.spyOn(fs, "stat").mockResolvedValueOnce({} as Stats);
+      vi.spyOn(fs, "readFile").mockResolvedValueOnce(
+        JSON.stringify({
+          issues: [{ file: "src/Utils.ts", exports: [{ name: "a", line: 1, col: 1, pos: 1 }] }],
+        }),
+      );
+
+      // Behaviour
+      const result = await runKnipTasks({
+        buildScriptName: "knip",
+        jsonReportPath: "report.json",
+        annotationsEnabled: true,
+        verboseEnabled: false,
+        collapse: "auto",
+        cwd: ".",
+      });
+      expect(result.annotations.map((annotation) => annotation.path)).toStrictEqual([
+        "src/Utils.ts",
+      ]);
+
+      // Logging
+      expect(coreWarningLogMock).toHaveBeenCalledOnce();
+      expect(coreWarningLogMock.mock.lastCall?.[0]).toContain("outside the workspace");
+
+      vi.unstubAllEnvs();
     });
 
     it("should include the exit code when no report is found in the knip output", async () => {
